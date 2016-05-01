@@ -1,0 +1,69 @@
+
+blocks.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bottom_connection
+  rotate: false
+  xy: 1, 1
+  size: 64, 16
+  split: 44, 19, 0, 15
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+bottom_plain
+  rotate: false
+  xy: 67, 1
+  size: 64, 16
+  split: 44, 19, 0, 15
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+top_connection
+  rotate: false
+  xy: 133, 1
+  size: 64, 16
+  split: 44, 19, 15, 0
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+top_plain
+  rotate: false
+  xy: 199, 1
+  size: 64, 16
+  split: 44, 19, 15, 0
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+right_connection
+  rotate: false
+  xy: 265, 1
+  size: 32, 16
+  split: 0, 31, 15, 0
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+right_plain
+  rotate: false
+  xy: 299, 1
+  size: 32, 16
+  split: 0, 31, 15, 0
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+left_connection
+  rotate: false
+  xy: 333, 1
+  size: 16, 16
+  split: 15, 0, 15, 0
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+left_plain
+  rotate: false
+  xy: 351, 1
+  size: 16, 16
+  split: 15, 0, 15, 0
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
