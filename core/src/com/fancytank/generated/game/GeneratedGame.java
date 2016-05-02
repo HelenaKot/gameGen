@@ -11,10 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.fancytank.generated.game.generated.SampleActor;
 import com.fancytank.generated.game.programming.Block;
 import com.fancytank.generated.game.programming.BlockShape;
 import com.fancytank.generated.game.programming.BlockTextureManager;
+import com.fancytank.generated.game.programming.ProgrammingBlock;
 
 public class GeneratedGame extends ApplicationAdapter {
     private Stage stage;
@@ -23,18 +23,16 @@ public class GeneratedGame extends ApplicationAdapter {
 
     @Override
     public void create() {
-        stage =  new Stage(new ScalingViewport(Scaling.fillY,400,400, cam));
-                //new Stage(new ScalingViewport(Scaling.stretch, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
+        stage = new Stage(new ScalingViewport(Scaling.fillY, 400, 400, cam));
+        //new Stage(new ScalingViewport(Scaling.stretch, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
         Gdx.input.setInputProcessor(stage);
 
         setUp();
-
-        //SampleActor actor = new SampleActor();
-        //stage.addActor(actor);
     }
 
     private void setUp() {
         new BlockTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
+        ProgrammingBlock.loadSkin(new Skin(Gdx.files.internal("uiskin.json")));
         addToStage(new Block(BlockShape.VARIABLE, new Skin(Gdx.files.internal("uiskin.json"))));
     }
 

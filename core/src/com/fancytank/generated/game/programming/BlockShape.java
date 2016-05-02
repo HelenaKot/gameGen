@@ -9,4 +9,6 @@ public class BlockShape {
     BlockShape(boolean[] connects) {
         this.connects = connects;
     }
+
+    boolean connects(Direction direction) {return connects[direction.ordinal()];}
 }
