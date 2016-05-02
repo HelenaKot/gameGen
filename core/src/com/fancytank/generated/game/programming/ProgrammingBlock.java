@@ -1,16 +1,13 @@
 package com.fancytank.generated.game.programming;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class ProgrammingBlock {
-    Color tint;
     Label label;
     PatchData topPatch, leftPatch, rightPatch, bottomPatch;
-    int x, y;
     static Skin skin;
     static int padding = 16;
 
@@ -24,6 +21,10 @@ public class ProgrammingBlock {
 
         setSize();
         setPosition(0, 0);
+    }
+
+    public static void loadSkin(Skin uiSkin) {
+        skin = uiSkin;
     }
 
     void setSize() {
@@ -53,33 +54,10 @@ public class ProgrammingBlock {
         patchData.patch.draw(batch, patchData.startX, patchData.startY, patchData.width, patchData.height);
     }
 
-    public static void loadSkin(Skin uiskin) {
-        skin = uiskin;
-    }
-
     private NinePatch getPatchTexture(boolean isConnected, Direction direction) {
         if (isConnected)
             return BlockTextureManager.connected[direction.ordinal()];
         else
             return BlockTextureManager.plain[direction.ordinal()];
-    }
-
-    class PatchData {
-        NinePatch patch;
-        float startX, startY, width, height;
-
-        PatchData(NinePatch patch) {
-            this.patch = patch;
-        }
-
-        void setSize(float width, float height) {
-            this.width = width;
-            this.height = height;
-        }
-
-        void setPosition(float startX, float startY) {
-            this.startX = startX;
-            this.startY = startY;
-        }
     }
 }

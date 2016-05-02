@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.fancytank.generated.game.programming.Block;
+import com.fancytank.generated.game.programming.BlockActor;
 import com.fancytank.generated.game.programming.BlockShape;
 import com.fancytank.generated.game.programming.BlockTextureManager;
 import com.fancytank.generated.game.programming.ProgrammingBlock;
@@ -33,7 +33,7 @@ public class GeneratedGame extends ApplicationAdapter {
     private void setUp() {
         new BlockTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         ProgrammingBlock.loadSkin(new Skin(Gdx.files.internal("uiskin.json")));
-        addToStage(new Block(BlockShape.VARIABLE, new Skin(Gdx.files.internal("uiskin.json"))));
+        addToStage(new BlockActor(BlockShape.VARIABLE));
     }
 
     public void addToStage(Actor actor) {
