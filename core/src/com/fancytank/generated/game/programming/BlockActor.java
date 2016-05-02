@@ -9,24 +9,26 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 public class BlockActor extends Actor {
     Color tint;
     ProgrammingBlock blockAppearance;
+    private float touchedX, touchedY;
 
     public BlockActor(BlockShape shape, Color tint) {
         this.tint = tint;
         blockAppearance = new ProgrammingBlock(this, "le Placeholder", shape);
         addListener(new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                touchedX = x;
+                touchedY = y;
                 return true;
             }
+
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                moveBy(x, y);
-                System.out.println("MOVING " + x + ' ' + y);
+                moveBy(x - touchedX, y - touchedY);
             }
         });
     }
 
     @Override
     public void moveBy(float deltaX, float deltaY) {
-        // todo przesuwaj nie lewy gorny rog, tylko miejsce za ktore sie ciagnie
         super.moveBy(deltaX, deltaY);
         blockAppearance.translate(deltaX, deltaY);
     }
