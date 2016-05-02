@@ -7,10 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class BlockActor extends Actor {
-    Color tint = Color.YELLOW;
+    Color tint;
     ProgrammingBlock blockAppearance;
 
-    public BlockActor(BlockShape shape) {
+    public BlockActor(BlockShape shape, Color tint) {
+        this.tint = tint;
         blockAppearance = new ProgrammingBlock(this, "le Placeholder", shape);
         addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

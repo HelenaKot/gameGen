@@ -23,7 +23,7 @@ public class GeneratedGame extends ApplicationAdapter {
 
     @Override
     public void create() {
-        stage = new Stage(new ScalingViewport(Scaling.fillY, 400, 400, cam));
+        stage = new Stage(new ScalingViewport(Scaling.fillY, 640, 360, cam));
         //new Stage(new ScalingViewport(Scaling.stretch, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
         Gdx.input.setInputProcessor(stage);
 
@@ -33,7 +33,8 @@ public class GeneratedGame extends ApplicationAdapter {
     private void setUp() {
         new BlockTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         ProgrammingBlock.loadSkin(new Skin(Gdx.files.internal("uiskin.json")));
-        addToStage(new BlockActor(BlockShape.VARIABLE));
+        addToStage(new BlockActor(BlockShape.VARIABLE, Color.YELLOW));
+        addToStage(new BlockActor(BlockShape.CHAIN_FUNCTION, Color.ORANGE));
     }
 
     public void addToStage(Actor actor) {
