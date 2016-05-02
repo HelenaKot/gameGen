@@ -6,19 +6,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class ProgrammingBlock {
+public class BlockAppearance {
     Label label;
-    PatchData topPatch, leftPatch, rightPatch, bottomPatch;
+    PatchData[] patch = new PatchData[4]; // topPatch, leftPatch, rightPatch, bottomPatch;
     static Skin skin;
     static int padding = 16;
 
-    ProgrammingBlock(Actor root, String labelText, BlockShape shape) {
+    BlockAppearance(Actor root, String labelText, BlockShape shape) {
         label = new Label(labelText, skin);
 
-        topPatch = new PatchData(getPatchTexture(shape.connects(Direction.UP), Direction.UP));
-        leftPatch = new PatchData(getPatchTexture(shape.connects(Direction.LEFT), Direction.LEFT));
-        rightPatch = new PatchData(getPatchTexture(shape.connects(Direction.RIGHT), Direction.RIGHT));
-        bottomPatch = new PatchData(getPatchTexture(shape.connects(Direction.DOWN), Direction.DOWN));
+        for (Direction dir : Direction.values())
+            patch[dir.ordinal()] = new PatchData(getPatchTexture(shape.connects(dir), dir));
 
         setSize(root);
         setPosition(0, 0);
@@ -29,30 +27,28 @@ public class ProgrammingBlock {
     }
 
     void setPosition(float x, float y) {
-        bottomPatch.setPosition(x, y);
-        leftPatch.setPosition(x, y + bottomPatch.height);
-        rightPatch.setPosition(x + leftPatch.width, y + bottomPatch.height);
-        topPatch.setPosition(x, leftPatch.startY + leftPatch.height);
+        patch[Direction.DOWN.ordinal()].setPosition(x, y);
+        patch[Direction.LEFT.ordinal()].setPosition(x, y + padding);
+        patch[Direction.RIGHT.ordinal()].setPosition(x + padding, y + padding);
+        patch[Direction.UP.ordinal()].setPosition(x, y + label.getHeight() + padding);
         label.setPosition(x + padding, y + padding);
     }
 
     void translate(float x, float y) {
-        setPosition(bottomPatch.startX + x, bottomPatch.startY + y);
+        setPosition(patch[Direction.DOWN.ordinal()].startX + x, patch[Direction.DOWN.ordinal()].startY + y);
     }
 
     private void setSize(Actor root) {
-        topPatch.setSize(label.getWidth() + padding * 2, padding);
-        leftPatch.setSize(padding, label.getHeight());
-        rightPatch.setSize(label.getWidth() + padding, label.getHeight());
-        bottomPatch.setSize(label.getWidth() + padding * 2, padding);
+        patch[Direction.UP.ordinal()].setSize(label.getWidth() + padding * 2, padding);
+        patch[Direction.LEFT.ordinal()].setSize(padding, label.getHeight());
+        patch[Direction.RIGHT.ordinal()].setSize(label.getWidth() + padding, label.getHeight());
+        patch[Direction.DOWN.ordinal()].setSize(label.getWidth() + padding * 2, padding);
         root.setBounds(0, 0, label.getWidth() + padding * 2, label.getHeight() + padding * 2);
     }
 
     void drawShape(Batch batch, float alpha) {
-        drawPatch(topPatch, batch);
-        drawPatch(leftPatch, batch);
-        drawPatch(rightPatch, batch);
-        drawPatch(bottomPatch, batch);
+        for (Direction dir : Direction.values())
+            drawPatch(patch[dir.ordinal()], batch);
         label.draw(batch, alpha);
     }
 

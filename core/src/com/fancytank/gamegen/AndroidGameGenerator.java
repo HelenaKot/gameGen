@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.fancytank.gamegen.programming.BlockActor;
 import com.fancytank.gamegen.programming.BlockShape;
 import com.fancytank.gamegen.programming.BlockTextureManager;
-import com.fancytank.gamegen.programming.ProgrammingBlock;
+import com.fancytank.gamegen.programming.BlockAppearance;
 
 public class AndroidGameGenerator extends ApplicationAdapter {
     private Stage stage;
@@ -32,7 +32,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     private void setUp() {
         new BlockTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
-        ProgrammingBlock.loadSkin(new Skin(Gdx.files.internal("uiskin.json")));
+        BlockAppearance.loadSkin(new Skin(Gdx.files.internal("uiskin.json")));
         addToStage(new BlockActor(BlockShape.VARIABLE, Color.YELLOW));
         addToStage(new BlockActor(BlockShape.CHAIN_FUNCTION, Color.ORANGE));
     }
@@ -47,9 +47,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-
-//        drawTriangle(50, 50, 70, 40, Color.BLUE);
-//        drawTriangle(10, 10, 40, 40, Color.RED);
     }
 
 
