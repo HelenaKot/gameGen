@@ -1,4 +1,4 @@
-package com.fancytank.generated.game.generated;
+package com.fancytank.gamegen.generated;
 
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 

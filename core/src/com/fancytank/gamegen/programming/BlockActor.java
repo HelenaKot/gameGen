@@ -1,4 +1,4 @@
-package com.fancytank.generated.game.programming;
+package com.fancytank.gamegen.programming;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;

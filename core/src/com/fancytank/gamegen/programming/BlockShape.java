@@ -1,4 +1,4 @@
-package com.fancytank.generated.game.programming;
+package com.fancytank.gamegen.programming;
 
 public class BlockShape {
     boolean[] connects = new boolean[4];

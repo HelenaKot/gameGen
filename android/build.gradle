@@ -15,7 +15,7 @@ android {
         instrumentTest.setRoot('tests')
     }
     defaultConfig {
-        applicationId "com.fancytank.generated.game"
+        applicationId "com.fancytank.gamegen"
         minSdkVersion 8
         targetSdkVersion 23
     }
@@ -68,7 +68,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.fancytank.generated.game/com.fancytank.generated.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.fancytank.gamegen/com.fancytank.gamegen.AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.

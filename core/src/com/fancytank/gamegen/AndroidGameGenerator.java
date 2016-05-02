@@ -1,4 +1,4 @@
-package com.fancytank.generated.game;
+package com.fancytank.gamegen;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -11,12 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.fancytank.generated.game.programming.BlockActor;
-import com.fancytank.generated.game.programming.BlockShape;
-import com.fancytank.generated.game.programming.BlockTextureManager;
-import com.fancytank.generated.game.programming.ProgrammingBlock;
+import com.fancytank.gamegen.programming.BlockActor;
+import com.fancytank.gamegen.programming.BlockShape;
+import com.fancytank.gamegen.programming.BlockTextureManager;
+import com.fancytank.gamegen.programming.ProgrammingBlock;
 
-public class GeneratedGame extends ApplicationAdapter {
+public class AndroidGameGenerator extends ApplicationAdapter {
     private Stage stage;
     private Color bgColor = Color.FOREST;
     OrthographicCamera cam = new OrthographicCamera();

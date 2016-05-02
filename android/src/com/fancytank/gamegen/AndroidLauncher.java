@@ -1,16 +1,15 @@
-package com.fancytank.generated.game;
+package com.fancytank.gamegen;
 
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.fancytank.generated.game.GeneratedGame;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new GeneratedGame(), config);
+		initialize(new AndroidGameGenerator(), config);
 	}
 }

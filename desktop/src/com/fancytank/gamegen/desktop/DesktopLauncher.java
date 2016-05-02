@@ -1,12 +1,11 @@
-package com.fancytank.generated.game.desktop;
+package com.fancytank.gamegen.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.fancytank.generated.game.GeneratedGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new GeneratedGame(), config);
+		new LwjglApplication(new AndroidGameGenerator(), config);
 	}
 }
