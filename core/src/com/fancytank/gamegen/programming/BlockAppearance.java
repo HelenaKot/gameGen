@@ -14,11 +14,11 @@ public class BlockAppearance {
     static Skin skin;
     static int padding = 16;
 
-    BlockAppearance(Actor root, String labelText, BlockShape shape) {
+    BlockAppearance(BlockActor root, String labelText) {
         label = new Label(labelText, skin);
 
         for (Direction dir : values())
-            patch[dir.ordinal()] = new PatchData(getPatchTexture(shape.connects(dir), dir));
+            patch[dir.ordinal()] = new PatchData(getPatchTexture(root.shape.connects(dir), dir));
 
         setSize(root);
         setPosition(0, 0);
@@ -28,16 +28,16 @@ public class BlockAppearance {
         skin = uiSkin;
     }
 
-    void setPosition(float x, float y) {
+    void translate(float x, float y) {
+        setPosition(patch[DOWN.ordinal()].startX + x, patch[DOWN.ordinal()].startY + y);
+    }
+
+    private void setPosition(float x, float y) {
         patch[DOWN.ordinal()].setPosition(x, y);
         patch[LEFT.ordinal()].setPosition(x, y + padding);
         patch[RIGHT.ordinal()].setPosition(x + padding, y + padding);
         patch[UP.ordinal()].setPosition(x, y + label.getHeight() + padding);
         label.setPosition(x + padding, y + padding);
-    }
-
-    void translate(float x, float y) {
-        setPosition(patch[DOWN.ordinal()].startX + x, patch[DOWN.ordinal()].startY + y);
     }
 
     private void setSize(Actor root) {
