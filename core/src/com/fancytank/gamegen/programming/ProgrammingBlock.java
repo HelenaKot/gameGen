@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ProgrammingBlock extends Group {
     CoreBlock coreBlock;
@@ -15,10 +16,11 @@ public class ProgrammingBlock extends Group {
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
 
     public ProgrammingBlock(BlockShape shape, Color tint) {
+        setName(UUID.randomUUID().toString());
         coreBlock = new CoreBlock(shape, tint);
         connectors = ConnectionPlacer.getConnectors(coreBlock);
         blocksList.add(this);
-        setBounds(0, 0, coreBlock.getWidth(), coreBlock.getWidth());
+        setBounds(0, 0, coreBlock.getWidth(), coreBlock.getHeight());
 
         setUpListeners();
         populateGroup();
@@ -32,6 +34,7 @@ public class ProgrammingBlock extends Group {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 touchedX = x;
                 touchedY = y;
+                detach();
                 return true;
             }
 
@@ -65,17 +68,27 @@ public class ProgrammingBlock extends Group {
             for (ConnectionArea dockingConnector : programmingBlock.connectors)
                 if (localConnector.getBoundingBox().overlaps(dockingConnector.getBoundingBox()))
                     if (localConnector.direction == dockingConnector.direction.flip())
-                        attach(localConnector, dockingConnector);
+                        attach(dockingConnector);
     }
 
-    void attach(ConnectionArea localConnector, ConnectionArea dockingConnector) {
-        System.out.println("connected!");
-        float deltaX = dockingConnector.getBoundingBox().x - localConnector.getBoundingBox().x;
-        float deltaY = dockingConnector.getBoundingBox().y - localConnector.getBoundingBox().y;
-        moveBy(deltaX, deltaY);
+    //todo rework basing on some hierarchy of blocks.
+    private Group attachedTo = null;
+    private static int compensation = -20;
+
+    void attach(ConnectionArea dockingConnector) {
+        if (attachedTo == null && findActor(dockingConnector.parent.getParent().getName()) == null) {
+            attachedTo = dockingConnector.parent.getParent();
+            setPosition(dockingConnector.direction.deltaX * (dockingConnector.parent.getWidth() + compensation),
+                    dockingConnector.direction.deltaY * (dockingConnector.parent.getHeight() + compensation));
+            attachedTo.addActor(this);
+        }
     }
 
     void detach() {
-        System.out.println("dosconected!");
+        if (attachedTo != null) {
+            attachedTo.removeActor(this);
+            attachedTo = null;
+            AndroidGameGenerator.addToStage(this);
+        }
     }
 }
