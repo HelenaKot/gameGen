@@ -9,13 +9,13 @@ import com.fancytank.gamegen.AndroidGameGenerator;
 import java.util.ArrayList;
 
 public class ProgrammingBlock extends Group {
-    BlockActor coreBlock;
+    CoreBlock coreBlock;
     ArrayList<ConnectionArea> connectors;
     private float touchedX, touchedY;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
 
     public ProgrammingBlock(BlockShape shape, Color tint) {
-        coreBlock = new BlockActor(shape, tint);
+        coreBlock = new CoreBlock(shape, tint);
         connectors = ConnectionPlacer.getConnectors(coreBlock);
         blocksList.add(this);
         setBounds(0, 0, coreBlock.getWidth(), coreBlock.getWidth());

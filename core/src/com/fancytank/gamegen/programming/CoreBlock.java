@@ -6,12 +6,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class BlockActor extends Actor {
+public class CoreBlock extends Actor {
     Color tint;
     BlockShape shape;
     BlockAppearance blockAppearance;
 
-    public BlockActor(BlockShape shape, Color tint) {
+    public CoreBlock(BlockShape shape, Color tint) {
         this.tint = tint;
         this.shape = shape;
         blockAppearance = new BlockAppearance(this, "le Placeholder");

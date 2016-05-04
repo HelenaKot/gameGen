@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.fancytank.gamegen.programming.BlockActor;
 import com.fancytank.gamegen.programming.BlockShape;
 import com.fancytank.gamegen.programming.BlockTextureManager;
 import com.fancytank.gamegen.programming.BlockAppearance;
@@ -37,7 +36,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
         new ProgrammingBlock(BlockShape.VARIABLE, Color.YELLOW);
         new ProgrammingBlock(BlockShape.CHAIN_FUNCTION, Color.ORANGE);
-
     }
 
     static public void addToStage(Actor actor) {
@@ -51,7 +49,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
-
 
     @Override
     public void dispose() {

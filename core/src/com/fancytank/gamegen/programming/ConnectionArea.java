@@ -14,7 +14,7 @@ public class ConnectionArea extends Actor {
     Direction direction;
     private Vector2 pos;
 
-    ConnectionArea(float x, float y, BlockActor parent, Direction direction) {
+    ConnectionArea(float x, float y, CoreBlock parent, Direction direction) {
         this.parent = parent;
         this.direction = direction;
         this.setBounds(x / 2, y / 2, padding, padding);

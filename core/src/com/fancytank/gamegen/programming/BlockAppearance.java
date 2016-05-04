@@ -13,7 +13,7 @@ public class BlockAppearance {
     static Skin skin;
     static int padding = 30;//16;
 
-    BlockAppearance(BlockActor root, String labelText) {
+    BlockAppearance(CoreBlock root, String labelText) {
         label = new Label(labelText, skin);
 
         for (Direction dir : values())
