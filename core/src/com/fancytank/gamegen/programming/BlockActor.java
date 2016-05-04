@@ -9,20 +9,20 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import java.util.ArrayList;
 
-
-public class BlockActor extends Actor implements Collidable {
+public class BlockActor extends Actor {
     Color tint;
     BlockShape shape;
     ArrayList<ConnectionArea> connectors;
     BlockAppearance blockAppearance;
+    Rectangle boundingBox;
     private float touchedX, touchedY;
     private static ArrayList<BlockActor> list = new ArrayList<BlockActor>();
-    private Rectangle boundingBox;
 
     public BlockActor(BlockShape shape, Color tint) {
         this.tint = tint;
         this.shape = shape;
         blockAppearance = new BlockAppearance(this, "le Placeholder");
+        boundingBox = new Rectangle((int) getX(), (int) getY(), (int) blockAppearance.getWidth(), (int) blockAppearance.getHeight());
         connectors = ConnectionPlacer.getConnectors(this);
         list.add(this);
 
@@ -61,16 +61,8 @@ public class BlockActor extends Actor implements Collidable {
         blockAppearance.drawShape(batch, alpha);
     }
 
-    @Override
-    public Rectangle getBoundingBox() { return boundingBox; }
-
-    @Override
-    public boolean overlapping(Collidable collidable) {
-        return this.getBoundingBox().overlaps(collidable.getBoundingBox());
-    }
-
     public void checkOverlapping(BlockActor blockActor) {
-        if (this.overlapping(blockActor)) {
+        if (this.boundingBox.overlaps(blockActor.boundingBox)) {
             System.out.println("Block Collision !");
             checkConnectors(blockActor);
         }
@@ -81,7 +73,6 @@ public class BlockActor extends Actor implements Collidable {
             for (ConnectionArea checkedConnector : collidable.connectors)
                 if (homeConnector.getBoundingBox().overlaps(checkedConnector.getBoundingBox()))
                     System.out.println("Collision ! " + homeConnector + " + " + checkedConnector);
-
     }
 
     @Override
