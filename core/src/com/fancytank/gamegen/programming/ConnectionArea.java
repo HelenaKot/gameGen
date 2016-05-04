@@ -22,9 +22,4 @@ public class ConnectionArea {
     void translate(float x, float y) {
         boundingBox.setPosition(boundingBox.getX() + x, boundingBox.getY() + y);
     }
-
-    @Override
-    public String toString() {
-        return "CA-" + direction + " PA: " + parent;
-    }
 }

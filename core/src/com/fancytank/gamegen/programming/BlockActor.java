@@ -61,9 +61,8 @@ public class BlockActor extends Actor {
         blockAppearance.drawShape(batch, alpha);
     }
 
-    public void checkOverlapping(BlockActor blockActor) {
+    private void checkOverlapping(BlockActor blockActor) {
         if (this.boundingBox.overlaps(blockActor.boundingBox)) {
-            System.out.println("Block Collision !");
             checkConnectors(blockActor);
         }
     }
@@ -73,10 +72,5 @@ public class BlockActor extends Actor {
             for (ConnectionArea checkedConnector : collidable.connectors)
                 if (homeConnector.getBoundingBox().overlaps(checkedConnector.getBoundingBox()))
                     System.out.println("Collision ! " + homeConnector + " + " + checkedConnector);
-    }
-
-    @Override
-    public String toString() {
-        return shape.toString();
     }
 }
