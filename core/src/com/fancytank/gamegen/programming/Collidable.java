@@ -1,5 +1,8 @@
 package com.fancytank.gamegen.programming;
 
+import com.badlogic.gdx.math.Rectangle;
+
 public interface Collidable {
-    com.badlogic.gdx.math.Rectangle getBoundingBox();
+    Rectangle getBoundingBox();
+    boolean overlapping(Collidable collidable);
 }

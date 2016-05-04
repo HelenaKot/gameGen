@@ -7,9 +7,11 @@ import static com.fancytank.gamegen.programming.BlockAppearance.padding;
 public class ConnectionArea implements Collidable {
     BlockActor parent;
     Rectangle boundingBox;
+    Direction direction;
 
-    ConnectionArea(int x, int y, BlockActor parent) {
+    ConnectionArea(float x, float y, BlockActor parent, Direction direction) {
         this.parent = parent;
+        this.direction = direction;
         boundingBox = new Rectangle(x, y, padding, padding);
     }
 
@@ -18,4 +20,17 @@ public class ConnectionArea implements Collidable {
         return boundingBox;
     }
 
+    void translate(float x, float y) {
+        boundingBox.setPosition(boundingBox.getX() + x, boundingBox.getY() + y);
+    }
+
+    @Override
+    public boolean overlapping(Collidable collidable) {
+        return this.getBoundingBox().overlaps(collidable.getBoundingBox());
+    }
+
+    @Override
+    public String toString() {
+        return "CA-"+ direction + " PA: "+ parent;
+    }
 }

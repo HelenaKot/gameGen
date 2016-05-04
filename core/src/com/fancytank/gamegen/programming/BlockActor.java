@@ -7,23 +7,26 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+
 
 public class BlockActor extends Actor implements Collidable {
     Color tint;
-    private BlockAppearance blockAppearance;
+    BlockShape shape;
+    ArrayList<ConnectionArea> connectors;
+    BlockAppearance blockAppearance;
     private float touchedX, touchedY;
-    private static LinkedList<BlockActor> list = new LinkedList<BlockActor>();
+    private static ArrayList<BlockActor> list = new ArrayList<BlockActor>();
     private Rectangle boundingBox;
 
     public BlockActor(BlockShape shape, Color tint) {
         this.tint = tint;
-        blockAppearance = new BlockAppearance(this, "le Placeholder", shape);
-        boundingBox = new Rectangle((int) getX(), (int) getY(), (int) getHeight(), (int) getWidth());
+        this.shape = shape;
+        blockAppearance = new BlockAppearance(this, "le Placeholder");
+        connectors = ConnectionPlacer.getConnectors(this);
         list.add(this);
 
         final BlockActor self = this;
-
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 touchedX = x;
@@ -34,7 +37,7 @@ public class BlockActor extends Actor implements Collidable {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 for (BlockActor blockActor : list)
                     if (blockActor != self)
-                        isOverlapping(blockActor);
+                        checkOverlapping(blockActor);
             }
 
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
@@ -46,6 +49,8 @@ public class BlockActor extends Actor implements Collidable {
     @Override
     public void moveBy(float deltaX, float deltaY) {
         super.moveBy(deltaX, deltaY);
+        for (ConnectionArea connectionArea : connectors)
+            connectionArea.translate(deltaX, deltaY);
         boundingBox.setPosition(boundingBox.getX() + deltaX, boundingBox.getY() + deltaY);
         blockAppearance.translate(deltaX, deltaY);
     }
@@ -57,14 +62,30 @@ public class BlockActor extends Actor implements Collidable {
     }
 
     @Override
-    public Rectangle getBoundingBox() {
-        return boundingBox;
+    public Rectangle getBoundingBox() { return boundingBox; }
+
+    @Override
+    public boolean overlapping(Collidable collidable) {
+        return this.getBoundingBox().overlaps(collidable.getBoundingBox());
     }
 
-    public void isOverlapping(Collidable collidable) {
-        if (collidable.getBoundingBox().overlaps(boundingBox)) {
-            //TODO if blocks overlaps, check for tiny collidable elements.
-            System.out.println("Collision ! " + collidable);
+    public void checkOverlapping(BlockActor blockActor) {
+        if (this.overlapping(blockActor)) {
+            System.out.println("Block Collision !");
+            checkConnectors(blockActor);
         }
+    }
+
+    private void checkConnectors(BlockActor collidable) {
+        for (ConnectionArea homeConnector : connectors)
+            for (ConnectionArea checkedConnector : collidable.connectors)
+                if (homeConnector.getBoundingBox().overlaps(checkedConnector.getBoundingBox()))
+                    System.out.println("Collision ! " + homeConnector + " + " + checkedConnector);
+
+    }
+
+    @Override
+    public String toString() {
+        return shape.toString();
     }
 }

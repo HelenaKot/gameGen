@@ -12,7 +12,7 @@ public class BlockAppearance {
     Label label;
     PatchData[] patch = new PatchData[4];
     static Skin skin;
-    static int padding = 16;
+    static int padding = 30;//16;
 
     BlockAppearance(BlockActor root, String labelText) {
         label = new Label(labelText, skin);
@@ -32,6 +32,9 @@ public class BlockAppearance {
         setPosition(patch[DOWN.ordinal()].startX + x, patch[DOWN.ordinal()].startY + y);
     }
 
+    float getHeight() { return patch[RIGHT.ordinal()].height + 2 * padding; }
+    float getWidth() { return patch[UP.ordinal()].width; }
+
     private void setPosition(float x, float y) {
         patch[DOWN.ordinal()].setPosition(x, y);
         patch[LEFT.ordinal()].setPosition(x, y + padding);
@@ -45,7 +48,7 @@ public class BlockAppearance {
         patch[LEFT.ordinal()].setSize(padding, label.getHeight());
         patch[RIGHT.ordinal()].setSize(label.getWidth() + padding, label.getHeight());
         patch[DOWN.ordinal()].setSize(label.getWidth() + padding * 2, padding);
-        root.setBounds(0, 0, label.getWidth() + padding * 2, label.getHeight() + padding * 2);
+        root.setBounds(0, 0, getWidth(), getHeight());
     }
 
     void drawShape(Batch batch, float alpha) {
