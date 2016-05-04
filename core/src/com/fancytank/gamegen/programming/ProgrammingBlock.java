@@ -1,13 +1,14 @@
 package com.fancytank.gamegen.programming;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
 
 import java.util.ArrayList;
 
-public class ProgrammingBlock {
+public class ProgrammingBlock extends Group {
     BlockActor coreBlock;
     ArrayList<ConnectionArea> connectors;
     private float touchedX, touchedY;
@@ -17,15 +18,17 @@ public class ProgrammingBlock {
         coreBlock = new BlockActor(shape, tint);
         connectors = ConnectionPlacer.getConnectors(coreBlock);
         blocksList.add(this);
-        coreBlock.setBounds(0, 0, coreBlock.blockAppearance.getWidth(), coreBlock.blockAppearance.getWidth());
+        setBounds(0, 0, coreBlock.getWidth(), coreBlock.getWidth());
 
         setUpListeners();
-        addAllToStage();
+        populateGroup();
+
+        AndroidGameGenerator.addToStage(this);
     }
 
     private void setUpListeners() {
         final ProgrammingBlock local = this;
-        coreBlock.addListener(new InputListener() {
+        addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 touchedX = x;
                 touchedY = y;
@@ -39,25 +42,20 @@ public class ProgrammingBlock {
             }
 
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                translateChildren(x - touchedX, y - touchedY);
+                moveBy(x - touchedX, y - touchedY);
             }
         });
     }
 
-    private void addAllToStage() {
-        AndroidGameGenerator.addToStage(coreBlock);
+    private void populateGroup() {
+        this.addActor(coreBlock);
         for (ConnectionArea connectionArea : connectors)
-            AndroidGameGenerator.addToStage(connectionArea);
-    }
-
-    private void translateChildren(float deltaX, float deltaY) {
-        coreBlock.moveBy(deltaX, deltaY);
-        for (ConnectionArea connectionArea : connectors)
-            connectionArea.moveBy(deltaX, deltaY);
+            this.addActor(connectionArea);
     }
 
     private void checkOverlapping(ProgrammingBlock programmingBlock) {
         if (coreBlock.getBoundingBox().overlaps(programmingBlock.coreBlock.getBoundingBox())) {
+            System.out.println("block touching");
             checkConnectors(programmingBlock);
         }
     }
@@ -74,7 +72,7 @@ public class ProgrammingBlock {
         System.out.println("connected!");
         float deltaX = dockingConnector.getBoundingBox().x - localConnector.getBoundingBox().x;
         float deltaY = dockingConnector.getBoundingBox().y - localConnector.getBoundingBox().y;
-        translateChildren(deltaX, deltaY);
+        moveBy(deltaX, deltaY);
     }
 
     void detach() {

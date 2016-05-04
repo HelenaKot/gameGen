@@ -27,10 +27,6 @@ public class BlockAppearance {
         skin = uiSkin;
     }
 
-    void translate(float x, float y) {
-        setPosition(patch[DOWN.ordinal()].startX + x, patch[DOWN.ordinal()].startY + y);
-    }
-
     float getHeight() {
         return patch[RIGHT.ordinal()].height + 2 * padding;
     }

@@ -3,26 +3,18 @@ package com.fancytank.gamegen.programming;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class BlockActor extends Actor {
     Color tint;
     BlockShape shape;
     BlockAppearance blockAppearance;
-    private Rectangle boundingBox;
 
     public BlockActor(BlockShape shape, Color tint) {
         this.tint = tint;
         this.shape = shape;
         blockAppearance = new BlockAppearance(this, "le Placeholder");
-        boundingBox = new Rectangle((int) getX(), (int) getY(), (int) blockAppearance.getWidth(), (int) blockAppearance.getHeight());
-    }
-
-    @Override
-    public void moveBy(float deltaX, float deltaY) {
-        super.moveBy(deltaX, deltaY);
-        boundingBox.setPosition(boundingBox.getX() + deltaX, boundingBox.getY() + deltaY);
-        blockAppearance.translate(deltaX, deltaY);
     }
 
     @Override
@@ -38,6 +30,7 @@ public class BlockActor extends Actor {
     public float getHeight() { return blockAppearance.getHeight(); }
 
     Rectangle getBoundingBox() {
-        return boundingBox;
+        Vector2 pos = localToStageCoordinates(new Vector2(getX(), getY()));
+        return new Rectangle(pos.x, pos.y, getWidth(), getHeight());
     }
 }

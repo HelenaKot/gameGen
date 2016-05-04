@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import static com.fancytank.gamegen.programming.BlockAppearance.padding;
@@ -11,17 +12,16 @@ import static com.fancytank.gamegen.programming.BlockAppearance.padding;
 public class ConnectionArea extends Actor {
     Actor parent;
     Direction direction;
-
-    private Rectangle boundingBox;
+    private Vector2 pos;
 
     ConnectionArea(float x, float y, BlockActor parent, Direction direction) {
         this.parent = parent;
         this.direction = direction;
-        boundingBox = new Rectangle(x, y, padding, padding);
+        this.setBounds(x / 2, y / 2, padding, padding);
     }
 
     public Rectangle getBoundingBox() {
-        return boundingBox;
+        return new Rectangle(pos.x, pos.y, padding, padding);
     }
 
     static private boolean projectionMatrixSet = false;
@@ -32,19 +32,16 @@ public class ConnectionArea extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.end();
+
+        pos = localToStageCoordinates(new Vector2(getX(), getY()));
+
         if (!projectionMatrixSet) {
             shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         }
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+        shapeRenderer.rect(pos.x, pos.y, getWidth(), getHeight());
         shapeRenderer.end();
         batch.begin();
-    }
-
-    @Override
-    public void moveBy(float deltaX, float deltaY) {
-        super.moveBy(deltaX, deltaY);
-        boundingBox.setPosition(boundingBox.getX() + deltaX, boundingBox.getY() + deltaY);
     }
 }
