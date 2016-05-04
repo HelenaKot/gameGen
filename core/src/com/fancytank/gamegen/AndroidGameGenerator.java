@@ -15,9 +15,10 @@ import com.fancytank.gamegen.programming.BlockActor;
 import com.fancytank.gamegen.programming.BlockShape;
 import com.fancytank.gamegen.programming.BlockTextureManager;
 import com.fancytank.gamegen.programming.BlockAppearance;
+import com.fancytank.gamegen.programming.ProgrammingBlock;
 
 public class AndroidGameGenerator extends ApplicationAdapter {
-    private Stage stage;
+    static private Stage stage;
     private Color bgColor = Color.FOREST;
     OrthographicCamera cam = new OrthographicCamera();
 
@@ -33,11 +34,13 @@ public class AndroidGameGenerator extends ApplicationAdapter {
     private void setUp() {
         new BlockTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         BlockAppearance.loadSkin(new Skin(Gdx.files.internal("uiskin.json")));
-        addToStage(new BlockActor(BlockShape.VARIABLE, Color.YELLOW));
-        addToStage(new BlockActor(BlockShape.CHAIN_FUNCTION, Color.ORANGE));
+
+        new ProgrammingBlock(BlockShape.VARIABLE, Color.YELLOW);
+        new ProgrammingBlock(BlockShape.CHAIN_FUNCTION, Color.ORANGE);
+
     }
 
-    public void addToStage(Actor actor) {
+    static public void addToStage(Actor actor) {
         stage.addActor(actor);
     }
 

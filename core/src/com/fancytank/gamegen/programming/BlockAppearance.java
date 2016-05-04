@@ -2,7 +2,6 @@ package com.fancytank.gamegen.programming;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -20,7 +19,7 @@ public class BlockAppearance {
         for (Direction dir : values())
             patch[dir.ordinal()] = new PatchData(getPatchTexture(root.shape.connects(dir), dir));
 
-        setSize(root);
+        setSize();
         setPosition(0, 0);
     }
 
@@ -32,8 +31,13 @@ public class BlockAppearance {
         setPosition(patch[DOWN.ordinal()].startX + x, patch[DOWN.ordinal()].startY + y);
     }
 
-    float getHeight() { return patch[RIGHT.ordinal()].height + 2 * padding; }
-    float getWidth() { return patch[UP.ordinal()].width; }
+    float getHeight() {
+        return patch[RIGHT.ordinal()].height + 2 * padding;
+    }
+
+    float getWidth() {
+        return patch[UP.ordinal()].width;
+    }
 
     private void setPosition(float x, float y) {
         patch[DOWN.ordinal()].setPosition(x, y);
@@ -43,12 +47,11 @@ public class BlockAppearance {
         label.setPosition(x + padding, y + padding);
     }
 
-    private void setSize(Actor root) {
+    private void setSize() {
         patch[UP.ordinal()].setSize(label.getWidth() + padding * 2, padding);
         patch[LEFT.ordinal()].setSize(padding, label.getHeight());
         patch[RIGHT.ordinal()].setSize(label.getWidth() + padding, label.getHeight());
         patch[DOWN.ordinal()].setSize(label.getWidth() + padding * 2, padding);
-        root.setBounds(0, 0, getWidth(), getHeight());
     }
 
     void drawShape(Batch batch, float alpha) {
