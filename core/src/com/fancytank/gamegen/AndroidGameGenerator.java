@@ -18,7 +18,7 @@ import com.fancytank.gamegen.programming.ProgrammingBlock;
 
 public class AndroidGameGenerator extends ApplicationAdapter {
     static private Stage stage;
-    private Color bgColor = Color.FOREST;
+    private Color bgColor = Color.WHITE;
     OrthographicCamera cam = new OrthographicCamera();
 
     @Override
@@ -36,6 +36,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
         new ProgrammingBlock(BlockShape.VARIABLE, Color.YELLOW);
         new ProgrammingBlock(BlockShape.CHAIN_FUNCTION, Color.ORANGE);
+        new ProgrammingBlock(BlockShape.CHAIN_FUNCTION, Color.RED);
     }
 
     static public void addToStage(Actor actor) {

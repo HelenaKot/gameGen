@@ -21,6 +21,7 @@ public class ConnectionArea extends Actor {
     }
 
     public Rectangle getBoundingBox() {
+        pos = localToStageCoordinates(new Vector2(getX(), getY()));
         return new Rectangle(pos.x, pos.y, padding, padding);
     }
 
@@ -28,6 +29,7 @@ public class ConnectionArea extends Actor {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     //todo debug
+    /*
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
@@ -44,4 +46,5 @@ public class ConnectionArea extends Actor {
         shapeRenderer.end();
         batch.begin();
     }
+    */
 }
