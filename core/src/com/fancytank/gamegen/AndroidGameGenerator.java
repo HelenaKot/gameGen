@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.fancytank.gamegen.programming.BlockShape;
-import com.fancytank.gamegen.programming.BlockTextureManager;
+import com.fancytank.gamegen.programming.PatchTextureManager;
 import com.fancytank.gamegen.programming.BlockAppearance;
 import com.fancytank.gamegen.programming.ProgrammingBlock;
 
@@ -23,7 +23,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     @Override
     public void create() {
-        stage = new Stage(new ScalingViewport(Scaling.fillY, 640, 360, cam));
+        stage = new Stage();
         //new Stage(new ScalingViewport(Scaling.stretch, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
         Gdx.input.setInputProcessor(stage);
 
@@ -31,7 +31,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
     }
 
     private void setUp() {
-        new BlockTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
+        new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         BlockAppearance.loadSkin(new Skin(Gdx.files.internal("uiskin.json")));
 
         new ProgrammingBlock(BlockShape.VARIABLE, Color.YELLOW);

@@ -11,7 +11,7 @@ public class BlockAppearance {
     Label label;
     PatchData[] patch = new PatchData[4];
     static Skin skin;
-    static int padding = 30;//16;
+    static int padding = 51;//16;
 
     BlockAppearance(CoreBlock root, String labelText) {
         label = new Label(labelText, skin);
@@ -62,8 +62,8 @@ public class BlockAppearance {
 
     private NinePatch getPatchTexture(boolean isConnected, Direction direction) {
         if (isConnected)
-            return BlockTextureManager.connected[direction.ordinal()];
+            return PatchTextureManager.connected[direction.ordinal()];
         else
-            return BlockTextureManager.plain[direction.ordinal()];
+            return PatchTextureManager.plain[direction.ordinal()];
     }
 }

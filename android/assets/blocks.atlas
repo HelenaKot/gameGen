@@ -5,65 +5,65 @@ filter: Nearest,Nearest
 repeat: none
 bottom_connection
   rotate: false
-  xy: 1, 1
-  size: 64, 16
-  split: 44, 19, 0, 15
-  orig: 64, 16
-  offset: 0, 0
-  index: -1
-bottom_plain
-  rotate: false
-  xy: 67, 1
-  size: 64, 16
-  split: 44, 19, 0, 15
-  orig: 64, 16
+  xy: 1, 4
+  size: 153, 49
+  split: 98, 54, 0, 48
+  orig: 153, 49
   offset: 0, 0
   index: -1
 top_connection
   rotate: false
-  xy: 133, 1
-  size: 64, 16
-  split: 44, 19, 15, 0
-  orig: 64, 16
+  xy: 156, 4
+  size: 153, 49
+  split: 98, 54, 48, 0
+  orig: 153, 49
+  offset: 0, 0
+  index: -1
+bottom_plain
+  rotate: false
+  xy: 311, 4
+  size: 108, 49
+  split: 54, 53, 0, 48
+  orig: 108, 49
   offset: 0, 0
   index: -1
 top_plain
   rotate: false
-  xy: 199, 1
-  size: 64, 16
-  split: 44, 19, 15, 0
-  orig: 64, 16
-  offset: 0, 0
-  index: -1
-right_connection
-  rotate: false
-  xy: 265, 1
-  size: 32, 16
-  split: 0, 31, 15, 0
-  orig: 32, 16
-  offset: 0, 0
-  index: -1
-right_plain
-  rotate: false
-  xy: 299, 1
-  size: 32, 16
-  split: 0, 31, 15, 0
-  orig: 32, 16
+  xy: 421, 4
+  size: 105, 49
+  split: 52, 52, 48, 0
+  orig: 105, 49
   offset: 0, 0
   index: -1
 left_connection
   rotate: false
-  xy: 333, 1
-  size: 16, 16
-  split: 15, 0, 15, 0
-  orig: 16, 16
+  xy: 528, 7
+  size: 49, 46
+  split: 48, 0, 45, 0
+  orig: 49, 46
+  offset: 0, 0
+  index: -1
+right_connection
+  rotate: false
+  xy: 579, 7
+  size: 49, 46
+  split: 0, 48, 45, 0
+  orig: 49, 46
   offset: 0, 0
   index: -1
 left_plain
   rotate: false
-  xy: 351, 1
-  size: 16, 16
-  split: 15, 0, 15, 0
-  orig: 16, 16
+  xy: 1, 1
+  size: 49, 1
+  split: 48, 0, 0, 0
+  orig: 49, 1
+  offset: 0, 0
+  index: -1
+right_plain
+  rotate: false
+  xy: 528, 4
+  size: 49, 1
+  split: 0, 48, 0, 0
+  orig: 49, 1
   offset: 0, 0
   index: -1

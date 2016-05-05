@@ -73,10 +73,11 @@ public class ProgrammingBlock extends Group {
 
     //todo rework basing on some hierarchy of blocks.
     private Group attachedTo = null;
-    private static int compensation = -20;
+    private static int compensation = - (int) (BlockAppearance.padding * 0.8);
 
     void attach(ConnectionArea dockingConnector) {
         if (attachedTo == null && findActor(dockingConnector.parent.getParent().getName()) == null) {
+            System.out.println("Attaching");
             attachedTo = dockingConnector.parent.getParent();
             setPosition(dockingConnector.direction.deltaX * (dockingConnector.parent.getWidth() + compensation),
                     dockingConnector.direction.deltaY * (dockingConnector.parent.getHeight() + compensation));
@@ -86,7 +87,9 @@ public class ProgrammingBlock extends Group {
 
     void detach() {
         if (attachedTo != null) {
+            System.out.println("Detaching");
             attachedTo.removeActor(this);
+            moveBy(100,100); //todo some better shit
             attachedTo = null;
             AndroidGameGenerator.addToStage(this);
         }

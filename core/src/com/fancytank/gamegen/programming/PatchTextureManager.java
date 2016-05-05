@@ -3,11 +3,11 @@ package com.fancytank.gamegen.programming;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-public class BlockTextureManager {
+public class PatchTextureManager {
     static TextureAtlas textureAtlas;
     static NinePatch plain[], connected[];
 
-    public BlockTextureManager(TextureAtlas textureAtlas) {
+    public PatchTextureManager(TextureAtlas textureAtlas) {
         this.textureAtlas = textureAtlas;
         init();
     }
