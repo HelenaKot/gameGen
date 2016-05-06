@@ -3,16 +3,15 @@ package com.fancytank.gamegen;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.fancytank.gamegen.editor.EditorBackground;
+import com.fancytank.gamegen.programming.BlockAppearance;
 import com.fancytank.gamegen.programming.BlockShape;
 import com.fancytank.gamegen.programming.PatchTextureManager;
-import com.fancytank.gamegen.programming.BlockAppearance;
 import com.fancytank.gamegen.programming.ProgrammingBlock;
 
 public class AndroidGameGenerator extends ApplicationAdapter {
@@ -31,8 +30,9 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     private void setUp() {
         new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
-        BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt") ,Gdx.files.internal("fontvarsmall.png"), false));
-
+        BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
+        EditorBackground bg = new EditorBackground(stage.getWidth(), stage.getHeight());
+        stage.addActor(bg);
         new ProgrammingBlock(BlockShape.VARIABLE, Color.YELLOW);
         new ProgrammingBlock(BlockShape.CHAIN_FUNCTION, Color.ORANGE);
         new ProgrammingBlock(BlockShape.CHAIN_FUNCTION, Color.RED);
@@ -44,8 +44,8 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 1);
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
