@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import static com.fancytank.gamegen.programming.Direction.*;
 
@@ -13,7 +12,7 @@ public class BlockAppearance {
     Label label;
     PatchData[] patch = new PatchData[4];
     static BitmapFont font;
-    static int padding = 51;//16;
+    static int padding = 51;
 
     BlockAppearance(CoreBlock root, String labelText) {
         label = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));
@@ -25,7 +24,9 @@ public class BlockAppearance {
         setPosition(0, 0);
     }
 
-    public static void loadFont(BitmapFont bitmapFont) { font = bitmapFont; }
+    public static void loadFont(BitmapFont bitmapFont) {
+        font = bitmapFont;
+    }
 
     float getHeight() {
         return patch[RIGHT.ordinal()].height + 2 * padding;

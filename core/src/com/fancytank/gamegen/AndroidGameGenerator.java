@@ -16,8 +16,7 @@ import com.fancytank.gamegen.programming.ProgrammingBlock;
 
 public class AndroidGameGenerator extends ApplicationAdapter {
     static private Stage stage;
-    private Color bgColor = Color.WHITE;
-    OrthographicCamera cam = new OrthographicCamera();
+    //OrthographicCamera cam = new OrthographicCamera();
 
     @Override
     public void create() {
@@ -44,8 +43,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     @Override
     public void render() {
-        //Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, 1);
-        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
