@@ -1,6 +1,8 @@
 package com.fancytank.gamegen.programming;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -10,11 +12,11 @@ import static com.fancytank.gamegen.programming.Direction.*;
 public class BlockAppearance {
     Label label;
     PatchData[] patch = new PatchData[4];
-    static Skin skin;
+    static BitmapFont font;
     static int padding = 51;//16;
 
     BlockAppearance(CoreBlock root, String labelText) {
-        label = new Label(labelText, skin);
+        label = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));
 
         for (Direction dir : values())
             patch[dir.ordinal()] = new PatchData(getPatchTexture(root.shape.connects(dir), dir));
@@ -23,9 +25,7 @@ public class BlockAppearance {
         setPosition(0, 0);
     }
 
-    public static void loadSkin(Skin uiSkin) {
-        skin = uiSkin;
-    }
+    public static void loadFont(BitmapFont bitmapFont) { font = bitmapFont; }
 
     float getHeight() {
         return patch[RIGHT.ordinal()].height + 2 * padding;

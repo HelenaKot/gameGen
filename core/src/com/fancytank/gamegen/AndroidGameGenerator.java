@@ -5,12 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.fancytank.gamegen.programming.BlockShape;
 import com.fancytank.gamegen.programming.PatchTextureManager;
 import com.fancytank.gamegen.programming.BlockAppearance;
@@ -32,7 +31,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     private void setUp() {
         new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
-        BlockAppearance.loadSkin(new Skin(Gdx.files.internal("uiskin.json")));
+        BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt") ,Gdx.files.internal("fontvarsmall.png"), false));
 
         new ProgrammingBlock(BlockShape.VARIABLE, Color.YELLOW);
         new ProgrammingBlock(BlockShape.CHAIN_FUNCTION, Color.ORANGE);
