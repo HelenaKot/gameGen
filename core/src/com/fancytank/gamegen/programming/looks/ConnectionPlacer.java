@@ -1,18 +1,19 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.math.Vector2;
+import com.fancytank.gamegen.programming.Direction;
 
 import java.util.ArrayList;
 
-import static com.fancytank.gamegen.programming.BlockAppearance.padding;
+import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
 
 public class ConnectionPlacer {
 
-    static ArrayList<ConnectionArea> getConnectors(CoreBlock coreBlock) {
+    public static ArrayList<ConnectionArea> getConnectors(CoreBlock coreBlock) {
         ArrayList<ConnectionArea> output = new ArrayList<ConnectionArea>();
         coreBlock.getWidth();
         for (Direction direction : Direction.values())
-            if (coreBlock.shape.connects(direction)) {
+            if (coreBlock.data.shape.connects(direction)) {
                 Vector2 pos = coreBlock.localToStageCoordinates(new Vector2(0, 0));
                 float width = coreBlock.getWidth(), height = coreBlock.getHeight();
                 switch (direction) {

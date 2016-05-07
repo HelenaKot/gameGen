@@ -1,11 +1,10 @@
 package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.fancytank.gamegen.programming.ConnectionArea;
 import com.fancytank.gamegen.programming.Direction;
 
-import static com.fancytank.gamegen.programming.PatchTextureManager.getPatch;
-import static com.fancytank.gamegen.programming.PatchTextureManager.getSocket;
+import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getPatch;
+import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getSocket;
 
 public enum InputType {
     DUMMY(getPatch(false, Direction.RIGHT)),

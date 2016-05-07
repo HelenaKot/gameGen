@@ -6,8 +6,15 @@ public class BlockData {
     BlockData parent;
     BlockData descendant;
     InputFragment[] inputs;
+    public com.fancytank.gamegen.programming.looks.BlockShape shape;
 
-    BlockData(InputFragment[] inputs) {
+    public BlockData(InputFragment[] inputs) {
+        this.shape = com.fancytank.gamegen.programming.looks.BlockShape.ENCLOSED;
+        this.inputs = inputs;
+    }
+
+    BlockData(com.fancytank.gamegen.programming.looks.BlockShape shape, InputFragment[] inputs) {
+        this.shape = shape;
         this.inputs = inputs;
     }
 

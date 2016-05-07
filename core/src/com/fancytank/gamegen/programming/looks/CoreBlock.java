@@ -1,21 +1,21 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.fancytank.gamegen.programming.data.BlockShape;
+import com.fancytank.gamegen.programming.data.BlockData;
 
 public class CoreBlock extends Actor {
     Color tint;
-    BlockShape shape;
+    BlockData data;
     BlockAppearance blockAppearance;
 
-    public CoreBlock(BlockShape shape, Color tint) {
+    public CoreBlock(BlockData data, Color tint) {
         this.tint = tint;
-        this.shape = shape;
-        blockAppearance = new BlockAppearance(this, "le Placeholder\nlorem ipsum\ndolor sit amet");
+        this.data = data;
+        blockAppearance = new com.fancytank.gamegen.programming.looks.BlockAppearance(this, "le Placeholder\nlorem ipsum\ndolor sit amet");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class CoreBlock extends Actor {
     @Override
     public float getHeight() { return blockAppearance.getHeight(); }
 
-    Rectangle getBoundingBox() {
+    public Rectangle getBoundingBox() {
         Vector2 pos = localToStageCoordinates(new Vector2(getX(), getY()));
         return new Rectangle(pos.x, pos.y, getWidth(), getHeight());
     }

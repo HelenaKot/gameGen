@@ -1,17 +1,16 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.looks;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.fancytank.gamegen.programming.Direction;
 
-import static com.fancytank.gamegen.programming.BlockAppearance.padding;
+import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
 
 public class ConnectionArea extends Actor {
-    Actor parent;
-    Direction direction;
+    public Actor parent;
+    public Direction direction;
     ConnectionArea connectedTo;
     private Vector2 pos;
 

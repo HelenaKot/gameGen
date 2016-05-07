@@ -1,7 +1,8 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.fancytank.gamegen.programming.Direction;
 
 public class PatchTextureManager {
     static TextureAtlas textureAtlas;

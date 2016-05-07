@@ -1,4 +1,4 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 

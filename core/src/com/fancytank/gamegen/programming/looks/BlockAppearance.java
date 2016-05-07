@@ -1,24 +1,25 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.fancytank.gamegen.programming.Direction;
 
 import static com.fancytank.gamegen.programming.Direction.*;
-import static com.fancytank.gamegen.programming.PatchTextureManager.*;
+import static com.fancytank.gamegen.programming.looks.PatchTextureManager.*;
 
 public class BlockAppearance {
     Label label;
     PatchData[] patch = new PatchData[4];
     static BitmapFont font;
-    static int padding = 51;
+    public static int padding = 51;
 
     BlockAppearance(CoreBlock root, String labelText) {
         label = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));
 
         for (Direction dir : values())
-            patch[dir.ordinal()] = new PatchData(getPatch(root.shape.connects(dir), dir));
+            patch[dir.ordinal()] = new PatchData(getPatch(root.data.shape.connects(dir), dir));
 
         setSize();
         setPosition(0, 0);
