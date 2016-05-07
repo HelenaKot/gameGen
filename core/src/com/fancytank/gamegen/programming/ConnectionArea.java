@@ -12,6 +12,7 @@ import static com.fancytank.gamegen.programming.BlockAppearance.padding;
 public class ConnectionArea extends Actor {
     Actor parent;
     Direction direction;
+    ConnectionArea connectedTo;
     private Vector2 pos;
 
     ConnectionArea(float x, float y, CoreBlock parent, Direction direction) {
@@ -23,6 +24,10 @@ public class ConnectionArea extends Actor {
     public Rectangle getBoundingBox() {
         pos = localToStageCoordinates(new Vector2(getX(), getY()));
         return new Rectangle(pos.x, pos.y, padding, padding);
+    }
+
+    void setConnectedTo(ConnectionArea connectedTo) {
+        this.connectedTo = connectedTo;
     }
 
     static private boolean projectionMatrixSet = false;

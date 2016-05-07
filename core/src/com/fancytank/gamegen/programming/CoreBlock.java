@@ -8,10 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class CoreBlock extends Actor {
     Color tint;
-    BlockShape shape;
+    BlockArrangement shape;
     BlockAppearance blockAppearance;
 
-    public CoreBlock(BlockShape shape, Color tint) {
+    public CoreBlock(BlockArrangement shape, Color tint) {
         this.tint = tint;
         this.shape = shape;
         blockAppearance = new BlockAppearance(this, "le Placeholder\nlorem ipsum\ndolor sit amet");

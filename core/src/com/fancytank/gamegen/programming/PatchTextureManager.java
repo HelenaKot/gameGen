@@ -4,10 +4,8 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class PatchTextureManager {
-    enum Type {PLAIN, CONNECTED, SOCKET}
-
     static TextureAtlas textureAtlas;
-    static NinePatch plain[], connected[], socket;
+    private static NinePatch plain[], connected[], socket;
 
     public PatchTextureManager(TextureAtlas textureAtlas) {
         this.textureAtlas = textureAtlas;
@@ -27,6 +25,7 @@ public class PatchTextureManager {
                 textureAtlas.createPatch("bottom_connection"),
                 textureAtlas.createPatch("left_connection")
         };
+        socket = new NinePatch(textureAtlas.createPatch("right_socket"));
     }
 
     public static NinePatch getPatch(boolean isConnected, Direction direction) {

@@ -15,7 +15,7 @@ public class ProgrammingBlock extends Group {
     private float touchedX, touchedY;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
 
-    public ProgrammingBlock(BlockShape shape, Color tint) {
+    public ProgrammingBlock(BlockArrangement shape, Color tint) {
         setName(UUID.randomUUID().toString());
         coreBlock = new CoreBlock(shape, tint);
         connectors = ConnectionPlacer.getConnectors(coreBlock);

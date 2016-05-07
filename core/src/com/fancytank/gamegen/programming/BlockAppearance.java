@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import static com.fancytank.gamegen.programming.Direction.*;
+import static com.fancytank.gamegen.programming.PatchTextureManager.*;
 
 public class BlockAppearance {
     Label label;
@@ -17,9 +18,7 @@ public class BlockAppearance {
         label = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));
 
         for (Direction dir : values())
-            patch[dir.ordinal()] = new PatchData(PatchTextureManager.getPatch(root.shape.connects(dir), dir));
-
-        patch[RIGHT.ordinal()] = new PatchData(PatchTextureManager.socket);
+            patch[dir.ordinal()] = new PatchData(getPatch(root.shape.connects(dir), dir));
 
         setSize();
         setPosition(0, 0);
@@ -50,6 +49,10 @@ public class BlockAppearance {
         patch[LEFT.ordinal()].setSize(padding, label.getHeight());
         patch[RIGHT.ordinal()].setSize(label.getWidth() + padding, label.getHeight());
         patch[DOWN.ordinal()].setSize(label.getWidth() + padding * 2, padding);
+    }
+
+    private void initCenter() {
+
     }
 
     void drawShape(Batch batch, float alpha) {
