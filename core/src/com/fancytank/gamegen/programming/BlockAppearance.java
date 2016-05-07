@@ -3,7 +3,6 @@ package com.fancytank.gamegen.programming;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import static com.fancytank.gamegen.programming.Direction.*;
@@ -18,7 +17,9 @@ public class BlockAppearance {
         label = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));
 
         for (Direction dir : values())
-            patch[dir.ordinal()] = new PatchData(getPatchTexture(root.shape.connects(dir), dir));
+            patch[dir.ordinal()] = new PatchData(PatchTextureManager.getPatch(root.shape.connects(dir), dir));
+
+        patch[RIGHT.ordinal()] = new PatchData(PatchTextureManager.socket);
 
         setSize();
         setPosition(0, 0);
@@ -59,12 +60,5 @@ public class BlockAppearance {
 
     private void drawPatch(PatchData patchData, Batch batch) {
         patchData.patch.draw(batch, patchData.startX, patchData.startY, patchData.width, patchData.height);
-    }
-
-    private NinePatch getPatchTexture(boolean isConnected, Direction direction) {
-        if (isConnected)
-            return PatchTextureManager.connected[direction.ordinal()];
-        else
-            return PatchTextureManager.plain[direction.ordinal()];
     }
 }
