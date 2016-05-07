@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.programming.data.BlockShape;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public class ProgrammingBlock extends Group {
     private float touchedX, touchedY;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
 
-    public ProgrammingBlock(BlockArrangement shape, Color tint) {
+    public ProgrammingBlock(BlockShape shape, Color tint) {
         setName(UUID.randomUUID().toString());
         coreBlock = new CoreBlock(shape, tint);
         connectors = ConnectionPlacer.getConnectors(coreBlock);
