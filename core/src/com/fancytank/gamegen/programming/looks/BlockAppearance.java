@@ -13,7 +13,7 @@ import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getPat
 public class BlockAppearance {
     //Label label;
     List<PatchData> patches;
-    private int centerHeight, centerWidth;
+    private int height = 0, width = 0;
     private InputFragment[] inputs;
     public static int padding = 51;
     static BitmapFont font;
@@ -28,8 +28,6 @@ public class BlockAppearance {
         for (Direction dir : faces)
             patches.add(new PatchData(getPatch(root.data.shape.connects(dir), dir)));
 
-        centerHeight = 50;
-        centerWidth = 300;
         createInputs();
         setSize();
         setPosition(0, 0);
@@ -38,33 +36,34 @@ public class BlockAppearance {
     private void setPosition(float x, float y) {
         patches.get(down).setPosition(x, y);
         patches.get(left).setPosition(x, y + padding);
-        if (inputs != null) {
-            if (inputs.length > 0)
-                patches.get(faces.length).setPosition(x + padding, y + padding);
-            for (int input = faces.length + 1; input < inputs.length + faces.length; input++) {
-                patches.get(input).setPosition(x + padding + patches.get(input - 1).height, y + padding + patches.get(input - 1).width);
-            }
-        }
-        //patch[RIGHT.ordinal()].setPosition(x + padding, y + padding);
-        patches.get(top).setPosition(x, y + centerHeight + padding);
+        if (inputs != null)
+            setInputsPosition(x, y);
+        patches.get(top).setPosition(x, y + height);
         //label.setPosition(x + padding, y + padding);
     }
 
-    private void setSize() {
-        centerWidth = 0;
-        centerHeight = 0;
+    private void setInputsPosition(float x, float y) {
+        if (inputs.length > 0)
+            patches.get(faces.length).setPosition(x + padding, y + padding);
+        for (int input = faces.length + 1; input < inputs.length + faces.length; input++) {
+            patches.get(input).setPosition(x + padding + patches.get(input - 1).height, y + padding + patches.get(input - 1).width);
+        }
+    }
 
+    private void setSize() {
         if (inputs != null)
-            for (int input = faces.length; input < inputs.length + faces.length; input++) {
-                patches.get(input).setSize(300, 70);
-                // todo placeholder
-                centerWidth += patches.get(input).width - padding;
-                centerHeight += patches.get(input).height;
-            }
-        patches.get(top).setSize(centerWidth + padding * 2, padding);
-        patches.get(left).setSize(padding, centerHeight);
-        //patch[RIGHT.ordinal()].setSize(centerWidth + padding, centerHeight);
-        patches.get(down).setSize(centerWidth + padding * 2, padding);
+            setInputsSize();
+        patches.get(top).setSize(width, padding);
+        patches.get(left).setSize(padding, height - padding);
+        patches.get(down).setSize(width , padding);
+    }
+
+    private void setInputsSize() {
+        for (int input = faces.length; input < inputs.length + faces.length; input++) {
+            patches.get(input).setSize(300, 70);
+            width += patches.get(input).width + padding;
+            height += patches.get(input).height + padding;
+        }
     }
 
     private void createInputs() {
@@ -78,11 +77,11 @@ public class BlockAppearance {
     }
 
     float getHeight() {
-        return centerHeight + 2 * padding;
+        return height;
     }
 
     float getWidth() {
-        return patches.get(top).width;
+        return width;
     }
 
     void drawShape(Batch batch, float alpha) {
