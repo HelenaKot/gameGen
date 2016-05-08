@@ -16,15 +16,15 @@ public class PatchTextureManager {
     private static void init() {
         plain = new NinePatch[]{
                 textureAtlas.createPatch("top_plain"),
-                textureAtlas.createPatch("right_plain"),
+                textureAtlas.createPatch("left_plain"),
                 textureAtlas.createPatch("bottom_plain"),
-                textureAtlas.createPatch("left_plain")
+                textureAtlas.createPatch("right_plain")
         };
         connected = new NinePatch[]{
                 textureAtlas.createPatch("top_connection"),
-                textureAtlas.createPatch("right_connection"),
+                textureAtlas.createPatch("left_connection"),
                 textureAtlas.createPatch("bottom_connection"),
-                textureAtlas.createPatch("left_connection")
+                textureAtlas.createPatch("right_connection")
         };
         socket = new NinePatch(textureAtlas.createPatch("right_socket"));
     }

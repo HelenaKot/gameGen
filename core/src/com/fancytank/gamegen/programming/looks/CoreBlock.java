@@ -15,7 +15,7 @@ public class CoreBlock extends Actor {
     public CoreBlock(BlockData data, Color tint) {
         this.tint = tint;
         this.data = data;
-        blockAppearance = new BlockAppearance(this, "le Placeholder\nlorem ipsum\ndolor sit amet");
+        blockAppearance = new BlockAppearance(this);
     }
 
     @Override
