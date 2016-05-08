@@ -38,7 +38,7 @@ public class BlockAppearance {
         patches.get(left).setPosition(x, y + padding);
         if (inputs != null)
             setInputsPosition(x, y);
-        patches.get(top).setPosition(x, y + height);
+        patches.get(top).setPosition(x, y + height + padding);
         //label.setPosition(x + padding, y + padding);
     }
 
@@ -46,23 +46,23 @@ public class BlockAppearance {
         if (inputs.length > 0)
             patches.get(faces.length).setPosition(x + padding, y + padding);
         for (int input = faces.length + 1; input < inputs.length + faces.length; input++) {
-            patches.get(input).setPosition(x + padding + patches.get(input - 1).height, y + padding + patches.get(input - 1).width);
+            patches.get(input).setPosition( x + padding, patches.get(input - 1).height + patches.get(input - 1).startY);
         }
     }
 
     private void setSize() {
         if (inputs != null)
             setInputsSize();
-        patches.get(top).setSize(width, padding);
-        patches.get(left).setSize(padding, height - padding);
-        patches.get(down).setSize(width , padding);
+        patches.get(top).setSize(width + padding, padding);
+        patches.get(left).setSize(padding, height);
+        patches.get(down).setSize(width + padding, padding);
     }
 
     private void setInputsSize() {
         for (int input = faces.length; input < inputs.length + faces.length; input++) {
             patches.get(input).setSize(300, 70);
-            width += patches.get(input).width + padding;
-            height += patches.get(input).height + padding;
+            width = (int) patches.get(input).width; //+ padding;
+            height += patches.get(input).height; //+ padding * 2;
         }
     }
 
@@ -77,11 +77,11 @@ public class BlockAppearance {
     }
 
     float getHeight() {
-        return height;
+        return height + 2 * padding;
     }
 
     float getWidth() {
-        return width;
+        return width + 2 * padding;
     }
 
     void drawShape(Batch batch, float alpha) {
