@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.fancytank.gamegen.editor.EditorBackground;
+import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.BlockAppearance;
 import com.fancytank.gamegen.programming.data.BlockData;
+import com.fancytank.gamegen.programming.looks.InputType;
 import com.fancytank.gamegen.programming.looks.PatchTextureManager;
 import com.fancytank.gamegen.programming.ProgrammingBlock;
 
@@ -31,9 +33,10 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
         EditorBackground bg = new EditorBackground(stage.getWidth(), stage.getHeight());
         stage.addActor(bg);
-        //new ProgrammingBlock(BlockShape.VARIABLE, Color.YELLOW);
-        //new ProgrammingBlock(BlockShape.CHAIN_FUNCTION, Color.ORANGE);
-        new ProgrammingBlock(new BlockData(null), Color.RED);
+
+        new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.DUMMY, "DERP")}), Color.RED);
+        //new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.VARIABLE, "HERP")}), Color.RED);
+        //new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.SOCKET, "NOPE")}), Color.RED);
     }
 
     static public void addToStage(Actor actor) {

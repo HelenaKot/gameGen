@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.fancytank.gamegen.programming.data.BlockData;
+import com.fancytank.gamegen.programming.data.InputFragment;
 
 public class CoreBlock extends Actor {
     Color tint;
@@ -33,5 +34,9 @@ public class CoreBlock extends Actor {
     public Rectangle getBoundingBox() {
         Vector2 pos = localToStageCoordinates(new Vector2(getX(), getY()));
         return new Rectangle(pos.x, pos.y, getWidth(), getHeight());
+    }
+
+    public InputFragment[] getInputs() {
+        return data.getInputs();
     }
 }
