@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
 import com.fancytank.gamegen.programming.data.BlockData;
+import com.fancytank.gamegen.programming.looks.BlockAppearance;
+import com.fancytank.gamegen.programming.looks.ConnectionArea;
+import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -13,14 +16,14 @@ import java.util.UUID;
 import static com.fancytank.gamegen.programming.looks.ConnectionPlacer.getConnectors;
 
 public class ProgrammingBlock extends Group {
-    com.fancytank.gamegen.programming.looks.CoreBlock coreBlock;
-    ArrayList<com.fancytank.gamegen.programming.looks.ConnectionArea> connectors;
+    CoreBlock coreBlock;
+    ArrayList<ConnectionArea> connectors;
     private float touchedX, touchedY;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
 
     public ProgrammingBlock(BlockData data, Color tint) {
         setName(UUID.randomUUID().toString());
-        coreBlock = new com.fancytank.gamegen.programming.looks.CoreBlock(data, tint);
+        coreBlock = new CoreBlock(data, tint);
         connectors = getConnectors(coreBlock);
         blocksList.add(this);
         setBounds(0, 0, coreBlock.getWidth(), coreBlock.getHeight());
@@ -55,7 +58,7 @@ public class ProgrammingBlock extends Group {
 
     private void populateGroup() {
         this.addActor(coreBlock);
-        for (com.fancytank.gamegen.programming.looks.ConnectionArea connectionArea : connectors)
+        for (ConnectionArea connectionArea : connectors)
             this.addActor(connectionArea);
     }
 
@@ -67,8 +70,8 @@ public class ProgrammingBlock extends Group {
     }
 
     private void checkConnectors(ProgrammingBlock programmingBlock) {
-        for (com.fancytank.gamegen.programming.looks.ConnectionArea localConnector : connectors)
-            for (com.fancytank.gamegen.programming.looks.ConnectionArea dockingConnector : programmingBlock.connectors)
+        for (ConnectionArea localConnector : connectors)
+            for (ConnectionArea dockingConnector : programmingBlock.connectors)
                 if (localConnector.getBoundingBox().overlaps(dockingConnector.getBoundingBox()))
                     if (localConnector.direction == dockingConnector.direction.flip())
                         attach(dockingConnector);
@@ -76,9 +79,9 @@ public class ProgrammingBlock extends Group {
 
     //todo rework basing on some hierarchy of blocks.
     private Group attachedTo = null;
-    private static int compensation = - (int) (com.fancytank.gamegen.programming.looks.BlockAppearance.padding * 0.8);
+    private static int compensation = - (int) (BlockAppearance.padding * 0.8);
 
-    void attach(com.fancytank.gamegen.programming.looks.ConnectionArea dockingConnector) {
+    void attach(ConnectionArea dockingConnector) {
         if (attachedTo == null && findActor(dockingConnector.parent.getParent().getName()) == null) {
             System.out.println("Attaching");
             attachedTo = dockingConnector.parent.getParent();

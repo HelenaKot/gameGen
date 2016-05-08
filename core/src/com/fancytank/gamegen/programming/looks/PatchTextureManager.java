@@ -31,9 +31,9 @@ public class PatchTextureManager {
 
     public static NinePatch getPatch(boolean isConnected, Direction direction) {
         if (isConnected)
-            return plain[direction.ordinal()];
-        else
             return connected[direction.ordinal()];
+        else
+            return plain[direction.ordinal()];
     }
 
     public static NinePatch getSocket() {
