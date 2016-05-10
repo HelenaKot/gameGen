@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
+import com.fancytank.gamegen.programming.looks.input.BlockInputFactory;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,7 @@ public class BlockAppearance {
         if (inputs != null) {
             this.inputs = new ArrayList<BlockInputAppearance>();
             for (InputFragment inputLine : inputs)
-                this.inputs.add(new BlockInputAppearance(inputLine));
+                this.inputs.add(BlockInputFactory.create(inputLine));
         }
     }
 
