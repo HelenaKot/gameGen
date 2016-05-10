@@ -12,7 +12,7 @@ public final class ConnectionPlacer {
     public static ArrayList<ConnectionArea> getConnectors(CoreBlock coreBlock) {
         ArrayList<ConnectionArea> output = new ArrayList<ConnectionArea>();
         coreBlock.getWidth();
-        float width = coreBlock.getWidth(), height = coreBlock.getHeight();
+        float height = coreBlock.getHeight();
         if (connects(coreBlock, Direction.UP))
             output.add(new ConnectionArea(0, height - padding, coreBlock, Direction.UP));
         if (connects(coreBlock, Direction.DOWN))

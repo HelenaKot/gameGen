@@ -16,9 +16,4 @@ public enum InputType {
     InputType(NinePatch patch) {
         this.patch = patch;
     }
-
-    public ConnectionArea getConnection() {
-        // TODO
-        return null;
-    }
 }

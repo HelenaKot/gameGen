@@ -26,10 +26,14 @@ public class CoreBlock extends Actor {
     }
 
     @Override
-    public float getWidth() { return blockAppearance.getWidth(); }
+    public float getWidth() {
+        return blockAppearance.getWidth();
+    }
 
     @Override
-    public float getHeight() { return blockAppearance.getHeight(); }
+    public float getHeight() {
+        return blockAppearance.getHeight();
+    }
 
     public Rectangle getBoundingBox() {
         Vector2 pos = localToStageCoordinates(new Vector2(getX(), getY()));
