@@ -4,7 +4,7 @@ import com.fancytank.gamegen.programming.looks.InputType;
 
 public class InputFragment {
     public InputType inputType;
-    String labelText;
+    public String labelText;
 
     public InputFragment(InputType inputType, String labelText) {
         this.inputType = inputType;

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getPatch;
 
 public class BlockAppearance {
-    //Label label;
     PatchData[] patches;
     ArrayList<BlockInputAppearance> inputs;
     private int height = 0, width = 0;
@@ -20,7 +19,6 @@ public class BlockAppearance {
     private static Direction[] faces = new Direction[]{Direction.UP, Direction.LEFT, Direction.DOWN};
 
     BlockAppearance(CoreBlock root) {
-        //label = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));
         patches = new PatchData[3];
 
         for (Direction dir : faces)
@@ -37,7 +35,6 @@ public class BlockAppearance {
         if (inputs != null)
             setInputsPosition(x, y);
         patches[top].setPosition(x, y + height + padding);
-        //label.setPosition(x + padding, y + padding);
     }
 
     private void setInputsPosition(float x, float y) {
@@ -56,10 +53,15 @@ public class BlockAppearance {
 
     private void setInputsSize() {
         for (BlockInputAppearance input : inputs) {
-            input.setSize(300, 70);
             if (width < input.getWidth()) width = (int) input.getWidth();
             height += (int) input.getHeight();
         }
+        unifyWidth();
+    }
+
+    private void unifyWidth() {
+        for (BlockInputAppearance input : inputs)
+            input.setWidth(width);
     }
 
     private void createInputs(InputFragment[] inputs) {
@@ -86,8 +88,7 @@ public class BlockAppearance {
         for (PatchData patch : patches)
             drawPatch(patch, batch);
         for (BlockInputAppearance input : inputs)
-            input.drawInput(batch);
-        //label.draw(batch, alpha);
+            input.drawInput(batch, alpha);
     }
 
     private void drawPatch(PatchData patchData, Batch batch) {
