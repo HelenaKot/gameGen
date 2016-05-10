@@ -1,5 +1,7 @@
 package com.fancytank.gamegen.programming.looks;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -9,12 +11,12 @@ import com.fancytank.gamegen.programming.Direction;
 import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
 
 public class ConnectionArea extends Actor {
-    public Actor parent;
+    public CoreBlock coreBlock;
     public Direction direction;
     private Vector2 pos;
 
-    ConnectionArea(float x, float y, CoreBlock parent, Direction direction) {
-        this.parent = parent;
+    public ConnectionArea(float x, float y, CoreBlock coreBlock, Direction direction) {
+        this.coreBlock = coreBlock;
         this.direction = direction;
         this.setBounds(x / 2, y / 2, padding, padding);
     }
@@ -28,7 +30,7 @@ public class ConnectionArea extends Actor {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     //todo debug
-    /*
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
@@ -45,5 +47,5 @@ public class ConnectionArea extends Actor {
         shapeRenderer.end();
         batch.begin();
     }
-    */
+
 }

@@ -26,7 +26,7 @@ public class BlockAppearance {
         for (Direction dir : faces)
             patches[dir.ordinal()] = new PatchData(getPatch(root.data.shape.connects(dir), dir));
 
-        createInputs(root.getInputs());
+        createInputs(root);
         setSize();
         setPosition(0, 0);
     }
@@ -66,11 +66,11 @@ public class BlockAppearance {
             input.setWidth(width);
     }
 
-    private void createInputs(InputFragment[] inputs) {
-        if (inputs != null) {
+    private void createInputs(CoreBlock root) {
+        if (root.getInputs() != null) {
             this.inputs = new ArrayList<BlockInputAppearance>();
-            for (InputFragment inputLine : inputs)
-                this.inputs.add(BlockInputFactory.create(inputLine));
+            for (InputFragment inputLine : root.getInputs())
+                this.inputs.add(BlockInputFactory.create(inputLine, root));
         }
     }
 

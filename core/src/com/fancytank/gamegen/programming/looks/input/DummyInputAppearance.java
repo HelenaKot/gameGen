@@ -6,14 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.BlockAppearance;
+import com.fancytank.gamegen.programming.looks.ConnectionArea;
+import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
 
 public class DummyInputAppearance extends BlockInputAppearance {
     Label label;
 
-    DummyInputAppearance(InputFragment inputFragment) {
-        super(inputFragment);
+    DummyInputAppearance(InputFragment inputFragment, CoreBlock parent) {
+        super(inputFragment, parent);
         label = new Label(inputFragment.labelText, new Label.LabelStyle(BlockAppearance.font, Color.BLACK));
         setPreferredSize();
     }
@@ -27,6 +29,11 @@ public class DummyInputAppearance extends BlockInputAppearance {
     public void drawInput(Batch batch, float alpha) {
         super.drawInput(batch, alpha);
         label.draw(batch, alpha);
+    }
+
+    @Override
+    public ConnectionArea getConnectors() {
+        return null;
     }
 
     @Override

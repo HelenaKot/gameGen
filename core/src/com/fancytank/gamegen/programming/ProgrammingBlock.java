@@ -82,11 +82,11 @@ public class ProgrammingBlock extends Group {
     private static int compensation = - (int) (BlockAppearance.padding * 0.8);
 
     void attach(ConnectionArea dockingConnector) {
-        if (attachedTo == null && findActor(dockingConnector.parent.getParent().getName()) == null) {
+        if (attachedTo == null && findActor(dockingConnector.coreBlock.getParent().getName()) == null) {
             System.out.println("Attaching");
-            attachedTo = dockingConnector.parent.getParent();
-            setPosition(dockingConnector.direction.deltaX * (dockingConnector.parent.getWidth() + compensation),
-                    dockingConnector.direction.deltaY * (dockingConnector.parent.getHeight() + compensation));
+            attachedTo = dockingConnector.coreBlock.getParent();
+            setPosition(dockingConnector.direction.deltaX * (dockingConnector.coreBlock.getWidth() + compensation),
+                    dockingConnector.direction.deltaY * (dockingConnector.coreBlock.getHeight() + compensation));
             attachedTo.addActor(this);
         }
     }

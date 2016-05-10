@@ -15,7 +15,7 @@ public class BlockData {
         this.inputs = inputs;
     }
 
-    BlockData(BlockShape shape, InputFragment[] inputs) {
+    public BlockData(InputFragment[] inputs, BlockShape shape) {
         this.shape = shape;
         this.inputs = inputs;
     }
