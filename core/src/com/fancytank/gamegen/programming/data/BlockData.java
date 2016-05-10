@@ -3,8 +3,6 @@ package com.fancytank.gamegen.programming.data;
 import com.fancytank.gamegen.programming.looks.BlockShape;
 
 public class BlockData {
-    public int significance;
-
     BlockData parent;
     BlockData descendant;
     InputFragment[] inputs;

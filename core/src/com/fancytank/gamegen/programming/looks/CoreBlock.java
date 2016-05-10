@@ -5,15 +5,18 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.fancytank.gamegen.programming.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
 
 public class CoreBlock extends Actor {
     Color tint;
-    BlockData data;
+    public BlockData data;
     BlockAppearance blockAppearance;
+    private ProgrammingBlock parent;
 
-    public CoreBlock(BlockData data, Color tint) {
+    public CoreBlock(ProgrammingBlock parent, BlockData data, Color tint) {
+        this.parent = parent;
         this.tint = tint;
         this.data = data;
         blockAppearance = new BlockAppearance(this);
@@ -33,6 +36,11 @@ public class CoreBlock extends Actor {
     @Override
     public float getHeight() {
         return blockAppearance.getHeight();
+    }
+
+    @Override
+    public ProgrammingBlock getParent() {
+        return parent;
     }
 
     public Rectangle getBoundingBox() {

@@ -23,7 +23,7 @@ public class ProgrammingBlock extends Group {
 
     public ProgrammingBlock(BlockData data, Color tint) {
         setName(UUID.randomUUID().toString());
-        coreBlock = new CoreBlock(data, tint);
+        coreBlock = new CoreBlock(this, data, tint);
         connectors = getConnectors(coreBlock);
         blocksList.add(this);
         setBounds(0, 0, coreBlock.getWidth(), coreBlock.getHeight());
@@ -74,21 +74,32 @@ public class ProgrammingBlock extends Group {
             for (ConnectionArea dockingConnector : programmingBlock.connectors)
                 if (localConnector.getBoundingBox().overlaps(dockingConnector.getBoundingBox()))
                     if (localConnector.direction == dockingConnector.direction.flip())
-                        attach(dockingConnector);
+                        tryAttach(dockingConnector);
     }
 
     //todo rework basing on some hierarchy of blocks.
     private Group attachedTo = null;
     private static int compensation = -(int) (BlockAppearance.padding * 0.8);
 
-    void attach(ConnectionArea dockingConnector) {
-        if (attachedTo == null && findActor(dockingConnector.coreBlock.getParent().getName()) == null) {
-            System.out.println("Attaching");
-            attachedTo = dockingConnector.coreBlock.getParent();
-            setPosition(dockingConnector.direction.deltaX * (dockingConnector.coreBlock.getWidth() + compensation),
-                    dockingConnector.direction.deltaY * (dockingConnector.coreBlock.getHeight() + compensation));
-            attachedTo.addActor(this);
+    void tryAttach(ConnectionArea dockingConnector) {
+        ProgrammingBlock block = dockingConnector.coreBlock.getParent();
+        if (attachedTo == null && findActor(block.getName()) == null) {
+            if (this.getSignificance() > block.getSignificance())
+                attachBlock(this, block, dockingConnector);
+            else
+                attachBlock(block, this, dockingConnector);
         }
+    }
+
+    private int getSignificance() {
+        return this.coreBlock.data.shape.significance;
+    }
+
+    static void attachBlock(ProgrammingBlock baseBlock, ProgrammingBlock attachingBlock, ConnectionArea dockingConnector) {
+        attachingBlock.attachedTo = baseBlock;
+        attachingBlock.setPosition(dockingConnector.direction.deltaX * (dockingConnector.coreBlock.getWidth() + compensation),
+                dockingConnector.direction.deltaY * (dockingConnector.coreBlock.getHeight() + compensation));
+        baseBlock.addActor(attachingBlock);
     }
 
     void detach() {
