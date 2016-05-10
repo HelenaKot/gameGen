@@ -1,9 +1,11 @@
-package com.fancytank.gamegen.programming.looks;
+package com.fancytank.gamegen.programming.looks.input;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.fancytank.gamegen.programming.data.InputFragment;
+import com.fancytank.gamegen.programming.looks.BlockAppearance;
+import com.fancytank.gamegen.programming.looks.PatchData;
 
 import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
 
@@ -13,7 +15,7 @@ public class BlockInputAppearance {
     InputFragment inputFragment;
     private static int spacing = 10;
 
-    BlockInputAppearance(InputFragment inputFragment) {
+    public BlockInputAppearance(InputFragment inputFragment) {
         this.inputFragment = inputFragment;
         patchData = new PatchData(inputFragment.inputType.patch);
         //if (inputFragment.inputType != InputType.SOCKET)
@@ -31,25 +33,25 @@ public class BlockInputAppearance {
         patchData.height = label.getHeight() + spacing;
     }
 
-    void setPosition(float x, float y) {
+    public void setPosition(float x, float y) {
         patchData.startX = x;
         patchData.startY = y;
         label.setPosition(x + spacing / 2, y);
     }
 
-    float getHeight() {
+    public float getHeight() {
         return patchData.height;
     }
 
-    float getWidth() {
+    public float getWidth() {
         return patchData.width;
     }
 
-    void setWidth(float width) {
+    public void setWidth(float width) {
         patchData.width = width;
     }
 
-    float getY() {
+    public float getY() {
         return patchData.startY;
     }
 

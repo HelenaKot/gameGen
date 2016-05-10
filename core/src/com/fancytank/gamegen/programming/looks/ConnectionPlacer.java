@@ -19,7 +19,8 @@ public class ConnectionPlacer {
                         output.add(new ConnectionArea(0, height - padding, coreBlock, Direction.UP));
                         break;
                     case RIGHT:
-                        output.add(new ConnectionArea(0 + width - padding, padding, coreBlock, Direction.RIGHT));
+                        //output.add(new ConnectionArea(0 + width - padding, padding, coreBlock, Direction.RIGHT));
+                        getInputConnectors(coreBlock);
                         break;
                     case DOWN:
                         output.add(new ConnectionArea(0, 0, coreBlock, Direction.DOWN));
@@ -30,5 +31,10 @@ public class ConnectionPlacer {
                 }
             }
         return output;
+    }
+
+    private static void getInputConnectors(CoreBlock coreBlock)
+    {
+
     }
 }

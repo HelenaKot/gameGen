@@ -2,11 +2,11 @@ package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 
-class PatchData {
-    NinePatch patch;
-    float startX, startY, width, height;
+public class PatchData {
+    public NinePatch patch;
+    public float startX, startY, width, height;
 
-    PatchData(NinePatch patch) {
+    public PatchData(NinePatch patch) {
         this.patch = patch;
     }
 

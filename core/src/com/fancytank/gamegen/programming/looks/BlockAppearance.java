@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.data.InputFragment;
+import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
 
 import java.util.ArrayList;
 
@@ -12,9 +13,9 @@ import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getPat
 public class BlockAppearance {
     PatchData[] patches;
     ArrayList<BlockInputAppearance> inputs;
-    private int height = 0, width = 0;
     public static int padding = 51;
-    static BitmapFont font;
+    public static BitmapFont font;
+    private int height = 0, width = 0;
     private static int top = Direction.UP.ordinal(), left = Direction.LEFT.ordinal(), down = Direction.DOWN.ordinal();
     private static Direction[] faces = new Direction[]{Direction.UP, Direction.LEFT, Direction.DOWN};
 
