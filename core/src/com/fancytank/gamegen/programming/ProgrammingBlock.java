@@ -5,9 +5,15 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.programming.data.BlockData;
+import com.fancytank.gamegen.programming.looks.BlockAppearance;
+import com.fancytank.gamegen.programming.looks.ConnectionArea;
+import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import static com.fancytank.gamegen.programming.looks.ConnectionPlacer.getConnectors;
 
 public class ProgrammingBlock extends Group {
     CoreBlock coreBlock;
@@ -15,10 +21,10 @@ public class ProgrammingBlock extends Group {
     private float touchedX, touchedY;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
 
-    public ProgrammingBlock(BlockShape shape, Color tint) {
+    public ProgrammingBlock(BlockData data, Color tint) {
         setName(UUID.randomUUID().toString());
-        coreBlock = new CoreBlock(shape, tint);
-        connectors = ConnectionPlacer.getConnectors(coreBlock);
+        coreBlock = new CoreBlock(data, tint);
+        connectors = getConnectors(coreBlock);
         blocksList.add(this);
         setBounds(0, 0, coreBlock.getWidth(), coreBlock.getHeight());
 
