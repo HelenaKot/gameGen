@@ -19,7 +19,7 @@ public class DummyInputAppearance extends BlockInputAppearance {
     }
 
     private void setPreferredSize() {
-        patchData.width = label.getWidth() + padding;
+        patchData.width = label.getWidth() + padding + spacing;
         patchData.height = label.getHeight() + spacing;
     }
 

@@ -34,9 +34,10 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         EditorBackground bg = new EditorBackground(stage.getWidth(), stage.getHeight());
         stage.addActor(bg);
 
-        new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.DUMMY, "DERP")}), Color.RED);
-        //new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.VARIABLE, "HERP")}), Color.RED);
-        //new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.SOCKET, "NOPE")}), Color.RED);
+       // new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.DUMMY, "DERP")}), Color.ORANGE);
+        new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.VARIABLE, "derp herp"), new InputFragment(InputType.SOCKET, "HERP"),
+                new InputFragment(InputType.VARIABLE, "derp"),  new InputFragment(InputType.SOCKET, "derp"),  new InputFragment(InputType.DUMMY, "herp")}), Color.ORANGE);
+       // new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.SOCKET, "NOPE")}), Color.ORANGE);
     }
 
     static public void addToStage(Actor actor) {
