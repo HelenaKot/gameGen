@@ -6,15 +6,14 @@ import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.data.InputFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getPatch;
 
 public class BlockAppearance {
     //Label label;
-    List<PatchData> patches;
+    PatchData[] patches;
+    ArrayList<BlockInputAppearance> inputs;
     private int height = 0, width = 0;
-    private InputFragment[] inputs;
     public static int padding = 51;
     static BitmapFont font;
     private static int top = Direction.UP.ordinal(), left = Direction.LEFT.ordinal(), down = Direction.DOWN.ordinal();
@@ -22,54 +21,53 @@ public class BlockAppearance {
 
     BlockAppearance(CoreBlock root) {
         //label = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));
-        patches = new ArrayList<PatchData>();
-        inputs = root.getInputs();
+        patches = new PatchData[3];
 
         for (Direction dir : faces)
-            patches.add(new PatchData(getPatch(root.data.shape.connects(dir), dir)));
+            patches[dir.ordinal()] = new PatchData(getPatch(root.data.shape.connects(dir), dir));
 
-        createInputs();
+        createInputs(root.getInputs());
         setSize();
         setPosition(0, 0);
     }
 
     private void setPosition(float x, float y) {
-        patches.get(down).setPosition(x, y);
-        patches.get(left).setPosition(x, y + padding);
+        patches[down].setPosition(x, y);
+        patches[left].setPosition(x, y + padding);
         if (inputs != null)
             setInputsPosition(x, y);
-        patches.get(top).setPosition(x, y + height + padding);
+        patches[top].setPosition(x, y + height + padding);
         //label.setPosition(x + padding, y + padding);
     }
 
     private void setInputsPosition(float x, float y) {
-        if (inputs.length > 0)
-            patches.get(faces.length).setPosition(x + padding, y + padding);
-        for (int input = faces.length + 1; input < inputs.length + faces.length; input++) {
-            patches.get(input).setPosition( x + padding, patches.get(input - 1).height + patches.get(input - 1).startY);
-        }
+        inputs.get(0).setPosition(x + padding, y + padding);
+        for (int i = 1; i < inputs.size(); i++)
+            inputs.get(i).setPosition(x + padding, inputs.get(i - 1).getHeight() + inputs.get(i - 1).getY());
     }
 
     private void setSize() {
         if (inputs != null)
             setInputsSize();
-        patches.get(top).setSize(width + padding, padding);
-        patches.get(left).setSize(padding, height);
-        patches.get(down).setSize(width + padding, padding);
+        patches[top].setSize(width + padding, padding);
+        patches[left].setSize(padding, height);
+        patches[down].setSize(width + padding, padding);
     }
 
     private void setInputsSize() {
-        for (int input = faces.length; input < inputs.length + faces.length; input++) {
-            patches.get(input).setSize(300, 70);
-            width = (int) patches.get(input).width; //+ padding;
-            height += patches.get(input).height; //+ padding * 2;
+        for (BlockInputAppearance input : inputs) {
+            input.setSize(300, 70);
+            if (width < input.getWidth()) width = (int) input.getWidth();
+            height += (int) input.getHeight();
         }
     }
 
-    private void createInputs() {
-        if (inputs != null)
+    private void createInputs(InputFragment[] inputs) {
+        if (inputs != null) {
+            this.inputs = new ArrayList<BlockInputAppearance>();
             for (InputFragment inputLine : inputs)
-                patches.add(new PatchData(inputLine.inputType.patch));
+                this.inputs.add(new BlockInputAppearance(inputLine));
+        }
     }
 
     public static void loadFont(BitmapFont bitmapFont) {
@@ -87,6 +85,8 @@ public class BlockAppearance {
     void drawShape(Batch batch, float alpha) {
         for (PatchData patch : patches)
             drawPatch(patch, batch);
+        for (BlockInputAppearance input : inputs)
+            input.drawInput(batch);
         //label.draw(batch, alpha);
     }
 
