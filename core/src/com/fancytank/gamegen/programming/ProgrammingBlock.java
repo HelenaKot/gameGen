@@ -1,12 +1,12 @@
 package com.fancytank.gamegen.programming;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
 import com.fancytank.gamegen.programming.data.BlockData;
-import com.fancytank.gamegen.programming.looks.BlockAppearance;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
@@ -74,20 +74,19 @@ public class ProgrammingBlock extends Group {
             for (ConnectionArea dockingConnector : programmingBlock.connectors)
                 if (localConnector.getBoundingBox().overlaps(dockingConnector.getBoundingBox()))
                     if (localConnector.direction == dockingConnector.direction.flip())
-                        tryAttach(dockingConnector);
+                        tryAttach(localConnector, dockingConnector);
     }
 
-    //todo rework basing on some hierarchy of blocks.
     private Group attachedTo = null;
-    private static int compensation = -(int) (BlockAppearance.padding * 0.8);
+    // private static int compensation = -(int) (BlockAppearance.padding * 0.8);
 
-    void tryAttach(ConnectionArea dockingConnector) {
-        ProgrammingBlock block = dockingConnector.coreBlock.getParent();
+    void tryAttach(ConnectionArea localConnector, ConnectionArea dockingConnector) {
+        ProgrammingBlock block = getProgrammingBlock(dockingConnector);
         if (attachedTo == null && findActor(block.getName()) == null) {
-            if (this.getSignificance() > block.getSignificance())
-                attachBlock(this, block, dockingConnector);
+            if (this.getSignificance() < block.getSignificance())
+                attachBlock(localConnector, dockingConnector);
             else
-                attachBlock(block, this, dockingConnector);
+                attachBlock(dockingConnector, localConnector);
         }
     }
 
@@ -95,10 +94,21 @@ public class ProgrammingBlock extends Group {
         return this.coreBlock.data.shape.significance;
     }
 
-    static void attachBlock(ProgrammingBlock baseBlock, ProgrammingBlock attachingBlock, ConnectionArea dockingConnector) {
+    private static ProgrammingBlock getProgrammingBlock(ConnectionArea connectionArea) {
+        return connectionArea.coreBlock.getParent();
+    }
+
+    static void attachBlock(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
+        System.out.println("attaching");
+        ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
+        Vector2 dockingPosition = baseConnector.localToStageCoordinates(new Vector2(baseConnector.getX(), baseConnector.getY())),
+                attachingPosition = dockingConnector.localToStageCoordinates(new Vector2(dockingConnector.getX(), dockingConnector.getY()));
         attachingBlock.attachedTo = baseBlock;
-        attachingBlock.setPosition(dockingConnector.direction.deltaX * (dockingConnector.coreBlock.getWidth() + compensation),
-                dockingConnector.direction.deltaY * (dockingConnector.coreBlock.getHeight() + compensation));
+        attachingBlock.setPosition(baseConnector.getX() * 2 - dockingConnector.getX() * 2, //+ attachingBlock.getHeight(),
+                baseConnector.getY() * 2 -  dockingConnector.getY() * 2);//+ attachingBlock.getHeight());
+        System.out.println(attachingBlock.getX() + " : " + attachingBlock.getY());
+       /* attachingBlock.setPosition(baseConnector.direction.deltaX * (baseConnector.coreBlock.getWidth() + compensation),
+                baseConnector.direction.deltaY * (baseConnector.coreBlock.getHeight() + compensation));*/
         baseBlock.addActor(attachingBlock);
     }
 
