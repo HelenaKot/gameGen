@@ -1,7 +1,6 @@
 package com.fancytank.gamegen.programming;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -34,24 +33,31 @@ public class ProgrammingBlock extends Group {
         AndroidGameGenerator.addToStage(this);
     }
 
+    InputListener inputListener;
+
     private void setUpListeners() {
         final ProgrammingBlock local = this;
-        addListener(new InputListener() {
+        addListener(inputListener = new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 touchedX = x;
                 touchedY = y;
-                detach();
-                return true;
+                return detach();
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 for (ProgrammingBlock programmingBlock : blocksList)
                     if (programmingBlock != local)
                         checkOverlapping(programmingBlock);
+                detachingBlock = null;
             }
 
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                moveBy(x - touchedX, y - touchedY);
+                if (detachingBlock != null) {
+                    detachingBlock.moveBy( x - detachingBlock.getX() + getX() - detachingBlock.touchedX, // + detachingX - touchedX - detachingBlock.touchedX,
+                            y - detachingBlock.getY() + getY() - detachingBlock.touchedY );//+ detachingY - touchedY - detachingBlock.touchedY);
+                } else {
+                    moveBy(x - touchedX, y - touchedY);
+                }
             }
         });
     }
@@ -64,7 +70,6 @@ public class ProgrammingBlock extends Group {
 
     private void checkOverlapping(ProgrammingBlock programmingBlock) {
         if (coreBlock.getBoundingBox().overlaps(programmingBlock.coreBlock.getBoundingBox())) {
-            System.out.println("block touching");
             checkConnectors(programmingBlock);
         }
     }
@@ -99,26 +104,24 @@ public class ProgrammingBlock extends Group {
     }
 
     static void attachBlock(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
-        System.out.println("attaching");
         ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
-        Vector2 dockingPosition = baseConnector.localToStageCoordinates(new Vector2(baseConnector.getX(), baseConnector.getY())),
-                attachingPosition = dockingConnector.localToStageCoordinates(new Vector2(dockingConnector.getX(), dockingConnector.getY()));
         attachingBlock.attachedTo = baseBlock;
-        attachingBlock.setPosition(baseConnector.getX() * 2 - dockingConnector.getX() * 2, //+ attachingBlock.getHeight(),
-                baseConnector.getY() * 2 -  dockingConnector.getY() * 2);//+ attachingBlock.getHeight());
-        System.out.println(attachingBlock.getX() + " : " + attachingBlock.getY());
-       /* attachingBlock.setPosition(baseConnector.direction.deltaX * (baseConnector.coreBlock.getWidth() + compensation),
-                baseConnector.direction.deltaY * (baseConnector.coreBlock.getHeight() + compensation));*/
+        attachingBlock.setPosition(baseConnector.getX() * 2 - dockingConnector.getX() * 2,
+                baseConnector.getY() * 2 - dockingConnector.getY() * 2);
         baseBlock.addActor(attachingBlock);
     }
 
-    void detach() {
+    private static ProgrammingBlock detachingBlock;
+
+    boolean detach() {
         if (attachedTo != null) {
-            System.out.println("Detaching");
             attachedTo.removeActor(this);
-            moveBy(100, 100); //todo some better shit
+            this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());
             attachedTo = null;
             AndroidGameGenerator.addToStage(this);
+            detachingBlock = this;
+            return false;
         }
+        return true;
     }
 }
