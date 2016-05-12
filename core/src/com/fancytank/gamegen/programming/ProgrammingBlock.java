@@ -18,7 +18,9 @@ public class ProgrammingBlock extends Group {
     CoreBlock coreBlock;
     ArrayList<ConnectionArea> connectors;
     private float touchedX, touchedY;
+    private Group attachedTo = null;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
+    private static ProgrammingBlock detachingBlock;
 
     public ProgrammingBlock(BlockData data, Color tint) {
         setName(UUID.randomUUID().toString());
@@ -53,8 +55,8 @@ public class ProgrammingBlock extends Group {
 
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 if (detachingBlock != null) {
-                    detachingBlock.moveBy( x - detachingBlock.getX() + getX() - detachingBlock.touchedX, // + detachingX - touchedX - detachingBlock.touchedX,
-                            y - detachingBlock.getY() + getY() - detachingBlock.touchedY );//+ detachingY - touchedY - detachingBlock.touchedY);
+                    detachingBlock.moveBy(x - detachingBlock.getX() + getX() - detachingBlock.touchedX, // + detachingX - touchedX - detachingBlock.touchedX,
+                            y - detachingBlock.getY() + getY() - detachingBlock.touchedY);//+ detachingY - touchedY - detachingBlock.touchedY);
                 } else {
                     moveBy(x - touchedX, y - touchedY);
                 }
@@ -82,9 +84,6 @@ public class ProgrammingBlock extends Group {
                         tryAttach(localConnector, dockingConnector);
     }
 
-    private Group attachedTo = null;
-    // private static int compensation = -(int) (BlockAppearance.padding * 0.8);
-
     void tryAttach(ConnectionArea localConnector, ConnectionArea dockingConnector) {
         ProgrammingBlock block = getProgrammingBlock(dockingConnector);
         if (attachedTo == null && findActor(block.getName()) == null) {
@@ -95,14 +94,6 @@ public class ProgrammingBlock extends Group {
         }
     }
 
-    private int getSignificance() {
-        return this.coreBlock.data.shape.significance;
-    }
-
-    private static ProgrammingBlock getProgrammingBlock(ConnectionArea connectionArea) {
-        return connectionArea.coreBlock.getParent();
-    }
-
     static void attachBlock(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
         ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
         attachingBlock.attachedTo = baseBlock;
@@ -110,8 +101,6 @@ public class ProgrammingBlock extends Group {
                 baseConnector.getY() * 2 - dockingConnector.getY() * 2);
         baseBlock.addActor(attachingBlock);
     }
-
-    private static ProgrammingBlock detachingBlock;
 
     boolean detach() {
         if (attachedTo != null) {
@@ -123,5 +112,13 @@ public class ProgrammingBlock extends Group {
             return false;
         }
         return true;
+    }
+
+    private int getSignificance() {
+        return this.coreBlock.data.shape.significance;
+    }
+
+    private static ProgrammingBlock getProgrammingBlock(ConnectionArea connectionArea) {
+        return connectionArea.coreBlock.getParent();
     }
 }
