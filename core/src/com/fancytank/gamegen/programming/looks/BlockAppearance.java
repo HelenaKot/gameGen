@@ -2,10 +2,14 @@ package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.fancytank.gamegen.programming.BlockConnectionEvent;
 import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
 import com.fancytank.gamegen.programming.looks.input.BlockInputFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -29,6 +33,14 @@ public class BlockAppearance {
         createInputs(root);
         setSize();
         setPosition(0, 0);
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe
+    public void onEvent(BlockConnectionEvent event){
+        // your implementation
+       System.out.println("hello event!");
     }
 
     private void setPosition(float x, float y) {

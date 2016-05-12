@@ -9,6 +9,8 @@ import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -96,9 +98,14 @@ public class ProgrammingBlock extends Group {
 
     static void attachBlock(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
         ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
-        attachingBlock.attachedTo = baseBlock;
         attachingBlock.setPosition(baseConnector.getX() * 2 - dockingConnector.getX() * 2,
                 baseConnector.getY() * 2 - dockingConnector.getY() * 2);
+        setDependencies(attachingBlock, baseBlock);
+        EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector));
+    }
+
+    static private void setDependencies(ProgrammingBlock attachingBlock, ProgrammingBlock baseBlock) {
+        attachingBlock.attachedTo = baseBlock;
         baseBlock.addActor(attachingBlock);
     }
 

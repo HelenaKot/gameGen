@@ -32,7 +32,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
     }
 
     private void setUp() {
-        EventBus myEventBus = EventBus.getDefault();
         new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
         EditorBackground bg = new EditorBackground(stage.getWidth(), stage.getHeight());
