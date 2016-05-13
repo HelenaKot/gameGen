@@ -1,6 +1,7 @@
 package com.fancytank.gamegen.programming.looks.input;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
@@ -9,12 +10,12 @@ import com.fancytank.gamegen.programming.looks.PatchData;
 abstract public class BlockInputAppearance {
     PatchData patchData;
     InputFragment inputFragment;
-    CoreBlock parent;
+    public final CoreBlock coreBlock;
     static int spacing = 10;
 
-    BlockInputAppearance(InputFragment inputFragment, CoreBlock parent) {
+    BlockInputAppearance(InputFragment inputFragment, CoreBlock coreBlock) {
         this.inputFragment = inputFragment;
-        this.parent = parent;
+        this.coreBlock = coreBlock;
         patchData = new PatchData(inputFragment.inputType.patch);
     }
 
@@ -23,6 +24,8 @@ abstract public class BlockInputAppearance {
     }
 
     public abstract ConnectionArea getConnectors();
+
+    public abstract Vector2 getConnectorPlacement();
 
     public void setPosition(float x, float y) {
         patchData.startX = x;
@@ -39,6 +42,10 @@ abstract public class BlockInputAppearance {
 
     public void setWidth(float width) {
         patchData.width = width;
+    }
+
+    public void setHeight(float height) {
+        patchData.height = height;
     }
 
     public float getY() {

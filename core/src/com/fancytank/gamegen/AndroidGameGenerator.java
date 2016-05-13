@@ -16,8 +16,6 @@ import com.fancytank.gamegen.programming.looks.InputType;
 import com.fancytank.gamegen.programming.looks.PatchTextureManager;
 import com.fancytank.gamegen.programming.ProgrammingBlock;
 
-import org.greenrobot.eventbus.EventBus;
-
 public class AndroidGameGenerator extends ApplicationAdapter {
     static private Stage stage;
     //OrthographicCamera cam = new OrthographicCamera();
@@ -25,7 +23,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
     @Override
     public void create() {
         stage = new Stage();
-        //new Stage(new ScalingViewport(Scaling.stretch, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
         Gdx.input.setInputProcessor(stage);
 
         setUp();

@@ -3,14 +3,16 @@ package com.fancytank.gamegen.programming;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 
 public class BlockConnectionEvent {
-    ConnectionArea baseConnector, attachingConnector;
+    public final ConnectionArea baseConnector, attachingConnector;
+    boolean isConnecting;
 
-    public BlockConnectionEvent(ConnectionArea baseConnector, ConnectionArea attachingConnector) {
+    public BlockConnectionEvent(ConnectionArea baseConnector, ConnectionArea attachingConnector, boolean isConnecting) {
         this.baseConnector = baseConnector;
         this.attachingConnector = attachingConnector;
+        this.isConnecting = isConnecting;
     }
 
-    float getConnectedComponentHeight() {
-        return attachingConnector.coreBlock.getHeight();
+    public boolean isConnecting() {
+        return isConnecting;
     }
 }

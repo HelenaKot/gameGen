@@ -2,7 +2,7 @@ package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.fancytank.gamegen.programming.BlockConnectionEvent;
+import com.fancytank.gamegen.programming.BlockResizeEvent;
 import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
@@ -20,7 +20,7 @@ public class BlockAppearance {
     ArrayList<BlockInputAppearance> inputs;
     public static int padding = 51;
     public static BitmapFont font;
-    private int height = 0, width = 0;
+    private int height, width;
     private static int top = Direction.UP.ordinal(), left = Direction.LEFT.ordinal(), down = Direction.DOWN.ordinal();
     private static Direction[] faces = new Direction[]{Direction.UP, Direction.LEFT, Direction.DOWN};
 
@@ -38,9 +38,14 @@ public class BlockAppearance {
     }
 
     @Subscribe
-    public void onEvent(BlockConnectionEvent event){
-        // your implementation
-       System.out.println("hello event!");
+    public void onEvent(BlockResizeEvent event) {
+        if (event.getBaseBlockAppearance() == this)
+            if (event.isConnecting()) {
+                event.baseConnector.blockInputAppearance.setHeight(event.getConnectedComponentHeight());
+                setSize();
+                setPosition(patches[down].startX, patches[down].startY);
+                ConnectionPlacer.updateConnectors(event.baseConnector.coreBlock);
+            }
     }
 
     private void setPosition(float x, float y) {
@@ -66,6 +71,8 @@ public class BlockAppearance {
     }
 
     private void setInputsSize() {
+        height = 0;
+        width = 0;
         for (BlockInputAppearance input : inputs) {
             if (width < input.getWidth()) width = (int) input.getWidth();
             height += (int) input.getHeight();

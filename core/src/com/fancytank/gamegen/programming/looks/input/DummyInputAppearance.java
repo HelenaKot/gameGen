@@ -3,6 +3,7 @@ package com.fancytank.gamegen.programming.looks.input;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.BlockAppearance;
@@ -33,6 +34,11 @@ public class DummyInputAppearance extends BlockInputAppearance {
 
     @Override
     public ConnectionArea getConnectors() {
+        return null;
+    }
+
+    @Override
+    public Vector2 getConnectorPlacement() {
         return null;
     }
 

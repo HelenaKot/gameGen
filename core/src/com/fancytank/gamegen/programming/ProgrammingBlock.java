@@ -18,7 +18,7 @@ import static com.fancytank.gamegen.programming.looks.ConnectionPlacer.getConnec
 
 public class ProgrammingBlock extends Group {
     CoreBlock coreBlock;
-    ArrayList<ConnectionArea> connectors;
+    public ArrayList<ConnectionArea> connectors;
     private float touchedX, touchedY;
     private Group attachedTo = null;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
@@ -100,8 +100,11 @@ public class ProgrammingBlock extends Group {
         ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
         attachingBlock.setPosition(baseConnector.getX() * 2 - dockingConnector.getX() * 2,
                 baseConnector.getY() * 2 - dockingConnector.getY() * 2);
+
         setDependencies(attachingBlock, baseBlock);
-        EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector));
+        dockingConnector.connect(baseConnector);
+
+        sendConnectionEvent(baseConnector, dockingConnector, true);
     }
 
     static private void setDependencies(ProgrammingBlock attachingBlock, ProgrammingBlock baseBlock) {
@@ -109,8 +112,18 @@ public class ProgrammingBlock extends Group {
         baseBlock.addActor(attachingBlock);
     }
 
+    static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
+        if (baseConnector.direction == Direction.DOWN)
+            EventBus.getDefault().post(new BlockResizeEvent(baseConnector, dockingConnector, true));
+        else
+            EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, true));
+    }
+
     boolean detach() {
         if (attachedTo != null) {
+            ConnectionArea outputConnector = connectors.get(0);
+            EventBus.getDefault().post(new BlockConnectionEvent(outputConnector, outputConnector.getConnectedTo(), false));
+
             attachedTo.removeActor(this);
             this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());
             attachedTo = null;

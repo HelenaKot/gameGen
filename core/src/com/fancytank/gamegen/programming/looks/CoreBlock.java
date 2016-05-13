@@ -11,9 +11,9 @@ import com.fancytank.gamegen.programming.data.InputFragment;
 
 public class CoreBlock extends Actor {
     Color tint;
+    ProgrammingBlock parent;
     public BlockData data;
-    BlockAppearance blockAppearance;
-    private ProgrammingBlock parent;
+    public BlockAppearance blockAppearance;
 
     public CoreBlock(ProgrammingBlock parent, BlockData data, Color tint) {
         this.parent = parent;
