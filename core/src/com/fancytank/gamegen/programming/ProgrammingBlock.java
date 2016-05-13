@@ -37,11 +37,9 @@ public class ProgrammingBlock extends Group {
         AndroidGameGenerator.addToStage(this);
     }
 
-    InputListener inputListener;
-
     private void setUpListeners() {
         final ProgrammingBlock local = this;
-        addListener(inputListener = new InputListener() {
+        addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 touchedX = x;
                 touchedY = y;
@@ -113,16 +111,16 @@ public class ProgrammingBlock extends Group {
     }
 
     static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
-        if (baseConnector.direction == Direction.DOWN)
-            EventBus.getDefault().post(new BlockResizeEvent(baseConnector, dockingConnector, true));
+        if (baseConnector.direction == Direction.DOWN || baseConnector.direction == Direction.UP)
+            EventBus.getDefault().post(new BlockResizeEvent(baseConnector, dockingConnector, isConnecting));
         else
-            EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, true));
+            EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
     }
 
     boolean detach() {
         if (attachedTo != null) {
             ConnectionArea outputConnector = connectors.get(0);
-            EventBus.getDefault().post(new BlockConnectionEvent(outputConnector, outputConnector.getConnectedTo(), false));
+            sendConnectionEvent(outputConnector.getConnectedTo(), outputConnector, false);
 
             attachedTo.removeActor(this);
             this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());

@@ -40,8 +40,7 @@ public class BlockAppearance {
     @Subscribe
     public void onEvent(BlockResizeEvent event) {
         if (event.getBaseBlockAppearance() == this)
-            if (event.isConnecting())
-                BlockResizer.resizeBlock(event);
+            BlockResizer.resizeBlock(event);
     }
 
     void updateSize() {
