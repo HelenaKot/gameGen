@@ -40,12 +40,13 @@ public class BlockAppearance {
     @Subscribe
     public void onEvent(BlockResizeEvent event) {
         if (event.getBaseBlockAppearance() == this)
-            if (event.isConnecting()) {
-                event.baseConnector.blockInputAppearance.setHeight(event.getConnectedComponentHeight());
-                setSize();
-                setPosition(patches[down].startX, patches[down].startY);
-                ConnectionPlacer.updateConnectors(event.baseConnector.coreBlock);
-            }
+            if (event.isConnecting())
+                BlockResizer.resizeBlock(event);
+    }
+
+    void updateSize() {
+        setSize();
+        setPosition(patches[down].startX, patches[down].startY);
     }
 
     private void setPosition(float x, float y) {
