@@ -37,6 +37,10 @@ public class ProgrammingBlock extends Group {
         AndroidGameGenerator.addToStage(this);
     }
 
+    public ConnectionArea getOutputConnector() {
+        return connectors.get(0);
+    }
+
     private void setUpListeners() {
         final ProgrammingBlock local = this;
         addListener(new InputListener() {
@@ -110,6 +114,7 @@ public class ProgrammingBlock extends Group {
         baseBlock.addActor(attachingBlock);
     }
 
+    // TODO Resize only on socket! link ConnectionArea with inputs plz
     static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
         if (baseConnector.direction == Direction.DOWN || baseConnector.direction == Direction.UP)
             EventBus.getDefault().post(new BlockResizeEvent(baseConnector, dockingConnector, isConnecting));
@@ -119,8 +124,9 @@ public class ProgrammingBlock extends Group {
 
     boolean detach() {
         if (attachedTo != null) {
-            ConnectionArea outputConnector = connectors.get(0);
+            ConnectionArea outputConnector = getOutputConnector();
             sendConnectionEvent(outputConnector.getConnectedTo(), outputConnector, false);
+            outputConnector.disconnect();
 
             attachedTo.removeActor(this);
             this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());

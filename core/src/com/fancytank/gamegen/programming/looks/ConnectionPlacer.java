@@ -28,12 +28,17 @@ public final class ConnectionPlacer {
         float height = coreBlock.getHeight();
         int next = 0;
         if (connects(coreBlock, Direction.LEFT))
-            connectors.get(next++).setPosition(0, height - padding * 2);
+            trySetPosition(connectors.get(next++), 0, height - padding * 2);
         if (connects(coreBlock, Direction.UP))
-            connectors.get(next++).setPosition(0, height - padding);
+            trySetPosition(connectors.get(next++), 0, height - padding);
         if (connects(coreBlock, Direction.DOWN))
-            connectors.get(next++).setPosition(0, 0);
+            trySetPosition(connectors.get(next++), 0, 0);
         updateInputConnectors(coreBlock, next);
+    }
+
+    private static void trySetPosition(ConnectionArea connectionArea, float x, float y) {
+        if (connectionArea.getX() != x && connectionArea.getY() != y)
+            connectionArea.setPosition(x, y);
     }
 
     private static boolean connects(CoreBlock coreBlock, Direction dir) {
@@ -50,7 +55,7 @@ public final class ConnectionPlacer {
         ArrayList<ConnectionArea> connectors = coreBlock.parent.connectors;
         for (int next = index; next < connectors.size(); next++) {
             Vector2 newPlacement = coreBlock.blockAppearance.inputs.get(next - index).getConnectorPlacement();
-            connectors.get(next).setPosition(newPlacement.x/2, newPlacement.y/2);
+            connectors.get(next).setPosition(newPlacement.x / 2, newPlacement.y / 2);
         }
     }
 }

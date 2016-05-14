@@ -15,9 +15,10 @@ public class BlockResizer {
 
         event.baseConnector.blockInputAppearance.setHeight(height);
         coreBlock.blockAppearance.updateSize();
-        ConnectionPlacer.updateConnectors(coreBlock);
 
         coreBlock.parent.setBounds(coreBlock.parent.getX(), coreBlock.parent.getY(), coreBlock.getWidth(), coreBlock.getHeight());
         coreBlock.parent.setPosition(coreBlock.parent.getX(), coreBlock.parent.getY() + heightDelta);
+
+        ConnectionPlacer.updateConnectors(coreBlock);
     }
 }
