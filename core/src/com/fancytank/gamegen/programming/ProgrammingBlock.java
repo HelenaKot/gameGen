@@ -89,7 +89,7 @@ public class ProgrammingBlock extends Group {
                         tryAttach(localConnector, dockingConnector);
     }
 
-    void tryAttach(ConnectionArea localConnector, ConnectionArea dockingConnector) {
+    private void tryAttach(ConnectionArea localConnector, ConnectionArea dockingConnector) {
         ProgrammingBlock block = getProgrammingBlock(dockingConnector);
         if (attachedTo == null && findActor(block.getName()) == null) {
             if (this.getSignificance() < block.getSignificance())
@@ -99,23 +99,20 @@ public class ProgrammingBlock extends Group {
         }
     }
 
-    static void attachBlock(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
+    static private void attachBlock(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
         ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
-        attachingBlock.setPosition(baseConnector.getX() * 2 - dockingConnector.getX() * 2,
-                baseConnector.getY() * 2 - dockingConnector.getY() * 2);
-
-        setDependencies(attachingBlock, baseBlock);
-        dockingConnector.connect(baseConnector);
-
+        attachingBlock.setPosition(baseConnector.getX() * 2 - dockingConnector.getX() * 2, baseConnector.getY() * 2 - dockingConnector.getY() * 2);
+        setDependencies(dockingConnector, baseConnector);
         sendConnectionEvent(baseConnector, dockingConnector, true);
     }
 
-    static private void setDependencies(ProgrammingBlock attachingBlock, ProgrammingBlock baseBlock) {
+    static private void setDependencies(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
+        ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
         attachingBlock.attachedTo = baseBlock;
         baseBlock.addActor(attachingBlock);
+        dockingConnector.connect(baseConnector);
     }
 
-    // TODO Resize only on socket! link ConnectionArea with inputs plz
     static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
         if (baseConnector.getInputType() == InputType.SOCKET)
             EventBus.getDefault().post(new BlockResizeEvent(baseConnector, dockingConnector, isConnecting));
@@ -123,7 +120,7 @@ public class ProgrammingBlock extends Group {
             EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
     }
 
-    boolean detach() {
+    private boolean detach() {
         if (attachedTo != null) {
             tryDisconnectOutput();
             this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());
@@ -144,6 +141,7 @@ public class ProgrammingBlock extends Group {
     }
 
     private void removeDependencies() {
+        getOutputConnector().disconnect();
         attachedTo.removeActor(this);
         attachedTo = null;
     }
