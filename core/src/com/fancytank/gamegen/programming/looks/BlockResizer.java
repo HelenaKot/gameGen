@@ -4,7 +4,7 @@ import com.fancytank.gamegen.programming.BlockResizeEvent;
 
 import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
 
-public class BlockResizer {
+public final class BlockResizer {
 
     public static void resizeBlock(BlockResizeEvent event) {
         CoreBlock coreBlock = event.baseConnector.coreBlock;

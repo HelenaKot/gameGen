@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.fancytank.gamegen.programming.Direction;
 
-public class PatchTextureManager {
+public final class PatchTextureManager {
     static TextureAtlas textureAtlas;
     private static NinePatch plain[], connected[], socket;
 
