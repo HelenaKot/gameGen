@@ -37,6 +37,10 @@ public class BlockAppearance {
         EventBus.getDefault().register(this);
     }
 
+    public static void loadFont(BitmapFont bitmapFont) {
+        font = bitmapFont;
+    }
+
     @Subscribe
     public void onEvent(BlockResizeEvent event) {
         if (event.getBaseBlockAppearance() == this)
@@ -91,10 +95,6 @@ public class BlockAppearance {
             for (InputFragment inputLine : root.getInputs())
                 this.inputs.add(BlockInputFactory.create(inputLine, root));
         }
-    }
-
-    public static void loadFont(BitmapFont bitmapFont) {
-        font = bitmapFont;
     }
 
     float getHeight() {

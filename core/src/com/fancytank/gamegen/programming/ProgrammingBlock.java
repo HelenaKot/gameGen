@@ -62,8 +62,7 @@ public class ProgrammingBlock extends Group {
 
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 if (detachingBlock != null) {
-                    detachingBlock.moveBy(x - detachingBlock.getX() + getX() - detachingBlock.touchedX, // + detachingX - touchedX - detachingBlock.touchedX,
-                            y - detachingBlock.getY() + getY() - detachingBlock.touchedY);//+ detachingY - touchedY - detachingBlock.touchedY);
+                    detachingBlock.moveBy(x - detachingBlock.getX() + getX() - detachingBlock.touchedX, y - detachingBlock.getY() + getY() - detachingBlock.touchedY);
                 } else {
                     moveBy(x - touchedX, y - touchedY);
                 }

@@ -20,6 +20,14 @@ public class BlockData {
         this.inputs = inputs;
     }
 
+    public BlockData getParent() {
+        return parent;
+    }
+
+    public boolean hasParent() {
+        return parent != null;
+    }
+
     public void setParent(BlockData parent) {
         this.parent = parent;
         parent.descendant = this;
@@ -30,14 +38,6 @@ public class BlockData {
         parent = null;
     }
 
-    public BlockData getParent() {
-        return parent;
-    }
-
-    public boolean hasParent() {
-        return parent != null;
-    }
-
     public BlockData getDescendant() {
         return descendant;
     }
@@ -46,12 +46,12 @@ public class BlockData {
         return descendant != null;
     }
 
-    public void setCoreBlock(CoreBlock coreBlock) {
-        this.coreBlock = coreBlock;
-    }
-
     public CoreBlock getCoreBlock() {
         return coreBlock;
+    }
+
+    public void setCoreBlock(CoreBlock coreBlock) {
+        this.coreBlock = coreBlock;
     }
 
     public InputFragment[] getInputs() {
