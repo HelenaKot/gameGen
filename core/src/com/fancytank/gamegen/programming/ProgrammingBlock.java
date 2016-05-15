@@ -111,6 +111,8 @@ public class ProgrammingBlock extends Group {
         attachingBlock.attachedTo = baseBlock;
         baseBlock.addActor(attachingBlock);
         dockingConnector.connect(baseConnector);
+        BlockData descendantBlock = attachingBlock.coreBlock.data, parentBlock = baseBlock.coreBlock.data;
+        descendantBlock.setParent(parentBlock);
     }
 
     static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
@@ -135,6 +137,7 @@ public class ProgrammingBlock extends Group {
         tryDisconnectOutput();
         attachedTo.removeActor(this);
         attachedTo = null;
+        coreBlock.data.removeParent();
     }
 
     private void tryDisconnectOutput() {

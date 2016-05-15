@@ -23,9 +23,9 @@ public class BlockData {
         parent.descendant = this;
     }
 
-    public void setDescendant(BlockData descendant) {
-        this.descendant = descendant;
-        descendant.parent = this;
+    public void removeParent() {
+        parent.descendant = null;
+        parent = null;
     }
 
     public InputFragment[] getInputs() {
