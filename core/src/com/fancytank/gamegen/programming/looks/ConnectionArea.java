@@ -30,26 +30,6 @@ public class ConnectionArea extends Actor {
         this.setBounds(x / 2, y / 2, padding, padding);
     }
 
-    @Override
-    protected void positionChanged() {
-        super.positionChanged();
-        if (connectedTo != null && connectedTo.isOutputBlock())
-            translateConnectedToInput();
-    }
-
-    private boolean isOutputBlock() {
-        return this == coreBlock.parent.getOutputConnector();
-    }
-
-    private void translateConnectedToInput() {
-        float deltaY = this.getPosition().y - connectedTo.getPosition().y;
-        System.out.println(deltaY + "  -delta-  ");
-        ProgrammingBlock block = connectedTo.coreBlock.parent;
-        System.out.println(block.getX() + "  -pos-  " + block.getY());
-        //todo
-        block.setPosition(block.getX(), block.getY() + deltaY);
-    }
-
     public Rectangle getBoundingBox() {
         Vector2 pos = getPosition();
         return new Rectangle(pos.x, pos.y, padding, padding);
@@ -65,22 +45,39 @@ public class ConnectionArea extends Actor {
         this.connectedTo = null;
     }
 
-    private Vector2 getPosition() {
-        return localToStageCoordinates(new Vector2(getX(), getY()));
-    }
-
     public ConnectionArea getConnectedTo() {
         return connectedTo;
+    }
+
+    @Override
+    protected void positionChanged() {
+        super.positionChanged();
+        if (connectedTo != null && connectedTo.isOutputBlock())
+            translateConnectedToInput();
+    }
+
+    private boolean isOutputBlock() {
+        return this == coreBlock.parent.getOutputConnector();
+    }
+
+    private void translateConnectedToInput() {
+        float deltaY = this.getPosition().y - connectedTo.getPosition().y;
+        ProgrammingBlock block = connectedTo.coreBlock.parent;
+        block.setPosition(block.getX(), block.getY() + deltaY);
+    }
+
+    private Vector2 getPosition() {
+        return localToStageCoordinates(new Vector2(getX(), getY()));
     }
 
     static private boolean projectionMatrixSet = false;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    //todo debug
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
+        //todo debug
         /*
         Vector2 pos = getPosition();
         batch.end();
