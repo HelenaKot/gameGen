@@ -30,6 +30,14 @@ public class BlockData {
         parent = null;
     }
 
+    public BlockData getParent() {
+        return parent;
+    }
+
+    public boolean hasParent() {
+        return parent != null;
+    }
+
     public BlockData getDescendant() {
         return descendant;
     }
@@ -38,11 +46,11 @@ public class BlockData {
         return descendant != null;
     }
 
-    public void setCoreBlock (CoreBlock coreBlock) {
+    public void setCoreBlock(CoreBlock coreBlock) {
         this.coreBlock = coreBlock;
     }
 
-    public CoreBlock getCoreBlock () {
+    public CoreBlock getCoreBlock() {
         return coreBlock;
     }
 

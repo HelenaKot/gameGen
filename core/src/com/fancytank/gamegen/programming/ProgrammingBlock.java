@@ -112,6 +112,17 @@ public class ProgrammingBlock extends Group {
             EventBus.getDefault().post(new BlockResizeEvent(baseConnector, dockingConnector, isConnecting));
         else
             EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
+        if (baseConnector.getInputType() != InputType.VARIABLE)
+            sendConnectionEventUpward(baseConnector.coreBlock, isConnecting);
+    }
+
+    static private void sendConnectionEventUpward(CoreBlock block, boolean isConnecting) {
+        ConnectionArea outputConnector = block.getParent().getOutputConnector();
+        if (outputConnector.hasConnection() && outputConnector.getConnection().getInputType() == InputType.SOCKET) {
+            EventBus.getDefault().post(new BlockResizeEvent(outputConnector.getConnection(), outputConnector, isConnecting));
+        }
+        if (block.data.hasParent())
+            sendConnectionEventUpward(block.data.getParent().getCoreBlock(), isConnecting);
     }
 
     private boolean detach() {

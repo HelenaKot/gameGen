@@ -63,6 +63,10 @@ public class ConnectionArea extends Actor {
         return connectedTo;
     }
 
+    public boolean hasConnection() {
+        return connectedTo != null;
+    }
+
     @Override
     protected void positionChanged() {
         super.positionChanged();
