@@ -16,7 +16,6 @@ public class ConnectionArea extends Actor {
     public Direction direction;
     public BlockInputAppearance blockInputAppearance;
     private ConnectionArea connectedTo;
-    private Vector2 pos;
 
     public ConnectionArea(float x, float y, CoreBlock coreBlock, Direction direction) {
         this.coreBlock = coreBlock;
@@ -43,17 +42,16 @@ public class ConnectionArea extends Actor {
     }
 
     private void translateConnectedToInput() {
-        float deltaX = connectedTo.pos.x - this.pos.x,
-                deltaY = connectedTo.pos.y - this.pos.y;
-        System.out.println(deltaX + "  -delta-  " + deltaY);
+        float deltaY = this.getPosition().y - connectedTo.getPosition().y;
+        System.out.println(deltaY + "  -delta-  ");
         ProgrammingBlock block = connectedTo.coreBlock.parent;
-        System.out.println(block.getX() + "  -pos-  " +  block.getY());
+        System.out.println(block.getX() + "  -pos-  " + block.getY());
         //todo
-        block.setPosition(block.getX() + deltaX, block.getY() + deltaY);
+        block.setPosition(block.getX(), block.getY() + deltaY);
     }
 
     public Rectangle getBoundingBox() {
-        pos = localToStageCoordinates(new Vector2(getX(), getY()));
+        Vector2 pos = getPosition();
         return new Rectangle(pos.x, pos.y, padding, padding);
     }
 
@@ -65,6 +63,10 @@ public class ConnectionArea extends Actor {
     public void disconnect() {
         connectedTo.connectedTo = null;
         this.connectedTo = null;
+    }
+
+    private Vector2 getPosition() {
+        return localToStageCoordinates(new Vector2(getX(), getY()));
     }
 
     public ConnectionArea getConnectedTo() {
@@ -79,13 +81,9 @@ public class ConnectionArea extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        pos = localToStageCoordinates(new Vector2(getX(), getY()));
-
         /*
+        Vector2 pos = getPosition();
         batch.end();
-
-        pos = localToStageCoordinates(new Vector2(getX(), getY()));
-
         if (!projectionMatrixSet) {
             shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         }
