@@ -8,12 +8,9 @@ public final class ConnectionRules {
 
     public static void tryConnect(ConnectionArea connectFrom, ConnectionArea connectTo) {
         boolean shouldSwap = false;
-        // honour significance
-        if (getProgrammingBlock(connectFrom).getSignificance() > getProgrammingBlock(connectTo).getSignificance())
+        if (isCorrectSignificanceOrder(connectFrom, connectTo))
             shouldSwap = !shouldSwap;
-
-        // check vertical up to down significance
-        if (getProgrammingBlock(connectFrom).getSignificance() == getProgrammingBlock(connectTo).getSignificance() && connectFrom.direction == Direction.DOWN)
+        if (isCorrectVerticalOrder(connectFrom, connectTo))
             shouldSwap = !shouldSwap;
 
         if (shouldSwap) {
@@ -24,6 +21,14 @@ public final class ConnectionRules {
 
         if (canConnect(connectFrom, connectTo))
             ProgrammingBlock.attachBlock(connectFrom, connectTo);
+    }
+
+    private static boolean isCorrectSignificanceOrder(ConnectionArea connectFrom, ConnectionArea connectTo) {
+        return getProgrammingBlock(connectFrom).getSignificance() > getProgrammingBlock(connectTo).getSignificance();
+    }
+
+    private static boolean isCorrectVerticalOrder(ConnectionArea connectFrom, ConnectionArea connectTo) {
+        return getProgrammingBlock(connectFrom).getSignificance() == getProgrammingBlock(connectTo).getSignificance() && connectFrom.direction == Direction.DOWN;
     }
 
     private static boolean canConnect(ConnectionArea connectFrom, ConnectionArea connectTo) {

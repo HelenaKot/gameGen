@@ -145,7 +145,7 @@ public class ProgrammingBlock extends Group {
 
     private void tryDisconnectOutput() {
         ConnectionArea outputConnector = getOutputConnector();
-        if (outputConnector.getConnection() != null) {
+        if (outputConnector.hasConnection()) {
             sendConnectionEvent(outputConnector.getConnection(), outputConnector, false);
             outputConnector.disconnect();
         }
