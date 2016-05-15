@@ -48,7 +48,8 @@ public class ProgrammingBlock extends Group {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 touchedX = x;
                 touchedY = y;
-                return detach();
+                detach();
+                return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -83,34 +84,24 @@ public class ProgrammingBlock extends Group {
 
     private void checkConnectors(ProgrammingBlock programmingBlock) {
         for (ConnectionArea localConnector : connectors)
-            for (ConnectionArea dockingConnector : programmingBlock.connectors)
-                if (localConnector.getBoundingBox().overlaps(dockingConnector.getBoundingBox()))
-                    if (localConnector.direction == dockingConnector.direction.flip())
-                        tryAttach(localConnector, dockingConnector);
+            for (ConnectionArea baseConnector : programmingBlock.connectors)
+                if (localConnector.getBoundingBox().overlaps(baseConnector.getBoundingBox()))
+                    if (localConnector.direction == baseConnector.direction.flip())
+                        ConnectionRules.tryConnect(localConnector, baseConnector);
     }
 
-    private void tryAttach(ConnectionArea localConnector, ConnectionArea dockingConnector) {
-        ProgrammingBlock block = getProgrammingBlock(dockingConnector);
-        if (attachedTo == null && findActor(block.getName()) == null) {
-            if (this.getSignificance() < block.getSignificance())
-                attachBlock(localConnector, dockingConnector);
-            else
-                attachBlock(dockingConnector, localConnector);
-        }
+    static void attachBlock(ConnectionArea attachingConnector, ConnectionArea baseConnector) {
+        ProgrammingBlock attachingBlock = getProgrammingBlock(attachingConnector), baseBlock = getProgrammingBlock(baseConnector);
+        attachingBlock.setPosition(baseConnector.getX() * 2 - attachingConnector.getX() * 2, baseConnector.getY() * 2 - attachingConnector.getY() * 2);
+        setDependencies(attachingConnector, baseConnector);
+        sendConnectionEvent(baseConnector, attachingConnector, true);
     }
 
-    static private void attachBlock(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
-        ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
-        attachingBlock.setPosition(baseConnector.getX() * 2 - dockingConnector.getX() * 2, baseConnector.getY() * 2 - dockingConnector.getY() * 2);
-        setDependencies(dockingConnector, baseConnector);
-        sendConnectionEvent(baseConnector, dockingConnector, true);
-    }
-
-    static private void setDependencies(ConnectionArea dockingConnector, ConnectionArea baseConnector) {
-        ProgrammingBlock attachingBlock = getProgrammingBlock(dockingConnector), baseBlock = getProgrammingBlock(baseConnector);
+    static private void setDependencies(ConnectionArea attachingConnector, ConnectionArea baseConnector) {
+        ProgrammingBlock attachingBlock = getProgrammingBlock(attachingConnector), baseBlock = getProgrammingBlock(baseConnector);
         attachingBlock.attachedTo = baseBlock;
         baseBlock.addActor(attachingBlock);
-        dockingConnector.connect(baseConnector);
+        attachingConnector.connect(baseConnector);
         BlockData descendantBlock = attachingBlock.coreBlock.data, parentBlock = baseBlock.coreBlock.data;
         descendantBlock.setParent(parentBlock);
     }
@@ -142,17 +133,17 @@ public class ProgrammingBlock extends Group {
 
     private void tryDisconnectOutput() {
         ConnectionArea outputConnector = getOutputConnector();
-        if (outputConnector.getConnectedTo() != null) {
-            sendConnectionEvent(outputConnector.getConnectedTo(), outputConnector, false);
+        if (outputConnector.getConnection() != null) {
+            sendConnectionEvent(outputConnector.getConnection(), outputConnector, false);
             outputConnector.disconnect();
         }
     }
 
-    private int getSignificance() {
+    int getSignificance() {
         return this.coreBlock.data.shape.significance;
     }
 
-    private static ProgrammingBlock getProgrammingBlock(ConnectionArea connectionArea) {
+    static ProgrammingBlock getProgrammingBlock(ConnectionArea connectionArea) {
         return connectionArea.coreBlock.getParent();
     }
 }

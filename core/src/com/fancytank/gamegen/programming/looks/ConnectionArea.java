@@ -59,7 +59,7 @@ public class ConnectionArea extends Actor {
         this.connectedTo = null;
     }
 
-    public ConnectionArea getConnectedTo() {
+    public ConnectionArea getConnection() {
         return connectedTo;
     }
 
