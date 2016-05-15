@@ -122,7 +122,6 @@ public class ProgrammingBlock extends Group {
 
     private boolean detach() {
         if (attachedTo != null) {
-            tryDisconnectOutput();
             this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());
             AndroidGameGenerator.addToStage(this);
             removeDependencies();
@@ -132,18 +131,18 @@ public class ProgrammingBlock extends Group {
         return true;
     }
 
+    private void removeDependencies() {
+        tryDisconnectOutput();
+        attachedTo.removeActor(this);
+        attachedTo = null;
+    }
+
     private void tryDisconnectOutput() {
         ConnectionArea outputConnector = getOutputConnector();
         if (outputConnector.getConnectedTo() != null) {
             sendConnectionEvent(outputConnector.getConnectedTo(), outputConnector, false);
             outputConnector.disconnect();
         }
-    }
-
-    private void removeDependencies() {
-        getOutputConnector().disconnect();
-        attachedTo.removeActor(this);
-        attachedTo = null;
     }
 
     private int getSignificance() {
