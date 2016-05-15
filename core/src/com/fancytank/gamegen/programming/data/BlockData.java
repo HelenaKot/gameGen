@@ -18,9 +18,17 @@ public class BlockData {
         this.inputs = inputs;
     }
 
-    public void setParent(BlockData parent) { this.parent = parent; }
+    public void setParent(BlockData parent) {
+        this.parent = parent;
+        parent.descendant = this;
+    }
 
-    public void  setDescendant(BlockData descendant) { this.descendant = descendant; }
+    public void setDescendant(BlockData descendant) {
+        this.descendant = descendant;
+        descendant.parent = this;
+    }
 
-    public InputFragment[] getInputs() { return inputs; }
+    public InputFragment[] getInputs() {
+        return inputs;
+    }
 }

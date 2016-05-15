@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.ProgrammingBlock;
+import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
 
 import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
@@ -16,6 +17,7 @@ public class ConnectionArea extends Actor {
     public Direction direction;
     public BlockInputAppearance blockInputAppearance;
     private ConnectionArea connectedTo;
+    private InputFragment inputFragment;
 
     public ConnectionArea(float x, float y, CoreBlock coreBlock, Direction direction) {
         this.coreBlock = coreBlock;
@@ -28,6 +30,18 @@ public class ConnectionArea extends Actor {
         this.coreBlock = blockInputAppearance.coreBlock;
         this.direction = direction;
         this.setBounds(x / 2, y / 2, padding, padding);
+    }
+
+    // use inputFragment setConnectionArea, undepricate it someday
+    @Deprecated
+    public void setInputFragment(InputFragment inputFragment) {
+        this.inputFragment = inputFragment;
+    }
+
+    public InputType getInputType() {
+        if (inputFragment != null)
+            return inputFragment.inputType;
+        return null;
     }
 
     public Rectangle getBoundingBox() {

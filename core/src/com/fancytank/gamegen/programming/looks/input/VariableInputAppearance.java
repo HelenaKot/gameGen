@@ -16,7 +16,9 @@ public class VariableInputAppearance extends DummyInputAppearance {
 
     @Override
     public ConnectionArea getConnectors() {
-        return new ConnectionArea(getConnectorPlacement().x, getConnectorPlacement().y, this, Direction.RIGHT);
+        ConnectionArea inputConnector = new ConnectionArea(getConnectorPlacement().x, getConnectorPlacement().y, this, Direction.RIGHT);
+        inputFragment.setConnectionArea(inputConnector);
+        return inputConnector;
     }
 
     @Override

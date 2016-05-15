@@ -8,6 +8,7 @@ import com.fancytank.gamegen.AndroidGameGenerator;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
+import com.fancytank.gamegen.programming.looks.InputType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -116,7 +117,7 @@ public class ProgrammingBlock extends Group {
 
     // TODO Resize only on socket! link ConnectionArea with inputs plz
     static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
-        if (baseConnector.direction == Direction.DOWN || baseConnector.direction == Direction.UP)
+        if (baseConnector.getInputType() == InputType.SOCKET)
             EventBus.getDefault().post(new BlockResizeEvent(baseConnector, dockingConnector, isConnecting));
         else
             EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
@@ -124,18 +125,27 @@ public class ProgrammingBlock extends Group {
 
     boolean detach() {
         if (attachedTo != null) {
-            ConnectionArea outputConnector = getOutputConnector();
-            sendConnectionEvent(outputConnector.getConnectedTo(), outputConnector, false);
-            outputConnector.disconnect();
-
-            attachedTo.removeActor(this);
+            tryDisconnectOutput();
             this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());
-            attachedTo = null;
             AndroidGameGenerator.addToStage(this);
+            removeDependencies();
             detachingBlock = this;
             return false;
         }
         return true;
+    }
+
+    private void tryDisconnectOutput() {
+        ConnectionArea outputConnector = getOutputConnector();
+        if (outputConnector.getConnectedTo() != null) {
+            sendConnectionEvent(outputConnector.getConnectedTo(), outputConnector, false);
+            outputConnector.disconnect();
+        }
+    }
+
+    private void removeDependencies() {
+        attachedTo.removeActor(this);
+        attachedTo = null;
     }
 
     private int getSignificance() {
