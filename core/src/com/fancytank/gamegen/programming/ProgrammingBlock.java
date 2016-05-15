@@ -28,6 +28,7 @@ public class ProgrammingBlock extends Group {
     public ProgrammingBlock(BlockData data, Color tint) {
         setName(UUID.randomUUID().toString());
         coreBlock = new CoreBlock(this, data, tint);
+        data.setCoreBlock(coreBlock);
         connectors = getConnectors(coreBlock);
         blocksList.add(this);
         setBounds(0, 0, coreBlock.getWidth(), coreBlock.getHeight());
