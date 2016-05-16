@@ -10,7 +10,7 @@ import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
 
 public class CoreBlock extends Actor {
-    public Color tint; //todo
+    Color tint;
     ProgrammingBlock programmingBlock;
     public BlockData data;
     public BlockAppearance blockAppearance;

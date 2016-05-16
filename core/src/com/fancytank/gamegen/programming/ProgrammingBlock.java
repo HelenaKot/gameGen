@@ -25,6 +25,7 @@ public class ProgrammingBlock extends Group {
     public ArrayList<ConnectionArea> connectors;
     private float touchedX, touchedY;
     private Group attachedTo = null;
+    private int myZIndex;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
 
     public ProgrammingBlock(BlockData data, Color tint) {
@@ -52,6 +53,10 @@ public class ProgrammingBlock extends Group {
                 touchedX = x;
                 touchedY = y;
                 detach();
+
+                setMyZIndex(local.getZIndex());
+                local.setZIndex(100);
+
                 event.setBubbles(false);
                 return true;
             }
@@ -60,6 +65,9 @@ public class ProgrammingBlock extends Group {
                 for (ProgrammingBlock programmingBlock : blocksList)
                     if (programmingBlock != local)
                         checkOverlapping(programmingBlock);
+
+                local.setZIndex(myZIndex);
+
                 event.setBubbles(false);
             }
 
@@ -129,9 +137,7 @@ public class ProgrammingBlock extends Group {
 
     private void detach() {
         if (attachedTo != null) {
-            this.coreBlock.tint = Color.CORAL;
             Vector2 pos = Utility.myLocalToStageCoordinates(this);
-            this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());
             this.setPosition(pos.x, pos.y);
             AndroidGameGenerator.addToStage(this);
             removeDependencies();
@@ -153,6 +159,10 @@ public class ProgrammingBlock extends Group {
             outputConnector.disconnect();
             sendConnectionEvent(tmp, outputConnector, false);
         }
+    }
+
+    private void setMyZIndex(int z) {
+        myZIndex = z;
     }
 
     int getSignificance() {

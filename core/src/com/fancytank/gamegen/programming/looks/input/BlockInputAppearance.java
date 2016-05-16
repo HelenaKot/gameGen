@@ -32,16 +32,16 @@ abstract public class BlockInputAppearance {
         patchData.startY = y;
     }
 
-    public float getHeight() {
-        return patchData.height;
-    }
-
     public float getWidth() {
         return patchData.width;
     }
 
     public void setWidth(float width) {
         patchData.width = width;
+    }
+
+    public float getHeight() {
+        return patchData.height;
     }
 
     public void setHeight(float height) {
