@@ -75,12 +75,12 @@ public class ConnectionArea extends Actor {
     }
 
     private boolean isOutputBlock() {
-        return this == coreBlock.parent.getOutputConnector();
+        return this == coreBlock.programmingBlock.getOutputConnector();
     }
 
     private void translateConnectedToInput() {
         float deltaY = this.getPosition().y - connectedTo.getPosition().y;
-        ProgrammingBlock block = connectedTo.coreBlock.parent;
+        ProgrammingBlock block = connectedTo.coreBlock.programmingBlock;
         block.setPosition(block.getX(), block.getY() + deltaY);
     }
 

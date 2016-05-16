@@ -10,13 +10,13 @@ import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
 
 public class CoreBlock extends Actor {
-    Color tint;
-    ProgrammingBlock parent;
+    public Color tint; //todo
+    ProgrammingBlock programmingBlock;
     public BlockData data;
     public BlockAppearance blockAppearance;
 
-    public CoreBlock(ProgrammingBlock parent, BlockData data, Color tint) {
-        this.parent = parent;
+    public CoreBlock(ProgrammingBlock programmingBlock, BlockData data, Color tint) {
+        this.programmingBlock = programmingBlock;
         this.tint = tint;
         this.data = data;
         blockAppearance = new BlockAppearance(this);
@@ -38,9 +38,8 @@ public class CoreBlock extends Actor {
         return blockAppearance.getHeight();
     }
 
-    @Override
-    public ProgrammingBlock getParent() {
-        return parent;
+    public ProgrammingBlock getProgrammingBlock() {
+        return programmingBlock;
     }
 
     public Rectangle getBoundingBox() {

@@ -7,12 +7,19 @@ import com.fancytank.gamegen.programming.looks.CoreBlock;
 import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
 
 public class BlockResizeEvent extends BlockConnectionEvent {
+    boolean isLast = false;
 
     public BlockResizeEvent(ConnectionArea baseConnector, ConnectionArea attachingConnector, boolean isConnecting) {
         super(baseConnector, attachingConnector, isConnecting);
     }
 
+    public void setLast(boolean isLast) {
+        this.isLast = isLast;
+    }
+
     public float getConnectedComponentHeight() {
+        if (isLast && !isConnecting)
+            return 0;
         return sumHeight(attachingConnector.coreBlock, 0);
     }
 

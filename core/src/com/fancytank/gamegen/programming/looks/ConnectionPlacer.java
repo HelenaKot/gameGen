@@ -24,7 +24,7 @@ public final class ConnectionPlacer {
     }
 
     public static void updateConnectors(CoreBlock coreBlock) {
-        ArrayList<ConnectionArea> connectors = coreBlock.parent.connectors;
+        ArrayList<ConnectionArea> connectors = coreBlock.programmingBlock.connectors;
         float height = coreBlock.getHeight();
         int next = 0;
         if (connects(coreBlock, Direction.LEFT))
@@ -52,7 +52,7 @@ public final class ConnectionPlacer {
     }
 
     private static void updateInputConnectors(CoreBlock coreBlock, int index) {
-        ArrayList<ConnectionArea> connectors = coreBlock.parent.connectors;
+        ArrayList<ConnectionArea> connectors = coreBlock.programmingBlock.connectors;
         for (int next = index; next < connectors.size(); next++) {
             Vector2 newPlacement = coreBlock.blockAppearance.inputs.get(next - index).getConnectorPlacement();
             connectors.get(next).setPosition(newPlacement.x / 2, newPlacement.y / 2);

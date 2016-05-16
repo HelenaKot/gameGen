@@ -2,7 +2,7 @@ package com.fancytank.gamegen.programming;
 
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 
-import static com.fancytank.gamegen.programming.ProgrammingBlock.getProgrammingBlock;
+import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBlock;
 
 public final class ConnectionRules {
 

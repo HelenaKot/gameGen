@@ -1,6 +1,7 @@
 package com.fancytank.gamegen.programming;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -9,6 +10,7 @@ import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 import com.fancytank.gamegen.programming.looks.InputType;
+import com.fancytank.gamegen.programming.looks.Utility;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.fancytank.gamegen.programming.looks.ConnectionPlacer.getConnectors;
+import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBlock;
 
 public class ProgrammingBlock extends Group {
     CoreBlock coreBlock;
@@ -23,7 +26,6 @@ public class ProgrammingBlock extends Group {
     private float touchedX, touchedY;
     private Group attachedTo = null;
     private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
-    private static ProgrammingBlock detachingBlock;
 
     public ProgrammingBlock(BlockData data, Color tint) {
         setName(UUID.randomUUID().toString());
@@ -50,6 +52,7 @@ public class ProgrammingBlock extends Group {
                 touchedX = x;
                 touchedY = y;
                 detach();
+                event.setBubbles(false);
                 return true;
             }
 
@@ -57,15 +60,12 @@ public class ProgrammingBlock extends Group {
                 for (ProgrammingBlock programmingBlock : blocksList)
                     if (programmingBlock != local)
                         checkOverlapping(programmingBlock);
-                detachingBlock = null;
+                event.setBubbles(false);
             }
 
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                if (detachingBlock != null) {
-                    detachingBlock.moveBy(x - detachingBlock.getX() + getX() - detachingBlock.touchedX, y - detachingBlock.getY() + getY() - detachingBlock.touchedY);
-                } else {
-                    moveBy(x - touchedX, y - touchedY);
-                }
+                moveBy(x - touchedX, y - touchedY);
+                event.setBubbles(false);
             }
         });
     }
@@ -107,16 +107,19 @@ public class ProgrammingBlock extends Group {
     }
 
     static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
-        if (baseConnector.getInputType() == InputType.SOCKET)
-            EventBus.getDefault().post(new BlockResizeEvent(baseConnector, dockingConnector, isConnecting));
-        else
-            EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
+        if (baseConnector.getInputType() == InputType.SOCKET) {
+            BlockResizeEvent event = new BlockResizeEvent(baseConnector, dockingConnector, isConnecting);
+            event.setLast(true);
+            EventBus.getDefault().post(event);
+        }
+//        else
+//            EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
         if (baseConnector.getInputType() != InputType.VARIABLE)
             sendConnectionEventUpward(baseConnector.coreBlock, isConnecting);
     }
 
     static private void sendConnectionEventUpward(CoreBlock block, boolean isConnecting) {
-        ConnectionArea outputConnector = block.getParent().getOutputConnector();
+        ConnectionArea outputConnector = block.getProgrammingBlock().getOutputConnector();
         if (outputConnector.hasConnection() && outputConnector.getConnection().getInputType() == InputType.SOCKET) {
             EventBus.getDefault().post(new BlockResizeEvent(outputConnector.getConnection(), outputConnector, isConnecting));
         }
@@ -124,37 +127,35 @@ public class ProgrammingBlock extends Group {
             sendConnectionEventUpward(block.data.getParent().getCoreBlock(), isConnecting);
     }
 
-    private boolean detach() {
+    private void detach() {
         if (attachedTo != null) {
+            this.coreBlock.tint = Color.CORAL;
+            Vector2 pos = Utility.myLocalToStageCoordinates(this);
             this.setPosition(attachedTo.getX() + this.getX(), attachedTo.getY() + this.getY());
+            this.setPosition(pos.x, pos.y);
             AndroidGameGenerator.addToStage(this);
             removeDependencies();
-            detachingBlock = this;
-            return false;
         }
-        return true;
     }
 
+
     private void removeDependencies() {
-        tryDisconnectOutput();
         attachedTo.removeActor(this);
         attachedTo = null;
         coreBlock.data.removeParent();
+        tryDisconnectOutput();
     }
 
     private void tryDisconnectOutput() {
         ConnectionArea outputConnector = getOutputConnector();
         if (outputConnector.hasConnection()) {
-            sendConnectionEvent(outputConnector.getConnection(), outputConnector, false);
+            ConnectionArea tmp = outputConnector.getConnection();
             outputConnector.disconnect();
+            sendConnectionEvent(tmp, outputConnector, false);
         }
     }
 
     int getSignificance() {
         return this.coreBlock.data.shape.significance;
-    }
-
-    static ProgrammingBlock getProgrammingBlock(ConnectionArea connectionArea) {
-        return connectionArea.coreBlock.getParent();
     }
 }
