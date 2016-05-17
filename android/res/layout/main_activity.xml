@@ -10,28 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <com.wunderlist.slidinglayer.SlidingLayer xmlns:slidingLayer="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/slidingLayer1"
-        android:layout_width="wrap_content"
+        android:id="@+id/sliding_layer"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         slidingLayer:changeStateOnTap="true"
-        slidingLayer:offsetDistance="5pt"
-        slidingLayer:previewOffsetDistance="5pt"
+        slidingLayer:offsetDistance="10dp"
+        slidingLayer:previewOffsetDistance="10dp"
         slidingLayer:shadowDrawable="@drawable/drawer_shadow"
-        slidingLayer:shadowSize="10pt"
+        slidingLayer:shadowSize="10dp"
         slidingLayer:stickTo="left">
 
         <ListView
             android:id="@+id/drawer_list"
-            android:layout_width="240dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="#111"
