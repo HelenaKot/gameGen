@@ -21,7 +21,7 @@
         slidingLayer:shadowSize="10dp"
         slidingLayer:stickTo="left">
 
-        <ListView
+        <ExpandableListView
             android:id="@+id/drawer_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
