@@ -27,14 +27,16 @@ public class AndroidLauncher extends AndroidApplication {
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         View gdxView = initializeForView(new AndroidGameGenerator());
         contentFrame.addView(gdxView);
-
         slidingLayer = (SlidingLayer) findViewById(R.id.sliding_layer);
-        //slidingLayer.closeLayer(true);
+        slidingLayer.closeLayer(true);
 
         setGroupParents();
         setChildData();
 
         ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.drawer_list);
+        expandableList.setClickable(true);
+        expandableList.setDividerHeight(2);
+
         BlockExpendableListAdapter adapter = new BlockExpendableListAdapter(parentItems, childItems);
 
         adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);

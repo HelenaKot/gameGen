@@ -3,6 +3,7 @@ package com.fancytank.gamegen;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
@@ -11,14 +12,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
+
     private Activity activity;
-    private ArrayList<Object> childItems;
+    private ArrayList<Object> childtems;
     private LayoutInflater inflater;
     private ArrayList<String> parentItems, child;
 
     public BlockExpendableListAdapter(ArrayList<String> parents, ArrayList<Object> childern) {
         this.parentItems = parents;
-        this.childItems = childern;
+        this.childtems = childern;
     }
 
     public void setInflater(LayoutInflater inflater, Activity activity) {
@@ -29,7 +31,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        child = (ArrayList<String>) childItems.get(groupPosition);
+        child = (ArrayList<String>) childtems.get(groupPosition);
 
         TextView textView = null;
 
@@ -37,10 +39,10 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.drawer_list_item, null);
         }
 
-        textView = (TextView) convertView.findViewById(R.id.textView1);
+        textView = (TextView) convertView.findViewById(R.id.item_title);
         textView.setText(child.get(childPosition));
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -54,11 +56,12 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.drawer_list_group, null);
         }
-
-       ((TextView) convertView).setText(parentItems.get(groupPosition));
+        TextView textView = (TextView) convertView.findViewById(R.id.group_title);
+        textView.setText(parentItems.get(groupPosition));
 
         return convertView;
     }
@@ -75,7 +78,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return ((ArrayList<String>) childItems.get(groupPosition)).size();
+        return ((ArrayList<String>) childtems.get(groupPosition)).size();
     }
 
     @Override
@@ -112,4 +115,5 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
     }
+
 }
