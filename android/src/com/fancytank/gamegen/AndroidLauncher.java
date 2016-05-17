@@ -14,6 +14,8 @@ import android.widget.ListView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.wunderlist.slidinglayer.SlidingLayer;
 
 public class AndroidLauncher extends AndroidApplication {
     private DrawerLayout mDrawerLayout;
@@ -30,18 +32,25 @@ public class AndroidLauncher extends AndroidApplication {
         View gdxView = initializeForView(new AndroidGameGenerator());
         contentFrame.addView(gdxView);
 
-        setUpDrawer();
+        //setUpDrawer();
     }
 
-    private void setUpDrawer() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity);
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+    private void setUpSlidingLayer() {
+        SlidingLayer slidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
 
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mRandomList));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        slidingLayer.setChangeStateOnTap(false);
     }
+
+//    private void setUpDrawer() {
+//       // mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+//        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+//
+//        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+//                R.layout.drawer_list_item, mRandomList));
+//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
