@@ -124,3 +124,8 @@ idea {
         }
     }
 }
+
+dependencies {
+    compile files('build/intermediates/com.android.support/support-v4/23.3.0/jars/classes.jar')
+    compile 'com.android.support:appcompat-v7:23.3.0'
+}
