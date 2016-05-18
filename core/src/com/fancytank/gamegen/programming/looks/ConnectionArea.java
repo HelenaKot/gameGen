@@ -9,6 +9,7 @@ import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
+import com.fancytank.gamegen.programming.looks.input.InputType;
 
 import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
 

@@ -9,7 +9,7 @@ import com.fancytank.gamegen.AndroidGameGenerator;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
-import com.fancytank.gamegen.programming.looks.InputType;
+import com.fancytank.gamegen.programming.looks.input.InputType;
 import com.fancytank.gamegen.programming.looks.Utility;
 
 import org.greenrobot.eventbus.EventBus;

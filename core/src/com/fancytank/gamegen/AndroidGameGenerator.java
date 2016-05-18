@@ -2,30 +2,34 @@ package com.fancytank.gamegen;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.fancytank.gamegen.editor.EditorBackground;
-import com.fancytank.gamegen.programming.data.InputFragment;
-import com.fancytank.gamegen.programming.looks.BlockAppearance;
-import com.fancytank.gamegen.programming.data.BlockData;
-import com.fancytank.gamegen.programming.looks.BlockShape;
-import com.fancytank.gamegen.programming.looks.InputType;
-import com.fancytank.gamegen.programming.looks.PatchTextureManager;
 import com.fancytank.gamegen.programming.ProgrammingBlock;
+import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
+import com.fancytank.gamegen.programming.looks.BlockAppearance;
+import com.fancytank.gamegen.programming.looks.PatchTextureManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class AndroidGameGenerator extends ApplicationAdapter {
     static private Stage stage;
-    //OrthographicCamera cam = new OrthographicCamera();
 
     @Override
     public void create() {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
         setUp();
+        EventBus.getDefault().post(new SetUpFinished());
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe
+    public void onEvent(BlockCreateEvent event) {
+        new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor()).setPosition(stage.getWidth()*0.4f, stage.getHeight()/2);
     }
 
     private void setUp() {
@@ -33,13 +37,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
         EditorBackground bg = new EditorBackground(stage.getWidth(), stage.getHeight());
         stage.addActor(bg);
-
-        new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.DUMMY, "DERP\nDEP\nDERP\nWHY")}, BlockShape.CHAIN_FUNCTION), Color.GREEN);
-        new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.DUMMY, "DERP DERP DERP")}, BlockShape.CHAIN_FUNCTION), Color.GREEN);
-        new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.VARIABLE, "derp herp"), new InputFragment(InputType.SOCKET, "HERP"),
-                new InputFragment(InputType.VARIABLE, "derp"),  new InputFragment(InputType.SOCKET, "derp"),  new InputFragment(InputType.DUMMY, "herp")}), Color.ORANGE);
-        new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.VARIABLE, "NOPE")}, BlockShape.CHAIN_FUNCTION), Color.YELLOW);
-        new ProgrammingBlock(new BlockData(new InputFragment[] { new InputFragment(InputType.DUMMY, "NOPE")}, BlockShape.VARIABLE), Color.LIME);
     }
 
     static public void addToStage(Actor actor) {
@@ -56,4 +53,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
     public void dispose() {
         stage.dispose();
     }
+
+    class SetUpFinished {}
 }

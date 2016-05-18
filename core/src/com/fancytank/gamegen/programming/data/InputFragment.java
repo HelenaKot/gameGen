@@ -1,7 +1,7 @@
 package com.fancytank.gamegen.programming.data;
 
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
-import com.fancytank.gamegen.programming.looks.InputType;
+import com.fancytank.gamegen.programming.looks.input.InputType;
 
 public class InputFragment {
     public InputType inputType;

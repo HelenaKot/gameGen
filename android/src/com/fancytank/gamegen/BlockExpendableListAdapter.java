@@ -7,18 +7,23 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
+import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
 public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
     private Activity activity;
-    private ArrayList<Object> childtems;
+    private ArrayList<BlockActorPattern[]> childtems;
+    private BlockActorPattern[] childsArray;
     private LayoutInflater inflater;
-    private ArrayList<String> parentItems, child;
+    private ArrayList<String> parentItems;
 
-    public BlockExpendableListAdapter(ArrayList<String> parents, ArrayList<Object> childern) {
+    public BlockExpendableListAdapter(ArrayList<String> parents, ArrayList<BlockActorPattern[]> childern) {
         this.parentItems = parents;
         this.childtems = childern;
     }
@@ -30,8 +35,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-        child = (ArrayList<String>) childtems.get(groupPosition);
+        childsArray = childtems.get(groupPosition);
 
         TextView textView = null;
 
@@ -40,14 +44,13 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
         }
 
         textView = (TextView) convertView.findViewById(R.id.item_title);
-        textView.setText(child.get(childPosition));
+        textView.setText(childsArray[childPosition].getName());
 
         convertView.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, child.get(childPosition),
-                        Toast.LENGTH_SHORT).show();
+                BlockCreateEvent bce = new BlockCreateEvent(childsArray[childPosition]);
+                EventBus.getDefault().post(bce);
             }
         });
 
@@ -78,7 +81,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return ((ArrayList<String>) childtems.get(groupPosition)).size();
+        return (childtems.get(groupPosition)).length;
     }
 
     @Override
