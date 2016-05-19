@@ -19,12 +19,14 @@ import java.util.ArrayList;
 public class BlocksExpendableList {
     private ExpandableListView expandableList;
     private BlockExpendableListAdapter adapter;
+    private Activity activity;
 
     private ArrayList<String> parentItems = new ArrayList<String>();
     private ArrayList<BlockActorPattern[]> childItems = new ArrayList<>();
 
     public BlocksExpendableList(ExpandableListView expandableList, Activity context) {
         this.expandableList = expandableList;
+        activity = context;
         setListView();
 
         adapter = new BlockExpendableListAdapter(parentItems, childItems);
@@ -42,7 +44,13 @@ public class BlocksExpendableList {
     public void populateList() {
         setGroupParents();
         setChildData();
-        adapter.notifyDataSetChanged();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
     private void setGroupParents() {
@@ -68,12 +76,10 @@ public class BlocksExpendableList {
                 new CustomBlockPattern("function", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "LOREM IPSUM")}, BlockShape.CHAIN_FUNCTION), Color.CORAL),
                 new CustomBlockPattern("socket input", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "PLACEHOLDER"), new InputFragment(InputType.SOCKET, "PLACEHOLDER")}, BlockShape.CHAIN_FUNCTION), Color.PURPLE),
-                new CustomBlockPattern("mega derp", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "PLACEHOLDER"), new InputFragment(InputType.SOCKET, "PLACEHOLDER"),
-                        new InputFragment(InputType.DUMMY, "PLACEHOLDER"), new InputFragment(InputType.SOCKET, "PLACEHOLDER")}, BlockShape.ENCLOSED), Color.PINK)
-
-
+                        new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.DUMMY, "PLACEHOLDER")}, BlockShape.ENCLOSED), Color.PURPLE),
+                new CustomBlockPattern("sockets", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.VARIABLE, "PLACEHOLDER"),
+                        new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.DUMMY, "PLACEHOLDER")}, BlockShape.ENCLOSED), Color.PINK)
 
         };
         childItems.add(derpPatterns);

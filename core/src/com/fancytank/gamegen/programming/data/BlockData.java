@@ -30,7 +30,7 @@ public class BlockData {
 
     public void setParent(BlockData parent) {
         this.parent = parent;
-        parent.descendant = this;
+        this.parent.descendant = this;
     }
 
     public void removeParent() {
