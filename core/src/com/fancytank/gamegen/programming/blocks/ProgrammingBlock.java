@@ -1,4 +1,4 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.blocks;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
@@ -6,11 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.programming.BlockResizeEvent;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
-import com.fancytank.gamegen.programming.looks.input.InputType;
 import com.fancytank.gamegen.programming.looks.Utility;
+import com.fancytank.gamegen.programming.looks.input.InputType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,11 +36,8 @@ public class ProgrammingBlock extends Group {
         connectors = getConnectors(coreBlock);
         blocksList.add(this);
         setBounds(0, 0, coreBlock.getWidth(), coreBlock.getHeight());
-
         setUpListeners();
         populateGroup();
-
-        AndroidGameGenerator.addToStage(this);
     }
 
     public ConnectionArea getOutputConnector() {
@@ -99,7 +97,7 @@ public class ProgrammingBlock extends Group {
     }
 
     static void attachBlock(ConnectionArea attachingConnector, ConnectionArea baseConnector) {
-        ProgrammingBlock attachingBlock = getProgrammingBlock(attachingConnector), baseBlock = getProgrammingBlock(baseConnector);
+        ProgrammingBlock attachingBlock = getProgrammingBlock(attachingConnector);
         attachingBlock.setPosition(baseConnector.getX() * 2 - attachingConnector.getX() * 2, baseConnector.getY() * 2 - attachingConnector.getY() * 2);
         setDependencies(attachingConnector, baseConnector);
         sendConnectionEvent(baseConnector, attachingConnector, true);
@@ -122,7 +120,7 @@ public class ProgrammingBlock extends Group {
         }
 //        else
 //            EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
-        if (baseConnector.getInputType() != InputType.VARIABLE)
+        if (baseConnector.getInputType() != InputType.VARIABLE && baseConnector.coreBlock.data.hasParent())
             sendConnectionEventUpward(baseConnector.coreBlock, isConnecting);
     }
 
@@ -144,7 +142,6 @@ public class ProgrammingBlock extends Group {
         }
     }
 
-
     private void removeDependencies() {
         attachedTo.removeActor(this);
         attachedTo = null;
@@ -165,7 +162,7 @@ public class ProgrammingBlock extends Group {
         myZIndex = z;
     }
 
-    int getSignificance() {
+    public int getSignificance() {
         return this.coreBlock.data.shape.significance;
     }
 }

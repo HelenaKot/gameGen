@@ -1,5 +1,6 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.blocks;
 
+import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 
 import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBlock;

@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.fancytank.gamegen.editor.EditorBackground;
-import com.fancytank.gamegen.programming.ProgrammingBlock;
 import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
+import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.looks.BlockAppearance;
 import com.fancytank.gamegen.programming.looks.PatchTextureManager;
 
@@ -29,7 +29,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     @Subscribe
     public void onEvent(BlockCreateEvent event) {
-        new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor()).setPosition(stage.getWidth()*0.4f, stage.getHeight()/2);
+        addToStage(new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor()));
     }
 
     private void setUp() {
@@ -41,6 +41,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     static public void addToStage(Actor actor) {
         stage.addActor(actor);
+        actor.setPosition(stage.getWidth()*0.4f, stage.getHeight()/2);
     }
 
     @Override

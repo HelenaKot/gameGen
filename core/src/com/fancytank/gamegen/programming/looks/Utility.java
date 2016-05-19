@@ -3,7 +3,7 @@ package com.fancytank.gamegen.programming.looks;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.fancytank.gamegen.programming.ProgrammingBlock;
+import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 
 public final class Utility {
 
