@@ -3,12 +3,14 @@ package com.fancytank.gamegen.programming.data;
 import com.fancytank.gamegen.programming.looks.BlockShape;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
-public class BlockData {
+import java.io.Serializable;
+
+public class BlockData implements Serializable {
     public BlockShape shape;
     BlockData parent;
     BlockData descendant;
     InputFragment[] inputs;
-    CoreBlock coreBlock;
+    transient CoreBlock coreBlock;
 
     public BlockData(InputFragment[] inputs) {
         this.shape = BlockShape.ENCLOSED;

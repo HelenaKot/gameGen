@@ -22,7 +22,7 @@ import static com.fancytank.gamegen.programming.looks.ConnectionPlacer.getConnec
 import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBlock;
 
 public class ProgrammingBlock extends Group {
-    CoreBlock coreBlock;
+    public CoreBlock coreBlock;
     public ArrayList<ConnectionArea> connectors;
     private float touchedX, touchedY;
     private Group attachedTo = null;

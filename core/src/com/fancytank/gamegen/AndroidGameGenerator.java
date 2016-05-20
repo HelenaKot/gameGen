@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Json;
 import com.fancytank.gamegen.editor.EditorBackground;
+import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.looks.BlockAppearance;
@@ -29,7 +31,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     @Subscribe
     public void onEvent(BlockCreateEvent event) {
-        addToStage(new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor()));
+        addToStage(Workspace.clone(new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor())));
     }
 
     private void setUp() {

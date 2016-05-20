@@ -3,10 +3,12 @@ package com.fancytank.gamegen.programming.data;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
-public class InputFragment {
+import java.io.Serializable;
+
+public class InputFragment implements Serializable {
     public InputType inputType;
     public String labelText;
-    private ConnectionArea connectionArea;
+    transient private ConnectionArea connectionArea;
 
     public InputFragment(InputType inputType, String labelText) {
         this.inputType = inputType;
@@ -18,6 +20,7 @@ public class InputFragment {
         connectionArea.setInputFragment(this);
     }
 
+    //TODO Connection
 
     //TODO programming
 
