@@ -1,9 +1,9 @@
 package com.fancytank.gamegen.programming;
 
 
-import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
+import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.looks.BlockShape;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +11,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 public class Workspace {
 
@@ -54,26 +53,4 @@ public class Workspace {
         return new ProgrammingBlockSavedInstance(programmingBlock);
     }
 
-    static private class ProgrammingBlockSavedInstance implements Serializable {
-        BlockData data;
-        float a, r, g, b;
-        float posX, posY;
-
-        ProgrammingBlockSavedInstance(ProgrammingBlock programmingBlock) {
-            data = programmingBlock.coreBlock.data;
-            a = programmingBlock.coreBlock.tint.a;
-            r = programmingBlock.coreBlock.tint.r;
-            g = programmingBlock.coreBlock.tint.g;
-            b = programmingBlock.coreBlock.tint.b;
-            posX = programmingBlock.getX();
-            posY = programmingBlock.getY();
-        }
-
-        ProgrammingBlock restore() {
-            ProgrammingBlock restoredBlock = new ProgrammingBlock(data, new Color(r, g, b, a));
-            data.setCoreBlock(restoredBlock.coreBlock);
-            restoredBlock.setPosition(posX, posY);
-            return restoredBlock;
-        }
-    }
 }
