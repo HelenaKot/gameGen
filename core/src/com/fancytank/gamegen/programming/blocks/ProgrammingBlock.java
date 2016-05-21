@@ -165,4 +165,8 @@ public class ProgrammingBlock extends Group {
     public int getSignificance() {
         return this.coreBlock.data.shape.significance;
     }
+
+    public static ArrayList<ProgrammingBlock> getBlockList() {
+        return blocksList;
+    }
 }

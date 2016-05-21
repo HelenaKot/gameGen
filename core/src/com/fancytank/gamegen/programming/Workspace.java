@@ -4,6 +4,7 @@ package com.fancytank.gamegen.programming;
 import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
+import com.fancytank.gamegen.programming.looks.BlockShape;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,6 +19,14 @@ public class Workspace {
     }
 
     public static void load() {
+    }
+
+    public static String getDebugLog() {
+        String log = "DEBUG LOG\n";
+        for (BlockData blockData : BlockData.getBlockDataList())
+            if (blockData.shape == BlockShape.ENCLOSED)
+                log += blockData.toString() + "\n\n";
+        return log;
     }
 
     public static ProgrammingBlock clone(ProgrammingBlock cloningBlock) {

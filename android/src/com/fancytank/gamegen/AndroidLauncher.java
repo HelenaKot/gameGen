@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.fancytank.gamegen.programming.Workspace;
 import com.wunderlist.slidinglayer.SlidingLayer;
 
 import org.greenrobot.eventbus.EventBus;
@@ -15,12 +17,13 @@ import org.greenrobot.eventbus.Subscribe;
 public class AndroidLauncher extends AndroidApplication {
     private SlidingLayer slidingLayer;
     private BlocksExpendableList list;
+    private TextView debugText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
+        debugText = (TextView) findViewById(R.id.debug_text);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         View gdxView = initializeForView(new AndroidGameGenerator());
         contentFrame.addView(gdxView);
@@ -36,4 +39,7 @@ public class AndroidLauncher extends AndroidApplication {
         Log.e("LOG", "event is here");
     }
 
+    public void OnDebugClick(View view) {
+        debugText.setText(Workspace.getDebugLog());
+    }
 }

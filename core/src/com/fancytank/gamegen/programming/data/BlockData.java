@@ -1,9 +1,11 @@
 package com.fancytank.gamegen.programming.data;
 
+import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.looks.BlockShape;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class BlockData implements Serializable {
     public BlockShape shape;
@@ -58,5 +60,20 @@ public class BlockData implements Serializable {
 
     public InputFragment[] getInputs() {
         return inputs;
+    }
+
+    @Override
+    public String toString() {
+        String output = "BlockData ID: " + coreBlock.getProgrammingBlock().getName() + "\n";
+        for (InputFragment inputFragment : inputs)
+            output += inputFragment.toString();
+        return output;
+    }
+
+    public static ArrayList<BlockData> getBlockDataList() {
+        ArrayList<BlockData> output = new ArrayList<BlockData>();
+        for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())
+            output.add(programmingBlock.coreBlock.data);
+        return output;
     }
 }

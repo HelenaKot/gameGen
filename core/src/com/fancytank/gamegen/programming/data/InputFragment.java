@@ -20,6 +20,14 @@ public class InputFragment implements Serializable {
         connectionArea.setInputFragment(this);
     }
 
+    @Override
+    public String toString() {
+        String output = "Input [" + labelText + "] type " + inputType + "\n";
+        if (connectionArea != null && connectionArea.hasConnection())
+            output += "connected to:\n" + connectionArea.getConnection().coreBlock.data.toString() + "\n";
+        return output;
+    }
+
     //TODO Connection
 
     //TODO programming
