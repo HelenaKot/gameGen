@@ -20,11 +20,10 @@ public class InputFragment implements Serializable {
         connectionArea.setInputFragment(this);
     }
 
-    @Override
-    public String toString() {
-        String output = "Input [" + labelText + "] type " + inputType + "\n";
+    public String getDebugLog(String spacing) {
+        String output = spacing + "> Input [" + labelText + "] type " + inputType + "\n";
         if (connectionArea != null && connectionArea.hasConnection())
-            output += "connected to:\n" + connectionArea.getConnection().coreBlock.data.toString() + "\n";
+            output += spacing + "> connected to: \n" + spacing + connectionArea.getConnection().coreBlock.data.getDebugLog(spacing + "  ") + "\n";
         return output;
     }
 

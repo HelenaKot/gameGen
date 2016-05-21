@@ -62,11 +62,12 @@ public class BlockData implements Serializable {
         return inputs;
     }
 
-    @Override
-    public String toString() {
-        String output = "BlockData ID: " + coreBlock.getProgrammingBlock().getName() + "\n";
+    public String getDebugLog(String spacing) {
+        String output = spacing + "BlockData ID: " + coreBlock.getProgrammingBlock().getName() + "\n";
         for (InputFragment inputFragment : inputs)
-            output += inputFragment.toString();
+            output += inputFragment.getDebugLog(spacing + "  ");
+        if (hasDescendant())
+            output += "NEXT:\n" + descendant.getDebugLog(spacing + "  ");
         return output;
     }
 

@@ -24,7 +24,7 @@ public class Workspace {
         String log = "DEBUG LOG\n";
         for (BlockData blockData : BlockData.getBlockDataList())
             if (blockData.shape == BlockShape.ENCLOSED)
-                log += blockData.toString() + "\n\n";
+                log += "BLOCK\n"+ blockData.getDebugLog("") + "\n\n";
         return log;
     }
 
