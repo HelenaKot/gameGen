@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.editor.TrashCan;
 import com.fancytank.gamegen.programming.BlockResizeEvent;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
@@ -63,7 +64,8 @@ public class ProgrammingBlock extends Group {
                 for (ProgrammingBlock programmingBlock : blocksList)
                     if (programmingBlock != local)
                         checkOverlapping(programmingBlock);
-
+                if (checkBinOverlapping())
+                    destroy();
                 local.setZIndex(myZIndex);
 
                 event.setBubbles(false);
@@ -71,6 +73,7 @@ public class ProgrammingBlock extends Group {
 
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 moveBy(x - touchedX, y - touchedY);
+                checkBinOverlapping();
                 event.setBubbles(false);
             }
         });
@@ -86,6 +89,13 @@ public class ProgrammingBlock extends Group {
         if (coreBlock.getBoundingBox().overlaps(programmingBlock.coreBlock.getBoundingBox())) {
             checkConnectors(programmingBlock);
         }
+    }
+
+    private boolean checkBinOverlapping() {
+        if (coreBlock.getBoundingBox().overlaps(TrashCan.instance.getBoundingBox()))
+            return TrashCan.instance.setHover(true);
+        else
+            return TrashCan.instance.setHover(false);
     }
 
     private void checkConnectors(ProgrammingBlock programmingBlock) {
@@ -156,6 +166,14 @@ public class ProgrammingBlock extends Group {
             outputConnector.disconnect();
             sendConnectionEvent(tmp, outputConnector, false);
         }
+    }
+
+    public void destroy() {
+        blocksList.remove(this);
+        if (coreBlock.data.hasDescendant())
+            coreBlock.data.getDescendant().getCoreBlock().getProgrammingBlock().destroy();
+        this.remove();
+        TrashCan.instance.setHover(false);
     }
 
     private void setMyZIndex(int z) {

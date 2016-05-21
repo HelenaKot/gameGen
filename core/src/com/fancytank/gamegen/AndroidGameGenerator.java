@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Json;
 import com.fancytank.gamegen.editor.EditorBackground;
+import com.fancytank.gamegen.editor.TrashCan;
 import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
@@ -31,14 +32,16 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     @Subscribe
     public void onEvent(BlockCreateEvent event) {
-        addToStage(Workspace.clone(new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor())));
+        ProgrammingBlock template = new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor());
+        addToStage(Workspace.clone(template));
+        template.destroy();
     }
 
     private void setUp() {
         new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
-        EditorBackground bg = new EditorBackground(stage.getWidth(), stage.getHeight());
-        stage.addActor(bg);
+        stage.addActor(new EditorBackground(stage.getWidth(), stage.getHeight()));
+        stage.addActor(new TrashCan(stage.getWidth()));
     }
 
     static public void addToStage(Actor actor) {

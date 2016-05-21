@@ -79,7 +79,7 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.DUMMY, "PLACEHOLDER")}, BlockShape.ENCLOSED), Color.PURPLE),
                 new CustomBlockPattern("sockets", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.VARIABLE, "PLACEHOLDER"),
-                        new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.DUMMY, "PLACEHOLDER")}, BlockShape.ENCLOSED), Color.PINK)
+                        new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.DUMMY, "PLACEHOLDER")}, BlockShape.CHAIN_FUNCTION), Color.PINK)
 
         };
         childItems.add(derpPatterns);

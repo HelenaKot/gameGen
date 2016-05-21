@@ -43,7 +43,7 @@ public class CoreBlock extends Actor {
     }
 
     public Rectangle getBoundingBox() {
-        Vector2 pos = localToStageCoordinates(new Vector2(getX(), getY()));
+        Vector2 pos = Utility.myLocalToStageCoordinates(this);
         return new Rectangle(pos.x, pos.y, getWidth(), getHeight());
     }
 
