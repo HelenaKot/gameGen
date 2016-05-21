@@ -1,13 +1,13 @@
 package com.fancytank.gamegen;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.programming.Workspace;
 import com.wunderlist.slidinglayer.SlidingLayer;
 
@@ -36,7 +36,11 @@ public class AndroidLauncher extends AndroidApplication {
     @Subscribe
     public void onEvent(AndroidGameGenerator.SetUpFinished event) {
         list.populateList();
-        Log.e("LOG", "event is here");
+    }
+
+    @Subscribe
+    public void onEvent(BlockButton.OpenLayer event) {
+        slidingLayer.openLayer(true);
     }
 
     public void OnDebugClick(View view) {

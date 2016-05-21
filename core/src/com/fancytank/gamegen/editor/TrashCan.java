@@ -42,7 +42,6 @@ public class TrashCan extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Color.GRAY);
         batch.draw(binCurrent, getX(), getY(), width, height);
     }
 }

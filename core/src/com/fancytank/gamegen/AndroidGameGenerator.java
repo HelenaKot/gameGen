@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Json;
+import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.editor.EditorBackground;
 import com.fancytank.gamegen.editor.TrashCan;
 import com.fancytank.gamegen.programming.Workspace;
@@ -42,6 +43,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
         stage.addActor(new EditorBackground(stage.getWidth(), stage.getHeight()));
         stage.addActor(new TrashCan(stage.getWidth()));
+        stage.addActor(new BlockButton(stage.getHeight()));
     }
 
     static public void addToStage(Actor actor) {

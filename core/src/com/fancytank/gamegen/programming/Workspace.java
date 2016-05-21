@@ -21,7 +21,7 @@ public class Workspace {
     }
 
     public static String getDebugLog() {
-        String log = "DEBUG LOG\n";
+        String log = "BLOCKS ONBOARD: " +  BlockData.getBlockDataList().size() +"\n";
         for (BlockData blockData : BlockData.getBlockDataList())
             if (blockData.shape == BlockShape.ENCLOSED)
                 log += "BLOCK\n"+ blockData.getDebugLog("") + "\n\n";
