@@ -67,7 +67,7 @@ public class BlockData implements Serializable {
         for (InputFragment inputFragment : inputs)
             output += inputFragment.getDebugLog(spacing + "  ");
         if (hasDescendant())
-            output += "NEXT:\n" + descendant.getDebugLog(spacing + "  ");
+            output += spacing + "next:\n" + descendant.getDebugLog(spacing + "  ");
         return output;
     }
 
