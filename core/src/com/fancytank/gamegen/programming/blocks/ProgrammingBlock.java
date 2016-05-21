@@ -8,7 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.AndroidGameGenerator;
 import com.fancytank.gamegen.editor.TrashCan;
 import com.fancytank.gamegen.programming.BlockResizeEvent;
+import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.data.BlockData;
+import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 import com.fancytank.gamegen.programming.looks.Utility;
@@ -119,7 +121,8 @@ public class ProgrammingBlock extends Group {
         baseBlock.addActor(attachingBlock);
         attachingConnector.connect(baseConnector);
         BlockData descendantBlock = attachingBlock.coreBlock.data, parentBlock = baseBlock.coreBlock.data;
-        descendantBlock.setParent(parentBlock);
+        if (!baseConnector.hasInputType())
+            descendantBlock.setParent(parentBlock);
     }
 
     static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
@@ -155,13 +158,14 @@ public class ProgrammingBlock extends Group {
     private void removeDependencies() {
         attachedTo.removeActor(this);
         attachedTo = null;
-        coreBlock.data.removeParent();
         tryDisconnectOutput();
     }
 
     private void tryDisconnectOutput() {
         ConnectionArea outputConnector = getOutputConnector();
         if (outputConnector.hasConnection()) {
+            if (outputConnector.direction == Direction.UP)
+                coreBlock.data.removeParent();
             ConnectionArea tmp = outputConnector.getConnection();
             outputConnector.disconnect();
             sendConnectionEvent(tmp, outputConnector, false);
@@ -170,8 +174,13 @@ public class ProgrammingBlock extends Group {
 
     public void destroy() {
         blocksList.remove(this);
+        //  for (ConnectionArea connector : connectors)
+        // connector.remove();
         if (coreBlock.data.hasDescendant())
             coreBlock.data.getDescendant().getCoreBlock().getProgrammingBlock().destroy();
+        for (InputFragment input : coreBlock.data.getInputs())
+            if (input.hasConnectonArea() && input.getConnectionArea().hasConnection())
+                input.getConnectionArea().getConnection().coreBlock.getProgrammingBlock().destroy();
         this.remove();
         TrashCan.instance.setHover(false);
     }

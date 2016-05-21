@@ -39,8 +39,12 @@ public class ConnectionArea extends Actor {
         this.inputFragment = inputFragment;
     }
 
+    public boolean hasInputType() {
+        return inputFragment != null;
+    }
+
     public InputType getInputType() {
-        if (inputFragment != null)
+        if (hasInputType())
             return inputFragment.inputType;
         return null;
     }

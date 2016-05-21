@@ -15,6 +15,14 @@ public class InputFragment implements Serializable {
         this.labelText = labelText;
     }
 
+    public boolean hasConnectonArea() {
+        return connectionArea != null;
+    }
+
+    public ConnectionArea getConnectionArea() {
+        return connectionArea;
+    }
+
     public void setConnectionArea(ConnectionArea connectionArea) {
         this.connectionArea = connectionArea;
         connectionArea.setInputFragment(this);
@@ -23,7 +31,7 @@ public class InputFragment implements Serializable {
     public String getDebugLog(String spacing) {
         String output = spacing + "> Input [" + labelText + "] type " + inputType + "\n";
         if (connectionArea != null && connectionArea.hasConnection())
-            output += spacing + "> connected to: \n" + spacing + connectionArea.getConnection().coreBlock.data.getDebugLog(spacing + "  ") + "\n";
+            output += spacing + "> connected to: \n" + connectionArea.getConnection().coreBlock.data.getDebugLog(spacing + "  ") + "\n";
         return output;
     }
 
