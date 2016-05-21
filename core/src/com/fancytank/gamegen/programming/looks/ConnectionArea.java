@@ -1,7 +1,8 @@
 package com.fancytank.gamegen.programming.looks;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -23,14 +24,14 @@ public class ConnectionArea extends Actor {
     public ConnectionArea(float x, float y, CoreBlock coreBlock, Direction direction) {
         this.coreBlock = coreBlock;
         this.direction = direction;
-        this.setBounds(x / 2, y / 2, padding, padding);
+        this.setBounds(x, y, padding, padding);
     }
 
     public ConnectionArea(float x, float y, BlockInputAppearance blockInputAppearance, Direction direction) {
         this.blockInputAppearance = blockInputAppearance;
         this.coreBlock = blockInputAppearance.coreBlock;
         this.direction = direction;
-        this.setBounds(x / 2, y / 2, padding, padding);
+        this.setBounds(x, y, padding, padding);
     }
 
     // use inputFragment setConnectionArea, undepricate it someday
@@ -90,28 +91,19 @@ public class ConnectionArea extends Actor {
     }
 
     private Vector2 getPosition() {
-        return localToStageCoordinates(new Vector2(getX(), getY()));
+        return Utility.myLocalToStageCoordinates(this);
     }
 
-    static private boolean projectionMatrixSet = false;
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private static Texture debugTexture;
+    private boolean debug = false;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-
-        //todo debug
-        /*
-        Vector2 pos = getPosition();
-        batch.end();
-        if (!projectionMatrixSet) {
-            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+        if (debug) {
+            if (debugTexture == null)
+                debugTexture = new Texture(Gdx.files.internal("badlogic.jpg"));
+            batch.draw(debugTexture, getX(), getY(), getWidth(), getHeight());
         }
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(pos.x, pos.y, getWidth(), getHeight());
-        shapeRenderer.end();
-        batch.begin();
-        */
     }
 }

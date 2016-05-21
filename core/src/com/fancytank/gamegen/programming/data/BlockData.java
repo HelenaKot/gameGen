@@ -38,7 +38,8 @@ public class BlockData implements Serializable {
     }
 
     public void removeParent() {
-        parent.descendant = null;
+        if (parent.hasDescendant())
+            parent.descendant = null;
         parent = null;
     }
 
@@ -59,7 +60,9 @@ public class BlockData implements Serializable {
     }
 
     public InputFragment[] getInputs() {
-        return inputs;
+        if (inputs != null)
+            return inputs;
+        else return new InputFragment[0];
     }
 
     public String getDebugLog(String spacing) {

@@ -17,6 +17,8 @@ public final class BlockResizer {
         coreBlock.programmingBlock.setBounds(coreBlock.programmingBlock.getX(), coreBlock.programmingBlock.getY(), coreBlock.getWidth(), coreBlock.getHeight());
         coreBlock.programmingBlock.setPosition(coreBlock.programmingBlock.getX(), coreBlock.programmingBlock.getY() + heightDelta);
 
+        if (coreBlock.data.hasParent())
+            ConnectionPlacer.updateConnectors(coreBlock.data.getParent().getCoreBlock());
         ConnectionPlacer.updateConnectors(coreBlock);
     }
 }

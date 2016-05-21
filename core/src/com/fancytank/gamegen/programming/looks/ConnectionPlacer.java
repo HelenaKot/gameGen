@@ -55,7 +55,7 @@ public final class ConnectionPlacer {
         ArrayList<ConnectionArea> connectors = coreBlock.programmingBlock.connectors;
         for (int next = index; next < connectors.size(); next++) {
             Vector2 newPlacement = coreBlock.blockAppearance.inputs.get(next - index).getConnectorPlacement();
-            connectors.get(next).setPosition(newPlacement.x / 2, newPlacement.y / 2);
+            connectors.get(next).setPosition(newPlacement.x, newPlacement.y);
         }
     }
 }

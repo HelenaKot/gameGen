@@ -110,7 +110,7 @@ public class ProgrammingBlock extends Group {
 
     static void attachBlock(ConnectionArea attachingConnector, ConnectionArea baseConnector) {
         ProgrammingBlock attachingBlock = getProgrammingBlock(attachingConnector);
-        attachingBlock.setPosition(baseConnector.getX() * 2 - attachingConnector.getX() * 2, baseConnector.getY() * 2 - attachingConnector.getY() * 2);
+        attachingBlock.setPosition(baseConnector.getX() - attachingConnector.getX() , baseConnector.getY() - attachingConnector.getY());
         setDependencies(attachingConnector, baseConnector);
         sendConnectionEvent(baseConnector, attachingConnector, true);
     }
@@ -164,7 +164,7 @@ public class ProgrammingBlock extends Group {
     private void tryDisconnectOutput() {
         ConnectionArea outputConnector = getOutputConnector();
         if (outputConnector.hasConnection()) {
-            if (outputConnector.direction == Direction.UP)
+            if (outputConnector.direction == Direction.UP && coreBlock.data.hasParent())
                 coreBlock.data.removeParent();
             ConnectionArea tmp = outputConnector.getConnection();
             outputConnector.disconnect();
