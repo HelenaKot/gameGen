@@ -95,7 +95,7 @@ public class ConnectionArea extends Actor {
     }
 
     private static Texture debugTexture;
-    private boolean debug = true;
+    public static boolean debug = false;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

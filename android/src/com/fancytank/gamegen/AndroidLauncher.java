@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.programming.Workspace;
+import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.wunderlist.slidinglayer.SlidingLayer;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,7 +44,11 @@ public class AndroidLauncher extends AndroidApplication {
         slidingLayer.openLayer(true);
     }
 
-    public void OnDebugClick(View view) {
+    public void onDebugClick(View view) {
         debugText.setText(Workspace.getDebugLog());
+    }
+
+    public void paintConnectors(View view) {
+        ConnectionArea.debug = ! ConnectionArea.debug;
     }
 }
