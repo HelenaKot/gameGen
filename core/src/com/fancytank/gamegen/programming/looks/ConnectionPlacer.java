@@ -13,10 +13,10 @@ public final class ConnectionPlacer {
     public static ArrayList<ConnectionArea> getConnectors(CoreBlock coreBlock) {
         ArrayList<ConnectionArea> output = new ArrayList<ConnectionArea>();
         float height = coreBlock.getHeight();
-        if (connects(coreBlock, Direction.LEFT))
-            output.add(new ConnectionArea(0, height - padding * 2, coreBlock, Direction.LEFT));
         if (connects(coreBlock, Direction.UP))
             output.add(new ConnectionArea(0, height - padding, coreBlock, Direction.UP));
+        if (connects(coreBlock, Direction.LEFT))
+            output.add(new ConnectionArea(0, height - padding * 2, coreBlock, Direction.LEFT));
         if (connects(coreBlock, Direction.DOWN))
             output.add(new ConnectionArea(0, 0, coreBlock, Direction.DOWN));
         getInputConnectors(output, coreBlock);
@@ -27,17 +27,17 @@ public final class ConnectionPlacer {
         ArrayList<ConnectionArea> connectors = coreBlock.programmingBlock.connectors;
         float height = coreBlock.getHeight();
         int next = 0;
-        if (connects(coreBlock, Direction.LEFT))
-            trySetPosition(connectors.get(next++), 0, height - padding * 2);
         if (connects(coreBlock, Direction.UP))
             trySetPosition(connectors.get(next++), 0, height - padding);
+        if (connects(coreBlock, Direction.LEFT))
+            trySetPosition(connectors.get(next++), 0, height - padding * 2);
         if (connects(coreBlock, Direction.DOWN))
             trySetPosition(connectors.get(next++), 0, 0);
         updateInputConnectors(coreBlock, next);
     }
 
     private static void trySetPosition(ConnectionArea connectionArea, float x, float y) {
-        if (connectionArea.getX() != x && connectionArea.getY() != y)
+        if (connectionArea.getX() != x || connectionArea.getY() != y)
             connectionArea.setPosition(x, y);
     }
 

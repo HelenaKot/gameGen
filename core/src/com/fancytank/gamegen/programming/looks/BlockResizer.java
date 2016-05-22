@@ -13,12 +13,12 @@ public final class BlockResizer {
 
         event.baseConnector.blockInputAppearance.setHeight(height);
         coreBlock.blockAppearance.updateSize();
-
         coreBlock.programmingBlock.setBounds(coreBlock.programmingBlock.getX(), coreBlock.programmingBlock.getY(), coreBlock.getWidth(), coreBlock.getHeight());
-        coreBlock.programmingBlock.setPosition(coreBlock.programmingBlock.getX(), coreBlock.programmingBlock.getY() + heightDelta);
 
         if (coreBlock.data.hasParent())
             ConnectionPlacer.updateConnectors(coreBlock.data.getParent().getCoreBlock());
+        else
+            coreBlock.programmingBlock.setPosition(coreBlock.programmingBlock.getX(), coreBlock.programmingBlock.getY() + heightDelta);
         ConnectionPlacer.updateConnectors(coreBlock);
     }
 }
