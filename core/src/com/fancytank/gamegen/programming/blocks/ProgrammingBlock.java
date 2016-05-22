@@ -110,7 +110,7 @@ public class ProgrammingBlock extends Group {
 
     static void attachBlock(ConnectionArea attachingConnector, ConnectionArea baseConnector) {
         ProgrammingBlock attachingBlock = getProgrammingBlock(attachingConnector);
-        attachingBlock.setPosition(baseConnector.getX() - attachingConnector.getX() , baseConnector.getY() - attachingConnector.getY());
+        attachingBlock.setPosition(baseConnector.getX() - attachingConnector.getX(), baseConnector.getY() - attachingConnector.getY());
         setDependencies(attachingConnector, baseConnector);
         sendConnectionEvent(baseConnector, attachingConnector, true);
     }
@@ -133,7 +133,7 @@ public class ProgrammingBlock extends Group {
         }
 //        else
 //            EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
-        if (baseConnector.getInputType() != InputType.VARIABLE && baseConnector.coreBlock.data.hasParent())
+        if (baseConnector.getInputType() != InputType.VARIABLE)
             sendConnectionEventUpward(baseConnector.coreBlock, isConnecting);
     }
 
@@ -144,12 +144,20 @@ public class ProgrammingBlock extends Group {
         }
         if (block.data.hasParent())
             sendConnectionEventUpward(block.data.getParent().getCoreBlock(), isConnecting);
+        if (shouldSendToSocketUpward(outputConnector))
+            sendConnectionEventUpward(outputConnector.getConnection().coreBlock, isConnecting);
+    }
+
+    private static boolean shouldSendToSocketUpward(ConnectionArea outputConnector) {
+        return outputConnector.hasConnection()
+                && outputConnector.getConnection().hasInputType()
+                && outputConnector.getConnection().getInputType() == InputType.SOCKET;
     }
 
     private void detach() {
         if (attachedTo != null) {
             Vector2 pos = Utility.myLocalToStageCoordinates(this);
-            this.setPosition(pos.x, pos.y);
+            setPosition(pos.x, pos.y);
             AndroidGameGenerator.addToStage(this);
             removeDependencies();
         }
