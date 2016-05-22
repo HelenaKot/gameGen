@@ -34,7 +34,9 @@ public class AndroidGameGenerator extends ApplicationAdapter {
     @Subscribe
     public void onEvent(BlockCreateEvent event) {
         ProgrammingBlock template = new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor());
-        addToStage(Workspace.clone(template));
+        Actor newBlock = Workspace.clone(template);
+        newBlock.setPosition(stage.getWidth()*0.4f, stage.getHeight()/2);
+        addToStage(newBlock);
         template.destroy();
     }
 
@@ -48,7 +50,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
 
     static public void addToStage(Actor actor) {
         stage.addActor(actor);
-        actor.setPosition(stage.getWidth()*0.4f, stage.getHeight()/2);
     }
 
     @Override
