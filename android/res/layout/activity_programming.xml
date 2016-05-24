@@ -64,6 +64,24 @@
                     android:onClick="paintConnectors"
                     android:text="paintConnectors" />
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="saveWorkspace"
+                    android:text="save" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="loadWorkspace"
+                    android:text="load" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="deleteAll"
+                    android:text="delete all" />
+
             </LinearLayout>
 
             <ScrollView
@@ -74,6 +92,7 @@
                     android:id="@+id/debug_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColor="#ddd"
                     android:background="#111" />
             </ScrollView>
 

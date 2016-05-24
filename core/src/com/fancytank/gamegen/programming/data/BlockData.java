@@ -74,6 +74,11 @@ public class BlockData implements Serializable {
         return output;
     }
 
+    @Override
+    public String toString() {
+        return getDebugLog("");
+    }
+
     public static ArrayList<BlockData> getBlockDataList() {
         ArrayList<BlockData> output = new ArrayList<BlockData>();
         for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())

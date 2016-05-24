@@ -20,6 +20,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.fancytank.gamegen.programming.looks.ConnectionPlacer.getConnectors;
 import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBlock;
@@ -30,7 +31,7 @@ public class ProgrammingBlock extends Group {
     private float touchedX, touchedY;
     private Group attachedTo = null;
     private int myZIndex;
-    private static ArrayList<ProgrammingBlock> blocksList = new ArrayList<ProgrammingBlock>();
+    private static CopyOnWriteArrayList<ProgrammingBlock> blocksList = new CopyOnWriteArrayList<ProgrammingBlock>();
 
     public ProgrammingBlock(BlockData data, Color tint) {
         setName(UUID.randomUUID().toString());
@@ -201,7 +202,7 @@ public class ProgrammingBlock extends Group {
         return this.coreBlock.data.shape.significance;
     }
 
-    public static ArrayList<ProgrammingBlock> getBlockList() {
+    public static CopyOnWriteArrayList<ProgrammingBlock> getBlockList() {
         return blocksList;
     }
 }

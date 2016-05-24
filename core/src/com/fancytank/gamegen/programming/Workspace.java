@@ -1,6 +1,7 @@
 package com.fancytank.gamegen.programming;
 
 
+import com.fancytank.gamegen.AndroidGameGenerator;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
@@ -11,20 +12,37 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ListIterator;
 
 public class Workspace {
 
-    public static void save() {
+    public static ProgrammingBlockSavedInstance[] getWorkspaceItemsToSave() {
+        ProgrammingBlockSavedInstance[] output = new ProgrammingBlockSavedInstance[ProgrammingBlock.getBlockList().size()];
+        int index = 0;
+        for (ProgrammingBlock pb : ProgrammingBlock.getBlockList())
+            output[index++] = new ProgrammingBlockSavedInstance(pb);
+        return output;
     }
 
-    public static void load() {
+    public static void load(ProgrammingBlockSavedInstance[] data) {
+        clearWorkspace();
+        for (ProgrammingBlockSavedInstance block : data)
+            AndroidGameGenerator.addToStage(block.restore());
+    }
+
+    public static void clearWorkspace() {
+        ListIterator iter = ProgrammingBlock.getBlockList().listIterator();
+        while (iter.hasNext()) {
+            ProgrammingBlock pb = (ProgrammingBlock) iter.next();
+            pb.destroy();
+        }
     }
 
     public static String getDebugLog() {
-        String log = "BLOCKS ONBOARD: " +  BlockData.getBlockDataList().size() +"\n";
+        String log = "BLOCKS ONBOARD: " + BlockData.getBlockDataList().size() + "\n";
         for (BlockData blockData : BlockData.getBlockDataList())
             if (blockData.shape == BlockShape.ENCLOSED)
-                log += "BLOCK\n"+ blockData.getDebugLog("") + "\n\n";
+                log += "BLOCK\n" + blockData.getDebugLog("") + "\n\n";
         return log;
     }
 

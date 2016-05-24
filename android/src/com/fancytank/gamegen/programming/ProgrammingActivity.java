@@ -12,11 +12,23 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.AndroidGameGenerator;
 import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.editor.BlockButton;
+import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.wunderlist.slidinglayer.SlidingLayer;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 public class ProgrammingActivity extends AndroidApplication {
     private SlidingLayer slidingLayer;
@@ -55,5 +67,34 @@ public class ProgrammingActivity extends AndroidApplication {
 
     public void paintConnectors(View view) {
         ConnectionArea.debug = !ConnectionArea.debug;
+    }
+
+    private static String myFilename = "todotodo";
+
+    public void saveWorkspace(View view) throws IOException {
+        File file = new File(view.getContext().getFilesDir(), myFilename);
+        if (!file.exists())
+            file.createNewFile();
+        FileOutputStream fileOutputStream = new FileOutputStream(file.getAbsoluteFile());
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(Workspace.getWorkspaceItemsToSave());
+        objectOutputStream.flush();
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
+        File file = new File(view.getContext().getFilesDir(), myFilename);
+        if (file.exists())
+        {
+            FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile());
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            ProgrammingBlockSavedInstance[] data = (ProgrammingBlockSavedInstance[]) objectInputStream.readObject();
+            Workspace.load(data);
+        }
+    }
+
+    public void deleteAll(View view) {
+        Workspace.clearWorkspace();
     }
 }

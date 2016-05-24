@@ -26,4 +26,8 @@ public class ProgrammingBlockSavedInstance implements Serializable {
         restoredBlock.setPosition(posX, posY);
         return restoredBlock;
     }
+
+    public void restoreConnections() {
+
+    }
 }

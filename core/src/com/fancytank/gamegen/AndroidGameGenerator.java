@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Json;
 import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.editor.EditorBackground;
 import com.fancytank.gamegen.editor.TrashCan;
@@ -35,7 +34,7 @@ public class AndroidGameGenerator extends ApplicationAdapter {
     public void onEvent(BlockCreateEvent event) {
         ProgrammingBlock template = new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor());
         Actor newBlock = Workspace.clone(template);
-        newBlock.setPosition(stage.getWidth()*0.4f, stage.getHeight()/2);
+        newBlock.setPosition(stage.getWidth() * 0.4f, stage.getHeight() / 2);
         addToStage(newBlock);
         template.destroy();
     }
@@ -52,6 +51,10 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         stage.addActor(actor);
     }
 
+    static public Stage getStage() {
+        return stage;
+    }
+
     @Override
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());
@@ -63,5 +66,6 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         stage.dispose();
     }
 
-    public class SetUpFinished {}
+    public class SetUpFinished {
+    }
 }
