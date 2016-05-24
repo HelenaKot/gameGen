@@ -2,6 +2,8 @@ package com.fancytank.gamegen;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -15,7 +17,7 @@ import com.wunderlist.slidinglayer.SlidingLayer;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-public class AndroidLauncher extends AndroidApplication {
+public class ProgrammingActivity extends AndroidApplication {
     private SlidingLayer slidingLayer;
     private BlocksExpendableList list;
     private TextView debugText;
@@ -23,7 +25,9 @@ public class AndroidLauncher extends AndroidApplication {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.programming_activity);
         debugText = (TextView) findViewById(R.id.debug_text);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         View gdxView = initializeForView(new AndroidGameGenerator());
@@ -49,6 +53,6 @@ public class AndroidLauncher extends AndroidApplication {
     }
 
     public void paintConnectors(View view) {
-        ConnectionArea.debug = ! ConnectionArea.debug;
+        ConnectionArea.debug = !ConnectionArea.debug;
     }
 }

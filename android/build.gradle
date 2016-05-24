@@ -16,7 +16,7 @@ android {
     }
     defaultConfig {
         applicationId "com.fancytank.gamegen"
-        minSdkVersion 8
+        minSdkVersion 14
         targetSdkVersion 23
     }
 }
@@ -67,7 +67,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.fancytank.gamegen/com.fancytank.gamegen.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.fancytank.gamegen/com.fancytank.gamegen.ProgrammingActivity'
 }
 
 // sets up the Android Idea project, using the old Ant based build.
@@ -94,4 +94,5 @@ idea {
 dependencies {
     compile files('build/intermediates/com.android.support/support-v4/23.3.0/jars/classes.jar')
     compile 'com.wunderlist:sliding-layer:1.2.5'
+    compile 'com.android.support:appcompat-v7:23.4.0'
 }
