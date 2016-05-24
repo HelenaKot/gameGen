@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.fancytank.gamegen.programming.ProgrammingActivity;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override

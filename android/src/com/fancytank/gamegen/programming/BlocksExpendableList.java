@@ -1,4 +1,4 @@
-package com.fancytank.gamegen;
+package com.fancytank.gamegen.programming;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.fancytank.gamegen;
+package com.fancytank.gamegen.programming;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +9,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.editor.BlockButton;
-import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.wunderlist.slidinglayer.SlidingLayer;
 
@@ -27,7 +28,7 @@ public class ProgrammingActivity extends AndroidApplication {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.programming_activity);
+        setContentView(R.layout.activity_programming);
         debugText = (TextView) findViewById(R.id.debug_text);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         View gdxView = initializeForView(new AndroidGameGenerator());

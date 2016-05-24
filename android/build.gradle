@@ -67,7 +67,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.fancytank.gamegen/com.fancytank.gamegen.ProgrammingActivity'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.fancytank.gamegen/com.fancytank.gamegen.programming.ProgrammingActivity'
 }
 
 // sets up the Android Idea project, using the old Ant based build.

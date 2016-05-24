@@ -63,5 +63,5 @@ public class AndroidGameGenerator extends ApplicationAdapter {
         stage.dispose();
     }
 
-    class SetUpFinished {}
+    public class SetUpFinished {}
 }

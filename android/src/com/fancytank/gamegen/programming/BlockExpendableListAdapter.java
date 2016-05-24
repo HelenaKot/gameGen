@@ -1,4 +1,4 @@
-package com.fancytank.gamegen;
+package com.fancytank.gamegen.programming;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
 
@@ -40,7 +41,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
         TextView textView = null;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.drawer_list_item, null);
+            convertView = inflater.inflate(R.layout.programming_list_item, null);
         }
 
         textView = (TextView) convertView.findViewById(R.id.item_title);
@@ -61,7 +62,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.drawer_list_group, null);
+            convertView = inflater.inflate(R.layout.programming_list_group, null);
         }
         TextView textView = (TextView) convertView.findViewById(R.id.group_title);
         textView.setText(parentItems.get(groupPosition));
