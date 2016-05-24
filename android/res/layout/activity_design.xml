@@ -3,10 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.fancytank.gamegen.DesignActivity">
+    tools:context=".design.DesignActivity">
+
+    <com.wunderlist.slidinglayer.SlidingLayer xmlns:slidingLayer="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tool_panel"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        slidingLayer:changeStateOnTap="true"
+        slidingLayer:offsetDistance="10dp"
+        slidingLayer:previewOffsetDistance="100dp"
+        slidingLayer:shadowDrawable="@drawable/shadow_right"
+        slidingLayer:shadowSize="10dp"
+        slidingLayer:stickTo="right">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#333"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="entity"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="program"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="layers"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="paint"/>
+        </LinearLayout>
+
+    </com.wunderlist.slidinglayer.SlidingLayer>
 
 </RelativeLayout>

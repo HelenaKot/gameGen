@@ -6,6 +6,12 @@
     android:padding="@dimen/activity_vertical_margin"
     tools:context="com.fancytank.gamegen.WelcomeActivity"
     android:orientation="vertical">
+<!--
+    <ListView
+        android:id="@+id/saved_projects_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+        -->
 
     <Button
         android:layout_width="wrap_content"
