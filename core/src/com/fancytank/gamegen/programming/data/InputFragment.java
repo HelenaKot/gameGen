@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class InputFragment implements Serializable {
     public InputType inputType;
     public String labelText;
+    public BlockData connectedTo;
+    BlockData blockData;
     transient private ConnectionArea connectionArea;
 
     public InputFragment(InputType inputType, String labelText) {
@@ -24,14 +26,16 @@ public class InputFragment implements Serializable {
     }
 
     public void setConnectionArea(ConnectionArea connectionArea) {
-        this.connectionArea = connectionArea;
-        connectionArea.setInputFragment(this);
+        if (this.connectionArea != connectionArea) {
+            this.connectionArea = connectionArea;
+            connectionArea.setInputFragment(this);
+        }
     }
 
     public String getDebugLog(String spacing) {
         String output = spacing + "> Input [" + labelText + "] type " + inputType + "\n";
-        if (connectionArea != null && connectionArea.hasConnection())
-            output += spacing + "> connected to: \n" + connectionArea.getConnection().coreBlock.data.getDebugLog(spacing + "  ") + "\n";
+        if (connectedTo != null)
+            output += spacing + "> connected to: \n" + connectedTo.getDebugLog(spacing + "  ") + "\n";
         return output;
     }
 

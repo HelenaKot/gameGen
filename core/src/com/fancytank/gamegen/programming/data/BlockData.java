@@ -17,6 +17,8 @@ public class BlockData implements Serializable {
     public BlockData(InputFragment[] inputs) {
         this.shape = BlockShape.ENCLOSED;
         this.inputs = inputs;
+        for (InputFragment inputFragment : inputs)
+            inputFragment.blockData = this;
     }
 
     public BlockData(InputFragment[] inputs, BlockShape shape) {

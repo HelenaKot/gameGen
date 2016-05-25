@@ -22,12 +22,7 @@ public class ProgrammingBlockSavedInstance implements Serializable {
 
     public ProgrammingBlock restore() {
         ProgrammingBlock restoredBlock = new ProgrammingBlock(data, new Color(r, g, b, a));
-        data.setCoreBlock(restoredBlock.coreBlock);
         restoredBlock.setPosition(posX, posY);
         return restoredBlock;
-    }
-
-    public void restoreConnections() {
-
     }
 }

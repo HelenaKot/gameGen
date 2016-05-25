@@ -34,10 +34,11 @@ public class ConnectionArea extends Actor {
         this.setBounds(x, y, padding, padding);
     }
 
-    // use inputFragment setConnectionArea, undepricate it someday
-    @Deprecated
     public void setInputFragment(InputFragment inputFragment) {
-        this.inputFragment = inputFragment;
+        if (this.inputFragment != inputFragment) {
+            this.inputFragment = inputFragment;
+            inputFragment.setConnectionArea(this);
+        }
     }
 
     public boolean hasInputType() {
@@ -58,11 +59,27 @@ public class ConnectionArea extends Actor {
     public void connect(ConnectionArea connectedTo) {
         this.connectedTo = connectedTo;
         connectedTo.connectedTo = this;
+        if (hasInputType())
+            connectInput(connectedTo);
+        else if (connectedTo.hasInputType())
+            connectedTo.connectInput(this);
+    }
+
+    private void connectInput(ConnectionArea connection) {
+        inputFragment.connectedTo = connection.coreBlock.data;
     }
 
     public void disconnect() {
+        disconnectInput();
         connectedTo.connectedTo = null;
         this.connectedTo = null;
+    }
+
+    private void disconnectInput() {
+        if (connectedTo.hasInputType())
+            connectedTo.inputFragment.connectedTo = null;
+        else if (hasInputType())
+            inputFragment.connectedTo = null;
     }
 
     public ConnectionArea getConnection() {
