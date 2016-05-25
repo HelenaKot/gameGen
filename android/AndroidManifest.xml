@@ -15,20 +15,22 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Base.Theme.AppCompat.Light" >
-
+        android:theme="@style/Base.Theme.AppCompat.Light">
         <activity
             android:name=".programming.ProgrammingActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".design.DesignActivity"></activity>
+        <activity android:name=".design.DesignActivity" />
+        <activity android:name=".test.TestGameActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
