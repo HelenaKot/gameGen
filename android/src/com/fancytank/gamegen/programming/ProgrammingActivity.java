@@ -19,15 +19,11 @@ import com.wunderlist.slidinglayer.SlidingLayer;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 public class ProgrammingActivity extends AndroidApplication {
@@ -52,8 +48,9 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     @Subscribe
-    public void onEvent(AndroidGameGenerator.SetUpFinished event) {
-        list.populateList();
+    public void onEvent(AndroidGameGenerator.AppStatus status) {
+        if (status == AndroidGameGenerator.AppStatus.SETUP_FINISHED)
+            list.populateList();
     }
 
     @Subscribe
@@ -85,8 +82,7 @@ public class ProgrammingActivity extends AndroidApplication {
 
     public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
         File file = new File(view.getContext().getFilesDir(), myFilename);
-        if (file.exists())
-        {
+        if (file.exists()) {
             FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile());
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             ProgrammingBlockSavedInstance[] data = (ProgrammingBlockSavedInstance[]) objectInputStream.readObject();

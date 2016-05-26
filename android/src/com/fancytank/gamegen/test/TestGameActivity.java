@@ -18,7 +18,6 @@ public class TestGameActivity extends AndroidApplication {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_test_game);
-
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         View gdxView = initializeForView(new AndroidGameGenerator());
         contentFrame.addView(gdxView);

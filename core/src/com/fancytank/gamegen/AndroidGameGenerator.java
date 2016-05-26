@@ -1,71 +1,49 @@
 package com.fancytank.gamegen;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.fancytank.gamegen.editor.BlockButton;
-import com.fancytank.gamegen.editor.EditorBackground;
-import com.fancytank.gamegen.editor.TrashCan;
-import com.fancytank.gamegen.programming.Workspace;
-import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
-import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
-import com.fancytank.gamegen.programming.looks.BlockAppearance;
-import com.fancytank.gamegen.programming.looks.PatchTextureManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-public class AndroidGameGenerator extends ApplicationAdapter {
-    static private Stage stage;
+public class AndroidGameGenerator extends Game {
+    public enum AppStatus { SETUP_FINISHED, EDITOR_SCREEN, TEST_SCREEN}
 
     @Override
     public void create() {
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        setUp();
-        EventBus.getDefault().post(new SetUpFinished());
+        ScreenManager.getInstance().initialize(this);
+        if (ScreenEnum.screenType != null)
+                ScreenManager.getInstance().showScreen(ScreenEnum.screenType);
         EventBus.getDefault().register(this);
+        setScreen(ScreenEnum.GAME_SCREEN);
     }
 
+    //todo this is not working v
     @Subscribe
-    public void onEvent(BlockCreateEvent event) {
-        ProgrammingBlock template = new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor());
-        Actor newBlock = Workspace.clone(template);
-        newBlock.setPosition(stage.getWidth() * 0.4f, stage.getHeight() / 2);
-        addToStage(newBlock);
-        template.destroy();
+    public void onEvent(AndroidGameGenerator.AppStatus status) {
+        if (status == AppStatus.EDITOR_SCREEN)
+            setScreen(ScreenEnum.EDITOR_SCREEN);
+        else if (status == AppStatus.TEST_SCREEN)
+            setScreen(ScreenEnum.GAME_SCREEN);
     }
 
-    private void setUp() {
-        new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
-        BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
-        stage.addActor(new EditorBackground(stage.getWidth(), stage.getHeight()));
-        stage.addActor(new TrashCan(stage.getWidth()));
-        stage.addActor(new BlockButton(stage.getHeight()));
+    private void setScreen(final ScreenEnum screen) {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                ScreenManager.getInstance().showScreen(screen);
+            }
+        });
     }
 
     static public void addToStage(Actor actor) {
-        stage.addActor(actor);
+        ScreenEnum.screenInstance.addActor(actor);
     }
 
     static public Stage getStage() {
-        return stage;
+        return ScreenEnum.screenInstance;
     }
 
-    @Override
-    public void render() {
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.draw();
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
-
-    public class SetUpFinished {
-    }
 }
