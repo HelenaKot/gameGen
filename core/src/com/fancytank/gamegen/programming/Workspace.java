@@ -1,7 +1,7 @@
 package com.fancytank.gamegen.programming;
 
 
-import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
@@ -27,7 +27,7 @@ public class Workspace {
     public static void load(ProgrammingBlockSavedInstance[] data) {
         clearWorkspace();
         for (ProgrammingBlockSavedInstance block : data)
-            AndroidGameGenerator.addToStage(block.restore());
+            MainGdx.addToStage(block.restore());
     }
 
     public static void clearWorkspace() {

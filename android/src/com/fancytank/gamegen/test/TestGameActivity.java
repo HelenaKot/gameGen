@@ -7,7 +7,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
-import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.R;
 
 public class TestGameActivity extends AndroidApplication {
@@ -19,7 +19,7 @@ public class TestGameActivity extends AndroidApplication {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_test_game);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
-        View gdxView = initializeForView(new AndroidGameGenerator());
+        View gdxView = initializeForView(new MainGdx());
         contentFrame.addView(gdxView);
     }
 }

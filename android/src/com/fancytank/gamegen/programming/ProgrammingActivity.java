@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
-import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
@@ -39,7 +39,7 @@ public class ProgrammingActivity extends AndroidApplication {
         setContentView(R.layout.activity_programming);
         debugText = (TextView) findViewById(R.id.debug_text);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
-        View gdxView = initializeForView(new AndroidGameGenerator());
+        View gdxView = initializeForView(new MainGdx());
         contentFrame.addView(gdxView);
         slidingLayer = (SlidingLayer) findViewById(R.id.sliding_layer);
         slidingLayer.closeLayer(true);
@@ -48,8 +48,8 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     @Subscribe
-    public void onEvent(AndroidGameGenerator.AppStatus status) {
-        if (status == AndroidGameGenerator.AppStatus.SETUP_FINISHED)
+    public void onEvent(MainGdx.AppStatus status) {
+        if (status == MainGdx.AppStatus.SETUP_FINISHED)
             list.populateList();
     }
 

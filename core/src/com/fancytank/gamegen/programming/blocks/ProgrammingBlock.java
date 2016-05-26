@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.fancytank.gamegen.AndroidGameGenerator;
+import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.editor.TrashCan;
 import com.fancytank.gamegen.programming.BlockResizeEvent;
 import com.fancytank.gamegen.programming.Direction;
@@ -159,7 +159,7 @@ public class ProgrammingBlock extends Group {
         if (attachedTo != null) {
             Vector2 pos = Utility.myLocalToStageCoordinates(this);
             setPosition(pos.x, pos.y);
-            AndroidGameGenerator.addToStage(this);
+            MainGdx.addToStage(this);
             removeDependencies();
         }
     }

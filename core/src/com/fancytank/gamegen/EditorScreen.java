@@ -22,7 +22,7 @@ public class EditorScreen extends AbstractScreen {
     public void buildStage() {
         setUp();
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(AndroidGameGenerator.AppStatus.SETUP_FINISHED);
+        EventBus.getDefault().post(MainGdx.AppStatus.SETUP_FINISHED);
     }
 
     private void setUp() {
