@@ -31,7 +31,7 @@ public class BlocksExpendableList {
 
         adapter = new BlockExpendableListAdapter(parentItems, childItems);
 
-        adapter.setInflater((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE), context);
+        adapter.setInflater((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
         expandableList.setAdapter(adapter);
     }
 

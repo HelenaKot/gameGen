@@ -4,19 +4,18 @@ public enum ScreenEnum {
     EDITOR_SCREEN {
         @Override
         public AbstractScreen getScreen() {
-            screenType = this;
-            return  new EditorScreen();
+            screenInstance = new EditorScreen();
+            return screenInstance;
         }
     },
     GAME_SCREEN {
         @Override
         public AbstractScreen getScreen() {
-            screenType = this;
-            return new GameScreen();
+            screenInstance = new GameScreen();
+            return screenInstance;
         }
     };
 
-    static public ScreenEnum screenType;
     static public AbstractScreen screenInstance;
 
     public abstract AbstractScreen getScreen();

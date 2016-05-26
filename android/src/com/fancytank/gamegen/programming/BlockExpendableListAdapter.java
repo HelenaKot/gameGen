@@ -1,6 +1,5 @@
 package com.fancytank.gamegen.programming;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,25 +17,23 @@ import java.util.ArrayList;
 
 public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
-    private Activity activity;
-    private ArrayList<BlockActorPattern[]> childtems;
-    private BlockActorPattern[] childsArray;
+    private ArrayList<BlockActorPattern[]> items;
+    private BlockActorPattern[] itemsArray;
     private LayoutInflater inflater;
-    private ArrayList<String> parentItems;
+    private ArrayList<String> titleItems;
 
     public BlockExpendableListAdapter(ArrayList<String> parents, ArrayList<BlockActorPattern[]> childern) {
-        this.parentItems = parents;
-        this.childtems = childern;
+        this.titleItems = parents;
+        this.items = childern;
     }
 
-    public void setInflater(LayoutInflater inflater, Activity activity) {
+    public void setInflater(LayoutInflater inflater) {
         this.inflater = inflater;
-        this.activity = activity;
     }
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        childsArray = childtems.get(groupPosition);
+        itemsArray = items.get(groupPosition);
 
         TextView textView = null;
 
@@ -45,12 +42,12 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
         }
 
         textView = (TextView) convertView.findViewById(R.id.item_title);
-        textView.setText(childsArray[childPosition].getName());
+        textView.setText(itemsArray[childPosition].getName());
 
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                BlockCreateEvent bce = new BlockCreateEvent(childsArray[childPosition]);
+                BlockCreateEvent bce = new BlockCreateEvent(itemsArray[childPosition]);
                 EventBus.getDefault().post(bce);
             }
         });
@@ -65,7 +62,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.programming_list_group, null);
         }
         TextView textView = (TextView) convertView.findViewById(R.id.group_title);
-        textView.setText(parentItems.get(groupPosition));
+        textView.setText(titleItems.get(groupPosition));
 
         return convertView;
     }
@@ -82,7 +79,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return (childtems.get(groupPosition)).length;
+        return (items.get(groupPosition)).length;
     }
 
     @Override
@@ -92,7 +89,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return parentItems.size();
+        return titleItems.size();
     }
 
     @Override

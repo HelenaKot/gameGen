@@ -9,18 +9,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class MainGdx extends Game {
-    public enum AppStatus { GDX_INIT_FINISHED, SETUP_FINISHED, EDITOR_SCREEN, TEST_SCREEN}
+    public enum AppStatus {GDX_INIT_FINISHED, SETUP_FINISHED, EDITOR_SCREEN, TEST_SCREEN}
 
     @Override
     public void create() {
         ScreenManager.getInstance().initialize(this);
-        if (ScreenEnum.screenType != null)
-                ScreenManager.getInstance().showScreen(ScreenEnum.screenType);
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(MainGdx.AppStatus.GDX_INIT_FINISHED);
     }
 
-    //todo this is not working v
     @Subscribe
     public void onEvent(MainGdx.AppStatus status) {
         if (status == AppStatus.EDITOR_SCREEN)
