@@ -10,6 +10,9 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.R;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 public class TestGameActivity extends AndroidApplication {
 
     @Override
@@ -21,5 +24,12 @@ public class TestGameActivity extends AndroidApplication {
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         View gdxView = initializeForView(new MainGdx());
         contentFrame.addView(gdxView);
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe
+    public void onEvent(MainGdx.AppStatus status) {
+        if (status == MainGdx.AppStatus.GDX_INIT_FINISHED)
+            EventBus.getDefault().post(MainGdx.AppStatus.TEST_SCREEN);
     }
 }

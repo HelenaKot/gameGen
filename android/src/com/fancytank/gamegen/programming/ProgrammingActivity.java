@@ -39,17 +39,18 @@ public class ProgrammingActivity extends AndroidApplication {
         setContentView(R.layout.activity_programming);
         debugText = (TextView) findViewById(R.id.debug_text);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
-        View gdxView = initializeForView(new MainGdx());
-        contentFrame.addView(gdxView);
+        contentFrame.addView(initializeForView(new MainGdx()));
         slidingLayer = (SlidingLayer) findViewById(R.id.sliding_layer);
-        slidingLayer.closeLayer(true);
+        //slidingLayer.closeLayer(true);
         list = new BlocksExpendableList((ExpandableListView) findViewById(R.id.drawer_list), this);
         EventBus.getDefault().register(this);
     }
 
     @Subscribe
     public void onEvent(MainGdx.AppStatus status) {
-        if (status == MainGdx.AppStatus.SETUP_FINISHED)
+        if (status == MainGdx.AppStatus.GDX_INIT_FINISHED)
+            EventBus.getDefault().post(MainGdx.AppStatus.EDITOR_SCREEN);
+        else if (status == MainGdx.AppStatus.SETUP_FINISHED)
             list.populateList();
     }
 

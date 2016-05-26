@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import org.greenrobot.eventbus.EventBus;
+
 public abstract class AbstractScreen extends Stage implements Screen {
     public abstract void buildStage();
 
