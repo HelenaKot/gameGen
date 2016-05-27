@@ -54,21 +54,64 @@ public class BlocksExpendableList {
     }
 
     private void setGroupParents() {
-        parentItems.add("Sample");
-        parentItems.add("Logic");
         parentItems.add("Input");
+        parentItems.add("Variable");
+        parentItems.add("Logic");
+        parentItems.add("Methods");
+        parentItems.add("Collection");
         parentItems.add("Derp");
     }
 
     private void setChildData() {
-        BlockActorPattern[] samplePatterns = {};
-        childItems.add(samplePatterns);
+        BlockActorPattern[] inputPattern = {
+                new CustomBlockPattern("on click", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET"),
+                        new InputFragment(InputType.DUMMY, "do"),
+                        new InputFragment(InputType.VARIABLE, "when this object is pressed")}, BlockShape.ENCLOSED), Color.PURPLE)
+        };
+        childItems.add(inputPattern);
 
-        BlockActorPattern[] logicPatterns = {PredefinedBlockPattern.TEXT_VARIABLE};
-        childItems.add(logicPatterns);
+        BlockActorPattern[] variablePattern = {
+                new CustomBlockPattern("object", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "PLACEHODLER")}, BlockShape.VARIABLE), Color.CORAL),
+                new CustomBlockPattern("number", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "PLACEHODLER")}, BlockShape.VARIABLE), Color.SKY),
+                new CustomBlockPattern("name", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "PLACEHODLER")}, BlockShape.VARIABLE), Color.TEAL),
+                new CustomBlockPattern("color", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "PLACEHODLER")}, BlockShape.VARIABLE), Color.SKY)
+        };
+        childItems.add(variablePattern);
 
-        BlockActorPattern[] inputPatterns = {PredefinedBlockPattern.TEXT_VARIABLE};
-        childItems.add(inputPatterns);
+        BlockActorPattern[] logicPattern = {
+                new CustomBlockPattern("if statement", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.SOCKET, "IF_SOCKET"),
+                        new InputFragment(InputType.DUMMY, "do"),
+                        new InputFragment(InputType.VARIABLE, "is equal to this"),
+                        new InputFragment(InputType.VARIABLE, "if this object")}, BlockShape.CHAIN_FUNCTION), Color.TEAL),
+        };
+        childItems.add(logicPattern);
+
+        BlockActorPattern[] methodsPattern = {
+                new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "vertically"),
+                        new InputFragment(InputType.VARIABLE, "horizontally"),
+                        new InputFragment(InputType.DUMMY, ""),
+                        new InputFragment(InputType.VARIABLE, "move this object")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
+                new CustomBlockPattern("set color", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "to"),
+                        new InputFragment(InputType.VARIABLE, "set color of")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
+                new CustomBlockPattern("spawn object", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "create new instance of")}, BlockShape.CHAIN_FUNCTION), Color.RED),
+                new CustomBlockPattern("kill object", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "remove this object from existence")}, BlockShape.CHAIN_FUNCTION), Color.RED),
+        };
+        childItems.add(methodsPattern);
+
+        BlockActorPattern[] collectionPattern = {
+
+        };
+        childItems.add(collectionPattern);
 
         BlockActorPattern[] derpPatterns = {
                 PredefinedBlockPattern.TEXT_VARIABLE,
