@@ -25,15 +25,7 @@ public abstract class BaseActor extends Actor {
         for (InputListener il : actionListeners)
             addListener(il);
     }
-/*
-    static Texture getTexture(String textureName) {
-        return new Texture(Gdx.files.internal(textureName));
-    }
 
-    static Color getColor(String hexValue) {
-        return Color.valueOf(hexValue);
-    }
-*/
     public void draw(Batch batch, float alpha) {
         batch.setColor(tint);
         batch.draw(texture, this.getX(), getY(), this.getOriginX(), this.getOriginY(), this.getWidth(),

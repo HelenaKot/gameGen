@@ -24,7 +24,6 @@ public class GameMap {
                 initActor(new GenericActor(Color.LIGHT_GRAY, x, y));
             }
         }
-        System.out.println("Map initet");
     }
 
     void changeBlock(BaseActor actor) {
