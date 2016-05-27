@@ -54,15 +54,47 @@ public class BlocksExpendableList {
     }
 
     private void setGroupParents() {
+        parentItems.add("Demo");
         parentItems.add("Input");
         parentItems.add("Variable");
         parentItems.add("Logic");
         parentItems.add("Methods");
         parentItems.add("Collection");
-        parentItems.add("Derp");
     }
 
     private void setChildData() {
+        BlockActorPattern[] demoPatterns = {
+                new CustomBlockPattern("on click", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET"),
+                        new InputFragment(InputType.DUMMY, "do"),
+                        new InputFragment(InputType.VARIABLE, "when this object is PRESSED")}, BlockShape.ENCLOSED), Color.PURPLE),
+
+                new CustomBlockPattern("empty space", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE), Color.SKY),
+                new CustomBlockPattern("placeholder actor", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE), Color.SKY),
+
+                new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "vertically"),
+                        new InputFragment(InputType.VARIABLE, "horizontally"),
+                        new InputFragment(InputType.DUMMY, "move self")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
+
+                new CustomBlockPattern("number +1", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "1")}, BlockShape.VARIABLE), Color.SKY),
+                new CustomBlockPattern("number -1", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "-1")}, BlockShape.VARIABLE), Color.SKY),
+
+                new CustomBlockPattern("spawn object", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "at x"),
+                        new InputFragment(InputType.VARIABLE, "at y"),
+                        new InputFragment(InputType.DUMMY, ""),
+                        new InputFragment(InputType.VARIABLE, "spawn new")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
+
+                new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.CHAIN_FUNCTION), Color.RED),
+        };
+        childItems.add(demoPatterns);
+
         BlockActorPattern[] inputPattern = {
                 new CustomBlockPattern("on click", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET"),
@@ -102,7 +134,7 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "to"),
                         new InputFragment(InputType.VARIABLE, "set color of")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
                 new CustomBlockPattern("spawn object", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "create new instance of")}, BlockShape.CHAIN_FUNCTION), Color.RED),
+                        new InputFragment(InputType.VARIABLE, "create new instance of")}, BlockShape.CHAIN_FUNCTION), Color.YELLOW),
                 new CustomBlockPattern("kill object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "remove this object from existence")}, BlockShape.CHAIN_FUNCTION), Color.RED),
         };
@@ -112,19 +144,5 @@ public class BlocksExpendableList {
 
         };
         childItems.add(collectionPattern);
-
-        BlockActorPattern[] derpPatterns = {
-                PredefinedBlockPattern.TEXT_VARIABLE,
-                PredefinedBlockPattern.PRINT,
-                new CustomBlockPattern("function", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "LOREM IPSUM")}, BlockShape.CHAIN_FUNCTION), Color.CORAL),
-                new CustomBlockPattern("socket input", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.DUMMY, "PLACEHOLDER")}, BlockShape.ENCLOSED), Color.PURPLE),
-                new CustomBlockPattern("sockets", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.VARIABLE, "PLACEHOLDER"),
-                        new InputFragment(InputType.SOCKET, "PLACEHOLDER"), new InputFragment(InputType.DUMMY, "PLACEHOLDER")}, BlockShape.CHAIN_FUNCTION), Color.PINK)
-
-        };
-        childItems.add(derpPatterns);
     }
 }
