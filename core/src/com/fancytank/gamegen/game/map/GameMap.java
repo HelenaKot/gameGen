@@ -2,8 +2,9 @@ package com.fancytank.gamegen.game.map;
 
 import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.MainGdx;
-import com.fancytank.gamegen.game.BaseActor;
 import com.fancytank.gamegen.game.Constant;
+import com.fancytank.gamegen.game.actor.BaseActor;
+import com.fancytank.gamegen.game.actor.EmptyActor;
 import com.fancytank.gamegen.game.actor.GenericActor;
 
 public class GameMap {
@@ -21,9 +22,10 @@ public class GameMap {
         map = new BaseActor[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                initActor(new GenericActor(Color.LIGHT_GRAY, x, y));
+                initActor(new EmptyActor(x, y));
             }
         }
+        changeBlock(new GenericActor(Color.LIGHT_GRAY, 3, 3));
     }
 
     void changeBlock(BaseActor actor) {
