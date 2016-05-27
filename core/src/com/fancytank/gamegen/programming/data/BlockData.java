@@ -13,6 +13,7 @@ public class BlockData implements Serializable {
     BlockData descendant;
     InputFragment[] inputs;
     transient CoreBlock coreBlock;
+    String value; //todo
 
     public BlockData(InputFragment[] inputs) {
         this.shape = BlockShape.ENCLOSED;
@@ -86,5 +87,18 @@ public class BlockData implements Serializable {
         for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())
             output.add(programmingBlock.coreBlock.data);
         return output;
+    }
+
+    public boolean hasValue() {
+        return value != null;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public BlockData setValue(String value) {
+        this.value = value;
+        return this;
     }
 }

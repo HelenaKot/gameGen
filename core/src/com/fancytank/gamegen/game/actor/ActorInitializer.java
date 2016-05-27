@@ -1,5 +1,7 @@
 package com.fancytank.gamegen.game.actor;
 
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+
 import java.util.HashMap;
 
 public class ActorInitializer {
@@ -31,6 +33,14 @@ public class ActorInitializer {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void addActionListener(String name, InputListener inputListener) {
+        try {
+            instance.actors.get(name).getMethod("addActionListener",InputListener.class).invoke(null, inputListener);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

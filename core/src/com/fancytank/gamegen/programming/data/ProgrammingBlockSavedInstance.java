@@ -8,7 +8,7 @@ import com.fancytank.gamegen.programming.looks.Utility;
 import java.io.Serializable;
 
 public class ProgrammingBlockSavedInstance implements Serializable {
-    BlockData data;
+    public BlockData data;
     float a, r, g, b;
     float posX, posY;
 

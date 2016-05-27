@@ -8,7 +8,6 @@ import android.widget.ExpandableListView;
 import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.blocks.CustomBlockPattern;
-import com.fancytank.gamegen.programming.blocks.PredefinedBlockPattern;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.BlockShape;
@@ -70,9 +69,9 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "when this object is PRESSED")}, BlockShape.ENCLOSED), Color.PURPLE),
 
                 new CustomBlockPattern("empty space", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE), Color.SKY),
+                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setValue("empty"), Color.SKY),
                 new CustomBlockPattern("placeholder actor", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE), Color.SKY),
+                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE).setValue("generic"), Color.SKY),
 
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "vertically"),
@@ -80,9 +79,9 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.DUMMY, "move self")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
 
                 new CustomBlockPattern("number +1", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "1")}, BlockShape.VARIABLE), Color.SKY),
+                        new InputFragment(InputType.DUMMY, "1")}, BlockShape.VARIABLE).setValue("1"), Color.SKY),
                 new CustomBlockPattern("number -1", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "-1")}, BlockShape.VARIABLE), Color.SKY),
+                        new InputFragment(InputType.DUMMY, "-1")}, BlockShape.VARIABLE).setValue("-1"), Color.SKY),
 
                 new CustomBlockPattern("spawn object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "at x"),

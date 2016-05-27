@@ -18,7 +18,6 @@ public class GameMap {
 
     private void initEmptyMap(int width, int height) {
         map = new BaseActor[width][height];
-        new ActorInitializer();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 initActor(ActorInitializer.getInstanceOf("empty", x, y));
