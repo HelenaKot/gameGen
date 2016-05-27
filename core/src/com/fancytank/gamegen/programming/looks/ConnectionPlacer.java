@@ -53,9 +53,10 @@ public final class ConnectionPlacer {
 
     private static void updateInputConnectors(CoreBlock coreBlock, int index) {
         ArrayList<ConnectionArea> connectors = coreBlock.programmingBlock.connectors;
-        for (int next = index; next < connectors.size(); next++) {
-            Vector2 newPlacement = coreBlock.blockAppearance.inputs.get(next - index).getConnectorPlacement();
-            connectors.get(next).setPosition(newPlacement.x, newPlacement.y);
-        }
+        for (BlockInputAppearance input : coreBlock.blockAppearance.inputs)
+            if (input.getConnectors() != null){
+                Vector2 newPlacement = input.getConnectorPlacement();
+                connectors.get(index++).setPosition(newPlacement.x, newPlacement.y);
+            }
     }
 }
