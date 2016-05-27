@@ -37,11 +37,11 @@ public class ProgrammingActivity extends AndroidApplication {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_programming);
+
         debugText = (TextView) findViewById(R.id.debug_text);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         contentFrame.addView(initializeForView(new MainGdx()));
         slidingLayer = (SlidingLayer) findViewById(R.id.sliding_layer);
-        //slidingLayer.closeLayer(true);
         list = new BlocksExpendableList((ExpandableListView) findViewById(R.id.drawer_list), this);
         EventBus.getDefault().register(this);
     }

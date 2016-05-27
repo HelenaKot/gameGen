@@ -37,20 +37,20 @@ public class BlocksExpendableList {
 
     private void setListView() {
         expandableList.setClickable(true);
-        // expandableList.setGroupIndicator(null);
         expandableList.setDividerHeight(2);
     }
 
     public void populateList() {
-        setGroupParents();
-        setChildData();
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                adapter.notifyDataSetChanged();
-            }
-        });
-
+        if (parentItems.size() == 0) {
+            setGroupParents();
+            setChildData();
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     private void setGroupParents() {

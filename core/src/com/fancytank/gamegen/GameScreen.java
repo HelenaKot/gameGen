@@ -1,7 +1,7 @@
 package com.fancytank.gamegen;
 
-import com.fancytank.gamegen.generated.Constant;
-import com.fancytank.gamegen.generated.map.MapManager;
+import com.fancytank.gamegen.game.Constant;
+import com.fancytank.gamegen.game.map.MapManager;
 
 public class GameScreen extends AbstractScreen {
 

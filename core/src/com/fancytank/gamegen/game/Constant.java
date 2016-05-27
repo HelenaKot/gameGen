@@ -1,4 +1,4 @@
-package com.fancytank.gamegen.generated;
+package com.fancytank.gamegen.game;
 
 public class Constant {
     public static int BLOCK_SIZE;

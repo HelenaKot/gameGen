@@ -1,4 +1,4 @@
-package com.fancytank.gamegen.generated;
+package com.fancytank.gamegen.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

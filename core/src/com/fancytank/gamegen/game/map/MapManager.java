@@ -1,6 +1,6 @@
-package com.fancytank.gamegen.generated.map;
+package com.fancytank.gamegen.game.map;
 
-import com.fancytank.gamegen.generated.Constant;
+import com.fancytank.gamegen.game.Constant;
 
 public class MapManager {
     public static MapManager instance;

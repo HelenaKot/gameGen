@@ -1,10 +1,10 @@
-package com.fancytank.gamegen.generated.map;
+package com.fancytank.gamegen.game.map;
 
 import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.MainGdx;
-import com.fancytank.gamegen.generated.BaseActor;
-import com.fancytank.gamegen.generated.Constant;
-import com.fancytank.gamegen.generated.actor.GenericActor;
+import com.fancytank.gamegen.game.BaseActor;
+import com.fancytank.gamegen.game.Constant;
+import com.fancytank.gamegen.game.actor.GenericActor;
 
 public class GameMap {
     int widthPadding, heightOffset;

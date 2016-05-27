@@ -1,7 +1,7 @@
-package com.fancytank.gamegen.generated.actor;
+package com.fancytank.gamegen.game.actor;
 
 import com.badlogic.gdx.graphics.Color;
-import com.fancytank.gamegen.generated.BaseActor;
+import com.fancytank.gamegen.game.BaseActor;
 
 public class GenericActor extends BaseActor {
 
