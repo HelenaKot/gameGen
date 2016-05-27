@@ -7,7 +7,7 @@ import com.fancytank.gamegen.programming.looks.BlockShape;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
 public enum PredefinedBlockPattern implements BlockActorPattern {
-    VARIABLE(new CustomBlockPattern("variable", new BlockData(new InputFragment[]{new InputFragment(InputType.DUMMY, "NOPE")}, BlockShape.VARIABLE), Color.YELLOW)),
+    TEXT_VARIABLE(new CustomBlockPattern("variable", new BlockData(new InputFragment[]{new InputFragment(InputType.DUMMY, "NOPE")}, BlockShape.VARIABLE), Color.YELLOW)),
     PRINT(new CustomBlockPattern("print", new BlockData(new InputFragment[]{new InputFragment(InputType.VARIABLE, "Print")}, BlockShape.VARIABLE), Color.LIME));
 
     public final CustomBlockPattern pattern;

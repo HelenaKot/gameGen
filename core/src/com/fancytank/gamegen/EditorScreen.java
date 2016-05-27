@@ -23,6 +23,7 @@ public class EditorScreen extends AbstractScreen {
         setUp();
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(MainGdx.AppStatus.SETUP_FINISHED);
+        Gdx.input.setInputProcessor(this);
     }
 
     private void setUp() {

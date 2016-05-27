@@ -64,14 +64,14 @@ public class BlocksExpendableList {
         BlockActorPattern[] samplePatterns = {};
         childItems.add(samplePatterns);
 
-        BlockActorPattern[] logicPatterns = {PredefinedBlockPattern.VARIABLE};
+        BlockActorPattern[] logicPatterns = {PredefinedBlockPattern.TEXT_VARIABLE};
         childItems.add(logicPatterns);
 
-        BlockActorPattern[] inputPatterns = {PredefinedBlockPattern.VARIABLE};
+        BlockActorPattern[] inputPatterns = {PredefinedBlockPattern.TEXT_VARIABLE};
         childItems.add(inputPatterns);
 
         BlockActorPattern[] derpPatterns = {
-                PredefinedBlockPattern.VARIABLE,
+                PredefinedBlockPattern.TEXT_VARIABLE,
                 PredefinedBlockPattern.PRINT,
                 new CustomBlockPattern("function", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "LOREM IPSUM")}, BlockShape.CHAIN_FUNCTION), Color.CORAL),

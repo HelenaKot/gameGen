@@ -10,6 +10,7 @@ public class InputFragment implements Serializable {
     public String labelText;
     public BlockData connectedTo;
     BlockData blockData;
+    String value; // todo
     transient private ConnectionArea connectionArea;
 
     public InputFragment(InputType inputType, String labelText) {
@@ -39,8 +40,16 @@ public class InputFragment implements Serializable {
         return output;
     }
 
-    //TODO Connection
-
     //TODO programming
+    public boolean hasValue() {
+        return value != null;
+    }
 
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }
