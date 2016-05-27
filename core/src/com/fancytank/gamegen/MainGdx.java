@@ -43,4 +43,9 @@ public class MainGdx extends Game {
         return ScreenEnum.screenInstance;
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        EventBus.getDefault().unregister(this);
+    }
 }

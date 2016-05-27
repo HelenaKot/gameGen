@@ -1,7 +1,9 @@
 package com.fancytank.gamegen.programming.data;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
+import com.fancytank.gamegen.programming.looks.Utility;
 
 import java.io.Serializable;
 
@@ -16,8 +18,9 @@ public class ProgrammingBlockSavedInstance implements Serializable {
         r = programmingBlock.coreBlock.tint.r;
         g = programmingBlock.coreBlock.tint.g;
         b = programmingBlock.coreBlock.tint.b;
-        posX = programmingBlock.getX();
-        posY = programmingBlock.getY();
+        Vector2 pos = Utility.myLocalToStageCoordinates(programmingBlock);
+        posX = pos.x;
+        posY = pos.y;
     }
 
     public ProgrammingBlock restore() {

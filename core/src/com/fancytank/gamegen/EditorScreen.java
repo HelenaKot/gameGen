@@ -23,7 +23,6 @@ public class EditorScreen extends AbstractScreen {
         setUp();
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(MainGdx.AppStatus.SETUP_FINISHED);
-        Gdx.input.setInputProcessor(this);
     }
 
     private void setUp() {
@@ -41,5 +40,11 @@ public class EditorScreen extends AbstractScreen {
         newBlock.setPosition(getWidth() * 0.4f, getHeight() / 2);
         addActor(newBlock);
         template.destroy();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        EventBus.getDefault().unregister(this);
     }
 }

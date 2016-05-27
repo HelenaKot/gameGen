@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.fancytank.gamegen.GameScreen;
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.editor.BlockButton;
@@ -82,16 +83,34 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
-        File file = new File(view.getContext().getFilesDir(), myFilename);
+        Workspace.load(loadDataFromFile(view));
+    }
+
+    private ProgrammingBlockSavedInstance[] loadDataFromFile(View view) throws IOException, ClassNotFoundException {
+        File file = new File(view.getContext().getFilesDir(), ProgrammingActivity.myFilename);
         if (file.exists()) {
             FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile());
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             ProgrammingBlockSavedInstance[] data = (ProgrammingBlockSavedInstance[]) objectInputStream.readObject();
-            Workspace.load(data);
+            return data;
         }
+        return null;
     }
 
     public void deleteAll(View view) {
         Workspace.clearWorkspace();
+    }
+
+    private boolean inGame = false;
+
+    public void switchScreen(View view) throws IOException, ClassNotFoundException {
+        if (inGame)
+            EventBus.getDefault().post(MainGdx.AppStatus.EDITOR_SCREEN);
+        else {
+            EventBus.getDefault().post(MainGdx.AppStatus.TEST_SCREEN);
+            GameScreen.loadGame(loadDataFromFile(view));
+        }
+
+        inGame = !inGame;
     }
 }

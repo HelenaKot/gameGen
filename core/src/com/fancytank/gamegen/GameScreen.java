@@ -24,4 +24,10 @@ public class GameScreen extends AbstractScreen {
         ScriptLoader.load(data);
         new MapManager(instance.width, instance.height);
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        EventBus.getDefault().unregister(this);
+    }
 }

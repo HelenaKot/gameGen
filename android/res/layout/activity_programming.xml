@@ -82,6 +82,12 @@
                     android:onClick="deleteAll"
                     android:text="delete all" />
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="switchScreen"
+                    android:text="edit/test" />
+
             </LinearLayout>
 
             <ScrollView
