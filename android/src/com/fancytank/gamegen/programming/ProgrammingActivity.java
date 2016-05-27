@@ -48,11 +48,15 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     @Subscribe
-    public void onEvent(MainGdx.AppStatus status) {
+    public void onEvent(MainGdx.AppStatus status) throws IOException, ClassNotFoundException {
         if (status == MainGdx.AppStatus.GDX_INIT_FINISHED)
             EventBus.getDefault().post(MainGdx.AppStatus.EDITOR_SCREEN);
-        else if (status == MainGdx.AppStatus.SETUP_FINISHED)
-            list.populateList();
+        else if (status == MainGdx.AppStatus.SETUP_FINISHED) {
+            if (inGame)
+                GameScreen.loadGame(loadDataFromFile(view));
+            else
+                list.populateList();
+        }
     }
 
     @Subscribe
@@ -101,16 +105,16 @@ public class ProgrammingActivity extends AndroidApplication {
         Workspace.clearWorkspace();
     }
 
+    //todo refactoringplz
     private boolean inGame = false;
+    private static View view;
 
-    public void switchScreen(View view) throws IOException, ClassNotFoundException {
+    public void switchScreen(View v) {
+        view = v;
         if (inGame)
             EventBus.getDefault().post(MainGdx.AppStatus.EDITOR_SCREEN);
-        else {
+        else
             EventBus.getDefault().post(MainGdx.AppStatus.TEST_SCREEN);
-            GameScreen.loadGame(loadDataFromFile(view));
-        }
-
         inGame = !inGame;
     }
 }

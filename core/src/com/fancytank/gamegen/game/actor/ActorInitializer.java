@@ -15,7 +15,7 @@ public class ActorInitializer {
         if (instance == null) {
             actors = new HashMap<String, Class<? extends BaseActor>>();
             actors.put("empty", EmptyActor.class);
-            actors.put("base", BaseActor.class);
+            actors.put("generic", GenericActor.class);
         }
         instance = this;
     }

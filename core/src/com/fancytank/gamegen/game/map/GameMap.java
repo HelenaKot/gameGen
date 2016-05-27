@@ -1,11 +1,9 @@
 package com.fancytank.gamegen.game.map;
 
-import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.BaseActor;
-import com.fancytank.gamegen.game.actor.GenericActor;
 
 public class GameMap {
     int widthPadding, heightOffset;
@@ -26,7 +24,7 @@ public class GameMap {
                 initActor(ActorInitializer.getInstanceOf("empty", x, y));
             }
         }
-        changeBlock(new GenericActor(Color.LIGHT_GRAY, 3, 3));
+        changeBlock(ActorInitializer.getInstanceOf("generic", 2, 2));
     }
 
     void changeBlock(BaseActor actor) {
