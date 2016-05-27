@@ -67,7 +67,7 @@ public class ProgrammingActivity extends AndroidApplication {
         ConnectionArea.debug = !ConnectionArea.debug;
     }
 
-    private static String myFilename = "todotodo";
+    public static String myFilename = "todotodo";
 
     public void saveWorkspace(View view) throws IOException {
         File file = new File(view.getContext().getFilesDir(), myFilename);
