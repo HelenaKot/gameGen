@@ -12,19 +12,20 @@ import java.util.LinkedList;
 public abstract class BaseActor extends Actor {
     Texture texture;
     Color tint;
+    public int x, y;
     static LinkedList<FloatConsumer> actPerTick = new LinkedList<FloatConsumer>();
     static LinkedList<InputListener> actionListeners = new LinkedList<InputListener>();
 
-    public BaseActor(String textureName, String colorHexValue) {
-        texture = getTexture(textureName);
-        tint = getColor(colorHexValue);
+    public BaseActor(Color tint) {
+        texture = new Texture(Gdx.files.internal("badlogic.jpg"));
+        this.tint = tint;
 
         //TODO najpierw definiuj klase, potem rob obiekty a nikomu nie stanie sie krzywda
         setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());
         for (InputListener il : actionListeners)
             addListener(il);
     }
-
+/*
     static Texture getTexture(String textureName) {
         return new Texture(Gdx.files.internal(textureName));
     }
@@ -32,7 +33,7 @@ public abstract class BaseActor extends Actor {
     static Color getColor(String hexValue) {
         return Color.valueOf(hexValue);
     }
-
+*/
     public void draw(Batch batch, float alpha) {
         batch.setColor(tint);
         batch.draw(texture, this.getX(), getY(), this.getOriginX(), this.getOriginY(), this.getWidth(),
