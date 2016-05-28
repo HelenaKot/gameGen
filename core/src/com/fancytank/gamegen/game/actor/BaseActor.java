@@ -9,8 +9,6 @@ import java.util.LinkedList;
 
 public abstract class BaseActor extends Actor {
     public int x, y;
-    static LinkedList<FloatConsumer> actPerTick = new LinkedList<FloatConsumer>();
-    static LinkedList<InputListener> actionListeners = new LinkedList<InputListener>();
 
     /**
      * najpierw definiuj klase, potem rob obiekty a nikomu nie stanie sie krzywda
@@ -19,23 +17,35 @@ public abstract class BaseActor extends Actor {
         this.x = x;
         this.y = y;
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
-        for (InputListener il : actionListeners)
+        for (InputListener il : getListenerList())
             addListener(il);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        for (FloatConsumer ic : actPerTick) {
+        for (FloatConsumer ic : getActionsPerTick()) {
             ic.accept(delta);
         }
     }
 
-    public static void addTickEvent(FloatConsumer floatConsumer) {
-        actPerTick.add(floatConsumer);
+    public LinkedList<InputListener> getListenerList() {
+        return ActorInitializer.getListenerList(getClassName());
     }
 
-    public static void addActionListener(InputListener inputListener) {
-        actionListeners.add(inputListener);
+    private LinkedList<FloatConsumer> myActionsPerTick;
+
+    public LinkedList<FloatConsumer> getActionsPerTick() {
+        if (myActionsPerTick == null)
+            myActionsPerTick = ActorInitializer.getActionsPerTick(getClassName());
+        return myActionsPerTick;
+    }
+
+    private String className;
+
+    public String getClassName() {
+        if (className == null)
+            className = ActorInitializer.askClassName(this.getClass());
+        return className;
     }
 }

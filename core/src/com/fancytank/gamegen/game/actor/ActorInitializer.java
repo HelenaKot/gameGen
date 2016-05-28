@@ -1,34 +1,60 @@
 package com.fancytank.gamegen.game.actor;
 
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.fancytank.gamegen.game.FloatConsumer;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class ActorInitializer {
-    HashMap<String, Class<? extends BaseActor>> actors;
+    HashMap<String, ActorToInit> actorToInit;
     static ActorInitializer instance;
 
     public ActorInitializer() {
-        if (instance == null)
-            init();
+        if (instance == null) {
+            actorToInit = new HashMap<String, ActorToInit>();
+            actorToInit.put("unspecified", new ActorToInit(EmptyActor.class)); // my "nullobject"
+            actorToInit.put("empty", new ActorToInit(EmptyActor.class));
+            actorToInit.put("generic", new ActorToInit(GenericActor.class));
+            instance = this;
+        }
     }
 
-    private void init() {
-        if (instance == null) {
-            actors = new HashMap<String, Class<? extends BaseActor>>();
-            actors.put("empty", EmptyActor.class);
-            actors.put("generic", GenericActor.class);
+    class ActorToInit {
+        Class<? extends BaseActor> actorClass;
+        LinkedList<FloatConsumer> actPerTick;
+        LinkedList<InputListener> actionListeners;
+
+        ActorToInit(Class<? extends BaseActor> actorClass) {
+            this.actorClass = actorClass;
+            actPerTick = new LinkedList<FloatConsumer>();
+            actionListeners = new LinkedList<InputListener>();
         }
-        instance = this;
     }
 
     public static String[] getActorNames() {
-        return (String[]) instance.actors.keySet().toArray();
+        return (String[]) instance.actorToInit.keySet().toArray();
+    }
+
+    public static String askClassName(Class<? extends BaseActor> myClass) {
+        for (String name : instance.actorToInit.keySet())
+            if (myClass.equals(instance.actorToInit.get(name).actorClass))
+                return name;
+        return "unspecified";
+    }
+
+    public static LinkedList<InputListener> getListenerList(String name) {
+        return instance.actorToInit.get(name).actionListeners;
+    }
+
+    public static LinkedList<FloatConsumer> getActionsPerTick(String name) {
+        return instance.actorToInit.get(name).actPerTick;
     }
 
     public static BaseActor getInstanceOf(String name, int x, int y) {
         try {
-            return instance.actors.get(name).getConstructor(int.class, int.class).newInstance(x, y);
+            return instance.actorToInit.get(name).actorClass
+                    .getConstructor(int.class, int.class).newInstance(x, y);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,11 +62,7 @@ public class ActorInitializer {
     }
 
     public static void addActionListener(String name, InputListener inputListener) {
-        try {
-            instance.actors.get(name).getMethod("addActionListener",InputListener.class).invoke(null, inputListener);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        instance.actorToInit.get(name).actionListeners.add(inputListener);
     }
 
 }
