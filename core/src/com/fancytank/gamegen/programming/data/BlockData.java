@@ -1,7 +1,6 @@
 package com.fancytank.gamegen.programming.data;
 
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
-import com.fancytank.gamegen.programming.looks.BlockShape;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import java.io.Serializable;
@@ -14,13 +13,6 @@ public class BlockData implements Serializable {
     InputFragment[] inputs;
     transient CoreBlock coreBlock;
     String value; //todo
-
-    public BlockData(InputFragment[] inputs) {
-        this.shape = BlockShape.ENCLOSED;
-        this.inputs = inputs;
-        for (InputFragment inputFragment : inputs)
-            inputFragment.blockData = this;
-    }
 
     public BlockData(InputFragment[] inputs, BlockShape shape) {
         this.shape = shape;

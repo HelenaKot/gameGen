@@ -3,7 +3,7 @@ package com.fancytank.gamegen.programming.blocks;
 import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
-import com.fancytank.gamegen.programming.looks.BlockShape;
+import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
 public enum PredefinedBlockPattern implements BlockActorPattern {

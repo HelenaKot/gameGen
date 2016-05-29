@@ -1,12 +1,13 @@
-package com.fancytank.gamegen.programming.looks;
+package com.fancytank.gamegen.programming.data;
 
 import com.fancytank.gamegen.programming.Direction;
 
 import java.io.Serializable;
 
 public enum BlockShape implements Serializable {
-    ENCLOSED(10, new boolean[]{false, false, false}),
-    CHAIN_FUNCTION(5, new boolean[]{true, false, true}),
+    ACTION_LISTENER(10, new boolean[]{false, false, false}),
+    CHAIN_METHOD(5, new boolean[]{true, false, true}),
+    LAST_METHOD(5, new boolean[]{true, false, false}),
     VARIABLE(0, new boolean[]{false, true, false});
 
     public int significance;

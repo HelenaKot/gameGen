@@ -5,7 +5,7 @@ import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
-import com.fancytank.gamegen.programming.looks.BlockShape;
+import com.fancytank.gamegen.programming.data.BlockShape;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -41,7 +41,7 @@ public class Workspace {
     public static String getDebugLog() {
         String log = "BLOCKS ONBOARD: " + BlockData.getBlockDataList().size() + "\n";
         for (BlockData blockData : BlockData.getBlockDataList())
-            if (blockData.shape == BlockShape.ENCLOSED)
+            if (blockData.shape == BlockShape.ACTION_LISTENER)
                 log += "BLOCK\n" + blockData.getDebugLog("") + "\n\n";
         return log;
     }

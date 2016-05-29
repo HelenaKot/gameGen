@@ -10,7 +10,7 @@ import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.blocks.CustomBlockPattern;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
-import com.fancytank.gamegen.programming.looks.BlockShape;
+import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class BlocksExpendableList {
                 new CustomBlockPattern("on click", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET"),
                         new InputFragment(InputType.DUMMY, "do"),
-                        new InputFragment(InputType.VARIABLE, "when this object is PRESSED")}, BlockShape.ENCLOSED), Color.PURPLE),
+                        new InputFragment(InputType.VARIABLE, "when this object is PRESSED")}, BlockShape.ACTION_LISTENER), Color.PURPLE),
 
                 new CustomBlockPattern("empty space", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setValue("empty"), Color.SKY),
@@ -76,7 +76,7 @@ public class BlocksExpendableList {
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "vertically"),
                         new InputFragment(InputType.VARIABLE, "horizontally"),
-                        new InputFragment(InputType.DUMMY, "move self")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
+                        new InputFragment(InputType.DUMMY, "move self")}, BlockShape.CHAIN_METHOD), Color.ORANGE),
 
                 new CustomBlockPattern("number +1", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "1")}, BlockShape.VARIABLE).setValue("1"), Color.SKY),
@@ -87,10 +87,10 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "at x"),
                         new InputFragment(InputType.VARIABLE, "at y"),
                         new InputFragment(InputType.DUMMY, ""),
-                        new InputFragment(InputType.VARIABLE, "spawn new")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
+                        new InputFragment(InputType.VARIABLE, "spawn new")}, BlockShape.CHAIN_METHOD), Color.ORANGE),
 
                 new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.CHAIN_FUNCTION), Color.RED),
+                        new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.CHAIN_METHOD), Color.RED),
         };
         childItems.add(demoPatterns);
 
@@ -98,7 +98,7 @@ public class BlocksExpendableList {
                 new CustomBlockPattern("on click", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET"),
                         new InputFragment(InputType.DUMMY, "do"),
-                        new InputFragment(InputType.VARIABLE, "when this object is pressed")}, BlockShape.ENCLOSED), Color.PURPLE)
+                        new InputFragment(InputType.VARIABLE, "when this object is pressed")}, BlockShape.ACTION_LISTENER), Color.PURPLE)
         };
         childItems.add(inputPattern);
 
@@ -119,7 +119,7 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "IF_SOCKET"),
                         new InputFragment(InputType.DUMMY, "do"),
                         new InputFragment(InputType.VARIABLE, "is equal to this"),
-                        new InputFragment(InputType.VARIABLE, "if this object")}, BlockShape.CHAIN_FUNCTION), Color.TEAL),
+                        new InputFragment(InputType.VARIABLE, "if this object")}, BlockShape.CHAIN_METHOD), Color.TEAL),
         };
         childItems.add(logicPattern);
 
@@ -128,14 +128,14 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "vertically"),
                         new InputFragment(InputType.VARIABLE, "horizontally"),
                         new InputFragment(InputType.DUMMY, ""),
-                        new InputFragment(InputType.VARIABLE, "move this object")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
+                        new InputFragment(InputType.VARIABLE, "move this object")}, BlockShape.CHAIN_METHOD), Color.ORANGE),
                 new CustomBlockPattern("set color", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "to"),
-                        new InputFragment(InputType.VARIABLE, "set color of")}, BlockShape.CHAIN_FUNCTION), Color.ORANGE),
+                        new InputFragment(InputType.VARIABLE, "set color of")}, BlockShape.CHAIN_METHOD), Color.ORANGE),
                 new CustomBlockPattern("spawn object", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "create new instance of")}, BlockShape.CHAIN_FUNCTION), Color.YELLOW),
+                        new InputFragment(InputType.VARIABLE, "create new instance of")}, BlockShape.CHAIN_METHOD), Color.YELLOW),
                 new CustomBlockPattern("kill object", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "remove this object from existence")}, BlockShape.CHAIN_FUNCTION), Color.RED),
+                        new InputFragment(InputType.VARIABLE, "remove this object from existence")}, BlockShape.CHAIN_METHOD), Color.RED),
         };
         childItems.add(methodsPattern);
 
