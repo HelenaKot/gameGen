@@ -29,4 +29,9 @@ public class GenericActor extends BaseActor {
                 this.getHeight(), this.getScaleX(), this.getScaleY(), this.getRotation(), 0, 0,
                 texture.getWidth(), texture.getHeight(), false, false);
     }
+
+    @Override
+    public String toString() {
+        return "Generic Actor at " + x + " " + y;
+    }
 }

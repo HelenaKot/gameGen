@@ -9,6 +9,7 @@ public class InputFragment implements Serializable {
     public InputType inputType;
     public String labelText;
     public BlockData connectedTo;
+    public ValueType expectedValue;
     BlockData blockData;
     transient private ConnectionArea connectionArea;
 
@@ -32,13 +33,15 @@ public class InputFragment implements Serializable {
         }
     }
 
+    public InputFragment setExpectedValue(ValueType expectedValue) {
+        this.expectedValue = expectedValue;
+        return this;
+    }
+
     public String getDebugLog(String spacing) {
         String output = spacing + "> Input [" + labelText + "] type " + inputType + "\n";
         if (connectedTo != null)
             output += spacing + "> connected to: \n" + connectedTo.getDebugLog(spacing + "  ") + "\n";
         return output;
     }
-
-    //TODO programming
-
 }
