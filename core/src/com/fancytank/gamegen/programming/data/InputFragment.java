@@ -10,7 +10,6 @@ public class InputFragment implements Serializable {
     public String labelText;
     public BlockData connectedTo;
     public ValueType expectedValue;
-    BlockData blockData;
     transient private ConnectionArea connectionArea;
 
     public InputFragment(InputType inputType, String labelText) {
@@ -18,7 +17,7 @@ public class InputFragment implements Serializable {
         this.labelText = labelText;
     }
 
-    public boolean hasConnectonArea() {
+    public boolean hasConnectionArea() {
         return connectionArea != null;
     }
 

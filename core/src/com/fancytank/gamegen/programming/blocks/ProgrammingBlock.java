@@ -188,7 +188,7 @@ public class ProgrammingBlock extends Group {
         if (coreBlock.data.hasDescendant())
             coreBlock.data.getDescendant().getCoreBlock().getProgrammingBlock().destroy();
         for (InputFragment input : coreBlock.data.getInputs())
-            if (input.hasConnectonArea() && input.getConnectionArea().hasConnection())
+            if (input.hasConnectionArea() && input.getConnectionArea().hasConnection())
                 input.getConnectionArea().getConnection().coreBlock.getProgrammingBlock().destroy();
         this.remove();
         TrashCan.instance.setHover(false);
