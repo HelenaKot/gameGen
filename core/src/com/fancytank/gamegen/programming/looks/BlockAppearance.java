@@ -12,6 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getPatch;
 
@@ -91,9 +92,10 @@ public class BlockAppearance {
 
     private void createInputs(CoreBlock root) {
         if (root.getInputs() != null) {
-            this.inputs = new ArrayList<BlockInputAppearance>();
+            inputs = new ArrayList<BlockInputAppearance>();
             for (InputFragment inputLine : root.getInputs())
-                this.inputs.add(BlockInputFactory.create(inputLine, root));
+                inputs.add(BlockInputFactory.create(inputLine, root));
+            Collections.reverse(inputs);
         }
     }
 
