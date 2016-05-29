@@ -19,8 +19,8 @@ public class ScriptLoader {
     private static void loadListeners(ProgrammingBlockSavedInstance[] data) {
         for (ProgrammingBlockSavedInstance savedBlock : data)
             if (savedBlock.data.shape == BlockShape.ACTION_LISTENER) {
-                //todo na razie ostatni input to blok, na którym ma być wykonywana czynność, to potem też do metody
-                InputFragment targetInput = savedBlock.data.getInputs()[savedBlock.data.getInputs().length - 1];
+                //todo pierwszy input - najpewniej bedzie wyznacznikiem tego, co robi metoda
+                InputFragment targetInput = savedBlock.data.getInputs()[0];
                 if (targetInput != null) {
                     BlockData targetValue = targetInput.connectedTo;
                     if (targetValue.hasValue())

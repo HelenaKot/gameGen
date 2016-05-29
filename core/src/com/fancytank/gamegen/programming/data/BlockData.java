@@ -5,6 +5,9 @@ import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class BlockData implements Serializable {
     public BlockShape shape;
@@ -16,7 +19,9 @@ public class BlockData implements Serializable {
 
     public BlockData(InputFragment[] inputs, BlockShape shape) {
         this.shape = shape;
-        this.inputs = inputs;
+        List tmpInput = Arrays.asList(inputs);
+        Collections.reverse(Arrays.asList(inputs));
+        this.inputs = (InputFragment[]) tmpInput.toArray();
     }
 
     public BlockData getParent() {
