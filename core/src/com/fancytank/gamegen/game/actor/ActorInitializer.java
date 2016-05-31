@@ -1,7 +1,6 @@
 package com.fancytank.gamegen.game.actor;
 
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.fancytank.gamegen.game.FloatConsumer;
+import com.fancytank.gamegen.game.script.Executable;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,13 +21,13 @@ public class ActorInitializer {
 
     class ActorToInit {
         Class<? extends BaseActor> actorClass;
-        LinkedList<FloatConsumer> actPerTick;
-        LinkedList<InputListener> actionListeners;
+        LinkedList<Executable> actPerTick;
+        LinkedList<Executable> actionListeners;
 
         ActorToInit(Class<? extends BaseActor> actorClass) {
             this.actorClass = actorClass;
-            actPerTick = new LinkedList<FloatConsumer>();
-            actionListeners = new LinkedList<InputListener>();
+            actPerTick = new LinkedList<Executable>();
+            actionListeners = new LinkedList<Executable>();
         }
     }
 
@@ -43,11 +42,11 @@ public class ActorInitializer {
         return "unspecified";
     }
 
-    public static LinkedList<InputListener> getListenerList(String name) {
+    public static LinkedList<Executable> getListenerList(String name) {
         return instance.actorToInit.get(name).actionListeners;
     }
 
-    public static LinkedList<FloatConsumer> getActionsPerTick(String name) {
+    public static LinkedList<Executable> getActionsPerTick(String name) {
         return instance.actorToInit.get(name).actPerTick;
     }
 
@@ -61,8 +60,8 @@ public class ActorInitializer {
         return null;
     }
 
-    public static void addActionListener(String name, InputListener inputListener) {
-        instance.actorToInit.get(name).actionListeners.add(inputListener);
+    public static void addActionListener(String className, Executable executable) {
+        instance.actorToInit.get(className).actionListeners.add(executable);
     }
 
 }
