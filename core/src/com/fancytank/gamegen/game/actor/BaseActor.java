@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.script.Executable;
+import com.fancytank.gamegen.game.script.ExecutableProducer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,25 +34,21 @@ public abstract class BaseActor extends Actor {
         }
     */
     public LinkedList<InputListener> initListenersList() {
-        List<Executable> executables = ActorInitializer.getListenerList(getClassName());
+        List<ExecutableProducer> executables = ActorInitializer.getListenerList(getClassName());
         LinkedList<InputListener> output = new LinkedList<InputListener>();
         final BaseActor local = this;
-        for (final Executable executable : executables)
-            output.add(new InputListener() {
-                           Executable myExecutable = executable;
-                           private boolean doInit = true;
 
+        for (ExecutableProducer executableClass : executables) {
+            final Executable myInstance = executableClass.getInstance();
+            myInstance.init(local);
+            output.add(new InputListener() {
                            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                               if (doInit) {
-                                   myExecutable.init(local);
-                                   doInit = false;
-                               }
-                               myExecutable.performAction();
+                               myInstance.performAction();
                                return true;
                            }
                        }
             );
-
+        }
         return output;
     }
 

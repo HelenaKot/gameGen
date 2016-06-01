@@ -68,25 +68,27 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setValue("empty"), Color.SKY),
                 new CustomBlockPattern("placeholder actor", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE).setValue("generic"), Color.SKY),
-
+/*
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "move self"),
                         new InputFragment(InputType.VARIABLE, "vertically").setExpectedValue(ValueType.INT_NUMBER),
                         new InputFragment(InputType.VARIABLE, "horizontally").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
-
+*/
                 new CustomBlockPattern("number +1", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "1")}, BlockShape.VARIABLE).setValue("1"), Color.SKY),
-                new CustomBlockPattern("number -1", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "-1")}, BlockShape.VARIABLE).setValue("-1"), Color.SKY),
+                new CustomBlockPattern("number 2", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "2")}, BlockShape.VARIABLE).setValue("2"), Color.SKY),
+                new CustomBlockPattern("number 0", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "0")}, BlockShape.VARIABLE).setValue("0"), Color.SKY),
 
                 new CustomBlockPattern("spawn object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "spawn new").setExpectedValue(ValueType.CLASS_NAME),
                         new InputFragment(InputType.DUMMY, ""),
                         new InputFragment(InputType.VARIABLE, "at x").setExpectedValue(ValueType.INT_NUMBER),
                         new InputFragment(InputType.VARIABLE, "at y").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
-
+/*
                 new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.LAST_METHOD), Color.RED),
+                        new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.LAST_METHOD), Color.RED),*/
         };
         childItems.add(demoPatterns);
 
