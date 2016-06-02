@@ -78,7 +78,6 @@ public class Workspace {
         for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())
             for (ConnectionArea connectionArea : programmingBlock.connectors)
                 if (connectionArea.hasInputFragment())
-            //        System.out.println(connectionArea + " : " +  connectionArea.getInputFragment().getConnectionArea());
                     ConnectionRules.tryConnect(connectionArea, connectionArea.getInputFragment().connectedTo.getCoreBlock().getProgrammingBlock().getOutputConnector());
     }
 

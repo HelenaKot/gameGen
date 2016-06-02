@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class BlockData implements Serializable {
     public BlockShape shape;
+    MethodType methodType;
     BlockData parent;
     BlockData descendant;
     InputFragment[] inputs;

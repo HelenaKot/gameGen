@@ -32,7 +32,7 @@ public class ScriptLoader {
 
     private static ExecutableProducer convertToExecutableProducer(BlockData methodBlock) {
         if (methodBlock.getInputs()[0].expectedValue == ValueType.CLASS_NAME && methodBlock.getInputs()[0].connectedTo != null)
-            return new ExecutableProducer(methodBlock, ExecutableProducer.ExecutableType.ON_PRESS);
+            return new ExecutableProducer(methodBlock, ExecutableProducer.ActionListenerType.ON_PRESS);
         return null;
     }
 

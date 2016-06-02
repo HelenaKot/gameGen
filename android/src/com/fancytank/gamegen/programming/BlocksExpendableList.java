@@ -86,6 +86,10 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.DUMMY, ""),
                         new InputFragment(InputType.VARIABLE, "at x").setExpectedValue(ValueType.INT_NUMBER),
                         new InputFragment(InputType.VARIABLE, "at y").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
+
+                new CustomBlockPattern("change color", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "change color"),
+                        new InputFragment(InputType.VARIABLE, "to").setExpectedValue(ValueType.COLOR)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
 /*
                 new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.LAST_METHOD), Color.RED),*/

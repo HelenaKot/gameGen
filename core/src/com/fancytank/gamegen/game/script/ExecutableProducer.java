@@ -5,19 +5,29 @@ import com.fancytank.gamegen.game.actor.BaseActor;
 import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
+import com.fancytank.gamegen.programming.data.MethodType;
 import com.fancytank.gamegen.programming.data.ValueType;
 
 import java.util.Vector;
 
 public class ExecutableProducer {
-    enum ExecutableType {ON_PRESS, ON_RELEASE, ON_HOLD, TICK} //todo not used yet
+    enum ActionListenerType {ON_PRESS, ON_RELEASE, ON_HOLD, TICK} //todo not used yet
 
     BlockData methodBlock;
-    ExecutableType type;
+    ActionListenerType type;
+    MethodType methodType;
 
-    ExecutableProducer(BlockData methodBlock, ExecutableType type) {
+    ExecutableProducer(BlockData methodBlock, ActionListenerType type) {
         this.methodBlock = methodBlock;
         this.type = type;
+        methodType = getMethodType();
+    }
+
+    private MethodType getMethodType() {
+        for (InputFragment inputFragment : methodBlock.getInputs())
+            if (inputFragment.expectedValue != null && inputFragment.expectedValue.hasExpectedMethod())
+                return inputFragment.expectedValue.getExpectedMethod();
+        return null;
     }
 
     public Executable getInstance() {
