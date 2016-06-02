@@ -40,3 +40,4 @@ build/
 
 #for now
 html/
+local.properties

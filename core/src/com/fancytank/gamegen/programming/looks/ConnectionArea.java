@@ -34,6 +34,15 @@ public class ConnectionArea extends Actor {
         this.setBounds(x, y, padding, padding);
     }
 
+    public boolean hasInputFragment() {
+        return inputFragment != null;
+    }
+
+    public InputFragment getInputFragment() {
+        return inputFragment;
+
+    }
+
     public void setInputFragment(InputFragment inputFragment) {
         if (this.inputFragment != inputFragment) {
             this.inputFragment = inputFragment;

@@ -2,10 +2,12 @@ package com.fancytank.gamegen.programming;
 
 
 import com.fancytank.gamegen.MainGdx;
+import com.fancytank.gamegen.programming.blocks.ConnectionRules;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
-import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.data.BlockShape;
+import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
+import com.fancytank.gamegen.programming.looks.ConnectionArea;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,6 +30,7 @@ public class Workspace {
         clearWorkspace();
         for (ProgrammingBlockSavedInstance block : data)
             MainGdx.addToStage(block.restore());
+        reconnectAllConnectors();
     }
 
     public static void clearWorkspace() {
@@ -69,6 +72,14 @@ public class Workspace {
 
     static ProgrammingBlockSavedInstance createSaveInstance(ProgrammingBlock programmingBlock) {
         return new ProgrammingBlockSavedInstance(programmingBlock);
+    }
+
+    private static void reconnectAllConnectors() {
+        for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())
+            for (ConnectionArea connectionArea : programmingBlock.connectors)
+                if (connectionArea.hasInputFragment())
+            //        System.out.println(connectionArea + " : " +  connectionArea.getInputFragment().getConnectionArea());
+                    ConnectionRules.tryConnect(connectionArea, connectionArea.getInputFragment().connectedTo.getCoreBlock().getProgrammingBlock().getOutputConnector());
     }
 
 }
