@@ -12,6 +12,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.GameScreen;
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.R;
+import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
@@ -75,15 +76,7 @@ public class ProgrammingActivity extends AndroidApplication {
     public static String myFilename = "todotodo";
 
     public void saveWorkspace(View view) throws IOException {
-        File file = new File(view.getContext().getFilesDir(), myFilename);
-        if (!file.exists())
-            file.createNewFile();
-        FileOutputStream fileOutputStream = new FileOutputStream(file.getAbsoluteFile());
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(Workspace.getWorkspaceItemsToSave());
-        objectOutputStream.flush();
-        objectOutputStream.close();
-        fileOutputStream.close();
+        DataManager.saveFile(view.getContext().getFilesDir().getAbsolutePath(), "mah", Workspace.getWorkspaceItemsToSave());
     }
 
     public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
@@ -91,14 +84,7 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     private ProgrammingBlockSavedInstance[] loadDataFromFile(View view) throws IOException, ClassNotFoundException {
-        File file = new File(view.getContext().getFilesDir(), ProgrammingActivity.myFilename);
-        if (file.exists()) {
-            FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile());
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            ProgrammingBlockSavedInstance[] data = (ProgrammingBlockSavedInstance[]) objectInputStream.readObject();
-            return data;
-        }
-        return null;
+        return (ProgrammingBlockSavedInstance[]) DataManager.loadFile(view.getContext().getFilesDir().getAbsolutePath(), "todo");
     }
 
     public void deleteAll(View view) {

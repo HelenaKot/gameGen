@@ -25,10 +25,4 @@
         android:text="Design Activity"
         android:onClick="goToDesign"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test Activity"
-        android:onClick="goToTest"/>
-
 </LinearLayout>

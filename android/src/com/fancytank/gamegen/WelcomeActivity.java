@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.fancytank.gamegen.design.DesignActivity;
 import com.fancytank.gamegen.programming.ProgrammingActivity;
-import com.fancytank.gamegen.test.TestGameActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -24,11 +23,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
     public void goToDesign(View view) {
         Intent intent = new Intent(this, DesignActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToTest(View view) {
-        Intent intent = new Intent(this, TestGameActivity.class);
         startActivity(intent);
     }
 }

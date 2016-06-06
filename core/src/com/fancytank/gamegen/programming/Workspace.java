@@ -28,9 +28,11 @@ public class Workspace {
 
     public static void load(ProgrammingBlockSavedInstance[] data) {
         clearWorkspace();
-        for (ProgrammingBlockSavedInstance block : data)
-            MainGdx.addToStage(block.restore());
-        reconnectAllConnectors();
+        if (data != null) {
+            for (ProgrammingBlockSavedInstance block : data)
+                MainGdx.addToStage(block.restore());
+            reconnectAllConnectors();
+        }
     }
 
     public static void clearWorkspace() {
@@ -77,7 +79,7 @@ public class Workspace {
     private static void reconnectAllConnectors() {
         for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())
             for (ConnectionArea connectionArea : programmingBlock.connectors)
-                if (connectionArea.hasInputFragment())
+                if (connectionArea.hasInputFragment() && connectionArea.getInputFragment().connectedTo != null)
                     ConnectionRules.tryConnect(connectionArea, connectionArea.getInputFragment().connectedTo.getCoreBlock().getProgrammingBlock().getOutputConnector());
     }
 
