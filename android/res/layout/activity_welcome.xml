@@ -4,25 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin"
-    tools:context="com.fancytank.gamegen.WelcomeActivity"
-    android:orientation="vertical">
-<!--
+    tools:context="com.fancytank.gamegen.WelcomeActivity">
+
     <ListView
-        android:id="@+id/saved_projects_view"
+        android:id="@+id/saved_projects_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-        -->
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Programming Activity"
-        android:onClick="goToProgramming"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Design Activity"
-        android:onClick="goToDesign"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -21,12 +21,7 @@ import com.wunderlist.slidinglayer.SlidingLayer;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class ProgrammingActivity extends AndroidApplication {
     private SlidingLayer slidingLayer;
@@ -76,7 +71,7 @@ public class ProgrammingActivity extends AndroidApplication {
     public static String myFilename = "todotodo";
 
     public void saveWorkspace(View view) throws IOException {
-        DataManager.saveFile(view.getContext().getFilesDir().getAbsolutePath(), "mah", Workspace.getWorkspaceItemsToSave());
+        DataManager.saveBlocks(view.getContext().getFilesDir().getAbsolutePath(), "meh", Workspace.getWorkspaceItemsToSave());
     }
 
     public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
@@ -84,7 +79,7 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     private ProgrammingBlockSavedInstance[] loadDataFromFile(View view) throws IOException, ClassNotFoundException {
-        return (ProgrammingBlockSavedInstance[]) DataManager.loadFile(view.getContext().getFilesDir().getAbsolutePath(), "todo");
+        return DataManager.loadBlocks(view.getContext().getFilesDir().getAbsolutePath(), "todo");
     }
 
     public void deleteAll(View view) {
