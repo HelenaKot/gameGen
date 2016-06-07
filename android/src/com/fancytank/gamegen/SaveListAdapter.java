@@ -40,7 +40,6 @@ public class SaveListAdapter extends ArrayAdapter<String> {
         return convertView;
     }
 
-    //todo dont start activity, just pass string
     private void setSave(String saveName) {
         Intent intent = new Intent(getContext(), ProgrammingActivity.class);
         getContext().startActivity(intent);
