@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.programming;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -24,9 +25,11 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 
 public class ProgrammingActivity extends AndroidApplication {
+    private FrameLayout contentFrame;
     private SlidingLayer slidingLayer;
     private BlocksExpendableList list;
     private TextView debugText;
+    private String saveName = "a";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +39,15 @@ public class ProgrammingActivity extends AndroidApplication {
         setContentView(R.layout.activity_programming);
 
         debugText = (TextView) findViewById(R.id.debug_text);
-        FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_frame);
+        contentFrame = (FrameLayout) findViewById(R.id.content_frame);
         contentFrame.addView(initializeForView(new MainGdx()));
         slidingLayer = (SlidingLayer) findViewById(R.id.sliding_layer);
         list = new BlocksExpendableList((ExpandableListView) findViewById(R.id.drawer_list), this);
         EventBus.getDefault().register(this);
+
+        Intent intent = getIntent();
+        if (intent.hasExtra("saveName"))
+            saveName = intent.getExtras().getString("saveName");
     }
 
     @Subscribe
@@ -50,8 +57,10 @@ public class ProgrammingActivity extends AndroidApplication {
         else if (status == MainGdx.AppStatus.SETUP_FINISHED) {
             if (inGame)
                 GameScreen.loadGame(loadDataFromFile(view));
-            else
+            else {
                 list.populateList();
+                loadWorkspace(contentFrame.getRootView());
+            }
         }
     }
 
@@ -68,10 +77,8 @@ public class ProgrammingActivity extends AndroidApplication {
         ConnectionArea.debug = !ConnectionArea.debug;
     }
 
-    public static String myFilename = "todotodo";
-
     public void saveWorkspace(View view) throws IOException {
-        DataManager.saveBlocks(view.getContext().getFilesDir().getAbsolutePath(), "meh", Workspace.getWorkspaceItemsToSave());
+        DataManager.saveBlocks(view.getContext().getFilesDir().getAbsolutePath(), saveName, Workspace.getWorkspaceItemsToSave());
     }
 
     public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
@@ -79,7 +86,7 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     private ProgrammingBlockSavedInstance[] loadDataFromFile(View view) throws IOException, ClassNotFoundException {
-        return DataManager.loadBlocks(view.getContext().getFilesDir().getAbsolutePath(), "todo");
+        return DataManager.loadBlocks(view.getContext().getFilesDir().getAbsolutePath(), saveName);
     }
 
     public void deleteAll(View view) {

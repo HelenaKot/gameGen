@@ -42,6 +42,7 @@ public class SaveListAdapter extends ArrayAdapter<String> {
 
     private void setSave(String saveName) {
         Intent intent = new Intent(getContext(), ProgrammingActivity.class);
+        intent.putExtra("saveName", saveName);
         getContext().startActivity(intent);
     }
 
