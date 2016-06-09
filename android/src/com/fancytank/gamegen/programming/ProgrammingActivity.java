@@ -29,7 +29,7 @@ public class ProgrammingActivity extends AndroidApplication {
     private SlidingLayer slidingLayer;
     private BlocksExpendableList list;
     private TextView debugText;
-    private String saveName = "a";
+    private String saveName = "untitled";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +38,20 @@ public class ProgrammingActivity extends AndroidApplication {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_programming);
 
-        debugText = (TextView) findViewById(R.id.debug_text);
-        contentFrame = (FrameLayout) findViewById(R.id.content_frame);
-        contentFrame.addView(initializeForView(new MainGdx()));
-        slidingLayer = (SlidingLayer) findViewById(R.id.sliding_layer);
-        list = new BlocksExpendableList((ExpandableListView) findViewById(R.id.drawer_list), this);
+        init();
         EventBus.getDefault().register(this);
 
         Intent intent = getIntent();
         if (intent.hasExtra("saveName"))
             saveName = intent.getExtras().getString("saveName");
+    }
+
+    private void init() {
+        debugText = (TextView) findViewById(R.id.debug_text);
+        contentFrame = (FrameLayout) findViewById(R.id.content_frame);
+        contentFrame.addView(initializeForView(new MainGdx()));
+        slidingLayer = (SlidingLayer) findViewById(R.id.sliding_layer);
+        list = new BlocksExpendableList((ExpandableListView) findViewById(R.id.drawer_list), this);
     }
 
     @Subscribe

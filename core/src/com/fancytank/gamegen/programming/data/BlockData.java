@@ -7,13 +7,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BlockData implements Serializable {
+    private static final long serialVersionUID = 1233613063064496932L;
     public BlockShape shape;
     MethodType methodType;
     BlockData parent;
     BlockData descendant;
     InputFragment[] inputs;
     transient CoreBlock coreBlock;
-    String value; //todo
+    String value;
 
     public BlockData(InputFragment[] inputs, BlockShape shape) {
         this.shape = shape;

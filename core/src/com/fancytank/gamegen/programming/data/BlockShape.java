@@ -10,6 +10,7 @@ public enum BlockShape implements Serializable {
     LAST_METHOD(5, new boolean[]{true, false, false}),
     VARIABLE(0, new boolean[]{false, true, false});
 
+    private static final long serialVersionUID = 1233613063064496933L;
     public int significance;
     boolean[] connects = new boolean[3];
 

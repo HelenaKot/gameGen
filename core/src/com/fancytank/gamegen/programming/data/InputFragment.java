@@ -6,6 +6,7 @@ import com.fancytank.gamegen.programming.looks.input.InputType;
 import java.io.Serializable;
 
 public class InputFragment implements Serializable {
+    private static final long serialVersionUID = 1233613063064496935L;
     public InputType inputType;
     public String labelText;
     public BlockData connectedTo;
