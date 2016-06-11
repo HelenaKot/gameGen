@@ -60,7 +60,7 @@ public class ProgrammingActivity extends AndroidApplication {
             EventBus.getDefault().post(MainGdx.AppStatus.EDITOR_SCREEN);
         else if (status == MainGdx.AppStatus.SETUP_FINISHED) {
             if (inGame)
-                GameScreen.loadGame(loadDataFromFile(view));
+                GameScreen.loadGame(loadDataFromFile(contentFrame.getRootView()));
             else {
                 list.populateList();
                 loadWorkspace(contentFrame.getRootView());
@@ -99,10 +99,8 @@ public class ProgrammingActivity extends AndroidApplication {
 
     //todo refactoringplz
     private boolean inGame = false;
-    private static View view;
 
     public void switchScreen(View v) {
-        view = v;
         if (inGame)
             EventBus.getDefault().post(MainGdx.AppStatus.EDITOR_SCREEN);
         else

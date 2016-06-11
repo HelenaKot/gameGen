@@ -53,8 +53,9 @@ public class ActorInitializer {
 
     public static BaseActor getInstanceOf(String name, int x, int y) {
         try {
-            return instance.actorToInit.get(name).actorClass
-                    .getConstructor(int.class, int.class).newInstance(x, y);
+            if (instance.actorToInit.containsKey(name))
+                return instance.actorToInit.get(name).actorClass.getConstructor(int.class, int.class).newInstance(x, y);
+            else System.out.println("Actor with this name can not be initialized = " + name);
         } catch (Exception e) {
             e.printStackTrace();
         }

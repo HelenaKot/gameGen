@@ -63,7 +63,11 @@ public class BlockData implements Serializable {
     }
 
     public String getDebugLog(String spacing) {
-        String output = spacing + "BlockData ID: " + coreBlock.getProgrammingBlock().getName() + "\n";
+        String output = spacing + "BlockData ";
+        if (coreBlock != null)
+            output += "ID: " + coreBlock.getProgrammingBlock().getName() + "\n";
+        else
+            output += "(virtual)\n";
         for (InputFragment inputFragment : inputs)
             output += inputFragment.getDebugLog(spacing + "  ");
         if (hasDescendant())
