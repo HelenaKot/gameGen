@@ -24,15 +24,6 @@ public abstract class BaseActor extends Actor {
             addListener(il);
     }
 
-    /*
-        @Override
-        public void act(float delta) {
-            super.act(delta);
-            for (FloatConsumer ic : getActionsPerTick()) {
-                ic.accept(delta);
-            }
-        }
-    */
     public LinkedList<InputListener> initListenersList() {
         List<ExecutableProducer> executables = ActorInitializer.getListenerList(getClassName());
         LinkedList<InputListener> output = new LinkedList<InputListener>();
@@ -52,15 +43,6 @@ public abstract class BaseActor extends Actor {
         return output;
     }
 
-    /*
-        private LinkedList<FloatConsumer> myActionsPerTick;
-
-        public LinkedList<Executable> getActionsPerTick() {
-            if (myActionsPerTick == null)
-                myActionsPerTick = ActorInitializer.getActionsPerTick(getClassName());
-            return myActionsPerTick;
-        }
-    */
     private String className;
 
     public String getClassName() {
