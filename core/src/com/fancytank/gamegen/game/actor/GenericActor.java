@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class GenericActor extends BaseActor {
     Texture texture;
-    Color tint;
+    public Color tint;
 
     public GenericActor(int x, int y) {
         super(x, y);

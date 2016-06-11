@@ -1,12 +1,14 @@
 package com.fancytank.gamegen.game.script;
 
+import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.BaseActor;
+import com.fancytank.gamegen.game.actor.GenericActor;
 import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.data.MethodType;
-import com.fancytank.gamegen.programming.data.ValueType;
+import com.fancytank.gamegen.programming.looks.input.InputType;
 
 import java.util.Vector;
 
@@ -31,32 +33,68 @@ public class ExecutableProducer {
     }
 
     public Executable getInstance() {
+        switch (getMethodType()) {
+            case BLOCK_SETTR:
+                return getBlockSetter();
+            case COLOR_SETTER:
+                return getBlockColorChanger();
+        }
+        return null;
+    }
+
+    private Executable getBlockSetter() {
         return new Executable() {
-            String blockClassName;
             BaseActor blockInstance;
-            Vector<Integer> vars = new Vector<Integer>();
+            String blockClassName;
+            int blockX, blockY;
 
             @Override
             public void init(BaseActor blockInstance) {
-                InputFragment[] inputs = methodBlock.getInputs();
+                System.out.println(methodBlock);
                 this.blockInstance = blockInstance;
-                blockClassName = inputs[0].connectedTo.getValue();
-                for (int i = 1; i < inputs.length; i++)
-                    if (inputs[i].expectedValue == ValueType.INT_NUMBER)
-                        if (inputs[i].connectedTo != null)
-                            vars.add(Integer.parseInt(inputs[i].connectedTo.getValue()));
-                if (vars.size() < 2)
-                    vars.addAll(new Vector<Integer>(0, 0));
+                Vector<String> vars = collectVars();
+                blockClassName = vars.get(0);
+                blockX = Integer.parseInt(vars.get(1));
+                blockY = Integer.parseInt(vars.get(2));
             }
 
             @Override
             public boolean performAction() {
-                System.out.println("mapchange " + blockInstance.x + " " + blockInstance.y);
                 MapManager.changeBlock(
-                        ActorInitializer.getInstanceOf(blockClassName, blockInstance.x + vars.get(0), blockInstance.y + vars.get(1)));
+                        ActorInitializer.getInstanceOf(blockClassName, blockInstance.x + blockX, blockInstance.y + blockY));
                 return true;
             }
         };
     }
 
+    private Executable getBlockColorChanger() {
+        return new Executable() {
+            BaseActor blockInstance;
+            Vector<String> vars;
+
+            @Override
+            public void init(BaseActor blockInstance) {
+                vars = collectVars();
+                this.blockInstance = blockInstance;
+            }
+
+            @Override
+            public boolean performAction() {
+                if (blockInstance instanceof GenericActor)
+                    ((GenericActor) blockInstance).tint = Color.TEAL; // todo placeholder
+                return true;
+            }
+        };
+    }
+
+    private Vector<String> collectVars() {
+        Vector<String> vars = new Vector<String>();
+        InputFragment[] inputs = methodBlock.getInputs();
+        for (int i = 0; i < inputs.length; i++)
+            if (inputs[i].inputType != InputType.DUMMY)
+                if (inputs[i].connectedTo != null)
+                    vars.add(inputs[i].connectedTo.getValue());
+                else vars.add("0");
+        return vars;
+    }
 }
