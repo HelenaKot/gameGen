@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.data;
 
+import com.fancytank.gamegen.SaveListAdapter;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 
 import java.io.File;
@@ -14,11 +15,13 @@ import java.util.List;
 public class DataManager {
     private static String saveDir = "saved";
     private static File directory;
+    private static String absolutePath;
 
-    public static List<String> getFileNames(String absolutePath) {
+    public static List<String> getFileNames(String patch) {
         LinkedList<String> names = new LinkedList<>();
+        absolutePath = patch;
         try {
-            for (String filename : getDirectory(absolutePath).list())
+            for (String filename : getDirectory(patch).list())
                 names.add(filename);
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,6 +51,7 @@ public class DataManager {
             File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
             if (file.exists())
                 file.delete();
+            notifyListAdapter();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -86,6 +90,12 @@ public class DataManager {
             directory.createNewFile();
         }
         return directory;
+    }
+
+    private static void notifyListAdapter() {
+        if (SaveListAdapter.instance != null) {
+            SaveListAdapter.instance.notifyDataSetChanged();
+        }
     }
 
 }
