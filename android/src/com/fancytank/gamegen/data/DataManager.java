@@ -43,6 +43,16 @@ public class DataManager {
         }
     }
 
+    public static void deleteProject(String absolutePath, String projectName) {
+        try {
+            File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
+            if (file.exists())
+                file.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static SaveInstance loadFile(String absolutePath, String projectName) throws IOException, ClassNotFoundException {
         File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
         if (file.exists()) {
