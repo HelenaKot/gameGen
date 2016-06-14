@@ -21,8 +21,13 @@ public class ScriptLoader {
                 //todo pierwszy input - najpewniej bedzie wyznacznikiem tego, co robi metoda
                 InputFragment classNameInput = savedBlock.data.getInputs()[0];
                 InputFragment methodSocketInput = savedBlock.data.getInputs()[2]; // todo or not todo?
-                if (hasValidConnection(classNameInput) && hasValidConnection(methodSocketInput))
-                    ActorInitializer.addActionListener(classNameInput.connectedTo.getValue(), convertToExecutableProducer(methodSocketInput.connectedTo));
+                if (hasValidConnection(classNameInput) && hasValidConnection(methodSocketInput)) {
+                    ExecutableProducer executableProducer = convertToExecutableProducer(methodSocketInput.connectedTo);
+                    if (executableProducer != null)
+                        ActorInitializer.addActionListener(classNameInput.connectedTo.getValue(), executableProducer);
+                    else
+                        System.out.println("Class "+classNameInput.connectedTo.getValue() + " have unparseable executable.");
+                }
             }
     }
 
