@@ -5,7 +5,6 @@ import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
-import com.fancytank.gamegen.programming.data.ValueType;
 
 public class ScriptLoader {
     public static void load(ProgrammingBlockSavedInstance[] data) {
@@ -23,10 +22,10 @@ public class ScriptLoader {
                 InputFragment methodSocketInput = savedBlock.data.getInputs()[2]; // todo or not todo?
                 if (hasValidConnection(classNameInput) && hasValidConnection(methodSocketInput)) {
                     ExecutableProducer executableProducer = convertToExecutableProducer(methodSocketInput.connectedTo);
-                    if (executableProducer != null)
+                    if (executableProducer.getInstance() != null)
                         ActorInitializer.addActionListener(classNameInput.connectedTo.getValue(), executableProducer);
                     else
-                        System.out.println("Class "+classNameInput.connectedTo.getValue() + " have unparseable executable.");
+                        System.out.println("Class " + classNameInput.connectedTo.getValue() + " have unparseable executable.");
                 }
             }
     }
@@ -36,9 +35,7 @@ public class ScriptLoader {
     }
 
     private static ExecutableProducer convertToExecutableProducer(BlockData methodBlock) {
-        if (methodBlock.getInputs()[0].expectedValue == ValueType.CLASS_NAME && methodBlock.getInputs()[0].connectedTo != null)
-            return new ExecutableProducer(methodBlock, ExecutableProducer.ActionListenerType.ON_PRESS);
-        return null;
+        return new ExecutableProducer(methodBlock, ExecutableProducer.ActionListenerType.ON_PRESS);
     }
 
 }

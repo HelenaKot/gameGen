@@ -38,8 +38,9 @@ public class ExecutableProducer {
                 return getBlockSetter();
             case COLOR_SETTER:
                 return getBlockColorChanger();
+            default:
+                return null;
         }
-        return null;
     }
 
     private Executable getBlockSetter() {
@@ -74,14 +75,15 @@ public class ExecutableProducer {
 
             @Override
             public void init(BaseActor blockInstance) {
-                vars = collectVars();
                 this.blockInstance = blockInstance;
+                vars = collectVars();
             }
 
             @Override
             public boolean performAction() {
                 if (blockInstance instanceof GenericActor)
                     ((GenericActor) blockInstance).tint = Color.TEAL; // todo placeholder
+                System.out.println("nope");
                 return true;
             }
         };
