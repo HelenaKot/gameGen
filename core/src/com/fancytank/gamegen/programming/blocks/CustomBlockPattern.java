@@ -3,6 +3,8 @@ package com.fancytank.gamegen.programming.blocks;
 import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.programming.data.BlockData;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class CustomBlockPattern implements BlockActorPattern{
     String name;
     BlockData blockData;
@@ -14,6 +16,7 @@ public class CustomBlockPattern implements BlockActorPattern{
         this.tint = tint;
     }
 
+    //todo refactoring - merge with blockActorPattern
     @Override
     public String getName() {
         return name;
@@ -27,5 +30,17 @@ public class CustomBlockPattern implements BlockActorPattern{
     @Override
     public Color getColor() {
         return tint;
+    }
+
+    @Override
+    public void setValue(String value) {
+        blockData.setValue(value);
+        blockData.getInputs()[0].labelText = value;
+    }
+
+    @Override
+    public void spawn() {
+        BlockCreateEvent bce = new BlockCreateEvent(this);
+        EventBus.getDefault().post(bce);
     }
 }

@@ -8,21 +8,17 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.fancytank.gamegen.R;
-import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
-import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
 public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
-    private ArrayList<BlockActorPattern[]> items;
-    private BlockActorPattern[] itemsArray;
+    private ArrayList<BlockPatternHolder[]> items;
+    private BlockPatternHolder[] itemsArray;
     private LayoutInflater inflater;
     private ArrayList<String> titleItems;
 
-    public BlockExpendableListAdapter(ArrayList<String> parents, ArrayList<BlockActorPattern[]> childern) {
+    public BlockExpendableListAdapter(ArrayList<String> parents, ArrayList<BlockPatternHolder[]> childern) {
         this.titleItems = parents;
         this.items = childern;
     }
@@ -47,8 +43,7 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                BlockCreateEvent bce = new BlockCreateEvent(itemsArray[childPosition]);
-                EventBus.getDefault().post(bce);
+                itemsArray[childPosition].click(view.getContext());
             }
         });
 
