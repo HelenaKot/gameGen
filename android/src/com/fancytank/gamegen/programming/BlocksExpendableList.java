@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.ExpandableListView;
 
 import com.badlogic.gdx.graphics.Color;
-import com.fancytank.gamegen.programming.blocks.CustomBlockPattern;
+import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
@@ -58,14 +58,14 @@ public class BlocksExpendableList {
 
     private void setChildData() {
         BlockPatternHolder[] demoPatterns = {
-                new BlockPatternHolder(new CustomBlockPattern("on click", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("on click", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "when this object is PRESSED").setExpectedValue(ValueType.CLASS_NAME),
                         new InputFragment(InputType.DUMMY, "do"),
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET").setExpectedValue(ValueType.METHOD)}, BlockShape.ACTION_LISTENER), Color.PURPLE)),
 
-                new BlockPatternHolder(new CustomBlockPattern("empty space", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("empty space", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setValue("empty"), Color.SKY)),
-                new BlockPatternHolder(new CustomBlockPattern("placeholder actor", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("placeholder actor", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE).setValue("generic"), Color.SKY)),
 /*
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
@@ -74,19 +74,19 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "horizontally").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
 */
 
-                new BlockPatternHolder( new CustomBlockPattern("NUMBER", new BlockData(new InputFragment[]{
+                new BlockPatternHolder( new BlockActorPattern("NUMBER", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "0")}, BlockShape.VARIABLE).setValue("0"), Color.SKY), SpawnBlockDialog.DIALOG_NUMBER),
 
-                new BlockPatternHolder(new CustomBlockPattern("spawn object", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("spawn object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "spawn new").setExpectedValue(ValueType.CLASS_NAME),
                         new InputFragment(InputType.DUMMY, ""),
                         new InputFragment(InputType.VARIABLE, "at x").setExpectedValue(ValueType.INT_NUMBER),
                         new InputFragment(InputType.VARIABLE, "at y").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
 
-                new BlockPatternHolder(new CustomBlockPattern("change color", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("change color", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
 
-                new BlockPatternHolder(new CustomBlockPattern("if statement", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("if statement", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.METHOD),
                         new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
 /*

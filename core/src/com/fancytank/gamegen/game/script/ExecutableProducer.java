@@ -83,7 +83,6 @@ public class ExecutableProducer {
             public boolean performAction() {
                 if (blockInstance instanceof GenericActor)
                     ((GenericActor) blockInstance).tint = Color.TEAL; // todo placeholder
-                System.out.println("nope");
                 return true;
             }
         };
