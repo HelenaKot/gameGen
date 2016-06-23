@@ -72,17 +72,19 @@ public class ExecutableProducer {
         return new Executable() {
             BaseActor blockInstance;
             Vector<String> vars;
+            Color color;
 
             @Override
             public void init(BaseActor blockInstance) {
                 this.blockInstance = blockInstance;
                 vars = collectVars();
+                color = Color.valueOf(vars.get(0));
             }
 
             @Override
             public boolean performAction() {
                 if (blockInstance instanceof GenericActor)
-                    ((GenericActor) blockInstance).tint = Color.TEAL; // todo placeholder
+                    ((GenericActor) blockInstance).tint = color;
                 return true;
             }
         };

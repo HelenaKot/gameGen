@@ -83,8 +83,8 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "at x").setExpectedValue(ValueType.INT_NUMBER),
                         new InputFragment(InputType.VARIABLE, "at y").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
 
-                new BlockPatternHolder(new BlockActorPattern("change color", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
+                new BlockPatternHolder(new BlockActorPattern("COLOR", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.VARIABLE), Color.ORANGE), SpawnBlockDialog.DIALOG_COLOR),
 
                 new BlockPatternHolder(new BlockActorPattern("if statement", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.METHOD),

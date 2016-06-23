@@ -17,7 +17,10 @@ public class CoreBlock extends Actor {
 
     public CoreBlock(ProgrammingBlock programmingBlock, BlockData data, Color tint) {
         this.programmingBlock = programmingBlock;
-        this.tint = tint;
+        if (data.hasValue() && data.getValue().charAt(0) != '#')
+            this.tint = tint;
+        else
+            this.tint = Color.valueOf(data.getValue());
         this.data = data;
         blockAppearance = new BlockAppearance(this);
     }
