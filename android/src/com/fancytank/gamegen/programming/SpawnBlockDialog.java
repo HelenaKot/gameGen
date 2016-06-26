@@ -2,6 +2,8 @@ package com.fancytank.gamegen.programming;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -16,7 +18,7 @@ import uz.shift.colorpicker.LineColorPicker;
 import uz.shift.colorpicker.Palette;
 
 public enum SpawnBlockDialog {
-    DIALOG_NUMBER, DIALOG_COLOR;
+    DIALOG_NUMBER, DIALOG_COLOR, DIALOG_LOOP;
 
     public void getDialog(final Context context, BlockActorPattern pattern) {
         switch (this) {
@@ -26,18 +28,17 @@ public enum SpawnBlockDialog {
             case DIALOG_COLOR:
                 colorPickerDialog(context, pattern);
                 break;
+            case DIALOG_LOOP:
+                break;
         }
     }
 
     public static void enterNumberDialog(final Context context, final BlockActorPattern pattern) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("enter value");
-
         final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        builder.setView(input);
+        BuilderWrapper dialog = initDialog(context, "enter value", input);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        dialog.builder.setPositiveButton("OK", new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = input.getText().toString();
@@ -45,26 +46,14 @@ public enum SpawnBlockDialog {
                 pattern.spawn();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
+        dialog.builder.show();
     }
 
     public static void colorPickerDialog(final Context context, final BlockActorPattern pattern) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("pick color");
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View pickerView = inflater.inflate(R.layout.line_color_picker, null);
-        final LineColorPicker lineColorPicker = (LineColorPicker) pickerView.findViewById(R.id.picker);
+        BuilderWrapper dialog = initDialog(context, "pick color", R.layout.line_color_picker);
+        final LineColorPicker lineColorPicker = (LineColorPicker) dialog.view.findViewById(R.id.picker);
         lineColorPicker.setColors(Palette.DEFAULT);
-        builder.setView(pickerView);
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        dialog.builder.setPositiveButton("OK", new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = String.format("#%06X", (0xFFFFFF & lineColorPicker.getColor()));
@@ -72,13 +61,33 @@ public enum SpawnBlockDialog {
                 pattern.spawn();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialog.builder.show();
+    }
+
+    private static BuilderWrapper initDialog(Context context, String title, @LayoutRes int resource) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(resource, null);
+        return initDialog(context, title, view);
+    }
+
+    private static BuilderWrapper initDialog(Context context, String title, View view) {
+        BuilderWrapper output = new BuilderWrapper();
+        output.builder = new AlertDialog.Builder(context);
+        output.view = view;
+        output.builder.setView(output.view);
+        output.builder.setTitle(title);
+
+        output.builder.setNegativeButton("Cancel", new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
+        return output;
+    }
 
-        builder.show();
+    private static class BuilderWrapper {
+        AlertDialog.Builder builder;
+        View view;
     }
 }
