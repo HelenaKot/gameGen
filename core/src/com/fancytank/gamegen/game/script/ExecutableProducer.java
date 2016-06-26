@@ -13,7 +13,7 @@ import com.fancytank.gamegen.programming.looks.input.InputType;
 import java.util.Vector;
 
 public class ExecutableProducer {
-    enum ActionListenerType {ON_PRESS, ON_RELEASE, ON_HOLD, TICK} //todo not used yet
+    enum ActionListenerType {ON_PRESS, ON_RELEASE, ON_HOLD, TICK, NONE} //todo not used yet
 
     BlockData methodBlock;
     ActionListenerType type;
@@ -38,6 +38,10 @@ public class ExecutableProducer {
                 return getBlockSetter();
             case COLOR_SETTER:
                 return getBlockColorChanger();
+            case LOGIC_STATEMENT:
+                return getLogicStatement();
+            case CONDITIONED_STATEMENT:
+                return getIfStatement();
             default:
                 return null;
         }
@@ -88,6 +92,55 @@ public class ExecutableProducer {
                 return true;
             }
         };
+    }
+
+    //todo placeholder
+    private Executable getLogicStatement() {
+        return new Executable() {
+            boolean value;
+
+            @Override
+            public void init(BaseActor block) {
+                value = true;
+            }
+
+            @Override
+            public boolean performAction() {
+                return value;
+            }
+        };
+    }
+
+    private Executable getIfStatement() {
+        return new Executable() {
+            Executable condition;
+            Executable execute;
+            boolean validBlock = false;
+
+            @Override
+            public void init(BaseActor block) {
+                condition = initSubBlock(block, methodBlock.getInputs()[0].connectedTo);
+                execute = initSubBlock(block, methodBlock.getInputs()[1].connectedTo);
+                if (condition != null && execute != null)
+                    validBlock = true;
+            }
+
+            @Override
+            public boolean performAction() {
+                if (validBlock && condition.performAction())
+                    execute.performAction();
+                return true;
+            }
+        };
+    }
+
+    private Executable initSubBlock(BaseActor block, BlockData blockData) {
+        if (blockData != null) {
+            Executable executable = new ExecutableProducer(blockData, ActionListenerType.NONE).getInstance();
+            executable.init(block);
+            return executable;
+        }
+        return null;
     }
 
     private Vector<String> collectVars() {

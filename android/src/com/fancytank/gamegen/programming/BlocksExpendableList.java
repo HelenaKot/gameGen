@@ -87,10 +87,13 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
 
                 new BlockPatternHolder(new BlockActorPattern("COLOR", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.VARIABLE), Color.ORANGE), SpawnBlockDialog.DIALOG_COLOR),
+                        new InputFragment(InputType.DUMMY, "change color to")}, BlockShape.VARIABLE), Color.ORANGE), SpawnBlockDialog.DIALOG_COLOR),
+
+                new BlockPatternHolder(new BlockActorPattern("perma true", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "perma true placeholder").setExpectedValue(ValueType.ANY)}, BlockShape.VARIABLE), Color.BLUE)),
 
                 new BlockPatternHolder(new BlockActorPattern("if statement", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.METHOD),
+                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN),
                         new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
 /*
                 new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
