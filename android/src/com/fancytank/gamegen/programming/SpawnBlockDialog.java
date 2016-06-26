@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
+import com.fancytank.gamegen.programming.data.ValueType;
 
 import uz.shift.colorpicker.LineColorPicker;
 import uz.shift.colorpicker.Palette;
@@ -21,7 +21,7 @@ public enum SpawnBlockDialog {
     public void getDialog(final Context context, BlockActorPattern pattern) {
         switch (this) {
             case DIALOG_NUMBER:
-                enterValueDialog(context, pattern);
+                enterNumberDialog(context, pattern);
                 break;
             case DIALOG_COLOR:
                 colorPickerDialog(context, pattern);
@@ -29,7 +29,7 @@ public enum SpawnBlockDialog {
         }
     }
 
-    public static void enterValueDialog(final Context context, final BlockActorPattern pattern) {
+    public static void enterNumberDialog(final Context context, final BlockActorPattern pattern) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("enter value");
 
@@ -41,7 +41,7 @@ public enum SpawnBlockDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = input.getText().toString();
-                pattern.setValue(value);
+                pattern.setValue(value, ValueType.NUMBER);
                 pattern.spawn();
             }
         });
@@ -68,7 +68,7 @@ public enum SpawnBlockDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = String.format("#%06X", (0xFFFFFF & lineColorPicker.getColor()));
-                pattern.setValue(value);
+                pattern.setValue(value, ValueType.COLOR);
                 pattern.spawn();
             }
         });

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class BlockData implements Serializable {
     private static final long serialVersionUID = 1233613063064496932L;
     public BlockShape shape;
-    MethodType methodType;
+    ValueType valueType;
     BlockData parent;
     BlockData descendant;
     InputFragment[] inputs;
@@ -95,8 +95,9 @@ public class BlockData implements Serializable {
         return value;
     }
 
-    public BlockData setValue(String value) {
+    public BlockData setValue(String value, ValueType valueType) {
         this.value = value;
+        this.valueType = valueType;
         return this;
     }
 }

@@ -54,6 +54,7 @@ public class BlocksExpendableList {
 
     private void setGroupParents() {
         parentItems.add("Demo");
+        parentItems.add("Logic");
     }
 
     private void setChildData() {
@@ -64,9 +65,9 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET").setExpectedValue(ValueType.METHOD)}, BlockShape.ACTION_LISTENER), Color.PURPLE)),
 
                 new BlockPatternHolder(new BlockActorPattern("empty space", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setValue("empty"), Color.SKY)),
+                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setValue("empty", ValueType.CLASS_NAME), Color.SKY)),
                 new BlockPatternHolder(new BlockActorPattern("placeholder actor", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE).setValue("generic"), Color.SKY)),
+                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE).setValue("generic", ValueType.CLASS_NAME), Color.SKY)),
 /*
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "move self"),
@@ -74,8 +75,8 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "horizontally").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
 */
 
-                new BlockPatternHolder( new BlockActorPattern("NUMBER", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "0")}, BlockShape.VARIABLE).setValue("0"), Color.SKY), SpawnBlockDialog.DIALOG_NUMBER),
+                new BlockPatternHolder(new BlockActorPattern("NUMBER", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "0")}, BlockShape.VARIABLE), Color.SKY), SpawnBlockDialog.DIALOG_NUMBER),
 
                 new BlockPatternHolder(new BlockActorPattern("spawn object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "spawn new").setExpectedValue(ValueType.CLASS_NAME),
@@ -87,19 +88,36 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
 
                 new BlockPatternHolder(new BlockActorPattern("COLOR", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "change color to")}, BlockShape.VARIABLE), Color.ORANGE), SpawnBlockDialog.DIALOG_COLOR),
+                        new InputFragment(InputType.DUMMY, "#eeeeee")}, BlockShape.VARIABLE), Color.ORANGE), SpawnBlockDialog.DIALOG_COLOR),
 
-                new BlockPatternHolder(new BlockActorPattern("perma true", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "perma true placeholder").setExpectedValue(ValueType.ANY)}, BlockShape.VARIABLE), Color.BLUE)),
-
-                new BlockPatternHolder(new BlockActorPattern("if statement", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN),
-                        new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
 /*
                 new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.LAST_METHOD), Color.RED),*/
         };
         childItems.add(demoPatterns);
+
+        BlockPatternHolder[] logicPatterns = {
+                new BlockPatternHolder(new BlockActorPattern("if statement", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN),
+                        new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
+
+                new BlockPatternHolder(new BlockActorPattern("loop statement", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "repeat function as many times").setExpectedValue(ValueType.NUMBER),
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
+
+                // todo make dialog for  <>= ?
+                new BlockPatternHolder(new BlockActorPattern("equals", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "equals").setExpectedValue(ValueType.ANY),
+                        new InputFragment(InputType.VARIABLE, " ").setExpectedValue(ValueType.ANY)}, BlockShape.VARIABLE), Color.BLUE)),
+
+                new BlockPatternHolder(new BlockActorPattern("TRUE", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "true")}, BlockShape.VARIABLE), Color.BLUE).setValue("true", ValueType.BOOLEAN)),
+
+                new BlockPatternHolder(new BlockActorPattern("FALSE", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "false")}, BlockShape.VARIABLE), Color.BLUE).setValue("false", ValueType.BOOLEAN)),
+
+        };
+        childItems.add(logicPatterns);
 
     }
 

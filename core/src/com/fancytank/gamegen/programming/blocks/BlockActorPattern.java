@@ -2,6 +2,7 @@ package com.fancytank.gamegen.programming.blocks;
 
 import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.programming.data.BlockData;
+import com.fancytank.gamegen.programming.data.ValueType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,9 +29,10 @@ public class BlockActorPattern {
         return tint;
     }
 
-    public void setValue(String value) {
-        blockData.setValue(value);
+    public BlockActorPattern setValue(String value, ValueType valueType) {
+        blockData.setValue(value, valueType);
         blockData.getInputs()[0].labelText = value;
+        return this;
     }
 
     public void spawn() {
