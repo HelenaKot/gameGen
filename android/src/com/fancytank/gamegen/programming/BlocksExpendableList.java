@@ -97,17 +97,21 @@ public class BlocksExpendableList {
         childItems.add(demoPatterns);
 
         BlockPatternHolder[] logicPatterns = {
-                new BlockPatternHolder(new BlockActorPattern("if statement", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("IF", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN),
                         new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
 
-                new BlockPatternHolder(new BlockActorPattern("loop statement", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "repeat function as many times").setExpectedValue(ValueType.NUMBER),
-                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
+                new BlockPatternHolder(new BlockActorPattern("LOOP", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.NUMBER),
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW), SpawnBlockDialog.DIALOG_LOOP),
+//
+//                new BlockPatternHolder(new BlockActorPattern("WHILE", new BlockData(new InputFragment[]{
+//                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.BOOLEAN),
+//                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
 
                 // todo make dialog for  <>= ?
                 new BlockPatternHolder(new BlockActorPattern("equals", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "equals").setExpectedValue(ValueType.ANY),
+                        new InputFragment(InputType.VARIABLE, "are equal").setExpectedValue(ValueType.ANY),
                         new InputFragment(InputType.VARIABLE, " ").setExpectedValue(ValueType.ANY)}, BlockShape.VARIABLE), Color.BLUE)),
 
                 new BlockPatternHolder(new BlockActorPattern("TRUE", new BlockData(new InputFragment[]{
@@ -118,6 +122,21 @@ public class BlocksExpendableList {
 
         };
         childItems.add(logicPatterns);
+
+        BlockActorPattern[] loopsPatterns = {
+                new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.NUMBER),
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
+                new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.NUMBER),
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
+                new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.NUMBER),
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
+        };
+
+        SpawnBlockDialog.setLoopPaterns(loopsPatterns);
+
 
     }
 

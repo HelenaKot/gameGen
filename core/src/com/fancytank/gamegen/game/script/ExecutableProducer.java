@@ -28,7 +28,7 @@ public class ExecutableProducer {
     private MethodType getMethodType() {
         for (InputFragment inputFragment : methodBlock.getInputs())
             if (inputFragment.expectedValue != null && inputFragment.expectedValue.hasExpectedMethod())
-                return inputFragment.expectedValue.getExpectedMethod();
+                return inputFragment.getExpectedMethod();
         return null;
     }
 

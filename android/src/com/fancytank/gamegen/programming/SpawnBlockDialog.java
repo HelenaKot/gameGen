@@ -29,6 +29,7 @@ public enum SpawnBlockDialog {
                 colorPickerDialog(context, pattern);
                 break;
             case DIALOG_LOOP:
+                loopDialog(context, pattern);
                 break;
         }
     }
@@ -50,7 +51,7 @@ public enum SpawnBlockDialog {
     }
 
     public static void colorPickerDialog(final Context context, final BlockActorPattern pattern) {
-        BuilderWrapper dialog = initDialog(context, "pick color", R.layout.line_color_picker);
+        BuilderWrapper dialog = initDialog(context, "pick color", R.layout.dialog_color_picker);
         final LineColorPicker lineColorPicker = (LineColorPicker) dialog.view.findViewById(R.id.picker);
         lineColorPicker.setColors(Palette.DEFAULT);
         dialog.builder.setPositiveButton("OK", new OnClickListener() {
@@ -62,6 +63,25 @@ public enum SpawnBlockDialog {
             }
         });
         dialog.builder.show();
+    }
+
+
+    public static void loopDialog(final Context context, final BlockActorPattern patterns) {
+        BuilderWrapper dialog = initDialog(context, "loop type", R.layout.dialog_loop_spawner);
+        final LoopDialog radioSet = new LoopDialog(dialog);
+        dialog.builder.setPositiveButton("OK", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loopPaterns[radioSet.getChecked()].spawn();
+            }
+        });
+        dialog.builder.show();
+    }
+
+    private static BlockActorPattern[] loopPaterns;
+
+    public static void setLoopPaterns(BlockActorPattern[] patterns) {
+        loopPaterns = patterns;
     }
 
     private static BuilderWrapper initDialog(Context context, String title, @LayoutRes int resource) {
@@ -86,7 +106,7 @@ public enum SpawnBlockDialog {
         return output;
     }
 
-    private static class BuilderWrapper {
+    static class BuilderWrapper {
         AlertDialog.Builder builder;
         View view;
     }

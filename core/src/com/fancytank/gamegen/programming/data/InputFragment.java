@@ -11,6 +11,7 @@ public class InputFragment implements Serializable {
     public String labelText;
     public BlockData connectedTo;
     public ValueType expectedValue;
+    public MethodType customMethodType;
     transient private ConnectionArea connectionArea;
 
     public InputFragment(InputType inputType, String labelText) {
@@ -38,10 +39,21 @@ public class InputFragment implements Serializable {
         return this;
     }
 
+    public InputFragment setExpectedMethod(MethodType method) {
+        customMethodType = method;
+        return this;
+    }
+
     public String getDebugLog(String spacing) {
         String output = spacing + "> Input [" + labelText + "] type " + inputType + "\n";
         if (connectedTo != null)
             output += spacing + "> connected to: \n" + connectedTo.getDebugLog(spacing + "  ") + "\n";
         return output;
+    }
+
+    public MethodType getExpectedMethod() {
+        if (customMethodType != null)
+            return customMethodType;
+        return expectedValue.getExpectedMethod();
     }
 }
