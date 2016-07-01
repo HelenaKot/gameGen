@@ -10,6 +10,7 @@ import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
+import com.fancytank.gamegen.programming.data.MethodType;
 import com.fancytank.gamegen.programming.data.ValueType;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
@@ -125,13 +126,13 @@ public class BlocksExpendableList {
 
         BlockActorPattern[] loopsPatterns = {
                 new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.NUMBER),
+                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.BOOLEAN).setExpectedMethod(MethodType.LOOP_WHILE),
                         new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
-                new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.NUMBER),
+                new BlockActorPattern("LOOP2", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "loop for each").setExpectedValue(ValueType.ANY).setExpectedMethod(MethodType.LOOP_FOR),
                         new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
-                new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.NUMBER),
+                new BlockActorPattern("LOOP3", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "loop N times").setExpectedMethod(MethodType.LOOP_FOR),
                         new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
         };
 

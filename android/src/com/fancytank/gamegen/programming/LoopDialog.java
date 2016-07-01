@@ -8,8 +8,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.fancytank.gamegen.R;
+import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
+import com.fancytank.gamegen.programming.data.ValueType;
 
 public class LoopDialog {
+    static BlockActorPattern[] loopPatterns;
     private RadioButton[] buttons;
     private EditText editText;
     SpawnBlockDialog.BuilderWrapper dialog;
@@ -33,6 +36,7 @@ public class LoopDialog {
 
     private void setupDialog(View view) {
         buttons = setupRadioButtons(view);
+        setLoopTimes("4");
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -45,8 +49,14 @@ public class LoopDialog {
 
             @Override
             public void afterTextChanged(Editable s) {
+                setLoopTimes(s.toString());
             }
         });
+    }
+
+    private void setLoopTimes(String times) {
+        loopPatterns[2].setValue(times, ValueType.INT_NUMBER);
+        loopPatterns[2].setLabel("Loop " + times + " times");
     }
 
     private RadioButton[] setupRadioButtons(View view) {

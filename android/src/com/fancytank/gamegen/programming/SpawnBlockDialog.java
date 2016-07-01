@@ -72,16 +72,14 @@ public enum SpawnBlockDialog {
         dialog.builder.setPositiveButton("OK", new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                loopPaterns[radioSet.getChecked()].spawn();
+                LoopDialog.loopPatterns[radioSet.getChecked()].spawn();
             }
         });
         dialog.builder.show();
     }
 
-    private static BlockActorPattern[] loopPaterns;
-
     public static void setLoopPaterns(BlockActorPattern[] patterns) {
-        loopPaterns = patterns;
+        LoopDialog.loopPatterns = patterns;
     }
 
     private static BuilderWrapper initDialog(Context context, String title, @LayoutRes int resource) {

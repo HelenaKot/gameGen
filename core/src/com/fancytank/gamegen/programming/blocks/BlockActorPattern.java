@@ -35,6 +35,12 @@ public class BlockActorPattern {
         return this;
     }
 
+    public BlockActorPattern setLabel(String text) {
+        blockData.getInputs()[0].labelText = text;
+        return this;
+    }
+
+
     public void spawn() {
         BlockCreateEvent bce = new BlockCreateEvent(this);
         EventBus.getDefault().post(bce);
