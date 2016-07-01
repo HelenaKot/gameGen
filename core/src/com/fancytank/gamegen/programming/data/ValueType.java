@@ -9,7 +9,7 @@ public enum ValueType implements Serializable {
     COLOR(MethodType.COLOR_SETTER),
     NUMBER,
     INT_NUMBER,
-    CLASS_NAME(MethodType.BLOCK_SETTR),
+    CLASS_NAME(MethodType.BLOCK_SETTER),
     METHOD;
 
     private static final long serialVersionUID = 1233613063064496950L;

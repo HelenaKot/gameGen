@@ -34,7 +34,7 @@ public class ExecutableProducer {
 
     public Executable getInstance() {
         switch (getMethodType()) {
-            case BLOCK_SETTR:
+            case BLOCK_SETTER:
                 return getBlockSetter();
             case COLOR_SETTER:
                 return getBlockColorChanger();
