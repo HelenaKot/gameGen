@@ -19,7 +19,7 @@ public class ExecutableProducer {
     ActionListenerType type;
     MethodType methodType;
 
-    private ExecutableProducer condition, execution;
+    private ExecutableProducer conditionProducer, executionProducer;
 
     ExecutableProducer(BlockData methodBlock, ActionListenerType type) {
         this.methodBlock = methodBlock;
@@ -123,9 +123,9 @@ public class ExecutableProducer {
 
             @Override
             public void init(BaseActor block) {
-                if (execute == null) {
-                    condition = createSubBlock(block, methodBlock.getInputs()[0].connectedTo).getInstance();
-                    execute = createSubBlock(block, methodBlock.getInputs()[1].connectedTo).getInstance();
+                if (executionProducer == null) {
+                    condition = createSubBlock(conditionProducer, block, methodBlock.getInputs()[0].connectedTo).getInstance();
+                    execute = createSubBlock(executionProducer, block, methodBlock.getInputs()[1].connectedTo).getInstance();
                 }
                 if (condition != null && execute != null) {
                     condition.init(block);
@@ -180,8 +180,12 @@ public class ExecutableProducer {
 
             @Override
             public void init(BaseActor block) {
-                if (execute == null)
-                    execute = createSubBlock(block, methodBlock.getInputs()[1].connectedTo).getInstance();
+                if (execute == null) {
+                    execute = createSubBlock(executionProducer, block, methodBlock.getInputs()[1].connectedTo).getInstance();
+                    execute.init(block);
+                }
+                if (condition != null)
+                    condition.init(block);
             }
 
             @Override
@@ -196,9 +200,10 @@ public class ExecutableProducer {
         void execute(final Executable condition0, final Executable execute0);
     }
 
-    private ExecutableProducer createSubBlock(BaseActor block, BlockData blockData) {
+    private ExecutableProducer createSubBlock(ExecutableProducer variable, BaseActor block, BlockData blockData) {
         if (blockData != null) {
-            return new ExecutableProducer(blockData, ActionListenerType.NONE);
+            variable = new ExecutableProducer(blockData, ActionListenerType.NONE);
+            return variable;
         }
         return null;
     }
