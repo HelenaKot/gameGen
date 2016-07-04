@@ -124,8 +124,8 @@ public class ExecutableProducer {
             @Override
             public void init(BaseActor block) {
                 if (executionProducer == null) {
-                    condition = createSubBlock(conditionProducer, block, methodBlock.getInputs()[0].connectedTo).getInstance();
-                    execute = createSubBlock(executionProducer, block, methodBlock.getInputs()[1].connectedTo).getInstance();
+                    condition = createSubBlock(conditionProducer, methodBlock.getInputs()[0].connectedTo).getInstance();
+                    execute = createSubBlock(executionProducer, methodBlock.getInputs()[1].connectedTo).getInstance();
                 }
                 if (condition != null && execute != null) {
                     condition.init(block);
@@ -181,7 +181,7 @@ public class ExecutableProducer {
             @Override
             public void init(BaseActor block) {
                 if (execute == null) {
-                    execute = createSubBlock(executionProducer, block, methodBlock.getInputs()[1].connectedTo).getInstance();
+                    execute = createSubBlock(executionProducer, methodBlock.getInputs()[1].connectedTo).getInstance();
                     execute.init(block);
                 }
                 if (condition != null)
@@ -200,7 +200,7 @@ public class ExecutableProducer {
         void execute(final Executable condition0, final Executable execute0);
     }
 
-    private ExecutableProducer createSubBlock(ExecutableProducer variable, BaseActor block, BlockData blockData) {
+    private ExecutableProducer createSubBlock(ExecutableProducer variable, BlockData blockData) {
         if (blockData != null) {
             variable = new ExecutableProducer(blockData, ActionListenerType.NONE);
             return variable;
