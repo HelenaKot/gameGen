@@ -8,7 +8,7 @@ public enum MethodType implements Serializable {
     LOGIC_STATEMENT,
     LOOP_WHILE,
     LOOP_FOR,
-    CONDITIONED_STATEMENT;
+    IF_STATEMENT;
 
     private static final long serialVersionUID = 1233613063064496934L;
 }

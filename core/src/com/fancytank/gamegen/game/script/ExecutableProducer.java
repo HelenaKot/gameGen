@@ -19,6 +19,8 @@ public class ExecutableProducer {
     ActionListenerType type;
     MethodType methodType;
 
+    private ExecutableProducer condition, execution;
+
     ExecutableProducer(BlockData methodBlock, ActionListenerType type) {
         this.methodBlock = methodBlock;
         this.type = type;
@@ -27,24 +29,26 @@ public class ExecutableProducer {
 
     private MethodType getMethodType() {
         for (InputFragment inputFragment : methodBlock.getInputs())
-            if (inputFragment.expectedValue != null && inputFragment.expectedValue.hasExpectedMethod())
-                return inputFragment.getExpectedMethod();
+            return inputFragment.getExpectedMethod();
         return null;
     }
 
     public Executable getInstance() {
-        switch (getMethodType()) {
+        switch (methodType) {
             case BLOCK_SETTER:
                 return getBlockSetter();
             case COLOR_SETTER:
                 return getBlockColorChanger();
             case LOGIC_STATEMENT:
                 return getLogicStatement();
-            case CONDITIONED_STATEMENT:
+            case LOOP_WHILE:
+                return getWhileStatement();
+            case LOOP_FOR:
+                return getForStatement();
+            case IF_STATEMENT:
                 return getIfStatement();
-            default:
-                return null;
         }
+        return null;
     }
 
     private Executable getBlockSetter() {
@@ -119,10 +123,15 @@ public class ExecutableProducer {
 
             @Override
             public void init(BaseActor block) {
-                condition = initSubBlock(block, methodBlock.getInputs()[0].connectedTo);
-                execute = initSubBlock(block, methodBlock.getInputs()[1].connectedTo);
-                if (condition != null && execute != null)
+                if (execute == null) {
+                    condition = createSubBlock(block, methodBlock.getInputs()[0].connectedTo).getInstance();
+                    execute = createSubBlock(block, methodBlock.getInputs()[1].connectedTo).getInstance();
+                }
+                if (condition != null && execute != null) {
+                    condition.init(block);
+                    execute.init(block);
                     validBlock = true;
+                }
             }
 
             @Override
@@ -134,11 +143,62 @@ public class ExecutableProducer {
         };
     }
 
-    private Executable initSubBlock(BaseActor block, BlockData blockData) {
+    private Executable getWhileStatement() {
+        LoopType whileLoop = new LoopType() {
+            public void execute(Executable condition, Executable execute) {
+                while (condition.performAction())
+                    execute.performAction();
+            }
+        };
+        return getGenericLoop(null, whileLoop);
+    }
+
+    private Executable getForStatement() {
+        String value;
+        if (methodBlock.hasValue()) {
+            value = methodBlock.getValue();
+            getForTimes(Integer.parseInt(value));
+            //todo dla listy
+        }
+        return null;
+    }
+
+    private Executable getForTimes(final int numericValue) {
+        LoopType forLoop = new LoopType() {
+            public void execute(Executable condition, Executable execute) {
+                for (int i = 0; i < numericValue; i++)
+                    execute.performAction();
+            }
+        };
+        return getGenericLoop(null, forLoop);
+    }
+
+    private Executable getGenericLoop(Executable condition, final LoopType loop) {
+        return new Executable() {
+            Executable condition;
+            Executable execute;
+
+            @Override
+            public void init(BaseActor block) {
+                if (execute == null)
+                    execute = createSubBlock(block, methodBlock.getInputs()[1].connectedTo).getInstance();
+            }
+
+            @Override
+            public boolean performAction() {
+                loop.execute(condition, execute);
+                return true;
+            }
+        };
+    }
+
+    private interface LoopType {
+        void execute(final Executable condition0, final Executable execute0);
+    }
+
+    private ExecutableProducer createSubBlock(BaseActor block, BlockData blockData) {
         if (blockData != null) {
-            Executable executable = new ExecutableProducer(blockData, ActionListenerType.NONE).getInstance();
-            executable.init(block);
-            return executable;
+            return new ExecutableProducer(blockData, ActionListenerType.NONE);
         }
         return null;
     }

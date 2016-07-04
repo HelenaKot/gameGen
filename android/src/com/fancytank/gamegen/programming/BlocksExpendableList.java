@@ -99,7 +99,7 @@ public class BlocksExpendableList {
 
         BlockPatternHolder[] logicPatterns = {
                 new BlockPatternHolder(new BlockActorPattern("IF", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN),
+                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN).setExpectedMethod(MethodType.IF_STATEMENT),
                         new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
 
                 new BlockPatternHolder(new BlockActorPattern("LOOP", new BlockData(new InputFragment[]{
@@ -116,7 +116,7 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, " ").setExpectedValue(ValueType.ANY)}, BlockShape.VARIABLE), Color.BLUE)),
 
                 new BlockPatternHolder(new BlockActorPattern("TRUE", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "true")}, BlockShape.VARIABLE), Color.BLUE).setValue("true", ValueType.BOOLEAN)),
+                        new InputFragment(InputType.DUMMY, "true").setExpectedValue(ValueType.BOOLEAN)}, BlockShape.VARIABLE), Color.BLUE)), //todo
 
                 new BlockPatternHolder(new BlockActorPattern("FALSE", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "false")}, BlockShape.VARIABLE), Color.BLUE).setValue("false", ValueType.BOOLEAN)),

@@ -54,6 +54,8 @@ public class InputFragment implements Serializable {
     public MethodType getExpectedMethod() {
         if (customMethodType != null)
             return customMethodType;
-        return expectedValue.getExpectedMethod();
+        else if (expectedValue != null)
+            return expectedValue.getExpectedMethod();
+        return null;
     }
 }
