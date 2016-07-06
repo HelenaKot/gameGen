@@ -116,33 +116,15 @@ public class ExecutableProducer {
     }
 
     private Executable getIfStatement() {
-        return new Executable() {
-            Executable condition;
-            Executable execute;
-            boolean validBlock = false;
-
+        LoopType ifStatement = new LoopType() {
             @Override
-            public void init(BaseActor block) {
-                if (executionProducer == null) {
-                    conditionProducer = createSubBlock(methodBlock.getInputs()[0].connectedTo);
-                    executionProducer = createSubBlock(methodBlock.getInputs()[1].connectedTo);
-                }
-                condition = conditionProducer.getInstance();
-                execute = executionProducer.getInstance();
-                if (condition != null && execute != null) {
-                    condition.init(block);
-                    execute.init(block);
-                    validBlock = true;
-                }
-            }
-
-            @Override
-            public boolean performAction() {
-                if (validBlock && condition.performAction())
-                    execute.performAction();
-                return true;
+            public void execute(Executable condition0, Executable execute0) {
+                if (condition0.performAction())
+                    execute0.performAction();
             }
         };
+        ExecutableProducer conditionProducer = createSubBlock(methodBlock.getInputs()[0].connectedTo);
+        return getGenericLoop(conditionProducer, ifStatement);
     }
 
     private Executable getWhileStatement() {
@@ -176,7 +158,7 @@ public class ExecutableProducer {
         return getGenericLoop(null, forLoop);
     }
 
-    private Executable getGenericLoop(Executable condition, final LoopType loop) {
+    private Executable getGenericLoop(final ExecutableProducer conditionProducer, final LoopType loop) {
         System.out.println("loop returned");
         return new Executable() {
             Executable condition;
@@ -187,10 +169,11 @@ public class ExecutableProducer {
                 if (executionProducer == null)
                     executionProducer = createSubBlock(methodBlock.getInputs()[1].connectedTo);
                 execute = executionProducer.getInstance();
-                if (execute != null)
-                    execute.init(block);
-                if (condition != null)
+                execute.init(block);
+                if (conditionProducer != null) {
+                    condition = conditionProducer.getInstance();
                     condition.init(block);
+                }
             }
 
             @Override
