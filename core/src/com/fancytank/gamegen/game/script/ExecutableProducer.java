@@ -123,7 +123,7 @@ public class ExecutableProducer {
                     execute0.performAction();
             }
         };
-        ExecutableProducer conditionProducer = createSubBlock(methodBlock.getInputs()[0].connectedTo);
+        setConditionProducer(methodBlock.getInputs()[0].connectedTo);
         return getGenericLoop(conditionProducer, ifStatement);
     }
 
@@ -134,7 +134,8 @@ public class ExecutableProducer {
                     execute.performAction();
             }
         };
-        return getGenericLoop(null, whileLoop);
+        setConditionProducer(methodBlock.getInputs()[0].connectedTo);
+        return getGenericLoop(conditionProducer, whileLoop);
     }
 
     private Executable getForStatement() {
@@ -159,7 +160,6 @@ public class ExecutableProducer {
     }
 
     private Executable getGenericLoop(final ExecutableProducer conditionProducer, final LoopType loop) {
-        System.out.println("loop returned");
         return new Executable() {
             Executable condition;
             Executable execute;
@@ -182,6 +182,11 @@ public class ExecutableProducer {
                 return true;
             }
         };
+    }
+
+    private void setConditionProducer(BlockData methodBlock) {
+        if (conditionProducer == null)
+            conditionProducer = createSubBlock(methodBlock);
     }
 
     private interface LoopType {
