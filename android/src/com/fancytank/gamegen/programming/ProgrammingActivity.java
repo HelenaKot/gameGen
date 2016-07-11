@@ -82,11 +82,12 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     public void saveWorkspace(View view) throws IOException {
-        DataManager.saveBlocks(view.getContext().getFilesDir().getAbsolutePath(), saveName, Workspace.getWorkspaceItemsToSave());
+        DataManager.saveBlocks(view.getContext().getFilesDir().getAbsolutePath(), saveName,
+                Workspace.getWorkspaceItemsToSave(), Workspace.getWorkspaceVariablesToSave());
     }
 
     public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
-        Workspace.load(loadDataFromFile(view));
+        Workspace.loadBlocks(loadDataFromFile(view));
     }
 
     private ProgrammingBlockSavedInstance[] loadDataFromFile(View view) throws IOException, ClassNotFoundException {

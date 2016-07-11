@@ -2,6 +2,7 @@ package com.fancytank.gamegen.data;
 
 import com.fancytank.gamegen.SaveListAdapter;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
+import com.fancytank.gamegen.programming.data.VariableList;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,16 +32,18 @@ public class DataManager {
 
     public static ProgrammingBlockSavedInstance[] loadBlocks(String absolutePath, String projectName) {
         try {
-            return loadFile(absolutePath, projectName).blocks;
+            SaveInstance save = loadFile(absolutePath, projectName);
+            VariableList.instantiate(save.variables);
+            return save.blocks;
         } catch (Exception e) {
             e.printStackTrace();
             return new ProgrammingBlockSavedInstance[0];
         }
     }
 
-    public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
+    public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace, VariableList variables) {
         try {
-            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace));
+            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace, variables));
         } catch (IOException e) {
             e.printStackTrace();
         }

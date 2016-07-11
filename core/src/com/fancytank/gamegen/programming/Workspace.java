@@ -7,6 +7,7 @@ import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
+import com.fancytank.gamegen.programming.data.VariableList;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 
 import java.io.ByteArrayInputStream;
@@ -26,7 +27,15 @@ public class Workspace {
         return output;
     }
 
-    public static void load(ProgrammingBlockSavedInstance[] data) {
+    public static VariableList getWorkspaceVariablesToSave() {
+        return VariableList.getInstance();
+    }
+
+    public static void loadVariables(VariableList list) {
+        VariableList.instantiate(list);
+    }
+
+    public static void loadBlocks(ProgrammingBlockSavedInstance[] data) {
         clearWorkspace();
         if (data != null) {
             for (ProgrammingBlockSavedInstance block : data)
