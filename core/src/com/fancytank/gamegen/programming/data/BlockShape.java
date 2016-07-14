@@ -8,6 +8,7 @@ public enum BlockShape implements Serializable {
     ACTION_LISTENER(10, new boolean[]{false, false, false}),
     CHAIN_METHOD(5, new boolean[]{true, false, true}),
     LAST_METHOD(5, new boolean[]{true, false, false}),
+    VARIABLE_DECLARATION(10, new boolean[]{false, false, false}),
     VARIABLE(0, new boolean[]{false, true, false});
 
     private static final long serialVersionUID = 1233613063064496933L;

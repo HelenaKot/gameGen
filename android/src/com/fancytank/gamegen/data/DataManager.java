@@ -33,7 +33,6 @@ public class DataManager {
     public static ProgrammingBlockSavedInstance[] loadBlocks(String absolutePath, String projectName) {
         try {
             SaveInstance save = loadFile(absolutePath, projectName);
-            VariableList.instantiate(save.variables);
             return save.blocks;
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,9 +40,9 @@ public class DataManager {
         }
     }
 
-    public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace, VariableList variables) {
+    public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
         try {
-            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace, variables));
+            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace));
         } catch (IOException e) {
             e.printStackTrace();
         }

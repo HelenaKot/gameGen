@@ -12,14 +12,9 @@ public class VariableList implements Serializable {
         instance = this;
     }
 
-    public static void instantiate(VariableList list) {
-        if (list != null)
-            instance = list;
-        else
-            list = new VariableList();
-    }
-
     public static VariableList getInstance() {
+        if (instance == null)
+            instance = new VariableList();
         return instance;
     }
 
@@ -41,8 +36,18 @@ public class VariableList implements Serializable {
         return instance.variables.containsKey(key);
     }
 
-    public static void set(String name, String value, ValueType type) {
-        instance.variables.put(name, new Variable(value, type));
+    public static void put(String name, String value, ValueType type) {
+        if (!instance.variables.containsKey(name))
+            instance.variables.put(name, new Variable(value, type));
+        else
+            update(name, value, type);
+    }
+
+    static void update(String name, String value, ValueType type) {
+        if (instance.variables.get(name).valueType == type)
+            instance.variables.get(name).value = value;
+        else
+            System.out.println("Variable " + name + " is a different type [" + instance.variables.get(name).valueType + " != " + type + "]");
     }
 
     static class Variable implements Serializable {

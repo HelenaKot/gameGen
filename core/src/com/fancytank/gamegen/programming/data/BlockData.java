@@ -95,6 +95,10 @@ public class BlockData implements Serializable {
         return value;
     }
 
+    public ValueType getValueType() {
+        return valueType;
+    }
+
     public BlockData setValue(String value, ValueType valueType) {
         this.value = value;
         this.valueType = valueType;

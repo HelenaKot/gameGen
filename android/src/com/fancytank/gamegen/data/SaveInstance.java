@@ -8,12 +8,10 @@ import java.io.Serializable;
 public class SaveInstance implements Serializable {
     private static final long serialVersionUID = 1233613063064496930L;
     public ProgrammingBlockSavedInstance[] blocks;
-    public VariableList variables;
     public String fileName;
 
-    SaveInstance(String fileName, ProgrammingBlockSavedInstance[] blocks, VariableList variables) {
+    SaveInstance(String fileName, ProgrammingBlockSavedInstance[] blocks) {
         this.fileName = fileName;
         this.blocks = blocks;
-        this.variables = variables;
     }
 }

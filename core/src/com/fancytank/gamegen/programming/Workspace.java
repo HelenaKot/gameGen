@@ -27,14 +27,6 @@ public class Workspace {
         return output;
     }
 
-    public static VariableList getWorkspaceVariablesToSave() {
-        return VariableList.getInstance();
-    }
-
-    public static void loadVariables(VariableList list) {
-        VariableList.instantiate(list);
-    }
-
     public static void loadBlocks(ProgrammingBlockSavedInstance[] data) {
         clearWorkspace();
         if (data != null) {

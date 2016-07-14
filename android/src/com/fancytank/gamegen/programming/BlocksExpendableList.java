@@ -56,6 +56,7 @@ public class BlocksExpendableList {
     private void setGroupParents() {
         parentItems.add("Demo");
         parentItems.add("Logic");
+        parentItems.add("Variables");
     }
 
     private void setChildData() {
@@ -102,13 +103,7 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN).setExpectedMethod(MethodType.IF_STATEMENT),
                         new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
 
-                new BlockPatternHolder(new BlockActorPattern("LOOP", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.NUMBER),
-                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW), SpawnBlockDialog.DIALOG_LOOP),
-//
-//                new BlockPatternHolder(new BlockActorPattern("WHILE", new BlockData(new InputFragment[]{
-//                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.BOOLEAN),
-//                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
+                new BlockPatternHolder(new BlockActorPattern("LOOP", null, Color.YELLOW), SpawnBlockDialog.DIALOG_LOOP),
 
                 // todo make dialog for  <>= ?
                 new BlockPatternHolder(new BlockActorPattern("equals", new BlockData(new InputFragment[]{
@@ -123,6 +118,17 @@ public class BlocksExpendableList {
 
         };
         childItems.add(logicPatterns);
+
+        BlockPatternHolder[] variablesPatterns = {
+                //todo dialog
+                new BlockPatternHolder(new BlockActorPattern("NEW VARIABLE", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "var")}, BlockShape.VARIABLE_DECLARATION), Color.PINK),SpawnBlockDialog.DIALOG_INIT_VAR),
+                new BlockPatternHolder(new BlockActorPattern("get variable", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "get var")}, BlockShape.VARIABLE), Color.PINK)),
+                new BlockPatternHolder(new BlockActorPattern("update variable", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "update var")}, BlockShape.CHAIN_METHOD), Color.PINK))
+        };
+        childItems.add(variablesPatterns);
 
         BlockActorPattern[] loopsPatterns = {
                 new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
