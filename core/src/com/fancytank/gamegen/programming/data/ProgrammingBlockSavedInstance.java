@@ -20,13 +20,17 @@ public class ProgrammingBlockSavedInstance implements Serializable {
         g = programmingBlock.coreBlock.tint.g;
         b = programmingBlock.coreBlock.tint.b;
         Vector2 pos = Utility.myLocalToStageCoordinates(programmingBlock);
-        posX = pos.x;
-        posY = pos.y;
+        posX = pos.x + programmingBlock.getWidth();
+        System.out.println("pos" + pos.x + " " + programmingBlock.coreBlock.getWidth());
+        posY = pos.y + programmingBlock.getHeight();
+        System.out.println("pos" + pos.y + " " + programmingBlock.coreBlock.getHeight());
     }
 
     public ProgrammingBlock restore() {
         ProgrammingBlock restoredBlock = new ProgrammingBlock(data, new Color(r, g, b, a));
-        restoredBlock.setPosition(posX, posY);
+        restoredBlock.setPosition(posX - restoredBlock.coreBlock.getWidth(), posY - restoredBlock.coreBlock.getHeight());
+        System.out.println("pos" +posX + " " + restoredBlock.coreBlock.getWidth());
+        System.out.println("pos" +posY + " " + restoredBlock.coreBlock.getHeight());
         return restoredBlock;
     }
 }
