@@ -2,6 +2,7 @@ package com.fancytank.gamegen.programming.data;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Set;
 
 public class VariableList implements Serializable {
     HashMap<String, Variable> variables;
@@ -12,6 +13,11 @@ public class VariableList implements Serializable {
         instance = this;
     }
 
+    public static String[] getKeys() {
+        Set<String> keyset = getInstance().variables.keySet();
+        return keyset.toArray(new String[keyset.size()]);
+    }
+
     public static VariableList getInstance() {
         if (instance == null)
             instance = new VariableList();
@@ -19,7 +25,7 @@ public class VariableList implements Serializable {
     }
 
     public static Variable get(String name) {
-        return instance.variables.get(name);
+        return getInstance().variables.get(name);
     }
 
     public static String getString(String name) {
@@ -33,30 +39,24 @@ public class VariableList implements Serializable {
     }
 
     private static boolean doExist(String key) {
-        return instance.variables.containsKey(key);
+        return getInstance().variables.containsKey(key);
+    }
+
+    public static void put(String name, Variable variable) {
+        put(name, variable.value, variable.valueType);
     }
 
     public static void put(String name, String value, ValueType type) {
-        if (!instance.variables.containsKey(name))
+        if (!getInstance().variables.containsKey(name))
             instance.variables.put(name, new Variable(value, type));
         else
-            update(name, value, type);
+            updateValue(name, value, type);
     }
 
-    static void update(String name, String value, ValueType type) {
-        if (instance.variables.get(name).valueType == type)
+    static void updateValue(String name, String value, ValueType type) {
+        if (getInstance().variables.get(name).valueType == type)
             instance.variables.get(name).value = value;
         else
             System.out.println("Variable " + name + " is a different type [" + instance.variables.get(name).valueType + " != " + type + "]");
-    }
-
-    static class Variable implements Serializable {
-        String value;
-        ValueType valueType;
-
-        Variable(String value, ValueType valueType) {
-            this.value = value;
-            this.valueType = valueType;
-        }
     }
 }

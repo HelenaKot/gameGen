@@ -3,6 +3,7 @@ package com.fancytank.gamegen.programming.blocks;
 import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.ValueType;
+import com.fancytank.gamegen.programming.data.Variable;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,11 +36,16 @@ public class BlockActorPattern {
         return this;
     }
 
+    public BlockActorPattern setValue(Variable value) {
+        blockData.setValue(value);
+        blockData.getInputs()[0].labelText = value.value;
+        return this;
+    }
+
     public BlockActorPattern setLabel(String text) {
         blockData.getInputs()[0].labelText = text;
         return this;
     }
-
 
     public void spawn() {
         BlockCreateEvent bce = new BlockCreateEvent(this);

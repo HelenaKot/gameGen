@@ -31,7 +31,7 @@ public class ScriptLoader {
         InputFragment valueInput = savedBlock.data.getInputs()[0];
         if (hasValidConnection(valueInput)) {
             String name = savedBlock.data.getValue();
-            ValueType type = savedBlock.data.getValueType();
+            ValueType type = savedBlock.data.getVariable().valueType;
             String value = valueInput.connectedTo.getValue();
             VariableList.getInstance().put(name, value, type);
         }

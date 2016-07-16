@@ -9,12 +9,11 @@ import java.util.ArrayList;
 public class BlockData implements Serializable {
     private static final long serialVersionUID = 1233613063064496932L;
     public BlockShape shape;
-    ValueType valueType;
     BlockData parent;
     BlockData descendant;
     InputFragment[] inputs;
     transient CoreBlock coreBlock;
-    String value;
+    Variable variable;
 
     public BlockData(InputFragment[] inputs, BlockShape shape) {
         this.shape = shape;
@@ -88,20 +87,27 @@ public class BlockData implements Serializable {
     }
 
     public boolean hasValue() {
-        return value != null;
+        return variable != null;
+    }
+
+    public Variable getVariable() {
+        return variable;
     }
 
     public String getValue() {
-        return value;
+        if (variable.valueType != ValueType.VARIABLE)
+            return variable.value;
+        else
+            return VariableList.get(variable.value).value;
     }
 
-    public ValueType getValueType() {
-        return valueType;
+    public BlockData setValue(Variable value) {
+        this.variable = value;
+        return this;
     }
 
-    public BlockData setValue(String value, ValueType valueType) {
-        this.value = value;
-        this.valueType = valueType;
+    public BlockData setValue(String value, ValueType type) {
+        this.variable = new Variable(value, type);
         return this;
     }
 }
