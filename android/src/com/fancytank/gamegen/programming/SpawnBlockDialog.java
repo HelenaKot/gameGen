@@ -88,7 +88,8 @@ public enum SpawnBlockDialog {
             public void onClick(DialogInterface dialog, int which) {
                 ValueType selectedType = ValueType.getValuesList()[varSpinner.getSelectedItemPosition()];
                 String value = editText.getText().toString();
-                pattern.setValue(value, selectedType); //TODO not actual value, but expected one
+                VariableList.put(value, "0", selectedType);
+                pattern.setValue(value, selectedType);
                 pattern.setLabel(value + " (" + selectedType.toString().toLowerCase() + ")");
                 pattern.spawn();
             }

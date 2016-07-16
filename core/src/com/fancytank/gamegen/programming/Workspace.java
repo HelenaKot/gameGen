@@ -30,8 +30,11 @@ public class Workspace {
     public static void loadBlocks(ProgrammingBlockSavedInstance[] data) {
         clearWorkspace();
         if (data != null) {
-            for (ProgrammingBlockSavedInstance block : data)
+            for (ProgrammingBlockSavedInstance block : data) {
+                if (block.data.shape == BlockShape.VARIABLE_DECLARATION)
+                    VariableList.put(block.data.getValue(), block.data.getVariable());
                 MainGdx.addToStage(block.restore());
+            }
             reconnectAllConnectors();
         }
     }

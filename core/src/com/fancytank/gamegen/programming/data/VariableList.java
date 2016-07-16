@@ -43,20 +43,20 @@ public class VariableList implements Serializable {
     }
 
     public static void put(String name, Variable variable) {
-        put(name, variable.value, variable.valueType);
+        if (!getInstance().variables.containsKey(name))
+            instance.variables.put(name, variable);
+        else
+            updateValue(name, variable);
     }
 
     public static void put(String name, String value, ValueType type) {
-        if (!getInstance().variables.containsKey(name))
-            instance.variables.put(name, new Variable(value, type));
-        else
-            updateValue(name, value, type);
+        put(name, new Variable(value, type));
     }
 
-    static void updateValue(String name, String value, ValueType type) {
-        if (getInstance().variables.get(name).valueType == type)
-            instance.variables.get(name).value = value;
+    static void updateValue(String name, Variable variable) {
+        if (getInstance().variables.get(name).valueType == variable.valueType)
+            instance.variables.get(name).value = variable.value;
         else
-            System.out.println("Variable " + name + " is a different type [" + instance.variables.get(name).valueType + " != " + type + "]");
+            System.out.println("Variable " + name + " is a different type [" + instance.variables.get(name).valueType + " != " + variable.valueType + "]");
     }
 }
