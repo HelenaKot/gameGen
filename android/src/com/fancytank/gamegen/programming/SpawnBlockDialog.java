@@ -105,7 +105,7 @@ public enum SpawnBlockDialog {
         dialog.builder.setPositiveButton("OK", new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Variable selectedVariable = VariableList.get((String) varSpinner.getSelectedItem());
+                Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
                 pattern.setValue(selectedVariable);
                 pattern.spawn();
             }
