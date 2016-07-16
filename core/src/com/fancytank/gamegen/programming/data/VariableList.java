@@ -28,20 +28,6 @@ public class VariableList implements Serializable {
         return getInstance().variables.get(name);
     }
 
-    public static String getString(String name) {
-        if (doExist(name))
-            return get(name).value;
-        return null;
-    }
-
-    public static Integer getInt(String name) {
-        return Integer.parseInt(getString(name));
-    }
-
-    private static boolean doExist(String key) {
-        return getInstance().variables.containsKey(key);
-    }
-
     public static void put(String name, Variable variable) {
         if (!getInstance().variables.containsKey(name))
             instance.variables.put(name, variable);
