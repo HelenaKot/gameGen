@@ -1,10 +1,9 @@
 package com.fancytank.gamegen.programming.data;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
-public class VariableList implements Serializable {
+public class VariableList {
     HashMap<String, Variable> variables;
     private static VariableList instance;
 

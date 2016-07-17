@@ -22,7 +22,7 @@ import uz.shift.colorpicker.LineColorPicker;
 import uz.shift.colorpicker.Palette;
 
 public enum SpawnBlockDialog {
-    DIALOG_NUMBER, DIALOG_COLOR, DIALOG_LOOP, DIALOG_INIT_VAR, DIALOG_GET_VAR;
+    DIALOG_NUMBER, DIALOG_COLOR, DIALOG_LOOP, DIALOG_INIT_VAR, DIALOG_GET_VAR, DIALOG_SET_VAR;
 
     public void getDialog(final Context context, BlockActorPattern pattern) {
         switch (this) {
@@ -40,6 +40,9 @@ public enum SpawnBlockDialog {
                 break;
             case DIALOG_GET_VAR:
                 getVariableDialog(context, pattern);
+                break;
+            case DIALOG_SET_VAR:
+                setVariableDialog(context, pattern);
                 break;
         }
     }
@@ -99,10 +102,7 @@ public enum SpawnBlockDialog {
 
     public static void getVariableDialog(final Context context, final BlockActorPattern pattern) {
         BuilderWrapper dialog = initDialog(context, "get variable", R.layout.dialog_get_var);
-        final Spinner varSpinner = (Spinner) dialog.view.findViewById(R.id.spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, VariableList.getKeys());
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        varSpinner.setAdapter(dataAdapter);
+        final Spinner varSpinner = getVarSpinner(context, dialog);
         dialog.builder.setPositiveButton("OK", new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -112,6 +112,29 @@ public enum SpawnBlockDialog {
             }
         });
         dialog.builder.show();
+    }
+
+    private static void setVariableDialog(final Context context, final BlockActorPattern pattern) {
+        BuilderWrapper dialog = initDialog(context, "set variable", R.layout.dialog_get_var);
+        final Spinner varSpinner = getVarSpinner(context, dialog);
+        dialog.builder.setPositiveButton("OK", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
+                pattern.setValue(selectedVariable);
+                pattern.setLabel(selectedVariable.value + " =");
+                pattern.spawn();
+            }
+        });
+        dialog.builder.show();
+    }
+
+    private static Spinner getVarSpinner(final Context context, BuilderWrapper dialog) {
+        Spinner varSpinner = (Spinner) dialog.view.findViewById(R.id.spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, VariableList.getKeys());
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        varSpinner.setAdapter(dataAdapter);
+        return varSpinner;
     }
 
     public static void loopDialog(final Context context) {

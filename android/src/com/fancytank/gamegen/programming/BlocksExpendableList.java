@@ -120,13 +120,12 @@ public class BlocksExpendableList {
         childItems.add(logicPatterns);
 
         BlockPatternHolder[] variablesPatterns = {
-                //todo dialog
                 new BlockPatternHolder(new BlockActorPattern("NEW VARIABLE", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "var")}, BlockShape.VARIABLE_DECLARATION), Color.PINK), SpawnBlockDialog.DIALOG_INIT_VAR),
                 new BlockPatternHolder(new BlockActorPattern("get variable", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "get var")}, BlockShape.VARIABLE), Color.PINK), SpawnBlockDialog.DIALOG_GET_VAR),
                 new BlockPatternHolder(new BlockActorPattern("update variable", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "update var")}, BlockShape.CHAIN_METHOD), Color.PINK))
+                        new InputFragment(InputType.VARIABLE, "update var")}, BlockShape.CHAIN_METHOD), Color.PINK), SpawnBlockDialog.DIALOG_SET_VAR)
         };
         childItems.add(variablesPatterns);
 
