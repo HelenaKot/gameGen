@@ -31,14 +31,14 @@ public class BlockActorPattern {
     }
 
     public BlockActorPattern setValue(String value, ValueType valueType) {
-        blockData.setValue(value, valueType);
+        blockData.setVariable(value, valueType);
         blockData.getInputs()[0].labelText = value;
         return this;
     }
 
     public BlockActorPattern setValue(Variable value) {
-        blockData.setValue(value);
-        blockData.getInputs()[0].labelText = value.value;
+        blockData.setVariable(value);
+        blockData.getInputs()[0].labelText = value.getValue();
         return this;
     }
 

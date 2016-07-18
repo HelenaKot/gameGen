@@ -12,13 +12,14 @@ public class ScriptLoader {
         for (ProgrammingBlockSavedInstance savedBlock : data)
             switch (savedBlock.data.shape) {
                 case ACTION_LISTENER:
-                    loadListener(savedBlock);
+                    loadListener(savedBlock.data);
                     break;
                 case VARIABLE_DECLARATION:
                     loadVariable(savedBlock);
                     break;
             }
     }
+
     private static void loadVariable(ProgrammingBlockSavedInstance savedBlock) {
         InputFragment valueInput = savedBlock.data.getInputs()[0];
         if (hasValidConnection(valueInput)) {
@@ -29,15 +30,21 @@ public class ScriptLoader {
         }
     }
 
-    private static void loadListener(ProgrammingBlockSavedInstance savedBlock) {
-        InputFragment classNameInput = savedBlock.data.getInputs()[0];
-        InputFragment methodSocketInput = savedBlock.data.getInputs()[2];
-        if (hasValidConnection(classNameInput) && hasValidConnection(methodSocketInput)) {
-            ExecutableProducer executableProducer = convertToExecutableProducer(methodSocketInput.connectedTo);
+    private static void loadListener(BlockData blockData) {
+        InputFragment classNameInput = blockData.getInputs()[0];
+        InputFragment methodSocketInput = blockData.getInputs()[2];
+        createActionListener(classNameInput, methodSocketInput.connectedTo);
+    }
+
+    private static void createActionListener(InputFragment classNameInput, BlockData executableBlock) {
+        if (hasValidConnection(classNameInput) && executableBlock != null) {
+            ExecutableProducer executableProducer = convertToExecutableProducer(executableBlock);
             if (executableProducer.getInstance() != null)
                 ActorInitializer.addActionListener(classNameInput.connectedTo.getValue(), executableProducer);
             else
                 System.out.println("Class " + classNameInput.connectedTo.getValue() + " have unparseable executable.");
+            if (executableBlock.hasDescendant())
+                createActionListener(classNameInput, executableBlock.getDescendant());
         }
     }
 

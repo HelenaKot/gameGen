@@ -95,18 +95,15 @@ public class BlockData implements Serializable {
     }
 
     public String getValue() {
-        if (variable.valueType != ValueType.VARIABLE)
-            return variable.value;
-        else
-            return VariableList.get(variable.value).value;
+        return variable.getValue();
     }
 
-    public BlockData setValue(Variable value) {
+    public BlockData setVariable(Variable value) {
         this.variable = value;
         return this;
     }
 
-    public BlockData setValue(String value, ValueType type) {
+    public BlockData setVariable(String value, ValueType type) {
         this.variable = new Variable(value, type);
         return this;
     }

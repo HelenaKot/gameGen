@@ -122,7 +122,7 @@ public enum SpawnBlockDialog {
             public void onClick(DialogInterface dialog, int which) {
                 Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
                 pattern.setValue(selectedVariable);
-                pattern.setLabel(selectedVariable.value + " =");
+                pattern.setLabel(selectedVariable.getValue() + " =");
                 pattern.spawn();
             }
         });

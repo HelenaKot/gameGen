@@ -67,9 +67,9 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET").setExpectedValue(ValueType.METHOD)}, BlockShape.ACTION_LISTENER), Color.PURPLE)),
 
                 new BlockPatternHolder(new BlockActorPattern("empty space", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setValue("empty", ValueType.CLASS_NAME), Color.SKY)),
+                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setVariable("empty", ValueType.CLASS_NAME), Color.SKY)),
                 new BlockPatternHolder(new BlockActorPattern("placeholder actor", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE).setValue("generic", ValueType.CLASS_NAME), Color.SKY)),
+                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE).setVariable("generic", ValueType.CLASS_NAME), Color.SKY)),
 /*
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "move self"),
@@ -125,7 +125,7 @@ public class BlocksExpendableList {
                 new BlockPatternHolder(new BlockActorPattern("get variable", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "get var")}, BlockShape.VARIABLE), Color.PINK), SpawnBlockDialog.DIALOG_GET_VAR),
                 new BlockPatternHolder(new BlockActorPattern("update variable", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "update var")}, BlockShape.CHAIN_METHOD), Color.PINK), SpawnBlockDialog.DIALOG_SET_VAR)
+                        new InputFragment(InputType.VARIABLE, "update var").setExpectedMethod(MethodType.VARIABLE_SETTER)}, BlockShape.CHAIN_METHOD), Color.PINK), SpawnBlockDialog.DIALOG_SET_VAR)
         };
         childItems.add(variablesPatterns);
 

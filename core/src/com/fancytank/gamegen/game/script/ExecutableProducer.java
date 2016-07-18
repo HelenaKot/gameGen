@@ -8,6 +8,9 @@ import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.data.MethodType;
+import com.fancytank.gamegen.programming.data.ValueType;
+import com.fancytank.gamegen.programming.data.Variable;
+import com.fancytank.gamegen.programming.data.VariableList;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
 import java.util.Vector;
@@ -39,6 +42,8 @@ public class ExecutableProducer {
                 return getBlockSetter();
             case COLOR_SETTER:
                 return getBlockColorChanger();
+            case VARIABLE_SETTER:
+                return getVariableSetter();
             case LOGIC_STATEMENT:
                 return getLogicStatement();
             case LOOP_WHILE:
@@ -54,23 +59,23 @@ public class ExecutableProducer {
     private Executable getBlockSetter() {
         return new Executable() {
             BaseActor blockInstance;
-            String blockClassName;
-            int blockX, blockY;
+            Variable blockClassName;
+            Variable blockX, blockY;
 
             @Override
             public void init(BaseActor blockInstance) {
                 System.out.println(methodBlock);
                 this.blockInstance = blockInstance;
-                Vector<String> vars = collectVars();
+                Vector<Variable> vars = collectVars();
                 blockClassName = vars.get(0);
-                blockX = Integer.parseInt(vars.get(1));
-                blockY = Integer.parseInt(vars.get(2));
+                blockX = vars.get(1);
+                blockY = vars.get(2);
             }
 
             @Override
             public boolean performAction() {
                 MapManager.changeBlock(
-                        ActorInitializer.getInstanceOf(blockClassName, blockInstance.x + blockX, blockInstance.y + blockY));
+                        ActorInitializer.getInstanceOf(blockClassName.getValue(), blockInstance.x + blockX.getInt(), blockInstance.y + blockY.getInt()));
                 return true;
             }
         };
@@ -79,20 +84,41 @@ public class ExecutableProducer {
     private Executable getBlockColorChanger() {
         return new Executable() {
             BaseActor blockInstance;
-            Vector<String> vars;
-            Color color;
+            Vector<Variable> vars;
+            Variable color;
 
             @Override
             public void init(BaseActor blockInstance) {
                 this.blockInstance = blockInstance;
                 vars = collectVars();
-                color = Color.valueOf(vars.get(0));
+                color = vars.get(0);
             }
 
             @Override
             public boolean performAction() {
                 if (blockInstance instanceof GenericActor)
-                    ((GenericActor) blockInstance).tint = color;
+                    ((GenericActor) blockInstance).tint = Color.valueOf(color.getValue());
+                return true;
+            }
+        };
+    }
+
+    private Executable getVariableSetter() {
+        return new Executable() {
+            Variable variableToSet;
+            Variable newValue;
+
+            @Override
+            public void init(BaseActor blockInstance) {
+                variableToSet = methodBlock.getVariable();
+                BlockData connectedTo = methodBlock.getInputs()[0].connectedTo;
+                if (connectedTo != null)
+                    newValue = connectedTo.getVariable();
+            }
+
+            @Override
+            public boolean performAction() {
+                VariableList.put(variableToSet.getDirectValue(), newValue);
                 return true;
             }
         };
@@ -200,14 +226,14 @@ public class ExecutableProducer {
         return null;
     }
 
-    private Vector<String> collectVars() {
-        Vector<String> vars = new Vector<String>();
+    private Vector<Variable> collectVars() {
+        Vector<Variable> vars = new Vector<Variable>();
         InputFragment[] inputs = methodBlock.getInputs();
         for (int i = 0; i < inputs.length; i++)
             if (inputs[i].inputType != InputType.DUMMY)
                 if (inputs[i].connectedTo != null)
-                    vars.add(inputs[i].connectedTo.getValue());
-                else vars.add("0");
+                    vars.add(inputs[i].connectedTo.getVariable());
+                else vars.add(new Variable("0", ValueType.ANY));
         return vars;
     }
 }
