@@ -9,13 +9,6 @@ import com.fancytank.gamegen.programming.data.VariableList;
 
 public class ScriptLoader {
     public static void load(ProgrammingBlockSavedInstance[] data) {
-        System.out.println("loadBlocks debug");
-        for (ProgrammingBlockSavedInstance a : data)
-            System.out.println(a);
-        loadBlocks(data);
-    }
-
-    private static void loadBlocks(ProgrammingBlockSavedInstance[] data) {
         for (ProgrammingBlockSavedInstance savedBlock : data)
             switch (savedBlock.data.shape) {
                 case ACTION_LISTENER:
@@ -26,7 +19,6 @@ public class ScriptLoader {
                     break;
             }
     }
-
     private static void loadVariable(ProgrammingBlockSavedInstance savedBlock) {
         InputFragment valueInput = savedBlock.data.getInputs()[0];
         if (hasValidConnection(valueInput)) {
