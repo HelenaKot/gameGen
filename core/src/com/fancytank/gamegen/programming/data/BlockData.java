@@ -103,8 +103,4 @@ public class BlockData implements Serializable {
         return this;
     }
 
-    public BlockData setVariable(String value, ValueType type) {
-        this.variable = new Variable(value, type);
-        return this;
-    }
 }

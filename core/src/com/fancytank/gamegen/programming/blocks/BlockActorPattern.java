@@ -31,8 +31,7 @@ public class BlockActorPattern {
     }
 
     public BlockActorPattern setValue(String value, ValueType valueType) {
-        blockData.setVariable(value, valueType);
-        blockData.getInputs()[0].labelText = value;
+        setValue(new Variable(value, valueType));
         return this;
     }
 

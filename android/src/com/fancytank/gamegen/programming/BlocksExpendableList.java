@@ -67,9 +67,9 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET").setExpectedValue(ValueType.METHOD)}, BlockShape.ACTION_LISTENER), Color.PURPLE)),
 
                 new BlockPatternHolder(new BlockActorPattern("empty space", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE).setVariable("empty", ValueType.CLASS_NAME), Color.SKY)),
+                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE), Color.SKY).setValue("empty", ValueType.CLASS_NAME)),
                 new BlockPatternHolder(new BlockActorPattern("placeholder actor", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE).setVariable("generic", ValueType.CLASS_NAME), Color.SKY)),
+                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE), Color.SKY).setValue("generic", ValueType.CLASS_NAME)),
 /*
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "move self"),
