@@ -17,12 +17,6 @@ public class VariableList {
         return keyset.toArray(new String[keyset.size()]);
     }
 
-    public static VariableList getInstance() {
-        if (instance == null)
-            instance = new VariableList();
-        return instance;
-    }
-
     public static Variable get(String name) {
         return getInstance().variables.get(name);
     }
@@ -38,7 +32,13 @@ public class VariableList {
         put(name, new Variable(value, type));
     }
 
-    static void updateValue(String name, Variable variable) {
+    private static VariableList getInstance() {
+        if (instance == null)
+            instance = new VariableList();
+        return instance;
+    }
+
+    private static void updateValue(String name, Variable variable) {
         //if (getInstance().variables.get(name).valueType == variable.valueType) todo
             instance.variables.get(name).setValue(variable.getValue());
         //else

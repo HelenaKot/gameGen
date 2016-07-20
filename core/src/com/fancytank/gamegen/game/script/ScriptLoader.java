@@ -26,7 +26,7 @@ public class ScriptLoader {
             String name = savedBlock.data.getValue();
             ValueType type = savedBlock.data.getVariable().valueType;
             String value = valueInput.connectedTo.getValue();
-            VariableList.getInstance().put(name, value, type);
+            VariableList.put(name, value, type);
         }
     }
 
