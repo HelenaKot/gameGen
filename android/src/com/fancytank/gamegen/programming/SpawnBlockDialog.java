@@ -22,7 +22,7 @@ import uz.shift.colorpicker.LineColorPicker;
 import uz.shift.colorpicker.Palette;
 
 public enum SpawnBlockDialog {
-    DIALOG_NUMBER, DIALOG_COLOR, DIALOG_LOOP, DIALOG_INIT_VAR, DIALOG_GET_VAR, DIALOG_SET_VAR;
+    DIALOG_NUMBER, DIALOG_COLOR, DIALOG_LOOP, DIALOG_COMPARATOR, DIALOG_INIT_VAR, DIALOG_GET_VAR, DIALOG_SET_VAR;
 
     public void getDialog(final Context context, BlockActorPattern pattern) {
         switch (this) {
@@ -34,6 +34,8 @@ public enum SpawnBlockDialog {
                 break;
             case DIALOG_LOOP:
                 loopDialog(context);
+                break;
+            case DIALOG_COMPARATOR:
                 break;
             case DIALOG_INIT_VAR:
                 newVariableDialog(context, pattern);

@@ -100,15 +100,13 @@ public class BlocksExpendableList {
 
         BlockPatternHolder[] logicPatterns = {
                 new BlockPatternHolder(new BlockActorPattern("IF", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN).setExpectedMethod(MethodType.IF_STATEMENT),
-                        new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW)),
+                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN),
+                        new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
+                        .setExpectedMethod(MethodType.IF_STATEMENT), Color.YELLOW)),
 
                 new BlockPatternHolder(new BlockActorPattern("LOOP", null, Color.YELLOW), SpawnBlockDialog.DIALOG_LOOP),
 
-                // todo make dialog for  <>= ?
-                new BlockPatternHolder(new BlockActorPattern("equals", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "are equal").setExpectedValue(ValueType.ANY),
-                        new InputFragment(InputType.VARIABLE, " ").setExpectedValue(ValueType.ANY)}, BlockShape.VARIABLE), Color.BLUE)),
+                new BlockPatternHolder(new BlockActorPattern("COMPARE", null, Color.BLUE), SpawnBlockDialog.DIALOG_COMPARATOR),
 
                 new BlockPatternHolder(new BlockActorPattern("TRUE", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "true").setExpectedValue(ValueType.BOOLEAN)}, BlockShape.VARIABLE), Color.BLUE)), //todo
@@ -125,20 +123,24 @@ public class BlocksExpendableList {
                 new BlockPatternHolder(new BlockActorPattern("get variable", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "get var")}, BlockShape.VARIABLE), Color.PINK), SpawnBlockDialog.DIALOG_GET_VAR),
                 new BlockPatternHolder(new BlockActorPattern("update variable", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "update var").setExpectedMethod(MethodType.VARIABLE_SETTER)}, BlockShape.CHAIN_METHOD), Color.PINK), SpawnBlockDialog.DIALOG_SET_VAR)
+                        new InputFragment(InputType.VARIABLE, "update var")}, BlockShape.CHAIN_METHOD)
+                        .setExpectedMethod(MethodType.VARIABLE_SETTER), Color.PINK), SpawnBlockDialog.DIALOG_SET_VAR)
         };
         childItems.add(variablesPatterns);
 
         BlockActorPattern[] loopsPatterns = {
                 new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.BOOLEAN).setExpectedMethod(MethodType.LOOP_WHILE),
-                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
+                        new InputFragment(InputType.VARIABLE, "loop statement while").setExpectedValue(ValueType.BOOLEAN),
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
+                        .setExpectedMethod(MethodType.LOOP_WHILE), Color.YELLOW),
                 new BlockActorPattern("LOOP2", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "loop for each").setExpectedValue(ValueType.ANY).setExpectedMethod(MethodType.LOOP_FOR),
-                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
+                        new InputFragment(InputType.VARIABLE, "loop for each").setExpectedValue(ValueType.ANY),
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
+                        .setExpectedMethod(MethodType.LOOP_FOR), Color.YELLOW),
                 new BlockActorPattern("LOOP3", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "loop N times").setExpectedMethod(MethodType.LOOP_FOR),
-                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
+                        new InputFragment(InputType.DUMMY, "loop N times"),
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
+                        .setExpectedMethod(MethodType.LOOP_FOR), Color.YELLOW),
         };
 
         SpawnBlockDialog.setLoopPatterns(loopsPatterns);

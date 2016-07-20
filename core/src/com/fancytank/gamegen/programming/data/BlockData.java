@@ -12,8 +12,9 @@ public class BlockData implements Serializable {
     BlockData parent;
     BlockData descendant;
     InputFragment[] inputs;
-    transient CoreBlock coreBlock;
+    MethodType customMethodType;
     Variable variable;
+    transient CoreBlock coreBlock;
 
     public BlockData(InputFragment[] inputs, BlockShape shape) {
         this.shape = shape;
@@ -61,24 +62,6 @@ public class BlockData implements Serializable {
         else return new InputFragment[0];
     }
 
-    public String getDebugLog(String spacing) {
-        String output = spacing + "BlockData ";
-        if (coreBlock != null)
-            output += "ID: " + coreBlock.getProgrammingBlock().getName() + "\n";
-        else
-            output += "(virtual)\n";
-        for (InputFragment inputFragment : inputs)
-            output += inputFragment.getDebugLog(spacing + "  ");
-        if (hasDescendant())
-            output += spacing + "next:\n" + descendant.getDebugLog(spacing + "  ");
-        return output;
-    }
-
-    @Override
-    public String toString() {
-        return getDebugLog("");
-    }
-
     public static ArrayList<BlockData> getBlockDataList() {
         ArrayList<BlockData> output = new ArrayList<BlockData>();
         for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())
@@ -103,4 +86,36 @@ public class BlockData implements Serializable {
         return this;
     }
 
+    public BlockData setExpectedMethod(MethodType method) {
+        customMethodType = method;
+        return this;
+    }
+
+    public MethodType getExpectedMethod() {
+        return (customMethodType != null) ? customMethodType : getExpectedInputMethod();
+    }
+
+    private MethodType getExpectedInputMethod() {
+        for (InputFragment input : inputs)
+            return input.getExpectedMethod();
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return getDebugLog("");
+    }
+
+    public String getDebugLog(String spacing) {
+        String output = spacing + "BlockData ";
+        if (coreBlock != null)
+            output += "ID: " + coreBlock.getProgrammingBlock().getName() + "\n";
+        else
+            output += "(virtual)\n";
+        for (InputFragment inputFragment : inputs)
+            output += inputFragment.getDebugLog(spacing + "  ");
+        if (hasDescendant())
+            output += spacing + "next:\n" + descendant.getDebugLog(spacing + "  ");
+        return output;
+    }
 }

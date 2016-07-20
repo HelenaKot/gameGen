@@ -27,13 +27,7 @@ public class ExecutableProducer {
     ExecutableProducer(BlockData methodBlock, ActionListenerType type) {
         this.methodBlock = methodBlock;
         this.type = type;
-        methodType = getMethodType();
-    }
-
-    private MethodType getMethodType() {
-        for (InputFragment inputFragment : methodBlock.getInputs())
-            return inputFragment.getExpectedMethod();
-        return null;
+        methodType = methodBlock.getExpectedMethod();
     }
 
     public Executable getInstance() {
@@ -52,8 +46,9 @@ public class ExecutableProducer {
                 return getForStatement();
             case IF_STATEMENT:
                 return getIfStatement();
+            default:
+                return null;
         }
-        return null;
     }
 
     private Executable getBlockSetter() {
@@ -231,9 +226,7 @@ public class ExecutableProducer {
         InputFragment[] inputs = methodBlock.getInputs();
         for (int i = 0; i < inputs.length; i++)
             if (inputs[i].inputType != InputType.DUMMY)
-                if (inputs[i].connectedTo != null)
-                    vars.add(inputs[i].connectedTo.getVariable());
-                else vars.add(new Variable("0", ValueType.ANY));
+                vars.add((inputs[i].connectedTo != null) ? inputs[i].connectedTo.getVariable() : new Variable("0", ValueType.ANY));
         return vars;
     }
 }
