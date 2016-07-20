@@ -141,7 +141,7 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD), Color.YELLOW),
         };
 
-        SpawnBlockDialog.setLoopPaterns(loopsPatterns);
+        SpawnBlockDialog.setLoopPatterns(loopsPatterns);
 
 
     }

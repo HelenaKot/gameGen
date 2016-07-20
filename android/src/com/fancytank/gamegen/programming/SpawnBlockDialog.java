@@ -149,7 +149,7 @@ public enum SpawnBlockDialog {
         dialog.builder.show();
     }
 
-    public static void setLoopPaterns(BlockActorPattern[] patterns) {
+    public static void setLoopPatterns(BlockActorPattern[] patterns) {
         LoopDialog.loopPatterns = patterns;
     }
 
