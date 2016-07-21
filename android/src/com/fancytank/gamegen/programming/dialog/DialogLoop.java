@@ -13,16 +13,14 @@ import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.ValueType;
 
-import static com.fancytank.gamegen.programming.dialog.DialogSpawner.initDialog;
-
 public class DialogLoop {
     static BlockActorPattern[] loopPatterns;
     private RadioButton[] buttons;
     private EditText editText;
-    DialogSpawner.BuilderWrapper dialog;
+    BuilderWrapper dialog;
 
     static void newLoopDialog(final Context context) {
-        DialogSpawner.BuilderWrapper dialog = DialogSpawner.initDialog(context, "loop type", R.layout.dialog_loop_spawner);
+        BuilderWrapper dialog = DialogSpawner.initDialog(context, "loop type", R.layout.dialog_loop_spawner);
         final DialogLoop radioSet = new DialogLoop(dialog);
         dialog.builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -33,7 +31,7 @@ public class DialogLoop {
         dialog.builder.show();
     }
 
-    DialogLoop(DialogSpawner.BuilderWrapper dialog) {
+    DialogLoop(BuilderWrapper dialog) {
         editText = (EditText) dialog.view.findViewById(R.id.times_text);
         this.dialog = dialog;
         setupDialog(dialog.view);

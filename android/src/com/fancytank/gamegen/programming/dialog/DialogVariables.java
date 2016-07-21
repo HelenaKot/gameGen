@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.fancytank.gamegen.R;
-import com.fancytank.gamegen.programming.dialog.DialogSpawner.BuilderWrapper;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.ValueType;
 import com.fancytank.gamegen.programming.data.Variable;

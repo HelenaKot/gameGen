@@ -23,7 +23,7 @@ public enum DialogSpawner {
     public void getDialog(final Context context, BlockActorPattern pattern) {
         switch (this) {
             case DIALOG_NUMBER:
-                enterNumberDialog(context, pattern);
+                enterNumberDialog(context, pattern).builder.show();;
                 break;
             case DIALOG_COLOR:
                 colorPickerDialog(context, pattern);
@@ -45,7 +45,7 @@ public enum DialogSpawner {
         }
     }
 
-    public static void enterNumberDialog(final Context context, final BlockActorPattern pattern) {
+    public static BuilderWrapper enterNumberDialog(final Context context, final BlockActorPattern pattern) {
         final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         BuilderWrapper dialog = initDialog(context, "enter value", input);
@@ -58,7 +58,7 @@ public enum DialogSpawner {
                 pattern.spawn();
             }
         });
-        dialog.builder.show();
+        return dialog;
     }
 
     public static void colorPickerDialog(final Context context, final BlockActorPattern pattern) {
@@ -100,10 +100,5 @@ public enum DialogSpawner {
             }
         });
         return output;
-    }
-
-    static class BuilderWrapper {
-        AlertDialog.Builder builder;
-        View view;
     }
 }
