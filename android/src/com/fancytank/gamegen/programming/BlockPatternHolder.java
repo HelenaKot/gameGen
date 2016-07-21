@@ -3,16 +3,17 @@ package com.fancytank.gamegen.programming;
 import android.content.Context;
 
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
+import com.fancytank.gamegen.programming.dialog.DialogSpawner;
 
 class BlockPatternHolder {
     private BlockActorPattern pattern;
-    private SpawnBlockDialog dialogType;
+    private DialogSpawner dialogType;
 
     BlockPatternHolder(BlockActorPattern pattern) {
         this.pattern = pattern;
     }
 
-    BlockPatternHolder(BlockActorPattern pattern, SpawnBlockDialog dialogType) {
+    BlockPatternHolder(BlockActorPattern pattern, DialogSpawner dialogType) {
         this.pattern = pattern;
         this.dialogType = dialogType;
     }

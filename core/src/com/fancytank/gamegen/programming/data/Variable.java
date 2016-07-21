@@ -20,6 +20,7 @@ public class Variable implements Serializable {
     public String getDirectValue() {
         return value;
     }
+
     public String getValue() {
         if (valueType != ValueType.VARIABLE)
             return value;

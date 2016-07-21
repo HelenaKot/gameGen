@@ -1,5 +1,7 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen.programming.dialog;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,13 +13,27 @@ import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.ValueType;
 
-public class LoopDialog {
+import static com.fancytank.gamegen.programming.dialog.DialogSpawner.initDialog;
+
+public class DialogLoop {
     static BlockActorPattern[] loopPatterns;
     private RadioButton[] buttons;
     private EditText editText;
-    SpawnBlockDialog.BuilderWrapper dialog;
+    DialogSpawner.BuilderWrapper dialog;
 
-    LoopDialog(SpawnBlockDialog.BuilderWrapper dialog) {
+    static void newLoopDialog(final Context context) {
+        DialogSpawner.BuilderWrapper dialog = DialogSpawner.initDialog(context, "loop type", R.layout.dialog_loop_spawner);
+        final DialogLoop radioSet = new DialogLoop(dialog);
+        dialog.builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DialogLoop.loopPatterns[radioSet.getChecked()].spawn();
+            }
+        });
+        dialog.builder.show();
+    }
+
+    DialogLoop(DialogSpawner.BuilderWrapper dialog) {
         editText = (EditText) dialog.view.findViewById(R.id.times_text);
         this.dialog = dialog;
         setupDialog(dialog.view);
@@ -28,10 +44,6 @@ public class LoopDialog {
             if (buttons[i].isChecked())
                 return i;
         return -1;
-    }
-
-    public int getNumber() {
-        return Integer.parseInt(editText.getText().toString());
     }
 
     private void setupDialog(View view) {

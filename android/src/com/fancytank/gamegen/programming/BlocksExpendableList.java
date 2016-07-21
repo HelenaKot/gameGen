@@ -12,6 +12,7 @@ import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.data.MethodType;
 import com.fancytank.gamegen.programming.data.ValueType;
+import com.fancytank.gamegen.programming.dialog.DialogSpawner;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class BlocksExpendableList {
 */
 
                 new BlockPatternHolder(new BlockActorPattern("NUMBER", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "0")}, BlockShape.VARIABLE), Color.SKY), SpawnBlockDialog.DIALOG_NUMBER),
+                        new InputFragment(InputType.DUMMY, "0")}, BlockShape.VARIABLE), Color.SKY), DialogSpawner.DIALOG_NUMBER),
 
                 new BlockPatternHolder(new BlockActorPattern("spawn object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "spawn new").setExpectedValue(ValueType.CLASS_NAME),
@@ -90,7 +91,7 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
 
                 new BlockPatternHolder(new BlockActorPattern("COLOR", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "#eeeeee")}, BlockShape.VARIABLE), Color.ORANGE), SpawnBlockDialog.DIALOG_COLOR),
+                        new InputFragment(InputType.DUMMY, "#eeeeee")}, BlockShape.VARIABLE), Color.ORANGE), DialogSpawner.DIALOG_COLOR),
 
 /*
                 new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
@@ -104,9 +105,12 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
                         .setExpectedMethod(MethodType.IF_STATEMENT), Color.YELLOW)),
 
-                new BlockPatternHolder(new BlockActorPattern("LOOP", null, Color.YELLOW), SpawnBlockDialog.DIALOG_LOOP),
+                new BlockPatternHolder(new BlockActorPattern("LOOP", null, Color.YELLOW), DialogSpawner.DIALOG_LOOP),
 
-                new BlockPatternHolder(new BlockActorPattern("COMPARE", null, Color.BLUE), SpawnBlockDialog.DIALOG_COMPARATOR),
+                new BlockPatternHolder(new BlockActorPattern("COMPARE", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "compare").setExpectedValue(ValueType.ANY),
+                        new InputFragment(InputType.VARIABLE, "than").setExpectedValue(ValueType.ANY)},
+                        BlockShape.VARIABLE), Color.BLUE), DialogSpawner.DIALOG_COMPARATOR),
 
                 new BlockPatternHolder(new BlockActorPattern("TRUE", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "true").setExpectedValue(ValueType.BOOLEAN)}, BlockShape.VARIABLE), Color.BLUE)), //todo
@@ -119,12 +123,12 @@ public class BlocksExpendableList {
 
         BlockPatternHolder[] variablesPatterns = {
                 new BlockPatternHolder(new BlockActorPattern("NEW VARIABLE", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "var")}, BlockShape.VARIABLE_DECLARATION), Color.PINK), SpawnBlockDialog.DIALOG_INIT_VAR),
+                        new InputFragment(InputType.VARIABLE, "var")}, BlockShape.VARIABLE_DECLARATION), Color.PINK), DialogSpawner.DIALOG_INIT_VAR),
                 new BlockPatternHolder(new BlockActorPattern("get variable", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "get var")}, BlockShape.VARIABLE), Color.PINK), SpawnBlockDialog.DIALOG_GET_VAR),
+                        new InputFragment(InputType.DUMMY, "get var")}, BlockShape.VARIABLE), Color.PINK), DialogSpawner.DIALOG_GET_VAR),
                 new BlockPatternHolder(new BlockActorPattern("update variable", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "update var")}, BlockShape.CHAIN_METHOD)
-                        .setExpectedMethod(MethodType.VARIABLE_SETTER), Color.PINK), SpawnBlockDialog.DIALOG_SET_VAR)
+                        .setExpectedMethod(MethodType.VARIABLE_SETTER), Color.PINK), DialogSpawner.DIALOG_SET_VAR)
         };
         childItems.add(variablesPatterns);
 
@@ -143,7 +147,7 @@ public class BlocksExpendableList {
                         .setExpectedMethod(MethodType.LOOP_FOR), Color.YELLOW),
         };
 
-        SpawnBlockDialog.setLoopPatterns(loopsPatterns);
+        DialogSpawner.setLoopPatterns(loopsPatterns);
 
 
     }
