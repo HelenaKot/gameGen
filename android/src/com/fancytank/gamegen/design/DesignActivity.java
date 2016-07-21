@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.design;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
@@ -8,7 +9,7 @@ import android.view.WindowManager;
 import com.fancytank.gamegen.R;
 import com.wunderlist.slidinglayer.SlidingLayer;
 
-public class DesignActivity extends AppCompatActivity {
+public class DesignActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

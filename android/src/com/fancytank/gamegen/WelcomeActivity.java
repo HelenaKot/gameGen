@@ -1,5 +1,6 @@
 package com.fancytank.gamegen;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -10,7 +11,7 @@ import com.fancytank.gamegen.data.DataManager;
 
 import java.util.List;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends Activity {
     private SaveListAdapter adapter;
 
     @Override
