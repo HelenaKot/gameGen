@@ -8,6 +8,5 @@
         android:id="@+id/picker"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:padding="10dp"
         app:orientation="horizontal" />
 </LinearLayout>

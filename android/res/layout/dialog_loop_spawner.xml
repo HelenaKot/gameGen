@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <RadioButton
             android:id="@+id/radio_while"
@@ -25,24 +31,22 @@
             android:checked="false"
             android:text="repeat for " />
 
-    <EditText
-        android:id="@+id/times_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="4"
-        android:layout_alignBottom="@+id/radioGroup"
-        android:layout_toRightOf="@+id/radioGroup"
-        android:layout_toEndOf="@+id/radioGroup"
-        android:layout_row="2"
-        android:layout_column="1"
-        android:inputType="numberDecimal" />
+        <EditText
+            android:id="@+id/times_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="2"
+            android:inputType="numberDecimal"
+            android:text="4" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="times"
-        style="@android:style/Widget.CompoundButton.RadioButton"
-        android:layout_row="2"
-        android:layout_column="2" />
+        <TextView
+            style="@android:style/Widget.CompoundButton.RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_row="2"
+            android:text="times" />
 
-</GridLayout>
+    </GridLayout>
+</LinearLayout>
