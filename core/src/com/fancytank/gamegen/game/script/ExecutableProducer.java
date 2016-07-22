@@ -38,8 +38,8 @@ public class ExecutableProducer {
                 return getBlockColorChanger();
             case VARIABLE_SETTER:
                 return getVariableSetter();
-            case LOGIC_STATEMENT:
-                return getLogicStatement();
+            case COMPARE_STATEMENT:
+                return getCompareStatement();
             case LOOP_WHILE:
                 return getWhileStatement();
             case LOOP_FOR:
@@ -120,7 +120,7 @@ public class ExecutableProducer {
     }
 
     //todo placeholder
-    private Executable getLogicStatement() {
+    private Executable getCompareStatement() {
         return new Executable() {
             boolean value;
 

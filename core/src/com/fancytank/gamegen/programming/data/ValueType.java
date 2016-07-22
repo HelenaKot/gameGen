@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public enum ValueType implements Serializable {
     // todo do połączeń między bloczkami VV
-    BOOLEAN(MethodType.LOGIC_STATEMENT),
-    ANY(MethodType.LOGIC_STATEMENT),
+    BOOLEAN(),
+    ANY(),
     COLOR(MethodType.COLOR_SETTER),
     NUMBER(),
     INT_NUMBER(),
@@ -21,14 +21,6 @@ public enum ValueType implements Serializable {
 
     ValueType(MethodType expectedMethod) {
         this.expectedMethod = expectedMethod;
-    }
-
-    public boolean hasExpectedMethod() {
-        return expectedMethod != null;
-    }
-
-    public MethodType getExpectedMethod() {
-        return expectedMethod;
     }
 
     static ValueType[] usedValues;

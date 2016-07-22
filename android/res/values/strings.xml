@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">PJATK (cr)app inventor</string>
+    <string name="is_greater"><![CDATA[< is greater]]></string>
 
 </resources>

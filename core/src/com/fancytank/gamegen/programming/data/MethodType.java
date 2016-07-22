@@ -7,6 +7,7 @@ public enum MethodType implements Serializable {
     COLOR_SETTER,
     VARIABLE_SETTER,
     LOGIC_STATEMENT,
+    COMPARE_STATEMENT,
     LOOP_WHILE,
     LOOP_FOR,
     IF_STATEMENT;

@@ -20,6 +20,7 @@ import uz.shift.colorpicker.Palette;
 public enum DialogSpawner {
     DIALOG_NUMBER, DIALOG_COLOR, DIALOG_LOOP, DIALOG_COMPARATOR, DIALOG_INIT_VAR, DIALOG_GET_VAR, DIALOG_SET_VAR;
 
+
     public void getDialog(final Context context, BlockActorPattern pattern) {
         switch (this) {
             case DIALOG_NUMBER:
@@ -32,6 +33,7 @@ public enum DialogSpawner {
                 DialogLoop.newLoopDialog(context);
                 break;
             case DIALOG_COMPARATOR:
+                DialogComparator.compareDialog(context, pattern);
                 break;
             case DIALOG_INIT_VAR:
                 DialogVariables.newVariableDialog(context, pattern);

@@ -109,8 +109,8 @@ public class BlocksExpendableList {
 
                 new BlockPatternHolder(new BlockActorPattern("COMPARE", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "compare").setExpectedValue(ValueType.ANY),
-                        new InputFragment(InputType.VARIABLE, "than").setExpectedValue(ValueType.ANY)},
-                        BlockShape.VARIABLE), Color.BLUE), DialogSpawner.DIALOG_COMPARATOR),
+                        new InputFragment(InputType.VARIABLE, " ").setExpectedValue(ValueType.ANY)},
+                        BlockShape.VARIABLE).setExpectedMethod(MethodType.COMPARE_STATEMENT), Color.SKY), DialogSpawner.DIALOG_COMPARATOR),
 
                 new BlockPatternHolder(new BlockActorPattern("TRUE", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "true").setExpectedValue(ValueType.BOOLEAN)}, BlockShape.VARIABLE), Color.BLUE)), //todo
