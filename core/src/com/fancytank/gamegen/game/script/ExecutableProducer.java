@@ -119,21 +119,54 @@ public class ExecutableProducer {
         };
     }
 
-    //todo placeholder
     private Executable getCompareStatement() {
         return new Executable() {
-            boolean value;
-
+            Vector<Variable> vars;
+            Compare statement;
             @Override
             public void init(BaseActor block) {
-                value = true;
+                vars = collectVars();
+                switch (methodBlock.getValue().charAt(0)) {
+                    case '<':
+                        statement = new Compare() {
+                            @Override
+                            public boolean compare(Variable var1, Variable var2) {
+                                return 0 > var1.compareTo(var2);
+                            }
+                        }; break;
+                    case '=' :
+                        statement = new Compare() {
+                            @Override
+                            public boolean compare(Variable var1, Variable var2) {
+                                return 0 == var1.compareTo(var2);
+                            }
+                        }; break;
+                    case '>' :
+                        statement = new Compare() {
+                            @Override
+                            public boolean compare(Variable var1, Variable var2) {
+                                return 0 < var1.compareTo(var2);
+                            }
+                        }; break;
+                    default:
+                        statement = new Compare() {
+                            @Override
+                            public boolean compare(Variable var1, Variable var2) {
+                                return false;
+                            }
+                        }; break;
+                }
             }
 
             @Override
             public boolean performAction() {
-                return value;
+                return statement.compare(vars.get(0), vars.get(1));
             }
         };
+    }
+
+    private interface Compare {
+        boolean compare(Variable var1, Variable var2);
     }
 
     private Executable getIfStatement() {
