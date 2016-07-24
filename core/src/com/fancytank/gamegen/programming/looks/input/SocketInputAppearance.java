@@ -17,7 +17,7 @@ public class SocketInputAppearance extends BlockInputAppearance {
     }
 
     @Override
-    public ConnectionArea getConnectors() {
+    public ConnectionArea getConnector() {
         ConnectionArea inputConnector = new ConnectionArea(getConnectorPlacement().x, getConnectorPlacement().y, this, Direction.DOWN);
         inputFragment.setConnectionArea(inputConnector);
         return inputConnector;

@@ -88,18 +88,15 @@ public class Workspace {
     }
 
     private static void reconnectBlock(BlockData data) {
-        System.out.println("reconnecting block -- " + data.getInputs()[0].labelText);
         for (InputFragment inputFragment : data.getInputs())
-            if (inputFragment.connectedTo != null && inputFragment.inputType != InputType.DUMMY)
+            if (inputFragment.connectedTo != null)
                 reconnectInput(inputFragment);
         if (data.hasDescendant())
             reconnectBlock(data.getDescendant());
     }
 
     private static void reconnectInput(InputFragment inputFragment) {
-        System.out.println("reconnecting input" + inputFragment.labelText);
         ConnectionRules.tryConnect(inputFragment.getConnectionArea(), inputFragment.connectedTo.getCoreBlock().getProgrammingBlock().getFirstConnector());
-        System.out.println("FUCK FROM" +inputFragment.labelText + " TO "+inputFragment.connectedTo.getCoreBlock().data.getInputs()[0].labelText);
         reconnectBlock(inputFragment.connectedTo.getCoreBlock().data);
     }
 

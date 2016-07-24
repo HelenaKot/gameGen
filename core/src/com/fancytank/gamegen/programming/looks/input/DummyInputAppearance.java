@@ -29,7 +29,7 @@ public class DummyInputAppearance extends BlockInputAppearance {
     }
 
     @Override
-    public ConnectionArea getConnectors() {
+    public ConnectionArea getConnector() {
         return null;
     }
 

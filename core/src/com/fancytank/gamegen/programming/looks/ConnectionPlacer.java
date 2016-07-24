@@ -47,14 +47,14 @@ public final class ConnectionPlacer {
 
     private static void getInputConnectors(ArrayList<ConnectionArea> output, CoreBlock coreBlock) {
         for (BlockInputAppearance input : coreBlock.blockAppearance.inputs)
-            if (input.getConnectors() != null)
-                output.add(input.getConnectors());
+            if (input.getConnector() != null)
+                output.add(input.getConnector());
     }
 
     private static void updateInputConnectors(CoreBlock coreBlock, int index) {
         ArrayList<ConnectionArea> connectors = coreBlock.programmingBlock.connectors;
         for (BlockInputAppearance input : coreBlock.blockAppearance.inputs)
-            if (input.getConnectors() != null){
+            if (input.getConnector() != null){
                 Vector2 newPlacement = input.getConnectorPlacement();
                 connectors.get(index++).setPosition(newPlacement.x, newPlacement.y);
             }

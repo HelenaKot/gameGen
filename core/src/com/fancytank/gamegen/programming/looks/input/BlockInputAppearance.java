@@ -23,7 +23,7 @@ abstract public class BlockInputAppearance {
         patchData.patch.draw(batch, patchData.startX, patchData.startY, patchData.width, patchData.height);
     }
 
-    public abstract ConnectionArea getConnectors();
+    public abstract ConnectionArea getConnector();
 
     public abstract Vector2 getConnectorPlacement();
 
