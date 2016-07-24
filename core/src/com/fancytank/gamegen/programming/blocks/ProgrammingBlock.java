@@ -44,7 +44,7 @@ public class ProgrammingBlock extends Group {
         populateGroup();
     }
 
-    public ConnectionArea getOutputConnector() {
+    public ConnectionArea getFirstConnector() {
         return connectors.get(0);
     }
 
@@ -109,21 +109,22 @@ public class ProgrammingBlock extends Group {
                         ConnectionRules.tryConnect(localConnector, baseConnector);
     }
 
-    static void attachBlock(ConnectionArea attachingConnector, ConnectionArea baseConnector) {
+    static void attachBlock(ConnectionArea baseConnector, ConnectionArea attachingConnector) {
         ProgrammingBlock attachingBlock = getProgrammingBlock(attachingConnector);
         attachingBlock.setPosition(baseConnector.getX() - attachingConnector.getX(), baseConnector.getY() - attachingConnector.getY());
-        setDependencies(attachingConnector, baseConnector);
+        setDependencies(baseConnector, attachingConnector);
         sendConnectionEvent(baseConnector, attachingConnector, true);
     }
 
-    static private void setDependencies(ConnectionArea attachingConnector, ConnectionArea baseConnector) {
+    static private void setDependencies(ConnectionArea baseConnector, ConnectionArea attachingConnector) {
         ProgrammingBlock attachingBlock = getProgrammingBlock(attachingConnector), baseBlock = getProgrammingBlock(baseConnector);
         attachingBlock.attachedTo = baseBlock;
         baseBlock.addActor(attachingBlock);
         attachingConnector.connect(baseConnector);
-        BlockData descendantBlock = attachingBlock.coreBlock.data, parentBlock = baseBlock.coreBlock.data;
-        if (!baseConnector.hasInputType())
+        if (!baseConnector.hasInputType()) { // && !attachingConnector.hasInputType()
+            BlockData descendantBlock = attachingBlock.coreBlock.data, parentBlock = baseBlock.coreBlock.data;
             descendantBlock.setParent(parentBlock);
+        }
     }
 
     static private void sendConnectionEvent(ConnectionArea baseConnector, ConnectionArea dockingConnector, boolean isConnecting) {
@@ -132,14 +133,12 @@ public class ProgrammingBlock extends Group {
             event.setLast(true);
             EventBus.getDefault().post(event);
         }
-//        else
-//            EventBus.getDefault().post(new BlockConnectionEvent(baseConnector, dockingConnector, isConnecting));
         if (baseConnector.getInputType() != InputType.VARIABLE)
             sendConnectionEventUpward(baseConnector.coreBlock, isConnecting);
     }
 
     static private void sendConnectionEventUpward(CoreBlock block, boolean isConnecting) {
-        ConnectionArea outputConnector = block.getProgrammingBlock().getOutputConnector();
+        ConnectionArea outputConnector = block.getProgrammingBlock().getFirstConnector();
         if (outputConnector.hasConnection() && outputConnector.getConnection().getInputType() == InputType.SOCKET) {
             EventBus.getDefault().post(new BlockResizeEvent(outputConnector.getConnection(), outputConnector, isConnecting));
         }
@@ -171,7 +170,7 @@ public class ProgrammingBlock extends Group {
     }
 
     private void tryDisconnectOutput() {
-        ConnectionArea outputConnector = getOutputConnector();
+        ConnectionArea outputConnector = getFirstConnector();
         if (outputConnector.hasConnection()) {
             if (outputConnector.direction == Direction.UP && coreBlock.data.hasParent())
                 coreBlock.data.removeParent();
@@ -183,8 +182,6 @@ public class ProgrammingBlock extends Group {
 
     public void destroy() {
         blocksList.remove(this);
-        //  for (ConnectionArea connector : connectors)
-        // connector.remove();
         if (coreBlock.data.hasDescendant())
             coreBlock.data.getDescendant().getCoreBlock().getProgrammingBlock().destroy();
         for (InputFragment input : coreBlock.data.getInputs())

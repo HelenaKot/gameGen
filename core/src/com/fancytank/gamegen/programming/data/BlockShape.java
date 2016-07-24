@@ -23,4 +23,11 @@ public enum BlockShape implements Serializable {
     public boolean connects(Direction direction) {
         return connects[direction.ordinal()];
     }
+
+    public boolean enclosed() {
+        for (boolean connection : this.connects)
+            if (connection)
+                return false;
+        return true;
+    }
 }

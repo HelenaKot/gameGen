@@ -6,9 +6,10 @@ import com.fancytank.gamegen.programming.blocks.ConnectionRules;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.BlockShape;
+import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.data.VariableList;
-import com.fancytank.gamegen.programming.looks.ConnectionArea;
+import com.fancytank.gamegen.programming.looks.input.InputType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -35,7 +36,7 @@ public class Workspace {
                     VariableList.put(block.data.getValue(), block.data.getVariable());
                 MainGdx.addToStage(block.restore());
             }
-            reconnectAllConnectors();
+            reconnectAll();
         }
     }
 
@@ -80,11 +81,26 @@ public class Workspace {
         return new ProgrammingBlockSavedInstance(programmingBlock);
     }
 
-    private static void reconnectAllConnectors() {
+    private static void reconnectAll() {
         for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())
-            for (ConnectionArea connectionArea : programmingBlock.connectors)
-                if (connectionArea.hasInputFragment() && connectionArea.getInputFragment().connectedTo != null)
-                    ConnectionRules.tryConnect(connectionArea, connectionArea.getInputFragment().connectedTo.getCoreBlock().getProgrammingBlock().getOutputConnector());
+            if (programmingBlock.coreBlock.data.shape.enclosed())
+                reconnectBlock(programmingBlock.coreBlock.data);
+    }
+
+    private static void reconnectBlock(BlockData data) {
+        System.out.println("reconnecting block -- " + data.getInputs()[0].labelText);
+        for (InputFragment inputFragment : data.getInputs())
+            if (inputFragment.connectedTo != null && inputFragment.inputType != InputType.DUMMY)
+                reconnectInput(inputFragment);
+        if (data.hasDescendant())
+            reconnectBlock(data.getDescendant());
+    }
+
+    private static void reconnectInput(InputFragment inputFragment) {
+        System.out.println("reconnecting input" + inputFragment.labelText);
+        ConnectionRules.tryConnect(inputFragment.getConnectionArea(), inputFragment.connectedTo.getCoreBlock().getProgrammingBlock().getFirstConnector());
+        System.out.println("FUCK FROM" +inputFragment.labelText + " TO "+inputFragment.connectedTo.getCoreBlock().data.getInputs()[0].labelText);
+        reconnectBlock(inputFragment.connectedTo.getCoreBlock().data);
     }
 
 }

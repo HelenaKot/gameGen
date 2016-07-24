@@ -107,7 +107,7 @@ public class ConnectionArea extends Actor {
     }
 
     private boolean isOutputBlock() {
-        return this == coreBlock.programmingBlock.getOutputConnector();
+        return this == coreBlock.programmingBlock.getFirstConnector();
     }
 
     private void translateConnectedToInput() {

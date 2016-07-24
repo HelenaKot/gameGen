@@ -7,34 +7,35 @@ import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBloc
 
 public final class ConnectionRules {
 
-    public static void tryConnect(ConnectionArea connectFrom, ConnectionArea connectTo) {
-        if (isConnected(connectFrom, connectTo)) {
+    public static void tryConnect(ConnectionArea base, ConnectionArea attaching) {
+        if (isConnected(base, attaching)) {
             boolean shouldSwap = false;
-            if (isCorrectSignificanceOrder(connectFrom, connectTo))
+            if (!isCorrectSignificanceOrder(base, attaching))
                 shouldSwap = !shouldSwap;
-            if (isCorrectVerticalOrder(connectFrom, connectTo))
+            if (!isCorrectVerticalOrder(base, attaching))
                 shouldSwap = !shouldSwap;
 
             if (shouldSwap) {
-                ConnectionArea tmp = connectFrom;
-                connectFrom = connectTo;
-                connectTo = tmp;
+                ConnectionArea tmp = base;
+                base = attaching;
+                attaching = tmp;
             }
 
-            if (canConnect(connectFrom, connectTo))
-                ProgrammingBlock.attachBlock(connectFrom, connectTo);
+            if (canConnect(base, attaching))
+                ProgrammingBlock.attachBlock(base, attaching);
         }
     }
 
-    private static boolean isCorrectSignificanceOrder(ConnectionArea connectFrom, ConnectionArea connectTo) {
-        return getProgrammingBlock(connectFrom).getSignificance() > getProgrammingBlock(connectTo).getSignificance();
+    private static boolean isCorrectSignificanceOrder(ConnectionArea base, ConnectionArea attaching) {
+        return getProgrammingBlock(base).getSignificance() >= getProgrammingBlock(attaching).getSignificance();
     }
 
-    private static boolean isCorrectVerticalOrder(ConnectionArea connectFrom, ConnectionArea connectTo) {
-        return getProgrammingBlock(connectFrom).getSignificance() == getProgrammingBlock(connectTo).getSignificance() && connectFrom.direction == Direction.DOWN;
+    private static boolean isCorrectVerticalOrder(ConnectionArea base, ConnectionArea attaching) {
+        return getProgrammingBlock(base).getSignificance() != getProgrammingBlock(attaching).getSignificance()
+                || (base.direction == Direction.DOWN || base.direction == Direction.RIGHT);
     }
 
-    private static boolean canConnect(ConnectionArea connectFrom, ConnectionArea connectTo) {
+    private static boolean canConnect(ConnectionArea base, ConnectionArea attaching) {
         //// TODO: 2016-07-21
         return true;
     }
