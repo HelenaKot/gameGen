@@ -47,8 +47,24 @@ public class ExecutableProducer {
             case IF_STATEMENT:
                 return getIfStatement();
             default:
-                return null;
+                return getDefault();
         }
+    }
+
+    private Executable getDefault() {
+        return new Executable() {
+            Variable variable;
+
+            @Override
+            public void init(BaseActor blockInstance) {
+                variable = methodBlock.getVariable();
+            }
+
+            @Override
+            public boolean performAction() {
+                return Boolean.parseBoolean(variable.getValue());
+            }
+        };
     }
 
     private Executable getBlockSetter() {
@@ -123,6 +139,7 @@ public class ExecutableProducer {
         return new Executable() {
             Vector<Variable> vars;
             Compare statement;
+
             @Override
             public void init(BaseActor block) {
                 vars = collectVars();
@@ -133,28 +150,32 @@ public class ExecutableProducer {
                             public boolean compare(Variable var1, Variable var2) {
                                 return 0 > var1.compareTo(var2);
                             }
-                        }; break;
-                    case '=' :
+                        };
+                        break;
+                    case '=':
                         statement = new Compare() {
                             @Override
                             public boolean compare(Variable var1, Variable var2) {
                                 return 0 == var1.compareTo(var2);
                             }
-                        }; break;
-                    case '>' :
+                        };
+                        break;
+                    case '>':
                         statement = new Compare() {
                             @Override
                             public boolean compare(Variable var1, Variable var2) {
                                 return 0 < var1.compareTo(var2);
                             }
-                        }; break;
+                        };
+                        break;
                     default:
                         statement = new Compare() {
                             @Override
                             public boolean compare(Variable var1, Variable var2) {
                                 return false;
                             }
-                        }; break;
+                        };
+                        break;
                 }
             }
 
@@ -170,15 +191,32 @@ public class ExecutableProducer {
     }
 
     private Executable getIfStatement() {
-        LoopType ifStatement = new LoopType() {
+        return new Executable() {
+            Boolean doElse = false;
+            Executable condition, execution1, execution2;
+
             @Override
-            public void execute(Executable condition0, Executable execute0) {
-                if (condition0.performAction())
-                    execute0.performAction();
+            public void init(BaseActor blockInstance) {
+                condition = createSubBlock(methodBlock.getInputs()[0].connectedTo).getInstance();
+                condition.init(blockInstance);
+                execution1 = createSubBlock(methodBlock.getInputs()[1].connectedTo).getInstance();
+                execution1.init(blockInstance);
+                if (methodBlock.getInputs().length > 2) {
+                    execution2 = createSubBlock(methodBlock.getInputs()[3].connectedTo).getInstance();
+                    execution2.init(blockInstance);
+                    doElse = true;
+                }
+            }
+
+            @Override
+            public boolean performAction() {
+                if (condition.performAction())
+                    execution1.performAction();
+                else if (doElse)
+                    execution2.performAction();
+                return true;
             }
         };
-        setConditionProducer(methodBlock.getInputs()[0].connectedTo);
-        return getGenericLoop(conditionProducer, ifStatement);
     }
 
     private Executable getWhileStatement() {

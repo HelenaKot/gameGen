@@ -100,8 +100,15 @@ public class BlocksExpendableList {
         childItems.add(demoPatterns);
 
         BlockPatternHolder[] logicPatterns = {
-                new BlockPatternHolder(new BlockActorPattern("IF", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "if STATEMENT ").setExpectedValue(ValueType.BOOLEAN),
+                new BlockPatternHolder(new BlockActorPattern("if", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "if true, then").setExpectedValue(ValueType.BOOLEAN),
+                        new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
+                        .setExpectedMethod(MethodType.IF_STATEMENT), Color.YELLOW)),
+
+                new BlockPatternHolder(new BlockActorPattern("if else", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "if true, then").setExpectedValue(ValueType.BOOLEAN),
+                        new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD),
+                        new InputFragment(InputType.DUMMY, "else").setExpectedValue(ValueType.BOOLEAN),
                         new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
                         .setExpectedMethod(MethodType.IF_STATEMENT), Color.YELLOW)),
 
@@ -113,7 +120,7 @@ public class BlocksExpendableList {
                         BlockShape.VARIABLE).setExpectedMethod(MethodType.COMPARE_STATEMENT), Color.SKY), DialogSpawner.DIALOG_COMPARATOR),
 
                 new BlockPatternHolder(new BlockActorPattern("TRUE", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "true").setExpectedValue(ValueType.BOOLEAN)}, BlockShape.VARIABLE), Color.BLUE)), //todo
+                        new InputFragment(InputType.DUMMY, "true")}, BlockShape.VARIABLE), Color.BLUE).setValue("true", ValueType.BOOLEAN)), //todo
 
                 new BlockPatternHolder(new BlockActorPattern("FALSE", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "false")}, BlockShape.VARIABLE), Color.BLUE).setValue("false", ValueType.BOOLEAN)),
