@@ -40,7 +40,7 @@ public class Variable implements Serializable {
                 && (var1.valueType == ValueType.NUMBER || var1.valueType == ValueType.INT_NUMBER))
             return Float.compare(Float.parseFloat(value), Float.parseFloat(var1.value));
         else
-            return value.compareTo(var1.value);
+            return this.getValue().compareTo(var1.value);
     }
 
     public int getInt() {

@@ -13,6 +13,8 @@ import com.fancytank.gamegen.programming.data.Variable;
 import com.fancytank.gamegen.programming.data.VariableList;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class ExecutableProducer {
@@ -23,14 +25,41 @@ public class ExecutableProducer {
     MethodType methodType;
 
     private ExecutableProducer conditionProducer, executionProducer;
+    private ArrayList<ExecutableProducer> instructions;
 
     ExecutableProducer(BlockData methodBlock, ActionListenerType type) {
-        this.methodBlock = methodBlock;
+        initProducer(methodBlock);
         this.type = type;
+        if (methodBlock.hasDescendant()) {
+            ArrayList<BlockData> instructionBlocks = new ArrayList<BlockData>();
+            instructionBlocks.add(methodBlock);
+            createList(instructionBlocks, methodBlock);
+            for (BlockData block : instructionBlocks)
+                instructions.add(new ExecutableProducer(block));
+        }
+    }
+
+    private ExecutableProducer(BlockData methodBlock) {
+        initProducer(methodBlock);
+    }
+
+    private void initProducer(BlockData methodBlock) {
+        this.methodBlock = methodBlock;
         methodType = methodBlock.getExpectedMethod();
+        instructions = new ArrayList<ExecutableProducer>();
+    }
+
+    private void createList(List<BlockData> list, BlockData blockParent) {
+        list.add(blockParent);
+        if (blockParent.hasDescendant())
+            createList(list, blockParent.getDescendant());
     }
 
     public Executable getInstance() {
+        return (instructions.size() > 1) ? getAggregatedExecutables() : getLocalExecutable();
+    }
+
+    private Executable getLocalExecutable() {
         switch (methodType) {
             case BLOCK_SETTER:
                 return getBlockSetter();
@@ -49,6 +78,28 @@ public class ExecutableProducer {
             default:
                 return getDefault();
         }
+    }
+
+    private Executable getAggregatedExecutables() {
+        return new Executable() {
+            Executable[] executableInstance;
+
+            @Override
+            public void init(BaseActor block) {
+                executableInstance = new Executable[instructions.size()];
+                for (int i = 0; i < instructions.size(); i++) {
+                    executableInstance[i] = instructions.get(i).getInstance();
+                    executableInstance[i].init(block);
+                }
+            }
+
+            @Override
+            public boolean performAction() {
+                for (Executable executable : executableInstance)
+                    executable.performAction();
+                return true;
+            }
+        };
     }
 
     private Executable getDefault() {

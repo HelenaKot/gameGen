@@ -43,8 +43,6 @@ public class ScriptLoader {
                 ActorInitializer.addActionListener(classNameInput.connectedTo.getValue(), executableProducer);
             else
                 System.out.println("Class " + classNameInput.connectedTo.getValue() + " have unparseable executable.");
-            if (executableBlock.hasDescendant())
-                createActionListener(classNameInput, executableBlock.getDescendant());
         }
     }
 
