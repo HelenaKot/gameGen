@@ -3,33 +3,28 @@ package com.fancytank.gamegen.game.script;
 import com.fancytank.gamegen.game.actor.BaseActor;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.MethodType;
-import com.fancytank.gamegen.programming.data.Variable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.fancytank.gamegen.game.script.Util.createSubBlock;
-
 public class ExecutableProducer {
     enum ActionListenerType {ON_PRESS, ON_RELEASE, ON_HOLD, TICK, NONE} //todo not used yet
+
+    enum ProducerTag {CONDITION_PRODUCER, EXECUTION_PRODUCER, SECONDARY_PRODUCER}
 
     BlockData methodBlock;
     ActionListenerType type;
     MethodType methodType;
+    boolean producersInited = false;
 
-    ExecutableProducer conditionProducer, executionProducer;
+    private ExecutableProducer[] producers;
     private ArrayList<ExecutableProducer> instructions;
 
     ExecutableProducer(BlockData methodBlock, ActionListenerType type) {
         initProducer(methodBlock);
         this.type = type;
-        if (methodBlock.hasDescendant()) {
-            ArrayList<BlockData> instructionBlocks = new ArrayList<BlockData>();
-            instructionBlocks.add(methodBlock);
-            createList(instructionBlocks, methodBlock);
-            for (BlockData block : instructionBlocks)
-                instructions.add(new ExecutableProducer(block));
-        }
+        if (methodBlock.hasDescendant())
+            collectDescendants();
     }
 
     private ExecutableProducer(BlockData methodBlock) {
@@ -40,6 +35,15 @@ public class ExecutableProducer {
         this.methodBlock = methodBlock;
         methodType = methodBlock.getExpectedMethod();
         instructions = new ArrayList<ExecutableProducer>();
+        producers = new ExecutableProducer[ProducerTag.values().length];
+    }
+
+    private void collectDescendants() {
+        ArrayList<BlockData> instructionBlocks = new ArrayList<BlockData>();
+        instructionBlocks.add(methodBlock);
+        createList(instructionBlocks, methodBlock);
+        for (BlockData block : instructionBlocks)
+            instructions.add(new ExecutableProducer(block));
     }
 
     private void createList(List<BlockData> list, BlockData blockParent) {
@@ -63,13 +67,13 @@ public class ExecutableProducer {
             case COMPARE_STATEMENT:
                 return new CompareStatement(this.methodBlock);
             case LOOP_WHILE:
-                return getWhileStatement();
+                return Loop.whileStatement(this);
             case LOOP_FOR:
-                return getForStatement();
+                return Loop.forStatement(this);
             case IF_STATEMENT:
-                return new IfStatement(this.methodBlock);
+                return new IfStatement(this);
             default:
-                return getDefault();
+                return new DefaultExecutable(this.methodBlock);
         }
     }
 
@@ -95,90 +99,12 @@ public class ExecutableProducer {
         };
     }
 
-    private Executable getDefault() {
-        return new Executable() {
-            Variable variable;
-
-            @Override
-            public void init(BaseActor blockInstance) {
-                variable = methodBlock.getVariable();
-            }
-
-            @Override
-            public boolean performAction() {
-                return Boolean.parseBoolean(variable.getValue());
-            }
-        };
+    void putProducer(ExecutableProducer producer, ProducerTag tag) {
+        producers[tag.ordinal()] = producer;
+        producersInited = true;
     }
 
-    private Executable getWhileStatement() {
-        LoopType whileLoop = new LoopType() {
-            public void execute(Executable condition, Executable execute) {
-                while (condition.performAction())
-                    execute.performAction();
-            }
-        };
-        setConditionProducer(methodBlock.getInputs()[0].connectedTo);
-        return new DefaultLoop(conditionProducer, whileLoop);
-    }
-
-    private Executable getForStatement() {
-        String value;
-        if (methodBlock.hasValue()) {
-            value = methodBlock.getValue();
-            return getForTimes(Integer.parseInt(value));
-            //todo dla listy
-        }
-        return null;
-    }
-
-    private Executable getForTimes(final int numericValue) {
-        LoopType forLoop = new LoopType() {
-            public void execute(Executable condition, Executable execute) {
-                for (int i = 0; i < numericValue; i++) {
-                    execute.performAction();
-                }
-            }
-        };
-        return new DefaultLoop(null, forLoop);
-    }
-
-    private void setConditionProducer(BlockData methodBlock) {
-        if (conditionProducer == null)
-            conditionProducer = createSubBlock(methodBlock);
-    }
-
-    private interface LoopType {
-        void execute(final Executable condition0, final Executable execute0);
-    }
-
-    private class DefaultLoop implements Executable {
-        private final ExecutableProducer conditionProducer;
-        private final LoopType loop;
-        Executable condition;
-        Executable execute;
-
-        public DefaultLoop(ExecutableProducer conditionProducer, LoopType loop) {
-            this.conditionProducer = conditionProducer;
-            this.loop = loop;
-        }
-
-        @Override
-        public void init(BaseActor block) {
-            if (executionProducer == null)
-                executionProducer = createSubBlock(methodBlock.getInputs()[1].connectedTo);
-            execute = executionProducer.getInstance();
-            execute.init(block);
-            if (conditionProducer != null) {
-                condition = conditionProducer.getInstance();
-                condition.init(block);
-            }
-        }
-
-        @Override
-        public boolean performAction() {
-            loop.execute(condition, execute);
-            return true;
-        }
+    ExecutableProducer getProducer(ProducerTag tag) {
+        return producers[tag.ordinal()];
     }
 }

@@ -1,25 +1,35 @@
 package com.fancytank.gamegen.game.script;
 
 import com.fancytank.gamegen.game.actor.BaseActor;
-import com.fancytank.gamegen.programming.data.BlockData;
+
+import static com.fancytank.gamegen.game.script.ExecutableProducer.ProducerTag;
 
 class IfStatement implements Executable {
-    private BlockData blockData;
+    private ExecutableProducer producer;
     Boolean doElse = false;
     Executable condition, execution1, execution2;
 
-    public IfStatement(BlockData blockData) {
-        this.blockData = blockData;
+    public IfStatement(ExecutableProducer producer) {
+        this.producer = producer;
+        if (!producer.producersInited)
+            initProducers();
+    }
+
+    private void initProducers() {
+        producer.putProducer(Util.createSubBlock(producer.methodBlock.getInputs()[0].connectedTo), ProducerTag.CONDITION_PRODUCER);
+        producer.putProducer(Util.createSubBlock(producer.methodBlock.getInputs()[1].connectedTo), ProducerTag.EXECUTION_PRODUCER);
+        if (producer.methodBlock.getInputs().length > 2)
+            producer.putProducer(Util.createSubBlock(producer.methodBlock.getInputs()[3].connectedTo), ProducerTag.SECONDARY_PRODUCER);
     }
 
     @Override
     public void init(BaseActor blockInstance) {
-        condition = Util.createSubBlock(blockData.getInputs()[0].connectedTo).getInstance();
+        condition = producer.getProducer(ProducerTag.CONDITION_PRODUCER).getInstance();
         condition.init(blockInstance);
-        execution1 = Util.createSubBlock(blockData.getInputs()[1].connectedTo).getInstance();
+        execution1 = producer.getProducer(ProducerTag.EXECUTION_PRODUCER).getInstance();
         execution1.init(blockInstance);
-        if (blockData.getInputs().length > 2) {
-            execution2 = Util.createSubBlock(blockData.getInputs()[3].connectedTo).getInstance();
+        if (producer.methodBlock.getInputs().length > 2) {
+            execution2 = producer.getProducer(ProducerTag.SECONDARY_PRODUCER).getInstance();
             execution2.init(blockInstance);
             doElse = true;
         }
