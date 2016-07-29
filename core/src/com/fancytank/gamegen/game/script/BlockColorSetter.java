@@ -11,7 +11,6 @@ import java.util.Vector;
 class BlockColorSetter implements Executable {
     private BlockData blockData;
     BaseActor blockInstance;
-    Vector<Variable> vars;
     Variable color;
 
     BlockColorSetter(BlockData blockData) {
@@ -21,7 +20,7 @@ class BlockColorSetter implements Executable {
     @Override
     public void init(BaseActor blockInstance) {
         this.blockInstance = blockInstance;
-        vars = Util.collectVars(blockData);
+        Vector<Variable> vars = Util.collectVars(blockData);
         color = vars.get(0);
     }
 

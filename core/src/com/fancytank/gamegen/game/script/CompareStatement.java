@@ -8,7 +8,7 @@ import java.util.Vector;
 
 class CompareStatement implements Executable {
     private BlockData blockData;
-    Vector<Variable> vars;
+    Variable var0, var1;
     Compare statement;
 
     public CompareStatement(BlockData blockData) {
@@ -17,7 +17,9 @@ class CompareStatement implements Executable {
 
     @Override
     public void init(BaseActor block) {
-        vars = Util.collectVars(blockData);
+        Vector<Variable> vars = Util.collectVars(blockData);
+        var0 = vars.get(0);
+        var1 = vars.get(1);
         switch (blockData.getValue().charAt(0)) {
             case '<':
                 statement = new Compare() {
@@ -56,10 +58,10 @@ class CompareStatement implements Executable {
 
     @Override
     public boolean performAction() {
-        return statement.compare(vars.get(0), vars.get(1));
+        return statement.compare(var0, var1);
     }
 
     private interface Compare {
-        boolean compare(Variable var1, Variable var2);
+        boolean compare(Variable var0, Variable var1);
     }
 }

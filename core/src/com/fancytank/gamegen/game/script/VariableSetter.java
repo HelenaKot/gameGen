@@ -17,9 +17,8 @@ class VariableSetter implements Executable {
     @Override
     public void init(BaseActor blockInstance) {
         variableToSet = blockData.getVariable();
-        BlockData connectedTo = blockData.getInputs()[0].connectedTo;
-        if (connectedTo != null)
-            newValue = connectedTo.getVariable();
+        if (blockData.getInputs()[0].connectedTo != null)
+            newValue = Util.collectVars(blockData).get(0);
     }
 
     @Override
