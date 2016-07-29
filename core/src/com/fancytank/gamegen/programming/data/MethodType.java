@@ -6,7 +6,6 @@ public enum MethodType implements Serializable {
     BLOCK_SETTER,
     COLOR_SETTER,
     VARIABLE_SETTER,
-    LOGIC_STATEMENT,
     COMPARE_STATEMENT,
     LOOP_WHILE,
     LOOP_FOR,

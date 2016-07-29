@@ -12,6 +12,7 @@ import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.data.MethodType;
 import com.fancytank.gamegen.programming.data.ValueType;
+import com.fancytank.gamegen.programming.data.Variable;
 import com.fancytank.gamegen.programming.dialog.DialogSpawner;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
@@ -58,6 +59,7 @@ public class BlocksExpendableList {
         parentItems.add("Demo");
         parentItems.add("Logic");
         parentItems.add("Variables");
+        parentItems.add("Getters");
     }
 
     private void setChildData() {
@@ -66,6 +68,11 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "when this object is PRESSED").setExpectedValue(ValueType.CLASS_NAME),
                         new InputFragment(InputType.DUMMY, "do"),
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET").setExpectedValue(ValueType.METHOD)}, BlockShape.ACTION_LISTENER), Color.PURPLE)),
+
+                new BlockPatternHolder(new BlockActorPattern("on time", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "Trigger on this amount of ticks").setExpectedValue(ValueType.INT_NUMBER),
+                        new InputFragment(InputType.VARIABLE, "for class").setExpectedValue(ValueType.CLASS_NAME),
+                        new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET").setExpectedValue(ValueType.METHOD)}, BlockShape.TIMER), Color.PURPLE)),
 
                 new BlockPatternHolder(new BlockActorPattern("empty space", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE), Color.SKY).setValue("empty", ValueType.CLASS_NAME)),
@@ -77,10 +84,6 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "vertically").setExpectedValue(ValueType.INT_NUMBER),
                         new InputFragment(InputType.VARIABLE, "horizontally").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
 */
-
-                new BlockPatternHolder(new BlockActorPattern("NUMBER", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "0")}, BlockShape.VARIABLE), Color.SKY), DialogSpawner.DIALOG_NUMBER),
-
                 new BlockPatternHolder(new BlockActorPattern("spawn object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "spawn new").setExpectedValue(ValueType.CLASS_NAME),
                         new InputFragment(InputType.DUMMY, ""),
@@ -89,10 +92,6 @@ public class BlocksExpendableList {
 
                 new BlockPatternHolder(new BlockActorPattern("change color", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
-
-                new BlockPatternHolder(new BlockActorPattern("COLOR", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "#eeeeee")}, BlockShape.VARIABLE), Color.ORANGE), DialogSpawner.DIALOG_COLOR),
-
 /*
                 new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.LAST_METHOD), Color.RED),*/
@@ -112,32 +111,51 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "if body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
                         .setExpectedMethod(MethodType.IF_STATEMENT), Color.YELLOW)),
 
-                new BlockPatternHolder(new BlockActorPattern("LOOP", null, Color.YELLOW), DialogSpawner.DIALOG_LOOP),
+                new BlockPatternHolder(new BlockActorPattern("loop", null, Color.YELLOW), DialogSpawner.DIALOG_LOOP),
 
-                new BlockPatternHolder(new BlockActorPattern("COMPARE", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("compare", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "compare").setExpectedValue(ValueType.ANY),
                         new InputFragment(InputType.VARIABLE, " ").setExpectedValue(ValueType.ANY)},
                         BlockShape.VARIABLE).setExpectedMethod(MethodType.COMPARE_STATEMENT), Color.SKY), DialogSpawner.DIALOG_COMPARATOR),
 
                 new BlockPatternHolder(new BlockActorPattern("TRUE", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "true")}, BlockShape.VARIABLE), Color.BLUE).setValue("true", ValueType.BOOLEAN)), //todo
+                        new InputFragment(InputType.DUMMY, "true")}, BlockShape.VARIABLE), Color.BLUE).setValue("true", ValueType.BOOLEAN)),
 
                 new BlockPatternHolder(new BlockActorPattern("FALSE", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "false")}, BlockShape.VARIABLE), Color.BLUE).setValue("false", ValueType.BOOLEAN)),
+
+                new BlockPatternHolder(new BlockActorPattern("+", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "+").setExpectedValue(ValueType.NUMBER),
+                        new InputFragment(InputType.VARIABLE, " ").setExpectedValue(ValueType.NUMBER)},
+                        BlockShape.VARIABLE).setVariable(new Variable ("0", ValueType.SUM)), Color.SKY)),
 
         };
         childItems.add(logicPatterns);
 
         BlockPatternHolder[] variablesPatterns = {
-                new BlockPatternHolder(new BlockActorPattern("NEW VARIABLE", new BlockData(new InputFragment[]{
+                new BlockPatternHolder(new BlockActorPattern("new variable", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "var")}, BlockShape.VARIABLE_DECLARATION), Color.PINK), DialogSpawner.DIALOG_INIT_VAR),
                 new BlockPatternHolder(new BlockActorPattern("get variable", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "get var")}, BlockShape.VARIABLE), Color.PINK), DialogSpawner.DIALOG_GET_VAR),
                 new BlockPatternHolder(new BlockActorPattern("update variable", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.VARIABLE, "update var")}, BlockShape.CHAIN_METHOD)
-                        .setExpectedMethod(MethodType.VARIABLE_SETTER), Color.PINK), DialogSpawner.DIALOG_SET_VAR)
+                        new InputFragment(InputType.VARIABLE, "set variable")}, BlockShape.CHAIN_METHOD)
+                        .setExpectedMethod(MethodType.VARIABLE_SETTER), Color.PINK), DialogSpawner.DIALOG_SET_VAR),
+                new BlockPatternHolder(new BlockActorPattern("number [const]", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "0")}, BlockShape.VARIABLE), Color.SKY), DialogSpawner.DIALOG_NUMBER),
+                new BlockPatternHolder(new BlockActorPattern("color [const]", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "#eeeeee")}, BlockShape.VARIABLE), Color.ORANGE), DialogSpawner.DIALOG_COLOR),
         };
         childItems.add(variablesPatterns);
+
+        BlockPatternHolder[] getterPatterns = {
+                new BlockPatternHolder(new BlockActorPattern("get color", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "get color")}, BlockShape.VARIABLE).setVariable(new Variable(ValueType.COLOR.toString(), ValueType.GETTER)), Color.PINK)),
+                new BlockPatternHolder(new BlockActorPattern("get x", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "get x")}, BlockShape.VARIABLE).setVariable(new Variable("aa", ValueType.GETTER)), Color.PINK)),
+                new BlockPatternHolder(new BlockActorPattern("get y", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "get y")}, BlockShape.VARIABLE).setVariable(new Variable("aa", ValueType.GETTER)), Color.PINK)),
+        };
+        childItems.add(getterPatterns);
 
         BlockActorPattern[] loopsPatterns = {
                 new BlockActorPattern("LOOP1", new BlockData(new InputFragment[]{
@@ -146,7 +164,7 @@ public class BlocksExpendableList {
                         .setExpectedMethod(MethodType.LOOP_WHILE), Color.YELLOW),
                 new BlockActorPattern("LOOP2", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "loop for each").setExpectedValue(ValueType.ANY),
-                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD) //TODO foreach
                         .setExpectedMethod(MethodType.LOOP_FOR), Color.YELLOW),
                 new BlockActorPattern("LOOP3", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "loop N times"),

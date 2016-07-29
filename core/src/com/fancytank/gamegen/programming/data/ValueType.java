@@ -11,7 +11,9 @@ public enum ValueType implements Serializable {
     INT_NUMBER(),
     CLASS_NAME(MethodType.BLOCK_SETTER),
     METHOD(),
-    VARIABLE();
+    VARIABLE(),
+    GETTER(),
+    SUM();
 
     private static final long serialVersionUID = 1233613063064496950L;
     MethodType expectedMethod;

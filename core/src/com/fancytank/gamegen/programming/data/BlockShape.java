@@ -5,6 +5,7 @@ import com.fancytank.gamegen.programming.Direction;
 import java.io.Serializable;
 
 public enum BlockShape implements Serializable {
+    TIMER(10, new boolean[]{false, false, false}),
     ACTION_LISTENER(10, new boolean[]{false, false, false}),
     CHAIN_METHOD(5, new boolean[]{true, false, true}),
     LAST_METHOD(5, new boolean[]{true, false, false}),
