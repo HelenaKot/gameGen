@@ -21,4 +21,9 @@ class DefaultExecutable implements Executable {
     public boolean performAction() {
         return Boolean.parseBoolean(variable.getValue());
     }
+
+    @Override
+    public String performActionForResults() {
+        return variable.getValue();
+    }
 }

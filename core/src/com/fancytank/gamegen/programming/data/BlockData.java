@@ -96,9 +96,7 @@ public class BlockData implements Serializable {
     }
 
     private MethodType getExpectedInputMethod() {
-        for (InputFragment input : inputs)
-            return input.getExpectedMethod();
-        return null;
+        return (inputs[0].getExpectedMethod() != null) ? inputs[0].getExpectedMethod() : MethodType.UNSPECIFIED;
     }
 
     @Override

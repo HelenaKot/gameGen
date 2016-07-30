@@ -11,7 +11,8 @@ public enum MethodType implements Serializable {
     LOOP_FOR,
     IF_STATEMENT,
     GETTER,
-    SUM;
+    SUM,
+    UNSPECIFIED;
 
     private static final long serialVersionUID = 1233613063064496934L;
 }

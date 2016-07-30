@@ -5,19 +5,20 @@ import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.MethodType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ExecutableProducer {
     enum ActionListenerType {ON_PRESS, ON_RELEASE, ON_HOLD, TICK, NONE} //todo not used yet
 
-    enum ProducerTag {CONDITION_PRODUCER, EXECUTION_PRODUCER, SECONDARY_PRODUCER}
+    enum ProducerTag {CONDITION_PRODUCER, EXECUTION_PRODUCER, SECONDARY_PRODUCER, VALUE0, VALUE1, VALUE2}
 
     BlockData methodBlock;
     ActionListenerType type;
     MethodType methodType;
     boolean producersInited = false;
 
-    private ExecutableProducer[] producers;
+    private HashMap<ProducerTag, ExecutableProducer> producers;
     private ArrayList<ExecutableProducer> instructions;
 
     ExecutableProducer(BlockData methodBlock, ActionListenerType type) {
@@ -34,8 +35,8 @@ public class ExecutableProducer {
     private void initProducer(BlockData methodBlock) {
         this.methodBlock = methodBlock;
         methodType = methodBlock.getExpectedMethod();
-        instructions = new ArrayList<ExecutableProducer>();
-        producers = new ExecutableProducer[ProducerTag.values().length];
+        instructions = new ArrayList<>();
+        producers = new HashMap<>();
     }
 
     private void collectDescendants() {
@@ -61,7 +62,7 @@ public class ExecutableProducer {
             case BLOCK_SETTER:
                 return new BlockSetter(this.methodBlock);
             case COLOR_SETTER:
-                return new BlockColorSetter(this.methodBlock);
+                return new BlockColorSetter(this);
             case VARIABLE_SETTER:
                 return new VariableSetter(this.methodBlock);
             case COMPARE_STATEMENT:
@@ -72,6 +73,10 @@ public class ExecutableProducer {
                 return Loop.forStatement(this);
             case IF_STATEMENT:
                 return new IfStatement(this);
+            case GETTER:
+
+            case SUM:
+
             default:
                 return new DefaultExecutable(this.methodBlock);
         }
@@ -100,11 +105,11 @@ public class ExecutableProducer {
     }
 
     void putProducer(ExecutableProducer producer, ProducerTag tag) {
-        producers[tag.ordinal()] = producer;
+        producers.put(tag, producer);
         producersInited = true;
     }
 
     ExecutableProducer getProducer(ProducerTag tag) {
-        return producers[tag.ordinal()];
+        return producers.get(tag);
     }
 }
