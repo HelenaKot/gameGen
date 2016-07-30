@@ -12,7 +12,6 @@ import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.data.MethodType;
 import com.fancytank.gamegen.programming.data.ValueType;
-import com.fancytank.gamegen.programming.data.Variable;
 import com.fancytank.gamegen.programming.dialog.DialogSpawner;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
@@ -127,7 +126,7 @@ public class BlocksExpendableList {
                 new BlockPatternHolder(new BlockActorPattern("+", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "+").setExpectedValue(ValueType.NUMBER),
                         new InputFragment(InputType.VARIABLE, " ").setExpectedValue(ValueType.NUMBER)},
-                        BlockShape.VARIABLE).setVariable(new Variable ("0", ValueType.SUM)), Color.SKY)),
+                        BlockShape.VARIABLE).setExpectedMethod(MethodType.SUM), Color.SKY)),
 
         };
         childItems.add(logicPatterns);
@@ -149,11 +148,11 @@ public class BlocksExpendableList {
 
         BlockPatternHolder[] getterPatterns = {
                 new BlockPatternHolder(new BlockActorPattern("get color", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "get color")}, BlockShape.VARIABLE).setVariable(new Variable(ValueType.COLOR.toString(), ValueType.GETTER)), Color.PINK)),
+                        new InputFragment(InputType.DUMMY, "get color")}, BlockShape.VARIABLE).setExpectedMethod(MethodType.GETTER), Color.PINK).setValue("c", ValueType.COLOR)),
                 new BlockPatternHolder(new BlockActorPattern("get x", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "get x")}, BlockShape.VARIABLE).setVariable(new Variable("aa", ValueType.GETTER)), Color.PINK)),
+                        new InputFragment(InputType.DUMMY, "get x")}, BlockShape.VARIABLE).setExpectedMethod(MethodType.GETTER), Color.PINK).setValue("x", ValueType.INT_NUMBER)),
                 new BlockPatternHolder(new BlockActorPattern("get y", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "get y")}, BlockShape.VARIABLE).setVariable(new Variable("aa", ValueType.GETTER)), Color.PINK)),
+                        new InputFragment(InputType.DUMMY, "get y")}, BlockShape.VARIABLE).setExpectedMethod(MethodType.GETTER), Color.PINK).setValue("y", ValueType.INT_NUMBER)),
         };
         childItems.add(getterPatterns);
 

@@ -45,6 +45,7 @@ public class DialogVariables {
             public void onClick(DialogInterface dialog, int which) {
                 Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
                 pattern.setValue(selectedVariable);
+                pattern.setLabel(varSpinner.getSelectedItem().toString());
                 pattern.spawn();
             }
         });
@@ -59,7 +60,7 @@ public class DialogVariables {
             public void onClick(DialogInterface dialog, int which) {
                 Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
                 pattern.setValue(selectedVariable);
-                pattern.setLabel(selectedVariable.getValue() + " =");
+                pattern.setLabel(varSpinner.getSelectedItem() + " =");
                 pattern.spawn();
             }
         });
