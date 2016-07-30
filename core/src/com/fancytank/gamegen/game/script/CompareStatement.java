@@ -22,36 +22,16 @@ class CompareStatement implements Executable {
         var1 = vars.get(1);
         switch (blockData.getValue().charAt(0)) {
             case '<':
-                statement = new Compare() {
-                    @Override
-                    public boolean compare(Variable var1, Variable var2) {
-                        return 0 > var1.compareTo(var2);
-                    }
-                };
+                statement = (var1, var2) -> 0 > var1.compareTo(var2);
                 break;
             case '=':
-                statement = new Compare() {
-                    @Override
-                    public boolean compare(Variable var1, Variable var2) {
-                        return 0 == var1.compareTo(var2);
-                    }
-                };
+                statement = (var1, var2) -> 0 == var1.compareTo(var2);
                 break;
             case '>':
-                statement = new Compare() {
-                    @Override
-                    public boolean compare(Variable var1, Variable var2) {
-                        return 0 < var1.compareTo(var2);
-                    }
-                };
+                statement = (var1, var2) -> 0 < var1.compareTo(var2);
                 break;
             default:
-                statement = new Compare() {
-                    @Override
-                    public boolean compare(Variable var1, Variable var2) {
-                        return false;
-                    }
-                };
+                statement = (var1, var2) -> false;
                 break;
         }
     }
