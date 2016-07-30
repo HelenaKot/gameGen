@@ -35,14 +35,6 @@ public class Variable implements Serializable {
             VariableList.put(this.value, value, ValueType.ANY);
     }
 
-    public int compareTo(Variable var1) {
-        if ((valueType == ValueType.NUMBER || valueType == ValueType.INT_NUMBER)
-                && (var1.valueType == ValueType.NUMBER || var1.valueType == ValueType.INT_NUMBER))
-            return Float.compare(Float.parseFloat(value), Float.parseFloat(var1.value));
-        else
-            return this.getValue().compareTo(var1.value);
-    }
-
     public int getInt() {
         return Integer.parseInt(getValue());
     }

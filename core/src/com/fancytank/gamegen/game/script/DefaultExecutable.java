@@ -23,7 +23,7 @@ class DefaultExecutable implements Executable {
     }
 
     @Override
-    public String performActionForResults() {
-        return variable.getValue();
+    public Variable performActionForResults() {
+        return variable;
     }
 }

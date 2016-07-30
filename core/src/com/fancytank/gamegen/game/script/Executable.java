@@ -1,13 +1,15 @@
 package com.fancytank.gamegen.game.script;
 
 import com.fancytank.gamegen.game.actor.BaseActor;
+import com.fancytank.gamegen.programming.data.ValueType;
+import com.fancytank.gamegen.programming.data.Variable;
 
 public interface Executable {
     void init(BaseActor block);
 
     boolean performAction();
 
-    default String performActionForResults() {
-        return String.valueOf(performAction());
+    default Variable performActionForResults() {
+        return new Variable(String.valueOf(performAction()), ValueType.BOOLEAN);
     }
 }

@@ -3,33 +3,38 @@ package com.fancytank.gamegen.game.script;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.BaseActor;
 import com.fancytank.gamegen.game.map.MapManager;
-import com.fancytank.gamegen.programming.data.BlockData;
-import com.fancytank.gamegen.programming.data.Variable;
 
-import java.util.Vector;
+import static com.fancytank.gamegen.game.script.ExecutableProducer.ProducerTag;
+import static com.fancytank.gamegen.game.script.Util.createSubBlock;
+import static com.fancytank.gamegen.game.script.Util.initFromProducer;
 
 class BlockSetter implements Executable {
-    private BlockData blockData;
+    private ExecutableProducer producer;
     BaseActor blockInstance;
-    Variable blockClassName;
-    Variable blockX, blockY;
+    Executable blockClassName, blockX, blockY;
 
-    public BlockSetter(BlockData blockData) {
-        this.blockData = blockData;
+    public BlockSetter(ExecutableProducer producer) {
+        this.producer = producer;
+        if (!producer.producersInited) {
+            producer.putProducer(createSubBlock(producer.methodBlock.getInputs()[0].connectedTo), ProducerTag.VALUE0);
+            producer.putProducer(createSubBlock(producer.methodBlock.getInputs()[2].connectedTo), ProducerTag.VALUE1);
+            producer.putProducer(createSubBlock(producer.methodBlock.getInputs()[3].connectedTo), ProducerTag.VALUE2);
+        }
     }
 
     @Override
     public void init(BaseActor blockInstance) {
         this.blockInstance = blockInstance;
-        Vector<Variable> vars = Util.collectVars(blockData);
-        blockClassName = vars.get(0);
-        blockX = vars.get(1);
-        blockY = vars.get(2);
+        blockClassName = initFromProducer(producer.getProducer(ProducerTag.VALUE0), blockInstance);
+        blockX = initFromProducer(producer.getProducer(ProducerTag.VALUE1), blockInstance);
+        blockY = initFromProducer(producer.getProducer(ProducerTag.VALUE2), blockInstance);
     }
 
     @Override
     public boolean performAction() {
-        MapManager.changeBlock(ActorInitializer.getInstanceOf(blockClassName.getValue(), blockInstance.x + blockX.getInt(), blockInstance.y + blockY.getInt()));
+        MapManager.changeBlock(ActorInitializer.getInstanceOf(blockClassName.performActionForResults().getValue(),
+                blockInstance.x + Integer.parseInt(blockX.performActionForResults().getValue()),
+                blockInstance.y + Integer.parseInt(blockY.performActionForResults().getValue())));
         return true;
     }
 }

@@ -1,29 +1,33 @@
 package com.fancytank.gamegen.game.script;
 
 import com.fancytank.gamegen.game.actor.BaseActor;
-import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.Variable;
 import com.fancytank.gamegen.programming.data.VariableList;
 
-class VariableSetter implements Executable {
-    private BlockData blockData;
-    Variable variableToSet;
-    Variable newValue;
+import static com.fancytank.gamegen.game.script.Util.createSubBlock;
+import static com.fancytank.gamegen.game.script.Util.initFromProducer;
 
-    public VariableSetter(BlockData blockData) {
-        this.blockData = blockData;
+class VariableSetter implements Executable {
+    private ExecutableProducer producer;
+    Variable variableToSet;
+    Executable newValue;
+
+    public VariableSetter(ExecutableProducer producer) {
+        this.producer = producer;
+        if (!producer.producersInited) {
+            producer.putProducer(createSubBlock(producer.methodBlock.getInputs()[0].connectedTo), ExecutableProducer.ProducerTag.VALUE0);
+        }
     }
 
     @Override
     public void init(BaseActor blockInstance) {
-        variableToSet = blockData.getVariable();
-        if (blockData.getInputs()[0].connectedTo != null)
-            newValue = Util.collectVars(blockData).get(0);
+        variableToSet = producer.methodBlock.getVariable();
+        newValue = initFromProducer(producer.getProducer(ExecutableProducer.ProducerTag.VALUE0), blockInstance);
     }
 
     @Override
     public boolean performAction() {
-        VariableList.put(variableToSet.getDirectValue(), newValue);
+        VariableList.put(variableToSet.getDirectValue(), newValue.performActionForResults());
         return true;
     }
 }

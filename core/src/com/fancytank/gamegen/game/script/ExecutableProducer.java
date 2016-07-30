@@ -60,13 +60,13 @@ public class ExecutableProducer {
     private Executable getLocalExecutable() {
         switch (methodType) {
             case BLOCK_SETTER:
-                return new BlockSetter(this.methodBlock);
+                return new BlockSetter(this);
             case COLOR_SETTER:
                 return new BlockColorSetter(this);
             case VARIABLE_SETTER:
-                return new VariableSetter(this.methodBlock);
+                return new VariableSetter(this);
             case COMPARE_STATEMENT:
-                return new CompareStatement(this.methodBlock);
+                return new CompareStatement(this);
             case LOOP_WHILE:
                 return Loop.whileStatement(this);
             case LOOP_FOR:

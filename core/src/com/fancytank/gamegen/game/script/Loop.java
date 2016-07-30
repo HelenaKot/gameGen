@@ -6,11 +6,9 @@ import static com.fancytank.gamegen.game.script.Util.createSubBlock;
 
 public class Loop {
     static Executable whileStatement(ExecutableProducer producer) {
-        LoopType whileLoop = new LoopType() {
-            public void execute(Executable condition, Executable execute) {
-                while (condition.performAction())
-                    execute.performAction();
-            }
+        LoopType whileLoop = (Executable condition, Executable execute) -> {
+            while (condition.performAction())
+                execute.performAction();
         };
         if (producer.getProducer(ProducerTag.CONDITION_PRODUCER) == null)
             producer.putProducer(createSubBlock(producer.methodBlock.getInputs()[0].connectedTo), ProducerTag.CONDITION_PRODUCER);
@@ -28,11 +26,9 @@ public class Loop {
     }
 
     static Executable getForTimes(ExecutableProducer producer, final int numericValue) {
-        LoopType forLoop = new LoopType() {
-            public void execute(Executable condition, Executable execute) {
-                for (int i = 0; i < numericValue; i++) {
-                    execute.performAction();
-                }
+        LoopType forLoop = (Executable condition, Executable execute) -> {
+            for (int i = 0; i < numericValue; i++) {
+                execute.performAction();
             }
         };
         return new DefaultLoop(producer, null, forLoop);

@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.game.script;
 
+import com.fancytank.gamegen.game.actor.BaseActor;
 import com.fancytank.gamegen.game.script.ExecutableProducer.ActionListenerType;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
@@ -29,6 +30,14 @@ public class Util {
     public static String getSum(Variable var0, Variable var1) {
         float value = Float.parseFloat(var0.getValue()) + Float.parseFloat(var1.getValue());
         return (var0.valueType == ValueType.INT_NUMBER) ? Integer.toString((int) value) : Float.toString(value);
+    }
+
+    static Executable initFromProducer(ExecutableProducer producer, BaseActor actor) {
+        if (producer == null)
+            return null;
+        Executable executable = producer.getInstance();
+        executable.init(actor);
+        return executable;
     }
 
 }
