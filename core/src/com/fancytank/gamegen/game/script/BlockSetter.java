@@ -33,8 +33,11 @@ class BlockSetter implements Executable {
     @Override
     public boolean performAction() {
         MapManager.changeBlock(ActorInitializer.getInstanceOf(blockClassName.performActionForResults().getValue(),
-                blockInstance.x + Integer.parseInt(blockX.performActionForResults().getValue()),
-                blockInstance.y + Integer.parseInt(blockY.performActionForResults().getValue())));
+                blockInstance.x + getPos(blockX), blockInstance.y + getPos(blockY)));
         return true;
+    }
+
+    private int getPos(Executable executable) {
+        return (int) Float.parseFloat(executable.performActionForResults().getValue());
     }
 }

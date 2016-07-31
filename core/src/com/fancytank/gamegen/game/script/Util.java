@@ -18,20 +18,6 @@ public class Util {
         return null;
     }
 
-    public static Vector<Variable> collectVars(BlockData methodBlock) {
-        Vector<Variable> vars = new Vector<Variable>();
-        InputFragment[] inputs = methodBlock.getInputs();
-        for (int i = 0; i < inputs.length; i++)
-            if (inputs[i].inputType != InputType.DUMMY)
-                vars.add((inputs[i].connectedTo != null) ? inputs[i].connectedTo.getVariable() : new Variable("0", ValueType.ANY));
-        return vars;
-    }
-
-    public static String getSum(Variable var0, Variable var1) {
-        float value = Float.parseFloat(var0.getValue()) + Float.parseFloat(var1.getValue());
-        return (var0.valueType == ValueType.INT_NUMBER) ? Integer.toString((int) value) : Float.toString(value);
-    }
-
     static Executable initFromProducer(ExecutableProducer producer, BaseActor actor) {
         if (producer == null)
             return null;
