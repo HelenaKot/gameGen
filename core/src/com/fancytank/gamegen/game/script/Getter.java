@@ -6,26 +6,26 @@ import com.fancytank.gamegen.programming.data.Variable;
 
 public class Getter implements Executable {
     char type;
-    BaseActor actor;
+    BaseActor blockInstance;
 
     public Getter(ExecutableProducer producer) {
         type = producer.methodBlock.getValue().charAt(0);
     }
 
     @Override
-    public void init(BaseActor block) {
-        actor = block;
+    public void init(BaseActor blockInstance) {
+        this.blockInstance = blockInstance;
     }
 
     @Override
     public Variable performActionForResults() {
         switch (type) {
             case 'c':
-                return new Variable(String.format("#%06X", (0xFFFFFF & actor.tint.toIntBits())), ValueType.COLOR);
+                return new Variable(String.format("#%06X", (0xFFFFFF & blockInstance.tint.toIntBits())), ValueType.COLOR);
             case 'x':
-                return new Variable(String.valueOf(actor.x), ValueType.INT_NUMBER);
+                return new Variable(String.valueOf(blockInstance.x), ValueType.INT_NUMBER);
             case 'y':
-                return new Variable(String.valueOf(actor.y), ValueType.INT_NUMBER);
+                return new Variable(String.valueOf(blockInstance.y), ValueType.INT_NUMBER);
         }
         return null;
     }
