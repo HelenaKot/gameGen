@@ -35,10 +35,6 @@ public class Variable implements Serializable {
             VariableList.put(this.value, value, ValueType.ANY);
     }
 
-    public int getInt() {
-        return Integer.parseInt(getValue());
-    }
-
     @Override
     public String toString() {
         return value;

@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.game.actor;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public abstract class BaseActor extends Actor {
     public int x, y;
+    public Color tint;
 
     /**
      * najpierw definiuj klase, potem rob obiekty a nikomu nie stanie sie krzywda

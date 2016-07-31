@@ -74,9 +74,9 @@ public class ExecutableProducer {
             case IF_STATEMENT:
                 return new IfStatement(this);
             case GETTER:
-
+                return new Getter(this);
             case SUM:
-
+                return new Sum(this);
             default:
                 return new DefaultExecutable(this.methodBlock);
         }

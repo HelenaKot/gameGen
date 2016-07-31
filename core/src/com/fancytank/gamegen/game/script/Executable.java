@@ -7,7 +7,9 @@ import com.fancytank.gamegen.programming.data.Variable;
 public interface Executable {
     void init(BaseActor block);
 
-    boolean performAction();
+    default boolean performAction() {
+        return false;
+    }
 
     default Variable performActionForResults() {
         return new Variable(String.valueOf(performAction()), ValueType.BOOLEAN);
