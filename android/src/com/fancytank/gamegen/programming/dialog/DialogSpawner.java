@@ -24,7 +24,7 @@ public enum DialogSpawner {
     public void getDialog(final Context context, BlockActorPattern pattern) {
         switch (this) {
             case DIALOG_NUMBER:
-                enterNumberDialog(context, pattern).builder.show();;
+                enterNumberDialog(context, pattern).builder.show();
                 break;
             case DIALOG_COLOR:
                 colorPickerDialog(context, pattern);
@@ -49,7 +49,7 @@ public enum DialogSpawner {
 
     public static BuilderWrapper enterNumberDialog(final Context context, final BlockActorPattern pattern) {
         final EditText input = new EditText(context);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setRawInputType(InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_CLASS_NUMBER);
         BuilderWrapper dialog = initDialog(context, "enter value", input);
 
         dialog.builder.setPositiveButton("OK", new OnClickListener() {
