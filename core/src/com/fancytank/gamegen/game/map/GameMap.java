@@ -18,17 +18,17 @@ public class GameMap {
 
     private void initEmptyMap(int width, int height) {
         map = new BaseActor[width][height];
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
                 initActor(ActorInitializer.getInstanceOf("empty", x, y));
-            }
-        }
         changeBlock(ActorInitializer.getInstanceOf("generic", 2, 2));
     }
 
     void changeBlock(BaseActor actor) {
-        map[actor.x][actor.y].remove();
-        initActor(actor);
+        if (0 <= actor.x && actor.x < map.length && 0 <= actor.y && actor.y < map[0].length) {
+            map[actor.x][actor.y].remove();
+            initActor(actor);
+        }
     }
 
     private void initActor(BaseActor block) {
