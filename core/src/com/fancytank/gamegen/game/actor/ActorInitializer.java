@@ -12,7 +12,7 @@ public class ActorInitializer {
 
     public ActorInitializer() {
         if (instance == null) {
-            actorToInit = new HashMap<String, ActorToInit>();
+            actorToInit = new HashMap<>();
             actorToInit.put("unspecified", new ActorToInit(EmptyActor.class)); // my "nullobject"
             actorToInit.put("empty", new ActorToInit(EmptyActor.class));
             actorToInit.put("generic", new ActorToInit(GenericActor.class));
@@ -27,8 +27,8 @@ public class ActorInitializer {
 
         ActorToInit(Class<? extends BaseActor> actorClass) {
             this.actorClass = actorClass;
-            actPerTick = new LinkedList<Executable>();
-            actionListeners = new LinkedList<ExecutableProducer>();
+            actPerTick = new LinkedList<>();
+            actionListeners = new LinkedList<>();
         }
     }
 

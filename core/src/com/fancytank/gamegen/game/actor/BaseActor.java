@@ -22,13 +22,12 @@ public abstract class BaseActor extends Actor {
         this.x = x;
         this.y = y;
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
-        for (InputListener il : initListenersList())
-            addListener(il);
+        initListenersList().forEach(listener -> addListener(listener));
     }
 
     public LinkedList<InputListener> initListenersList() {
         List<ExecutableProducer> executables = ActorInitializer.getListenerList(getClassName());
-        LinkedList<InputListener> output = new LinkedList<InputListener>();
+        LinkedList<InputListener> output = new LinkedList<>();
         final BaseActor local = this;
 
         for (ExecutableProducer executableClass : executables) {
