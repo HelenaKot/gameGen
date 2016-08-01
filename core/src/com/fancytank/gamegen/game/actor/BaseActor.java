@@ -22,7 +22,9 @@ public abstract class BaseActor extends Actor {
         this.x = x;
         this.y = y;
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
-        initListenersList().forEach(listener -> addListener(listener));
+        for (InputListener listener : initListenersList()) {
+            addListener(listener);
+        }
     }
 
     public LinkedList<InputListener> initListenersList() {
