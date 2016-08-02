@@ -9,7 +9,7 @@ public class GameMap {
     int widthPadding, heightOffset;
     BaseActor[][] map;
 
-    public GameMap(int width, int height, int heightOffset) {
+    GameMap(int width, int height, int heightOffset) {
         this.heightOffset = heightOffset;
         widthPadding = Constant.MAP_PADDING;
         if (map == null)

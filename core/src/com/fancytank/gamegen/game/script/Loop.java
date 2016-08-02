@@ -16,13 +16,10 @@ public class Loop {
     }
 
     static Executable forStatement(ExecutableProducer producer) {
-        String value;
-        if (producer.methodBlock.hasValue()) {
-            value = producer.methodBlock.getValue();
-            return getForTimes(producer, Integer.parseInt(value));
-            //todo dla listy
-        }
-        return null;
+        if (producer.methodBlock.hasValue()) return
+                getForTimes(producer, Integer.parseInt(producer.methodBlock.getValue()));
+        else
+            return new IteratorLoop(producer);
     }
 
     static Executable getForTimes(ExecutableProducer producer, final int numericValue) {
