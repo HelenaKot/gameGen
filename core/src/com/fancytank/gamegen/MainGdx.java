@@ -27,12 +27,7 @@ public class MainGdx extends Game {
     }
 
     private void setScreen(final ScreenEnum screen) {
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                ScreenManager.getInstance().showScreen(screen);
-            }
-        });
+        Gdx.app.postRunnable( ()-> ScreenManager.getInstance().showScreen(screen));
     }
 
     static public void addToStage(Actor actor) {

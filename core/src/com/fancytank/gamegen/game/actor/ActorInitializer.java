@@ -1,6 +1,5 @@
 package com.fancytank.gamegen.game.actor;
 
-import com.fancytank.gamegen.game.script.Executable;
 import com.fancytank.gamegen.game.script.ExecutableProducer;
 
 import java.util.HashMap;
@@ -22,12 +21,12 @@ public class ActorInitializer {
 
     class ActorToInit {
         Class<? extends BaseActor> actorClass;
-        LinkedList<Executable> actPerTick;
+        LinkedList<ExecutableProducer> actionPerTick;
         LinkedList<ExecutableProducer> actionListeners;
 
         ActorToInit(Class<? extends BaseActor> actorClass) {
             this.actorClass = actorClass;
-            actPerTick = new LinkedList<>();
+            actionPerTick = new LinkedList<>();
             actionListeners = new LinkedList<>();
         }
     }
@@ -47,8 +46,8 @@ public class ActorInitializer {
         return instance.actorToInit.get(name).actionListeners;
     }
 
-    public static LinkedList<Executable> getActionsPerTick(String name) {
-        return instance.actorToInit.get(name).actPerTick;
+    public static LinkedList<ExecutableProducer> getActionsPerTick(String name) {
+        return instance.actorToInit.get(name).actionPerTick;
     }
 
     public static BaseActor getInstanceOf(String name, int x, int y) {
@@ -64,6 +63,10 @@ public class ActorInitializer {
 
     public static void addActionListener(String className, ExecutableProducer executable) {
         instance.actorToInit.get(className).actionListeners.add(executable);
+    }
+
+    public static void addTimerListener(String className, ExecutableProducer executable) {
+        instance.actorToInit.get(className).actionPerTick.add(executable);
     }
 
 }

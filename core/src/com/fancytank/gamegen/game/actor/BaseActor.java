@@ -18,6 +18,7 @@ import static com.fancytank.gamegen.game.actor.ActorInitializer.getListenerList;
 public abstract class BaseActor extends Actor {
     public int x, y;
     public Color tint;
+    private String className;
     private LinkedList<Executable> actions = new LinkedList<>();
 
     /**
@@ -67,11 +68,7 @@ public abstract class BaseActor extends Actor {
         return output;
     }
 
-    private String className;
-
     public String getClassName() {
-        if (className == null)
-            className = ActorInitializer.askClassName(this.getClass());
-        return className;
+        return (className == null) ? className = askClassName(this.getClass()) : className;
     }
 }
