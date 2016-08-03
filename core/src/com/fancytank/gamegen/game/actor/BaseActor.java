@@ -11,9 +11,14 @@ import com.fancytank.gamegen.game.script.ExecutableProducer;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.fancytank.gamegen.game.actor.ActorInitializer.askClassName;
+import static com.fancytank.gamegen.game.actor.ActorInitializer.getActionsPerTick;
+import static com.fancytank.gamegen.game.actor.ActorInitializer.getListenerList;
+
 public abstract class BaseActor extends Actor {
     public int x, y;
     public Color tint;
+    private LinkedList<Executable> actions = new LinkedList<>();
 
     /**
      * najpierw definiuj klase, potem rob obiekty a nikomu nie stanie sie krzywda
@@ -22,13 +27,29 @@ public abstract class BaseActor extends Actor {
         this.x = x;
         this.y = y;
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
-        for (InputListener listener : initListenersList()) {
+        for (InputListener listener : initListenersList())
             addListener(listener);
-        }
+        actions = initActiionsPerTick();
     }
 
-    public LinkedList<InputListener> initListenersList() {
-        List<ExecutableProducer> executables = ActorInitializer.getListenerList(getClassName());
+    @Override
+    public void act(float delta) {
+        for (Executable action : actions)
+            action.performAction();
+    }
+
+    private LinkedList<Executable> initActiionsPerTick() {
+        LinkedList<Executable> output = new LinkedList<>();
+        for (ExecutableProducer producer : getActionsPerTick(getClassName())) {
+            Executable instance = producer.getInstance();
+            instance.init(this);
+            output.add(instance);
+        }
+        return output;
+    }
+
+    private LinkedList<InputListener> initListenersList() {
+        List<ExecutableProducer> executables = getListenerList(getClassName());
         LinkedList<InputListener> output = new LinkedList<>();
         final BaseActor local = this;
 

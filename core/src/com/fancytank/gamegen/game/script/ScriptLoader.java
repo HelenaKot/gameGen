@@ -7,6 +7,8 @@ import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.data.ValueType;
 import com.fancytank.gamegen.programming.data.VariableList;
 
+import static com.fancytank.gamegen.game.script.ExecutableProducer.ActionListenerType;
+
 public class ScriptLoader {
     public static void load(ProgrammingBlockSavedInstance[] data) {
         for (ProgrammingBlockSavedInstance savedBlock : data)
@@ -15,16 +17,19 @@ public class ScriptLoader {
                     loadListener(savedBlock.data);
                     break;
                 case VARIABLE_DECLARATION:
-                    loadVariable(savedBlock);
+                    loadVariable(savedBlock.data);
+                    break;
+                case TIMER:
+                    loadTimer(savedBlock.data);
                     break;
             }
     }
 
-    private static void loadVariable(ProgrammingBlockSavedInstance savedBlock) {
-        InputFragment valueInput = savedBlock.data.getInputs()[0];
+    private static void loadVariable(BlockData savedBlock) {
+        InputFragment valueInput = savedBlock.getInputs()[0];
         if (hasValidConnection(valueInput)) {
-            String name = savedBlock.data.getValue();
-            ValueType type = savedBlock.data.getVariable().valueType;
+            String name = savedBlock.getValue();
+            ValueType type = savedBlock.getVariable().valueType;
             String value = valueInput.connectedTo.getValue();
             VariableList.put(name, value, type);
         }
@@ -33,25 +38,36 @@ public class ScriptLoader {
     private static void loadListener(BlockData blockData) {
         InputFragment classNameInput = blockData.getInputs()[0];
         InputFragment methodSocketInput = blockData.getInputs()[2];
-        createActionListener(classNameInput, methodSocketInput.connectedTo);
+        if (hasValidConnection(classNameInput) && methodSocketInput.connectedTo != null)
+            createActionListener(classNameInput.connectedTo.getValue(), methodSocketInput.connectedTo);
     }
 
-    private static void createActionListener(InputFragment classNameInput, BlockData executableBlock) {
-        if (hasValidConnection(classNameInput) && executableBlock != null) {
-            ExecutableProducer executableProducer = convertToExecutableProducer(executableBlock);
-            if (executableProducer.getInstance() != null)
-                ActorInitializer.addActionListener(classNameInput.connectedTo.getValue(), executableProducer);
-            else
-                System.out.println("Class " + classNameInput.connectedTo.getValue() + " have unparseable executable.");
-        }
+    private static void loadTimer(BlockData blockData) {
+        InputFragment delayInput = blockData.getInputs()[0];
+        InputFragment classNameInput = blockData.getInputs()[1];
+        InputFragment methodSocketInput = blockData.getInputs()[2];
+        if (hasValidConnection(delayInput) && hasValidConnection(classNameInput) && methodSocketInput.connectedTo != null)
+            createTimerAction(delayInput.connectedTo.getValue(), classNameInput.connectedTo.getValue(), methodSocketInput.connectedTo);
+    }
+
+    private static void createTimerAction(String delayInput, String className, BlockData executableBlock) {
+        ExecutableProducer executableProducer = new ExecutableProducer(executableBlock, ActionListenerType.TICK);
+        if (executableProducer.getInstance() != null)
+            ActorInitializer.addTimerListener(className, executableProducer);
+        else
+            System.out.println("Class " + className + " have unparsable per tick executable.");
+    }
+
+    private static void createActionListener(String className, BlockData executableBlock) {
+        ExecutableProducer executableProducer = new ExecutableProducer(executableBlock, ActionListenerType.ON_PRESS);
+        if (executableProducer.getInstance() != null)
+            ActorInitializer.addActionListener(className, executableProducer);
+        else
+            System.out.println("Class " + className + " have unparsable executable.");
     }
 
     private static boolean hasValidConnection(InputFragment inputFragment) {
         return inputFragment != null && inputFragment.connectedTo != null;
-    }
-
-    private static ExecutableProducer convertToExecutableProducer(BlockData methodBlock) {
-        return new ExecutableProducer(methodBlock, ExecutableProducer.ActionListenerType.ON_PRESS);
     }
 
 }
