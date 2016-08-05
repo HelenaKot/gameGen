@@ -10,6 +10,8 @@ import android.widget.EditText;
 import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.programming.ProgrammingActivity;
 
+import java.io.File;
+
 public class ProjectDialog {
 
     public static void geNewProjectDialog(final Context context) {
@@ -24,7 +26,6 @@ public class ProjectDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String saveName = input.getText().toString();
-                // TODO SaveListAdapter.instance.saves.add(saveName);
                 newProject(context, saveName);
             }
         });
@@ -43,14 +44,14 @@ public class ProjectDialog {
         context.startActivity(intent);
     }
 
-    public static void getDeleteProjectDialog(final Context context, final String saveName) {
+    public static void getDeleteProjectDialog(final Context context, final String saveName, final int index) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("do you want to delete " + saveName);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // todo SaveListAdapter.instance.saveNames.remove(saveName);
+                SaveListAdapter.instance.saves.remove(index);
                 DataManager.deleteProject(context.getFilesDir().getAbsolutePath(), saveName);
             }
         });

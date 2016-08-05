@@ -11,22 +11,21 @@ import android.widget.TextView;
 import com.fancytank.gamegen.programming.ProgrammingActivity;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class SaveListAdapter extends ArrayAdapter {
-    public List<File> saves;
+    public ArrayList<File> saves;
     public static SaveListAdapter instance;
 
-    public SaveListAdapter(Context context, List<File> objects) {
+    public SaveListAdapter(Context context, ArrayList<File> objects) {
         super(context, R.layout.main_save_row, objects);
         saves = objects;
         instance = this;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final File save = saves.get(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.main_save_row, parent, false);
@@ -45,7 +44,7 @@ public class SaveListAdapter extends ArrayAdapter {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                ProjectDialog.getDeleteProjectDialog(context, save.getName());
+                ProjectDialog.getDeleteProjectDialog(context, save.getName(), position);
                 return true;
             }
         });
