@@ -24,7 +24,7 @@ public class ProjectDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String saveName = input.getText().toString();
-                SaveListAdapter.instance.saveNames.add(saveName);
+                // TODO SaveListAdapter.instance.saves.add(saveName);
                 newProject(context, saveName);
             }
         });
@@ -50,7 +50,7 @@ public class ProjectDialog {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SaveListAdapter.instance.saveNames.remove(saveName);
+                // todo SaveListAdapter.instance.saveNames.remove(saveName);
                 DataManager.deleteProject(context.getFilesDir().getAbsolutePath(), saveName);
             }
         });

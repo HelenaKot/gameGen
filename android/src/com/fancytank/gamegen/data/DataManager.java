@@ -2,7 +2,6 @@ package com.fancytank.gamegen.data;
 
 import com.fancytank.gamegen.SaveListAdapter;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
-import com.fancytank.gamegen.programming.data.VariableList;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,18 +15,14 @@ import java.util.List;
 public class DataManager {
     private static String saveDir = "saved";
     private static File directory;
-    private static String absolutePath;
 
-    public static List<String> getFileNames(String patch) {
-        LinkedList<String> names = new LinkedList<>();
-        absolutePath = patch;
+    public static File[] getFiles(String patch) {
         try {
-            for (String filename : getDirectory(patch).list())
-                names.add(filename);
+            return getDirectory(patch).listFiles();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return names;
+        return new File[0];
     }
 
     public static ProgrammingBlockSavedInstance[] loadBlocks(String absolutePath, String projectName) {

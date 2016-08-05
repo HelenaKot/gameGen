@@ -8,6 +8,8 @@ import android.widget.ListView;
 
 import com.fancytank.gamegen.data.DataManager;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -18,8 +20,8 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        List<String> saves = DataManager.getFileNames(this.getFilesDir().getAbsolutePath());
-        adapter = new SaveListAdapter(this, saves);
+        List<File> files = Arrays.asList(DataManager.getFiles(this.getFilesDir().getAbsolutePath()));
+        adapter = new SaveListAdapter(this, files);
 
         ListView projectList = (ListView) findViewById(R.id.saved_projects_list);
         projectList.setAdapter(adapter);
