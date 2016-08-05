@@ -23,24 +23,18 @@ public class ConnectionArea extends Actor {
 
     public ConnectionArea(float x, float y, CoreBlock coreBlock, Direction direction) {
         this.coreBlock = coreBlock;
-        this.direction = direction;
-        this.setBounds(x, y, padding, padding);
+        setUpArea(x, y, direction);
     }
 
     public ConnectionArea(float x, float y, BlockInputAppearance blockInputAppearance, Direction direction) {
         this.blockInputAppearance = blockInputAppearance;
         this.coreBlock = blockInputAppearance.coreBlock;
+        setUpArea(x, y, direction);
+    }
+
+    private void setUpArea(float x, float y, Direction direction) {
         this.direction = direction;
         this.setBounds(x, y, padding, padding);
-    }
-
-    public boolean hasInputFragment() {
-        return inputFragment != null;
-    }
-
-    public InputFragment getInputFragment() {
-        return inputFragment;
-
     }
 
     public void setInputFragment(InputFragment inputFragment) {

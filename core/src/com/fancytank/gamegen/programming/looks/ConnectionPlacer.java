@@ -11,7 +11,7 @@ import static com.fancytank.gamegen.programming.looks.Constant.padding;
 public final class ConnectionPlacer {
 
     public static ArrayList<ConnectionArea> getConnectors(CoreBlock coreBlock) {
-        ArrayList<ConnectionArea> output = new ArrayList<ConnectionArea>();
+        ArrayList<ConnectionArea> output = new ArrayList<>();
         float height = coreBlock.getHeight();
         if (connects(coreBlock, Direction.UP))
             output.add(new ConnectionArea(0, height - padding, coreBlock, Direction.UP));
