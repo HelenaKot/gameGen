@@ -128,7 +128,7 @@ public class ProgrammingBlock extends Group {
         attachingBlock.attachedTo = baseBlock;
         baseBlock.addActor(attachingBlock);
         attachingConnector.connect(baseConnector);
-        if (!baseConnector.hasInputType()) { // && !attachingConnector.hasInputType()
+        if (!baseConnector.hasInputType()) {
             BlockData descendantBlock = attachingBlock.coreBlock.data, parentBlock = baseBlock.coreBlock.data;
             descendantBlock.setParent(parentBlock);
         }

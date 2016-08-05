@@ -164,7 +164,7 @@ public class BlocksExpendableList {
                         .setExpectedMethod(MethodType.LOOP_WHILE), Color.YELLOW),
                 new BlockActorPattern("LOOP2", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "loop for each").setExpectedValue(ValueType.ANY),
-                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD) //TODO foreach
+                        new InputFragment(InputType.SOCKET, "loop body").setExpectedValue(ValueType.METHOD)}, BlockShape.CHAIN_METHOD)
                         .setExpectedMethod(MethodType.LOOP_FOR), Color.YELLOW),
                 new BlockActorPattern("LOOP3", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "loop N times"),

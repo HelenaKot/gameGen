@@ -8,7 +8,7 @@ public class VariableList {
     private static VariableList instance;
 
     VariableList() {
-        variables = new HashMap<String, Variable>();
+        variables = new HashMap<>();
         instance = this;
     }
 
@@ -39,9 +39,6 @@ public class VariableList {
     }
 
     private static void updateValue(String name, Variable variable) {
-        //if (getInstance().variables.get(name).valueType == variable.valueType) todo
-            instance.variables.get(name).setValue(variable.getValue());
-        //else
-        //    System.out.println("Variable " + name + " is a different type [" + instance.variables.get(name).valueType + " != " + variable.valueType + "]");
+        instance.variables.get(name).setValue(variable.getValue());
     }
 }
