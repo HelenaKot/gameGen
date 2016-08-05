@@ -31,7 +31,7 @@ public class MainGdx extends Game {
     }
 
     static public void addToStage(Actor actor) {
-        ScreenEnum.screenInstance.addActor(actor);
+        ScreenEnum.screenInstance.addToStage(actor);
     }
 
     static public Stage getStage() {

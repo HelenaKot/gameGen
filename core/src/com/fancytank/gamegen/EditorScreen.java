@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.editor.EditorBackground;
 import com.fancytank.gamegen.editor.TrashCan;
@@ -17,10 +18,17 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class EditorScreen extends AbstractScreen {
+    private Group programmingBlocks;
+    private EditorBackground editorBackground;
+
+    EditorScreen() {
+        programmingBlocks = new Group();
+    }
 
     @Override
     public void buildStage() {
         setUp();
+        editorBackground.setDraggable(programmingBlocks);
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(MainGdx.AppStatus.SETUP_FINISHED);
     }
@@ -28,9 +36,10 @@ public class EditorScreen extends AbstractScreen {
     private void setUp() {
         new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
-        addActor(new EditorBackground(getWidth(), getHeight()));
+        addActor(editorBackground = new EditorBackground(getWidth(), getHeight()));
         addActor(new TrashCan(getWidth()));
         addActor(new BlockButton(getHeight()));
+        addActor(programmingBlocks);
     }
 
     @Subscribe
@@ -38,7 +47,7 @@ public class EditorScreen extends AbstractScreen {
         ProgrammingBlock template = new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor());
         Actor newBlock = Workspace.clone(template);
         newBlock.setPosition(getWidth() * 0.4f, getHeight() / 2);
-        addActor(newBlock);
+        addToStage(newBlock);
         template.destroy();
     }
 
@@ -46,5 +55,11 @@ public class EditorScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void addToStage(Actor actor) {
+        actor.moveBy(-programmingBlocks.getX(), -programmingBlocks.getY()); // compensating for pan movement
+        programmingBlocks.addActor(actor);
     }
 }
