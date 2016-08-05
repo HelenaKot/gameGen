@@ -48,6 +48,13 @@ public class ProgrammingBlock extends Group {
         return connectors.get(0);
     }
 
+    public ConnectionArea getDownFacingConnector() {
+        for (ConnectionArea connectionArea : connectors)
+            if (connectionArea.direction == Direction.DOWN)
+                return connectionArea;
+        return null;
+    }
+
     private void setUpListeners() {
         final ProgrammingBlock local = this;
         addListener(new InputListener() {

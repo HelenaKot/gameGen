@@ -9,7 +9,6 @@ import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.data.VariableList;
-import com.fancytank.gamegen.programming.looks.input.InputType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,6 +16,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ListIterator;
+
+import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBlock;
 
 public class Workspace {
 
@@ -92,12 +93,17 @@ public class Workspace {
             if (inputFragment.connectedTo != null)
                 reconnectInput(inputFragment);
         if (data.hasDescendant())
-            reconnectBlock(data.getDescendant());
+            reconnectDescendant(data);
     }
 
     private static void reconnectInput(InputFragment inputFragment) {
-        ConnectionRules.tryConnect(inputFragment.getConnectionArea(), inputFragment.connectedTo.getCoreBlock().getProgrammingBlock().getFirstConnector());
+        ConnectionRules.tryConnect(inputFragment.getConnectionArea(), getProgrammingBlock(inputFragment.connectedTo).getFirstConnector());
         reconnectBlock(inputFragment.connectedTo.getCoreBlock().data);
+    }
+
+    private static void reconnectDescendant(BlockData data) {
+        ConnectionRules.tryConnect(getProgrammingBlock(data).getDownFacingConnector(), getProgrammingBlock(data.getDescendant()).getFirstConnector());
+        reconnectBlock(data.getDescendant());
     }
 
 }
