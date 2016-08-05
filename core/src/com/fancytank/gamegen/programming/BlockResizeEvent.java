@@ -4,7 +4,7 @@ import com.fancytank.gamegen.programming.looks.BlockAppearance;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
-import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
+import static com.fancytank.gamegen.programming.looks.Constant.padding;
 
 public class BlockResizeEvent extends BlockConnectionEvent {
     boolean isLast = false;

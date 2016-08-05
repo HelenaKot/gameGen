@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.fancytank.gamegen.programming.BlockResizeEvent;
 import com.fancytank.gamegen.programming.Direction;
+import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
 import com.fancytank.gamegen.programming.looks.input.BlockInputFactory;
@@ -19,7 +20,7 @@ import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getPat
 public class BlockAppearance {
     PatchData[] patches;
     ArrayList<BlockInputAppearance> inputs;
-    public static int padding = 51;
+    public int padding = Constant.padding;
     public static BitmapFont font;
     private int height, width;
     private static int top = Direction.UP.ordinal(), left = Direction.LEFT.ordinal(), down = Direction.DOWN.ordinal();
@@ -27,7 +28,8 @@ public class BlockAppearance {
 
     BlockAppearance(CoreBlock root) {
         patches = new PatchData[3];
-
+        if (root.data.shape == BlockShape.VARIABLE)
+            padding = Constant.slimPadding;
         for (Direction dir : faces)
             patches[dir.ordinal()] = new PatchData(getPatch(root.data.shape.connects(dir), dir));
 
@@ -92,7 +94,7 @@ public class BlockAppearance {
 
     private void createInputs(CoreBlock root) {
         if (root.getInputs() != null) {
-            inputs = new ArrayList<BlockInputAppearance>();
+            inputs = new ArrayList<>();
             for (InputFragment inputLine : root.getInputs())
                 inputs.add(BlockInputFactory.create(inputLine, root));
             Collections.reverse(inputs);

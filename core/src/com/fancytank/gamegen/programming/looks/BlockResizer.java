@@ -2,7 +2,7 @@ package com.fancytank.gamegen.programming.looks;
 
 import com.fancytank.gamegen.programming.BlockResizeEvent;
 
-import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
+import static com.fancytank.gamegen.programming.looks.Constant.padding;
 
 public final class BlockResizer {
 

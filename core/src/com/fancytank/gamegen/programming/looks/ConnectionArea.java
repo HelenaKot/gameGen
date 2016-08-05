@@ -12,7 +12,7 @@ import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
-import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
+import static com.fancytank.gamegen.programming.looks.Constant.padding;
 
 public class ConnectionArea extends Actor {
     public final CoreBlock coreBlock;

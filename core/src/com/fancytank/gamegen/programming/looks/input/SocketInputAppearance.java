@@ -7,7 +7,7 @@ import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
-import static com.fancytank.gamegen.programming.looks.BlockAppearance.padding;
+import static com.fancytank.gamegen.programming.looks.Constant.padding;
 
 public class SocketInputAppearance extends BlockInputAppearance {
 
