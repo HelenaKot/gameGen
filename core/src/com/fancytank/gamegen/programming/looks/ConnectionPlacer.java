@@ -16,7 +16,7 @@ public final class ConnectionPlacer {
         if (connects(coreBlock, Direction.UP))
             output.add(new ConnectionArea(0, height - padding, coreBlock, Direction.UP));
         if (connects(coreBlock, Direction.LEFT))
-            output.add(new ConnectionArea(0, height - padding * 2, coreBlock, Direction.LEFT));
+            output.add(new ConnectionArea(0, height - coreBlock.blockAppearance.padding - padding, coreBlock, Direction.LEFT));
         if (connects(coreBlock, Direction.DOWN))
             output.add(new ConnectionArea(0, 0, coreBlock, Direction.DOWN));
         getInputConnectors(output, coreBlock);
@@ -30,7 +30,7 @@ public final class ConnectionPlacer {
         if (connects(coreBlock, Direction.UP))
             trySetPosition(connectors.get(next++), 0, height - padding);
         if (connects(coreBlock, Direction.LEFT))
-            trySetPosition(connectors.get(next++), 0, height - padding * 2);
+            trySetPosition(connectors.get(next++), 0, -coreBlock.blockAppearance.padding - padding);
         if (connects(coreBlock, Direction.DOWN))
             trySetPosition(connectors.get(next++), 0, 0);
         updateInputConnectors(coreBlock, next);
