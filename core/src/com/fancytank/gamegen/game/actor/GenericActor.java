@@ -12,15 +12,13 @@ public class GenericActor extends BaseActor {
     public GenericActor(int x, int y) {
         super(x, y);
         tint = Color.WHITE;
-        texture = new Texture(Gdx.files.internal("badlogic.jpg"));
-        setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());
         texture = new Texture(Gdx.files.internal("block_bounds_full.png"));
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
     }
 
     public GenericActor(Color tint, int x, int y) {
         super(x, y);
-        texture = new Texture(Gdx.files.internal("badlogic.jpg"));
+        texture = new Texture(Gdx.files.internal("block_bounds_full.png"));
         this.tint = tint;
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
     }

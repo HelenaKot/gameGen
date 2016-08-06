@@ -4,7 +4,7 @@ public class Constant {
     public static int BLOCK_SIZE;
     public static int MAP_PADDING;
 
-    private static int BLOCKS_IN_ROW = 8;
+    private static int BLOCKS_IN_ROW = 20;
     private static int BLOCK_TEXTURE_SIZE;
     private static int BLOCK_SCALE;
 

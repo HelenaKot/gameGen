@@ -30,7 +30,7 @@ public abstract class BaseActor extends Actor {
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
         for (InputListener listener : initListenersList())
             addListener(listener);
-        actions = initActiionsPerTick();
+        actions = initActionsPerTick();
     }
 
     @Override
@@ -39,7 +39,7 @@ public abstract class BaseActor extends Actor {
             action.performAction();
     }
 
-    private LinkedList<Executable> initActiionsPerTick() {
+    private LinkedList<Executable> initActionsPerTick() {
         LinkedList<Executable> output = new LinkedList<>();
         for (ExecutableProducer producer : getActionsPerTick(getClassName())) {
             Executable instance = producer.getInstance();
