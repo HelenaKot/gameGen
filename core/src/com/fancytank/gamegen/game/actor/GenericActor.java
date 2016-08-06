@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.fancytank.gamegen.game.Constant;
 
 public class GenericActor extends BaseActor {
     Texture texture;
@@ -13,20 +14,20 @@ public class GenericActor extends BaseActor {
         tint = Color.WHITE;
         texture = new Texture(Gdx.files.internal("badlogic.jpg"));
         setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());
+        texture = new Texture(Gdx.files.internal("block_bounds_full.png"));
+        setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
     }
 
     public GenericActor(Color tint, int x, int y) {
         super(x, y);
         texture = new Texture(Gdx.files.internal("badlogic.jpg"));
         this.tint = tint;
-        setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());
+        setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
     }
 
     public void draw(Batch batch, float alpha) {
         batch.setColor(tint);
-        batch.draw(texture, this.getX(), getY(), this.getOriginX(), this.getOriginY(), this.getWidth(),
-                this.getHeight(), this.getScaleX(), this.getScaleY(), this.getRotation(), 0, 0,
-                texture.getWidth(), texture.getHeight(), false, false);
+        batch.draw(texture, this.getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
     }
 
     @Override
