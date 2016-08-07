@@ -30,7 +30,6 @@ public class EditorScreen extends AbstractScreen {
         setUp();
         editorBackground.setDraggable(programmingBlocks);
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(MainGdx.AppStatus.SETUP_FINISHED);
     }
 
     private void setUp() {

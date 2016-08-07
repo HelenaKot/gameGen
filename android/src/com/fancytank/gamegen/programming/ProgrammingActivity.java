@@ -13,6 +13,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.GameScreen;
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.R;
+import com.fancytank.gamegen.ScreenEnum;
 import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
@@ -56,15 +57,27 @@ public class ProgrammingActivity extends AndroidApplication {
 
     @Subscribe
     public void onEvent(MainGdx.AppStatus status) throws IOException, ClassNotFoundException {
-        if (status == MainGdx.AppStatus.GDX_INIT_FINISHED)
-            EventBus.getDefault().post(MainGdx.AppStatus.EDITOR_SCREEN);
-        else if (status == MainGdx.AppStatus.SETUP_FINISHED) {
-            if (inGame)
-                GameScreen.loadGame(loadDataFromFile(contentFrame.getRootView()));
-            else {
+        switch (status) {
+            case GDX_INIT_FINISHED:
+                EventBus.getDefault().post(MainGdx.currentScreen);
+                break;
+            case SETUP_FINISHED:
+                setupScreen(MainGdx.currentScreen);
+                break;
+        }
+    }
+
+    private void setupScreen(ScreenEnum screen) throws IOException, ClassNotFoundException {
+        switch (screen) {
+            case DESIGN_SCREEN:
+                break;
+            case EDITOR_SCREEN:
                 list.populateList();
                 loadWorkspace(contentFrame.getRootView());
-            }
+                break;
+            case GAME_SCREEN:
+                GameScreen.loadGame(loadDataFromFile(contentFrame.getRootView()));
+                break;
         }
     }
 
@@ -98,13 +111,10 @@ public class ProgrammingActivity extends AndroidApplication {
     }
 
     //todo refactoringplz
-    private boolean inGame = false;
-
     public void switchScreen(View v) {
-        if (inGame)
-            EventBus.getDefault().post(MainGdx.AppStatus.EDITOR_SCREEN);
+        if (MainGdx.currentScreen == ScreenEnum.GAME_SCREEN)
+            EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
         else
-            EventBus.getDefault().post(MainGdx.AppStatus.TEST_SCREEN);
-        inGame = !inGame;
+            EventBus.getDefault().post(ScreenEnum.GAME_SCREEN);
     }
 }

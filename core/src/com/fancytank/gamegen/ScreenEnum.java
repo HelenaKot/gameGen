@@ -1,6 +1,12 @@
 package com.fancytank.gamegen;
 
 public enum ScreenEnum {
+    DESIGN_SCREEN {
+        @Override
+        public AbstractScreen getScreen() {
+            return setInstance(new DesignScreen());
+        }
+    },
     EDITOR_SCREEN {
         @Override
         public AbstractScreen getScreen() {

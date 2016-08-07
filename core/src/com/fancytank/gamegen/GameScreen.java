@@ -17,7 +17,6 @@ public class GameScreen extends AbstractScreen {
         width = getWidth();
         height = getHeight();
         instance = this;
-        EventBus.getDefault().post(MainGdx.AppStatus.SETUP_FINISHED);
     }
 
     public static void loadGame(ProgrammingBlockSavedInstance[] data) {
