@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.fancytank.gamegen.programming.ProgrammingActivity;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +51,7 @@ public class SaveListAdapter extends ArrayAdapter {
     }
 
     private void setSave(String saveName) {
-        Intent intent = new Intent(getContext(), ProgrammingActivity.class);
+        Intent intent = new Intent(getContext(), GDXActivity.class);
         intent.putExtra("saveName", saveName);
         getContext().startActivity(intent);
     }

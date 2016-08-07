@@ -1,4 +1,4 @@
-package com.fancytank.gamegen.programming;
+package com.fancytank.gamegen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.ScreenEnum;
 import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.editor.BlockButton;
+import com.fancytank.gamegen.programming.BlocksExpendableList;
+import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.wunderlist.slidinglayer.SlidingLayer;
@@ -25,7 +27,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
-public class ProgrammingActivity extends AndroidApplication {
+public class GDXActivity extends AndroidApplication {
     private FrameLayout contentFrame;
     private SlidingLayer slidingLayer;
     private BlocksExpendableList list;

@@ -8,9 +8,6 @@ import android.text.InputType;
 import android.widget.EditText;
 
 import com.fancytank.gamegen.data.DataManager;
-import com.fancytank.gamegen.programming.ProgrammingActivity;
-
-import java.io.File;
 
 public class ProjectDialog {
 
@@ -39,7 +36,7 @@ public class ProjectDialog {
     }
 
     private static void newProject(Context context, String fineName) {
-        Intent intent = new Intent(context, ProgrammingActivity.class);
+        Intent intent = new Intent(context, GDXActivity.class);
         intent.putExtra("saveName", fineName);
         context.startActivity(intent);
     }
