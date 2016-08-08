@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+    <com.wunderlist.slidinglayer.SlidingLayer xmlns:slidingLayer="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_layer"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        slidingLayer:changeStateOnTap="true"
+        slidingLayer:offsetDistance="10dp"
+        slidingLayer:previewOffsetDistance="10dp"
+        slidingLayer:shadowDrawable="@drawable/drawer_shadow"
+        slidingLayer:shadowSize="10dp"
+        slidingLayer:stickTo="left">
+
+        <ExpandableListView
+            android:id="@+id/drawer_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#111"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp" />
+
+    </com.wunderlist.slidinglayer.SlidingLayer>
+
+    <com.wunderlist.slidinglayer.SlidingLayer xmlns:slidingLayer="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tools_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        slidingLayer:changeStateOnTap="true"
+        slidingLayer:offsetDistance="10dp"
+        slidingLayer:previewOffsetDistance="10dp"
+        slidingLayer:shadowSize="10dp"
+        slidingLayer:stickTo="right">
+
+    </com.wunderlist.slidinglayer.SlidingLayer>
+</RelativeLayout>
