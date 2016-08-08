@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -31,6 +30,7 @@ public class GDXActivity extends AndroidApplication {
     private SlidingLayer slidingLayer;
     private BlocksExpendableList list;
     private TextView debugText;
+    private View toolBar;
     private String saveName = "untitled";
 
     @Override
@@ -40,7 +40,6 @@ public class GDXActivity extends AndroidApplication {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_gdx);
 
-        initDebugTools();
         initXML();
         readName();
         EventBus.getDefault().register(this);
@@ -72,9 +71,8 @@ public class GDXActivity extends AndroidApplication {
     }
 
     private void setupScreen(ScreenEnum screen) throws IOException, ClassNotFoundException {
+        setToolsLayerContent(screen);
         switch (screen) {
-            case DESIGN_SCREEN:
-                break;
             case EDITOR_SCREEN:
                 list.populateList();
                 loadWorkspace(gdxFrame.getRootView());
@@ -98,19 +96,20 @@ public class GDXActivity extends AndroidApplication {
         return DataManager.loadBlocks(view.getContext().getFilesDir().getAbsolutePath(), saveName);
     }
 
-    private void initDebugTools() {
-        SlidingLayer toolsLayer = (SlidingLayer) findViewById(R.id.tools_layer);
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View debugButtons = inflater.inflate(R.layout.toolset_debug, toolsLayer);
+    private void initDesignButtons(View designButtons) {
+        designButtons.findViewById(R.id.button_programming).setOnClickListener(
+                v -> EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN));
+    }
 
+    private void initDebugTools(View debugButtons) {
         debugText = (TextView) findViewById(R.id.debug_text);
-        ((Button) debugButtons.findViewById(R.id.button_debug_log)).setOnClickListener(
+        debugButtons.findViewById(R.id.button_debug_log).setOnClickListener(
                 v -> debugText.setText(Workspace.getDebugLog()));
-        ((Button) debugButtons.findViewById(R.id.button_debug_connectors)).setOnClickListener(
+        debugButtons.findViewById(R.id.button_debug_connectors).setOnClickListener(
                 v -> ConnectionArea.debug = !ConnectionArea.debug);
-        ((Button) debugButtons.findViewById(R.id.button_debug_save)).setOnClickListener(
+        debugButtons.findViewById(R.id.button_debug_save).setOnClickListener(
                 v -> DataManager.saveBlocks(v.getContext().getFilesDir().getAbsolutePath(), saveName, Workspace.getWorkspaceItemsToSave()));
-        ((Button) debugButtons.findViewById(R.id.button_debug_load)).setOnClickListener(
+        debugButtons.findViewById(R.id.button_debug_load).setOnClickListener(
                 v -> {
                     try {
                         loadWorkspace(v);
@@ -118,14 +117,43 @@ public class GDXActivity extends AndroidApplication {
                         e.printStackTrace();
                     }
                 });
-        ((Button) debugButtons.findViewById(R.id.button_debug_delete)).setOnClickListener(
+        debugButtons.findViewById(R.id.button_debug_delete).setOnClickListener(
                 v -> Workspace.clearWorkspace());
-        ((Button) debugButtons.findViewById(R.id.button_debug_test)).setOnClickListener(
+        debugButtons.findViewById(R.id.button_debug_test).setOnClickListener(
                 v -> {
                     if (MainGdx.currentScreen == ScreenEnum.GAME_SCREEN)
                         EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
                     else
                         EventBus.getDefault().post(ScreenEnum.GAME_SCREEN);
                 });
+    }
+
+    //todo to wszystko zniknie, jak debug nie będzie potrzebny
+    private void setToolsLayerContent(ScreenEnum screen) {
+        SlidingLayer toolsLayer = (SlidingLayer) findViewById(R.id.tools_layer);
+        runOnUiThread(() -> {
+            toolsLayer.removeAllViews();
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater.inflate(getResId(screen), toolsLayer);
+            switch (screen) {
+                case DESIGN_SCREEN:
+                    initDesignButtons(toolsLayer);
+                    break;
+                case EDITOR_SCREEN:
+                    initDebugTools(toolsLayer);
+                    break;
+            }
+        });
+    }
+
+    private int getResId(ScreenEnum screen) {
+        switch (screen) {
+            case DESIGN_SCREEN:
+                return R.layout.toolset_design;
+            case EDITOR_SCREEN:
+                return R.layout.toolset_debug;
+            default:
+                return R.layout.toolset_debug;
+        }
     }
 }

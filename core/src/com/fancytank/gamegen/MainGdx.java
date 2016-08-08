@@ -12,7 +12,7 @@ public class MainGdx extends Game {
     public enum AppStatus {GDX_INIT_FINISHED, SETUP_FINISHED}
 
     public static ScreenEnum currentScreen;
-    private static ScreenEnum startingScreen = ScreenEnum.EDITOR_SCREEN;
+    private static ScreenEnum startingScreen = ScreenEnum.DESIGN_SCREEN;
 
     @Override
     public void create() {

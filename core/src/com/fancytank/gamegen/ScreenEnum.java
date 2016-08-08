@@ -21,6 +21,7 @@ public enum ScreenEnum {
     };
 
     static public AbstractScreen screenInstance;
+    public int toolbarResourceId;
 
     private static AbstractScreen setInstance(AbstractScreen screen) {
         if (screenInstance != null)
