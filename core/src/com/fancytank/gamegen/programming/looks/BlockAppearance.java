@@ -15,6 +15,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getMiniPatch;
 import static com.fancytank.gamegen.programming.looks.PatchTextureManager.getPatch;
 
 public class BlockAppearance {
@@ -28,10 +29,13 @@ public class BlockAppearance {
 
     BlockAppearance(CoreBlock root) {
         patches = new PatchData[3];
-        if (root.data.shape == BlockShape.VARIABLE)
+        if (root.data.shape == BlockShape.VARIABLE) {
             padding = Constant.slimPadding;
-        for (Direction dir : faces)
-            patches[dir.ordinal()] = new PatchData(getPatch(root.data.shape.connects(dir), dir));
+            for (Direction dir : faces)
+                patches[dir.ordinal()] = new PatchData(getMiniPatch(dir));
+        } else
+            for (Direction dir : faces)
+                patches[dir.ordinal()] = new PatchData(getPatch(root.data.shape.connects(dir), dir));
 
         createInputs(root);
         setSize();

@@ -11,7 +11,6 @@ abstract public class BlockInputAppearance {
     PatchData patchData;
     InputFragment inputFragment;
     public final CoreBlock coreBlock;
-    static int spacing = 10;
 
     BlockInputAppearance(InputFragment inputFragment, CoreBlock coreBlock) {
         this.inputFragment = inputFragment;

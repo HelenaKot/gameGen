@@ -6,7 +6,7 @@ import com.fancytank.gamegen.programming.Direction;
 
 public final class PatchTextureManager {
     static TextureAtlas textureAtlas;
-    private static NinePatch plain[], connected[], socket;
+    private static NinePatch mini[], plain[], connected[], socket;
 
     public PatchTextureManager(TextureAtlas textureAtlas) {
         this.textureAtlas = textureAtlas;
@@ -14,6 +14,11 @@ public final class PatchTextureManager {
     }
 
     private static void init() {
+        mini = new NinePatch[]{
+                textureAtlas.createPatch("top_mini"),
+                textureAtlas.createPatch("left_connection"),
+                textureAtlas.createPatch("bottom_mini"),
+                textureAtlas.createPatch("right_plain")};
         plain = new NinePatch[]{
                 textureAtlas.createPatch("top_plain"),
                 textureAtlas.createPatch("left_plain"),
@@ -34,6 +39,10 @@ public final class PatchTextureManager {
             return connected[direction.ordinal()];
         else
             return plain[direction.ordinal()];
+    }
+
+    public static NinePatch getMiniPatch(Direction direction){
+        return mini[direction.ordinal()];
     }
 
     public static NinePatch getSocket() {
