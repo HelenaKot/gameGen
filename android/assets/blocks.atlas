@@ -5,15 +5,15 @@ filter: Nearest,Nearest
 repeat: none
 right_socket
   rotate: false
-  xy: 1, 6
+  xy: 1, 4
   size: 122, 95
-  split: 100, 21, 49, 45
+  split: 100, 21, 52, 42
   orig: 122, 95
   offset: 0, 0
   index: -1
 bottom_connection
   rotate: false
-  xy: 125, 52
+  xy: 125, 50
   size: 153, 49
   split: 98, 54, 0, 48
   orig: 153, 49
@@ -21,23 +21,39 @@ bottom_connection
   index: -1
 top_connection
   rotate: false
-  xy: 280, 52
+  xy: 280, 50
   size: 153, 49
   split: 98, 54, 48, 0
   orig: 153, 49
   offset: 0, 0
   index: -1
-bottom_plain
+bottom_mini
   rotate: false
-  xy: 125, 1
+  xy: 435, 50
   size: 108, 49
   split: 54, 53, 0, 48
   orig: 108, 49
   offset: 0, 0
   index: -1
+bottom_plain
+  rotate: false
+  xy: 545, 50
+  size: 108, 49
+  split: 54, 53, 0, 48
+  orig: 108, 49
+  offset: 0, 0
+  index: -1
+top_mini
+  rotate: false
+  xy: 655, 50
+  size: 105, 49
+  split: 52, 52, 48, 0
+  orig: 105, 49
+  offset: 0, 0
+  index: -1
 top_plain
   rotate: false
-  xy: 235, 1
+  xy: 762, 50
   size: 105, 49
   split: 52, 52, 48, 0
   orig: 105, 49
@@ -45,7 +61,7 @@ top_plain
   index: -1
 left_connection
   rotate: false
-  xy: 435, 55
+  xy: 869, 53
   size: 49, 46
   split: 48, 0, 45, 0
   orig: 49, 46
@@ -53,7 +69,7 @@ left_connection
   index: -1
 right_connection
   rotate: false
-  xy: 342, 4
+  xy: 920, 53
   size: 49, 46
   split: 0, 48, 45, 0
   orig: 49, 46
@@ -61,7 +77,7 @@ right_connection
   index: -1
 left_plain
   rotate: false
-  xy: 1, 3
+  xy: 1, 1
   size: 49, 1
   split: 48, 0, 0, 0
   orig: 49, 1
@@ -69,7 +85,7 @@ left_plain
   index: -1
 right_plain
   rotate: false
-  xy: 435, 52
+  xy: 125, 47
   size: 49, 1
   split: 0, 48, 0, 0
   orig: 49, 1

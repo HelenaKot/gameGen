@@ -25,7 +25,7 @@ public class SocketInputAppearance extends BlockInputAppearance {
 
     @Override
     public Vector2 getConnectorPlacement() {
-        return new Vector2(patchData.startX, patchData.startY + patchData.height - padding);
+        return new Vector2(patchData.startX - padding / 2, patchData.startY + patchData.height - padding);
     }
 
     void setPreferredSize() {
