@@ -5,12 +5,15 @@ import android.content.DialogInterface;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.ValueType;
 import com.fancytank.gamegen.programming.data.Variable;
 import com.fancytank.gamegen.programming.data.VariableList;
+
+import java.util.List;
 
 import static com.fancytank.gamegen.programming.dialog.DialogSpawner.initDialog;
 
@@ -36,7 +39,7 @@ public class DialogVariables {
 
     static void getVariableDialog(final Context context, final BlockActorPattern pattern) {
         BuilderWrapper dialog = initDialog(context, "get variable", R.layout.dialog_get_var);
-        final Spinner varSpinner = getVarSpinner(context, dialog);
+        final Spinner varSpinner = setupSpinner(context, dialog, "get", VariableList.getKeys());
         dialog.builder.setPositiveButton("OK", (DialogInterface d, int which) -> {
                     Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
                     pattern.setValue(selectedVariable);
@@ -49,7 +52,7 @@ public class DialogVariables {
 
     static void setVariableDialog(final Context context, final BlockActorPattern pattern) {
         BuilderWrapper dialog = initDialog(context, "set variable", R.layout.dialog_get_var);
-        final Spinner varSpinner = getVarSpinner(context, dialog);
+        final Spinner varSpinner = setupSpinner(context, dialog, "set", VariableList.getKeys());
         dialog.builder.setPositiveButton("OK", (DialogInterface d, int which) -> {
             Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
             pattern.setValue(selectedVariable);
@@ -60,9 +63,24 @@ public class DialogVariables {
         dialog.builder.show();
     }
 
-    private static Spinner getVarSpinner(final Context context, BuilderWrapper dialog) {
+    static void varClassName(final Context context, final BlockActorPattern pattern) {
+        BuilderWrapper dialog = initDialog(context, "tile type", R.layout.dialog_get_var);
+        final Spinner varSpinner = setupSpinner(context, dialog, "tile", VariableList.getKeys()); // todo get class names
+        dialog.builder.setPositiveButton("OK", (DialogInterface d, int which) -> {
+            Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
+            pattern.setValue(selectedVariable);
+            pattern.setLabel(varSpinner.getSelectedItem().toString());
+            pattern.spawn();
+
+        });
+        dialog.builder.show();
+    }
+
+    private static Spinner setupSpinner(final Context context, BuilderWrapper dialog, String text, String[] args) {
         Spinner varSpinner = (Spinner) dialog.view.findViewById(R.id.spinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, VariableList.getKeys());
+        TextView textView = (TextView) dialog.view.findViewById(R.id.textView);
+        textView.setText(text);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, args);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         varSpinner.setAdapter(dataAdapter);
         return varSpinner;

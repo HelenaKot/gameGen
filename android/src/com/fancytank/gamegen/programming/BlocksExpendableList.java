@@ -56,14 +56,14 @@ public class BlocksExpendableList {
     }
 
     private void setGroupParents() {
-        parentItems.add("Demo");
+        parentItems.add("Tile");
         parentItems.add("Logic");
         parentItems.add("Variables");
         parentItems.add("Getters");
     }
 
     private void setChildData() {
-        BlockPatternHolder[] demoPatterns = {
+        BlockPatternHolder[] tilesPatterns = {
                 new BlockPatternHolder(new BlockActorPattern("on click", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "when this object is PRESSED").setExpectedValue(ValueType.CLASS_NAME),
                         new InputFragment(InputType.DUMMY, "do"),
@@ -74,10 +74,8 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "for class").setExpectedValue(ValueType.CLASS_NAME),
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET").setExpectedValue(ValueType.METHOD)}, BlockShape.TIMER), Color.PURPLE)),
 
-                new BlockPatternHolder(new BlockActorPattern("empty space", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "empty space")}, BlockShape.VARIABLE), Color.SKY).setValue("empty", ValueType.CLASS_NAME)),
-                new BlockPatternHolder(new BlockActorPattern("placeholder actor", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "placeholder")}, BlockShape.VARIABLE), Color.SKY).setValue("generic", ValueType.CLASS_NAME)),
+                new BlockPatternHolder(new BlockActorPattern("tile type", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "generic")}, BlockShape.VARIABLE), Color.SKY), DialogSpawner.DIALOG_COMPARATOR),
 /*
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "move self"),
@@ -96,7 +94,7 @@ public class BlocksExpendableList {
                 new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.LAST_METHOD), Color.RED),*/
         };
-        childItems.add(demoPatterns);
+        childItems.add(tilesPatterns);
 
         BlockPatternHolder[] logicPatterns = {
                 new BlockPatternHolder(new BlockActorPattern("if", new BlockData(new InputFragment[]{
