@@ -1,8 +1,6 @@
 package com.fancytank.gamegen.programming.dialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -49,16 +47,15 @@ public enum DialogSpawner {
 
     public static BuilderWrapper enterNumberDialog(final Context context, final BlockActorPattern pattern) {
         final EditText input = new EditText(context);
+        input.setHint("0");
         input.setRawInputType(InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_CLASS_NUMBER);
         BuilderWrapper dialog = initDialog(context, "enter value", input);
 
-        dialog.builder.setPositiveButton("OK", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String value = input.getText().toString();
-                pattern.setValue(value, ValueType.NUMBER);
-                pattern.spawn();
-            }
+        dialog.builder.setPositiveButton("OK", (d, which) -> {
+            String value = input.getText().toString();
+            if (value.equals("")) value = "0";
+            pattern.setValue(value, ValueType.NUMBER);
+            pattern.spawn();
         });
         return dialog;
     }
@@ -67,13 +64,10 @@ public enum DialogSpawner {
         BuilderWrapper dialog = initDialog(context, "pick color", R.layout.dialog_color_picker);
         final LineColorPicker lineColorPicker = (LineColorPicker) dialog.view.findViewById(R.id.picker);
         lineColorPicker.setColors(Palette.DEFAULT);
-        dialog.builder.setPositiveButton("OK", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String value = String.format("#%06X", (0xFFFFFF & lineColorPicker.getColor()));
-                pattern.setValue(value, ValueType.COLOR);
-                pattern.spawn();
-            }
+        dialog.builder.setPositiveButton("OK", (d, which) -> {
+            String value = String.format("#%06X", (0xFFFFFF & lineColorPicker.getColor()));
+            pattern.setValue(value, ValueType.COLOR);
+            pattern.spawn();
         });
         dialog.builder.show();
     }
@@ -95,12 +89,7 @@ public enum DialogSpawner {
         output.builder.setView(output.view);
         output.builder.setTitle(title);
 
-        output.builder.setNegativeButton("Cancel", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        output.builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         return output;
     }
 }

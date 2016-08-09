@@ -1,11 +1,9 @@
 package com.fancytank.gamegen.programming.dialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -22,12 +20,7 @@ public class DialogLoop {
     static void newLoopDialog(final Context context) {
         BuilderWrapper dialog = DialogSpawner.initDialog(context, "loop type", R.layout.dialog_loop_spawner);
         final DialogLoop radioSet = new DialogLoop(dialog);
-        dialog.builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                DialogLoop.loopPatterns[radioSet.getChecked()].spawn();
-            }
-        });
+        dialog.builder.setPositiveButton("OK", (d, which) -> DialogLoop.loopPatterns[radioSet.getChecked()].spawn());
         dialog.builder.show();
     }
 
@@ -74,14 +67,11 @@ public class DialogLoop {
                 (RadioButton) view.findViewById(R.id.radio_list),
                 (RadioButton) view.findViewById(R.id.radio_times),
         };
-
+        buttons[0].setChecked(true);
         for (int i = 0; i < buttons.length; i++) {
             final int idCopy = i;
-            buttons[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) emulateRadioSet(idCopy);
-                }
+            buttons[i].setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) emulateRadioSet(idCopy);
             });
         }
         return buttons;
