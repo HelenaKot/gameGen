@@ -18,7 +18,7 @@ public class ActorInitializer {
             instance = this;
         }
     }
-
+    
     class ActorToInit {
         Class<? extends BaseActor> actorClass;
         LinkedList<ExecutableProducer> actionPerTick;
@@ -32,7 +32,7 @@ public class ActorInitializer {
     }
 
     public static String[] getActorNames() {
-        return (String[]) instance.actorToInit.keySet().toArray();
+        return instance.actorToInit.keySet().toArray(new String[instance.actorToInit.size()]);
     }
 
     public static String askClassName(Class<? extends BaseActor> myClass) {

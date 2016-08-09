@@ -75,7 +75,7 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.SOCKET, "ON_PRESS_SOCKET").setExpectedValue(ValueType.METHOD)}, BlockShape.TIMER), Color.PURPLE)),
 
                 new BlockPatternHolder(new BlockActorPattern("tile type", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "generic")}, BlockShape.VARIABLE), Color.SKY), DialogSpawner.DIALOG_COMPARATOR),
+                        new InputFragment(InputType.DUMMY, "generic")}, BlockShape.VARIABLE), Color.SKY), DialogSpawner.DIALOG_PICK_CLASS),
 /*
                 new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "move self"),

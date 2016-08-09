@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.editor.EditorBackground;
 import com.fancytank.gamegen.editor.TrashCan;
+import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
@@ -35,6 +36,7 @@ public class EditorScreen extends AbstractScreen {
     private void setUp() {
         new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
+        new ActorInitializer();
         addActor(editorBackground = new EditorBackground(getWidth(), getHeight()));
         addActor(new TrashCan(getWidth()));
         addActor(new BlockButton(getHeight()));

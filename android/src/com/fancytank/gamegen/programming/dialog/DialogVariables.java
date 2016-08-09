@@ -8,6 +8,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fancytank.gamegen.R;
+import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.ValueType;
 import com.fancytank.gamegen.programming.data.Variable;
@@ -65,11 +66,10 @@ public class DialogVariables {
 
     static void varClassName(final Context context, final BlockActorPattern pattern) {
         BuilderWrapper dialog = initDialog(context, "tile type", R.layout.dialog_get_var);
-        final Spinner varSpinner = setupSpinner(context, dialog, "tile", VariableList.getKeys()); // todo get class names
+        final Spinner varSpinner = setupSpinner(context, dialog, "tile", ActorInitializer.getActorNames());
         dialog.builder.setPositiveButton("OK", (DialogInterface d, int which) -> {
-            Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
+            Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.CLASS_NAME);
             pattern.setValue(selectedVariable);
-            pattern.setLabel(varSpinner.getSelectedItem().toString());
             pattern.spawn();
 
         });
