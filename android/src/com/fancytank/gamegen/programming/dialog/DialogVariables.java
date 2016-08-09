@@ -23,16 +23,13 @@ public class DialogVariables {
                 android.R.layout.simple_spinner_item, ValueType.getValueStrings());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         varSpinner.setAdapter(dataAdapter);
-        dialog.builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ValueType selectedType = ValueType.getValuesList()[varSpinner.getSelectedItemPosition()];
-                String value = editText.getText().toString();
-                VariableList.put(value, "0", selectedType);
-                pattern.setValue(value, selectedType);
-                pattern.setLabel(value + " (" + selectedType.toString().toLowerCase() + ")");
-                pattern.spawn();
-            }
+        dialog.builder.setPositiveButton("OK", (DialogInterface d, int which) -> {
+            ValueType selectedType = ValueType.getValuesList()[varSpinner.getSelectedItemPosition()];
+            String value = editText.getText().toString();
+            VariableList.put(value, "0", selectedType);
+            pattern.setValue(value, selectedType);
+            pattern.setLabel(value + " (" + selectedType.toString().toLowerCase() + ")");
+            pattern.spawn();
         });
         dialog.builder.show();
     }
@@ -40,29 +37,25 @@ public class DialogVariables {
     static void getVariableDialog(final Context context, final BlockActorPattern pattern) {
         BuilderWrapper dialog = initDialog(context, "get variable", R.layout.dialog_get_var);
         final Spinner varSpinner = getVarSpinner(context, dialog);
-        dialog.builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
-                pattern.setValue(selectedVariable);
-                pattern.setLabel(varSpinner.getSelectedItem().toString());
-                pattern.spawn();
-            }
-        });
+        dialog.builder.setPositiveButton("OK", (DialogInterface d, int which) -> {
+                    Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
+                    pattern.setValue(selectedVariable);
+                    pattern.setLabel(varSpinner.getSelectedItem().toString());
+                    pattern.spawn();
+                }
+        );
         dialog.builder.show();
     }
 
     static void setVariableDialog(final Context context, final BlockActorPattern pattern) {
         BuilderWrapper dialog = initDialog(context, "set variable", R.layout.dialog_get_var);
         final Spinner varSpinner = getVarSpinner(context, dialog);
-        dialog.builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
-                pattern.setValue(selectedVariable);
-                pattern.setLabel(varSpinner.getSelectedItem() + " =");
-                pattern.spawn();
-            }
+        dialog.builder.setPositiveButton("OK", (DialogInterface d, int which) -> {
+            Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
+            pattern.setValue(selectedVariable);
+            pattern.setLabel(varSpinner.getSelectedItem() + " =");
+            pattern.spawn();
+
         });
         dialog.builder.show();
     }
