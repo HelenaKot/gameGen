@@ -27,6 +27,7 @@ public abstract class BaseActor extends Actor {
     public BaseActor(int x, int y) {
         this.x = x;
         this.y = y;
+        tint = Color.WHITE;
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
         for (InputListener listener : initListenersList())
             addListener(listener);

@@ -18,8 +18,8 @@ public class ActorInitializer {
             instance = this;
         }
     }
-    
-    class ActorToInit {
+
+    static class ActorToInit {
         Class<? extends BaseActor> actorClass;
         LinkedList<ExecutableProducer> actionPerTick;
         LinkedList<ExecutableProducer> actionListeners;
@@ -32,7 +32,15 @@ public class ActorInitializer {
     }
 
     public static String[] getActorNames() {
-        return instance.actorToInit.keySet().toArray(new String[instance.actorToInit.size()]);
+        LinkedList<String> names = new LinkedList<>();
+        for (String key : instance.actorToInit.keySet())
+            if (!key.equals("unspecified"))
+                names.add(key);
+        return names.toArray(new String[names.size()]);
+    }
+
+    public static void addActorClass(String name, Class<? extends BaseActor> tileClass) {
+        instance.actorToInit.put(name, new ActorToInit(tileClass));
     }
 
     public static String askClassName(Class<? extends BaseActor> myClass) {
