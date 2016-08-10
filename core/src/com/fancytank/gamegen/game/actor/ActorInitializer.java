@@ -57,7 +57,7 @@ public class ActorInitializer {
             BaseActor createInstance(int x, int y) {
                 GenericActor myActor = new GenericActor(x, y, name);
                 myActor.texture = texture;
-                return myActor
+                return myActor;
             }
         });
     }
