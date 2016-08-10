@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.game.actor;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.fancytank.gamegen.game.script.ExecutableProducer;
 
 import java.util.HashMap;
@@ -12,23 +13,35 @@ public class ActorInitializer {
     public ActorInitializer() {
         if (instance == null) {
             actorToInit = new HashMap<>();
-            actorToInit.put("unspecified", new ActorToInit(EmptyActor.class)); // my "nullobject"
-            actorToInit.put("empty", new ActorToInit(EmptyActor.class));
-            actorToInit.put("generic", new ActorToInit(GenericActor.class));
+            actorToInit.put("unspecified", new ActorToInit() {
+                BaseActor createInstance(int x, int y) {
+                    return new EmptyActor(x, y, "unspecified");
+                }
+            }); // my "nullobject"
+            actorToInit.put("empty", new ActorToInit() {
+                BaseActor createInstance(int x, int y) {
+                    return new EmptyActor(x, y, "empty");
+                }
+            });
+            actorToInit.put("generic", new ActorToInit() {
+                BaseActor createInstance(int x, int y) {
+                    return new GenericActor(x, y, "generic");
+                }
+            });
             instance = this;
         }
     }
 
-    static class ActorToInit {
-        Class<? extends BaseActor> actorClass;
+    static abstract class ActorToInit {
         LinkedList<ExecutableProducer> actionPerTick;
         LinkedList<ExecutableProducer> actionListeners;
 
-        ActorToInit(Class<? extends BaseActor> actorClass) {
-            this.actorClass = actorClass;
+        ActorToInit() {
             actionPerTick = new LinkedList<>();
             actionListeners = new LinkedList<>();
         }
+
+        abstract BaseActor createInstance(int x, int y);
     }
 
     public static String[] getActorNames() {
@@ -39,15 +52,14 @@ public class ActorInitializer {
         return names.toArray(new String[names.size()]);
     }
 
-    public static void addActorClass(String name, Class<? extends BaseActor> tileClass) {
-        instance.actorToInit.put(name, new ActorToInit(tileClass));
-    }
-
-    public static String askClassName(Class<? extends BaseActor> myClass) {
-        for (String name : instance.actorToInit.keySet())
-            if (myClass.equals(instance.actorToInit.get(name).actorClass))
-                return name;
-        return "unspecified";
+    public static void addActorClass(String name, Texture texture) {
+        instance.actorToInit.put(name, new ActorToInit() {
+            BaseActor createInstance(int x, int y) {
+                GenericActor myActor = new GenericActor(x, y, name);
+                myActor.texture = texture;
+                return myActor
+            }
+        });
     }
 
     public static LinkedList<ExecutableProducer> getListenerList(String name) {
@@ -59,13 +71,9 @@ public class ActorInitializer {
     }
 
     public static BaseActor getInstanceOf(String name, int x, int y) {
-        try {
-            if (instance.actorToInit.containsKey(name))
-                return instance.actorToInit.get(name).actorClass.getConstructor(int.class, int.class).newInstance(x, y);
-            else System.out.println("Actor with this name can not be initialized = " + name);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (instance.actorToInit.containsKey(name))
+            return instance.actorToInit.get(name).createInstance(x, y);
+        else System.out.println("Actor with this name can not be initialized = " + name);
         return null;
     }
 

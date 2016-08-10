@@ -9,13 +9,8 @@ import com.fancytank.gamegen.game.Constant;
 public class GenericActor extends BaseActor {
     public Texture texture = new Texture(Gdx.files.internal("block_bounds_full.png"));
 
-    public GenericActor(int x, int y) {
-        super(x, y);
-    }
-
-    public GenericActor(Color tint, int x, int y) {
-        super(x, y);
-        this.tint = tint;
+    public GenericActor(int x, int y, String name) {
+        super(x, y, name);
     }
 
     public void draw(Batch batch, float alpha) {
