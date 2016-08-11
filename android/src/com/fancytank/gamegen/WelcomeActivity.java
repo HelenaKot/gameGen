@@ -11,7 +11,6 @@ import com.fancytank.gamegen.data.DataManager;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class WelcomeActivity extends AppCompatActivity {
     private static WelcomeActivity instance;

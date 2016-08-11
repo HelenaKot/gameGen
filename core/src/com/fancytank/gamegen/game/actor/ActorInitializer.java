@@ -32,18 +32,6 @@ public class ActorInitializer {
         }
     }
 
-    static abstract class ActorToInit {
-        LinkedList<ExecutableProducer> actionPerTick;
-        LinkedList<ExecutableProducer> actionListeners;
-
-        ActorToInit() {
-            actionPerTick = new LinkedList<>();
-            actionListeners = new LinkedList<>();
-        }
-
-        abstract BaseActor createInstance(int x, int y);
-    }
-
     public static String[] getActorNames() {
         LinkedList<String> names = new LinkedList<>();
         for (String key : instance.actorToInit.keySet())
