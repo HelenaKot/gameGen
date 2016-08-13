@@ -2,10 +2,12 @@ package com.fancytank.gamegen.programming.looks.input;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 import com.fancytank.gamegen.programming.looks.PatchData;
+import com.fancytank.gamegen.programming.looks.PatchTextureManager;
 
 abstract public class BlockInputAppearance {
     PatchData patchData;
@@ -15,7 +17,14 @@ abstract public class BlockInputAppearance {
     BlockInputAppearance(InputFragment inputFragment, CoreBlock coreBlock) {
         this.inputFragment = inputFragment;
         this.coreBlock = coreBlock;
-        patchData = new PatchData(inputFragment.inputType.patch);
+        patchData = getPatchData();
+    }
+
+    private PatchData getPatchData() {
+        if (inputFragment.inputType == InputType.VARIABLE && coreBlock.data.shape == BlockShape.VARIABLE)
+            return new PatchData(PatchTextureManager.getMiniVariabla());
+        else
+            return new PatchData(inputFragment.inputType.patch);
     }
 
     public void drawInput(Batch batch, float alpha) {

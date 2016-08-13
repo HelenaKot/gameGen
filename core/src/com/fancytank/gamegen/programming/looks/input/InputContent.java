@@ -4,17 +4,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
-import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.BlockAppearance;
 
 import java.util.ArrayList;
 
 public class InputContent {
-    ArrayList<Widget> content = new ArrayList<Widget>();
+    ArrayList<Widget> content = new ArrayList<>();
     private float width = 0, height = 0;
     private static Label.LabelStyle labelStyle = new Label.LabelStyle(BlockAppearance.font, Color.BLACK);
 
-    public InputContent(InputFragment inputFragment, String labelText) {
+    public InputContent(String labelText) {
         addLabel(labelText);
     }
 

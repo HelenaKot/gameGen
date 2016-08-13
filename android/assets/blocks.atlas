@@ -5,15 +5,23 @@ filter: Nearest,Nearest
 repeat: none
 right_socket
   rotate: false
-  xy: 1, 4
+  xy: 1, 32
   size: 122, 95
   split: 100, 21, 52, 42
   orig: 122, 95
   offset: 0, 0
   index: -1
+bottom_mini
+  rotate: false
+  xy: 1, 1
+  size: 108, 29
+  split: 54, 53, 0, 28
+  orig: 108, 29
+  offset: 0, 0
+  index: -1
 bottom_connection
   rotate: false
-  xy: 125, 50
+  xy: 125, 78
   size: 153, 49
   split: 98, 54, 0, 48
   orig: 153, 49
@@ -21,71 +29,71 @@ bottom_connection
   index: -1
 top_connection
   rotate: false
-  xy: 280, 50
+  xy: 280, 78
   size: 153, 49
   split: 98, 54, 48, 0
   orig: 153, 49
   offset: 0, 0
   index: -1
-bottom_mini
-  rotate: false
-  xy: 435, 50
-  size: 108, 49
-  split: 54, 53, 0, 48
-  orig: 108, 49
-  offset: 0, 0
-  index: -1
 bottom_plain
   rotate: false
-  xy: 545, 50
+  xy: 125, 27
   size: 108, 49
   split: 54, 53, 0, 48
   orig: 108, 49
-  offset: 0, 0
-  index: -1
-top_mini
-  rotate: false
-  xy: 655, 50
-  size: 105, 49
-  split: 52, 52, 48, 0
-  orig: 105, 49
   offset: 0, 0
   index: -1
 top_plain
   rotate: false
-  xy: 762, 50
+  xy: 235, 27
   size: 105, 49
   split: 52, 52, 48, 0
   orig: 105, 49
   offset: 0, 0
   index: -1
+top_mini
+  rotate: false
+  xy: 342, 47
+  size: 105, 29
+  split: 52, 52, 28, 0
+  orig: 105, 29
+  offset: 0, 0
+  index: -1
 left_connection
   rotate: false
-  xy: 869, 53
+  xy: 435, 81
   size: 49, 46
   split: 48, 0, 45, 0
   orig: 49, 46
   offset: 0, 0
   index: -1
-right_connection
+right_connection_mini
   rotate: false
-  xy: 920, 53
-  size: 49, 46
-  split: 0, 48, 45, 0
-  orig: 49, 46
+  xy: 342, 16
+  size: 49, 29
+  split: 0, 48, 14, 14
+  orig: 49, 29
   offset: 0, 0
   index: -1
 left_plain
   rotate: false
-  xy: 1, 1
+  xy: 435, 78
   size: 49, 1
   split: 48, 0, 0, 0
   orig: 49, 1
   offset: 0, 0
   index: -1
+right_connection
+  rotate: false
+  xy: 449, 30
+  size: 49, 46
+  split: 0, 48, 45, 0
+  orig: 49, 46
+  offset: 0, 0
+  index: -1
 right_plain
   rotate: false
-  xy: 125, 47
+  xy: 393, 44
   size: 49, 1
   split: 0, 48, 0, 0
   orig: 49, 1

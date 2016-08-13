@@ -5,21 +5,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.fancytank.gamegen.programming.data.BlockShape;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
+import com.fancytank.gamegen.programming.looks.Constant;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import static com.fancytank.gamegen.programming.looks.Constant.padding;
-import static com.fancytank.gamegen.programming.looks.Constant.spacing;
 
 public class DummyInputAppearance extends BlockInputAppearance {
     InputContent inputContent;
+    int spacing = Constant.spacing;
 
     DummyInputAppearance(InputFragment inputFragment, CoreBlock parent) {
         super(inputFragment, parent);
-        inputContent = new InputContent(inputFragment, inputFragment.labelText);
+        inputContent = new InputContent(inputFragment.labelText);
         if (coreBlock.data.shape == BlockShape.VARIABLE)
-            setPreferredSize(0);
-        else
-            setPreferredSize(spacing);
+            spacing = 0;
+        setPreferredSize(spacing);
     }
 
     private void setPreferredSize(int spacing) {

@@ -1,10 +1,10 @@
 package com.fancytank.gamegen.programming.looks.input;
 
-
 import com.badlogic.gdx.math.Vector2;
 import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
+import com.fancytank.gamegen.programming.looks.Constant;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import static com.fancytank.gamegen.programming.looks.Constant.padding;
@@ -23,6 +23,6 @@ public class VariableInputAppearance extends DummyInputAppearance {
 
     @Override
     public Vector2 getConnectorPlacement() {
-        return new Vector2(patchData.startX + patchData.width - padding, patchData.startY);
+        return new Vector2(patchData.startX + patchData.width - padding, patchData.startY - Constant.spacing + spacing);
     }
 }
