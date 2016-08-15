@@ -18,7 +18,7 @@ import java.io.InputStream;
 public class ImageAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private String[] textureNames = new String[]{"block_bounds_full", "block_clear_full", "block_heart_cutout", "block_star_cutout", "block_striped_full"};
+    private static String[] textureNames = new String[]{"block_bounds_full", "block_clear_full", "block_heart_cutout", "block_star_cutout", "block_striped_full"};
     AssetManager assetManager;
 
     public ImageAdapter(Context c) {
@@ -32,7 +32,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        return null;
+        return textureNames[position];
     }
 
     public long getItemId(int position) {

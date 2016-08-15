@@ -8,6 +8,7 @@ import org.greenrobot.eventbus.EventBus;
 public class ScreenManager {
     private static ScreenManager instance;
     private static Game game;
+    public static ScreenEnum currentScreen;
 
     public static ScreenManager getInstance() {
         if (instance == null) {
@@ -21,15 +22,15 @@ public class ScreenManager {
     }
 
     public void showScreen(ScreenEnum screenEnum) {
-        Screen currentScreen = game.getScreen();
-
+        Screen lastScreen = game.getScreen();
+        currentScreen = screenEnum;
         AbstractScreen newScreen = screenEnum.getScreen();
         newScreen.buildStage();
         EventBus.getDefault().post(MainGdx.AppStatus.SETUP_FINISHED);
         game.setScreen(newScreen);
 
-        if (currentScreen != null) {
-            currentScreen.dispose();
+        if (lastScreen != null) {
+            lastScreen.dispose();
         }
     }
 }

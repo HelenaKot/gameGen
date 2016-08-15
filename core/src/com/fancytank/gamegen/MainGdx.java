@@ -11,23 +11,18 @@ import org.greenrobot.eventbus.Subscribe;
 public class MainGdx extends Game {
     public enum AppStatus {GDX_INIT_FINISHED, SETUP_FINISHED}
 
-    public static ScreenEnum currentScreen;
     private static ScreenEnum startingScreen = ScreenEnum.DESIGN_SCREEN;
 
     @Override
     public void create() {
         ScreenManager.getInstance().initialize(this);
+        ScreenManager.currentScreen = ScreenEnum.DESIGN_SCREEN;
         EventBus.getDefault().register(this);
-        currentScreen = startingScreen;
         EventBus.getDefault().post(AppStatus.GDX_INIT_FINISHED);
     }
 
     @Subscribe
     public void onEvent(ScreenEnum screen) {
-        setScreen(currentScreen = screen);
-    }
-
-    private void setScreen(final ScreenEnum screen) {
         Gdx.app.postRunnable(() -> ScreenManager.getInstance().showScreen(screen));
     }
 

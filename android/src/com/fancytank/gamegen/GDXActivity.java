@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.editor.BlockButton;
+import com.fancytank.gamegen.editor.TileActivity;
 import com.fancytank.gamegen.programming.BlocksExpendableList;
 import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
@@ -30,7 +31,6 @@ public class GDXActivity extends AndroidApplication {
     private SlidingLayer slidingLayer;
     private BlocksExpendableList list;
     private TextView debugText;
-    private View toolBar;
     private String saveName = "untitled";
 
     @Override
@@ -62,10 +62,10 @@ public class GDXActivity extends AndroidApplication {
     public void onEvent(MainGdx.AppStatus status) throws IOException, ClassNotFoundException {
         switch (status) {
             case GDX_INIT_FINISHED:
-                EventBus.getDefault().post(MainGdx.currentScreen);
+                EventBus.getDefault().post(ScreenManager.currentScreen);
                 break;
             case SETUP_FINISHED:
-                setupScreen(MainGdx.currentScreen);
+                setupScreen(ScreenManager.currentScreen);
                 break;
         }
     }
@@ -99,6 +99,11 @@ public class GDXActivity extends AndroidApplication {
     private void initDesignButtons(View designButtons) {
         designButtons.findViewById(R.id.button_programming).setOnClickListener(
                 v -> EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN));
+        designButtons.findViewById(R.id.button_new_class).setOnClickListener(
+                v -> {
+                    Intent intent = new Intent(getContext(), TileActivity.class);
+                    getContext().startActivity(intent);
+                });
     }
 
     private void initDebugTools(View debugButtons) {
@@ -121,7 +126,7 @@ public class GDXActivity extends AndroidApplication {
                 v -> Workspace.clearWorkspace());
         debugButtons.findViewById(R.id.button_debug_test).setOnClickListener(
                 v -> {
-                    if (MainGdx.currentScreen == ScreenEnum.GAME_SCREEN)
+                    if (ScreenManager.currentScreen == ScreenEnum.GAME_SCREEN)
                         EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
                     else
                         EventBus.getDefault().post(ScreenEnum.GAME_SCREEN);
@@ -140,6 +145,7 @@ public class GDXActivity extends AndroidApplication {
                     initDesignButtons(toolsLayer);
                     break;
                 case EDITOR_SCREEN:
+                case GAME_SCREEN:
                     initDebugTools(toolsLayer);
                     break;
             }

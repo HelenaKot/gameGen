@@ -1,6 +1,5 @@
 package com.fancytank.gamegen.game.actor;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.fancytank.gamegen.game.script.ExecutableProducer;
 
 import java.util.HashMap;
@@ -40,14 +39,8 @@ public class ActorInitializer {
         return names.toArray(new String[names.size()]);
     }
 
-    public static void addActorClass(String name, Texture texture) {
-        instance.actorToInit.put(name, new ActorToInit() {
-            BaseActor createInstance(int x, int y) {
-                GenericActor myActor = new GenericActor(x, y, name);
-                myActor.texture = texture;
-                return myActor;
-            }
-        });
+    public static void addActorClass(String name, String textureName) {
+        instance.actorToInit.put(name, new CustomActorToInit(name, textureName));
     }
 
     public static LinkedList<ExecutableProducer> getListenerList(String name) {

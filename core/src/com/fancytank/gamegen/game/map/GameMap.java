@@ -25,7 +25,9 @@ public class GameMap {
     }
 
     void changeBlock(BaseActor actor) {
-        if (0 <= actor.x && actor.x < map.length && 0 <= actor.y && actor.y < map[0].length) {
+        if (actor == null)
+            System.out.println(actor + " is not initialized");
+        else if (0 <= actor.x && actor.x < map.length && 0 <= actor.y && actor.y < map[0].length) {
             map[actor.x][actor.y].remove();
             initActor(actor);
         }

@@ -17,7 +17,7 @@ import static com.fancytank.gamegen.game.actor.ActorInitializer.getListenerList;
 public abstract class BaseActor extends Actor {
     public int x, y;
     public Color tint;
-    private String className;
+    protected String className;
     private LinkedList<Executable> actions = new LinkedList<>();
 
     /**

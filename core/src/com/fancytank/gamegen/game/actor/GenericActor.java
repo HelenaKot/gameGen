@@ -1,16 +1,21 @@
 package com.fancytank.gamegen.game.actor;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.fancytank.gamegen.game.Constant;
 
 public class GenericActor extends BaseActor {
-    public Texture texture = new Texture(Gdx.files.internal("block_bounds_full.png"));
+    public Texture texture;
 
     public GenericActor(int x, int y, String name) {
         super(x, y, name);
+        texture = new Texture(Gdx.files.internal("block_bounds_full.png"));
+    }
+
+    public GenericActor(int x, int y, String name, Texture texture) {
+        super(x, y, name);
+        this.texture = texture;
     }
 
     public void draw(Batch batch, float alpha) {
@@ -20,6 +25,6 @@ public class GenericActor extends BaseActor {
 
     @Override
     public String toString() {
-        return "Generic Actor at " + x + " " + y;
+        return className + " Actor at " + x + " " + y;
     }
 }
