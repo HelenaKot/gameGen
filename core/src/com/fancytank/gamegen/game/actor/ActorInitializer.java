@@ -43,6 +43,10 @@ public class ActorInitializer {
         instance.actorToInit.put(name, new CustomActorToInit(name, textureName));
     }
 
+    public static void addActorClass(CustomActorToInit actorToInit) {
+        instance.actorToInit.put(actorToInit.name, actorToInit);
+    }
+
     public static LinkedList<ExecutableProducer> getListenerList(String name) {
         return instance.actorToInit.get(name).actionListeners;
     }
@@ -64,6 +68,14 @@ public class ActorInitializer {
 
     public static void addTimerListener(String className, ExecutableProducer executable) {
         instance.actorToInit.get(className).actionPerTick.add(executable);
+    }
+
+    public static LinkedList<CustomActorToInit> getCustomActors() {
+        LinkedList<CustomActorToInit> output = new LinkedList();
+        for (ActorToInit actor : instance.actorToInit.values())
+            if (actor instanceof CustomActorToInit)
+                output.add((CustomActorToInit) actor);
+        return output;
     }
 
 }

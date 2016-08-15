@@ -93,7 +93,7 @@ public class GDXActivity extends AndroidApplication {
     }
 
     private ProgrammingBlockSavedInstance[] loadDataFromFile(View view) throws IOException, ClassNotFoundException {
-        return DataManager.loadBlocks(view.getContext().getFilesDir().getAbsolutePath(), saveName);
+        return DataManager.loadWorkspace(view.getContext().getFilesDir().getAbsolutePath(), saveName);
     }
 
     private void initDesignButtons(View designButtons) {

@@ -1,6 +1,8 @@
 package com.fancytank.gamegen.data;
 
 import com.fancytank.gamegen.SaveListAdapter;
+import com.fancytank.gamegen.game.actor.ActorInitializer;
+import com.fancytank.gamegen.game.actor.CustomActorToInit;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 
 import java.io.File;
@@ -10,7 +12,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
-import java.util.List;
 
 public class DataManager {
     private static String saveDir = "saved";
@@ -25,9 +26,10 @@ public class DataManager {
         return new File[0];
     }
 
-    public static ProgrammingBlockSavedInstance[] loadBlocks(String absolutePath, String projectName) {
+    public static ProgrammingBlockSavedInstance[] loadWorkspace(String absolutePath, String projectName) {
         try {
             SaveInstance save = loadFile(absolutePath, projectName);
+            loadActors(save);
             return save.blocks;
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,12 +37,22 @@ public class DataManager {
         }
     }
 
+    private static void loadActors(SaveInstance save) {
+        for (CustomActorToInit tile : save.tiles)
+            ActorInitializer.addActorClass(tile);
+    }
+
     public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
         try {
-            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace));
+            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace, fetchActors()));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static CustomActorToInit[] fetchActors() {
+        LinkedList<CustomActorToInit> list = ActorInitializer.getCustomActors();
+        return list.toArray(new CustomActorToInit[list.size()]);
     }
 
     public static void deleteProject(String absolutePath, String projectName) {
