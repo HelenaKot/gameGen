@@ -1,13 +1,14 @@
-package com.fancytank.gamegen.game.map;
+package com.fancytank.gamegen.editor;
 
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.game.Constant;
-import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.BaseActor;
+import com.fancytank.gamegen.game.map.Board;
+import com.fancytank.gamegen.game.map.MapType;
 
-public class GameMap implements MapType {
+public class EditorMap implements MapType {
     int widthPadding, heightOffset;
-    private BaseActor[][] map;
+    private EditorActor[][] map;
 
     @Override
     public MapType init(int width, int height, int heightOffset) {
@@ -19,31 +20,28 @@ public class GameMap implements MapType {
     }
 
     private void initEmptyMap(int width, int height) {
-        map = new BaseActor[width][height];
+        map = new EditorActor[width][height];
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
-                initActor(ActorInitializer.getInstanceOf("empty", x, y));
-        changeBlock(ActorInitializer.getInstanceOf("generic", 2, 2));
+                initActor(new EditorActor(x, y));
     }
 
     @Override
     public void changeBlock(BaseActor actor) {
-        if (actor == null)
-            System.out.println(actor + " is not initialized");
-        else if (0 <= actor.x && actor.x < map.length && 0 <= actor.y && actor.y < map[0].length) {
-            map[actor.x][actor.y].remove();
-            initActor(actor);
-        }
     }
 
     @Override
     public BaseActor[][] getMap() {
-        return map;
+        return new BaseActor[0][0];
     }
 
-    private void initActor(BaseActor block) {
+    private void initActor(EditorActor block) {
         map[block.x][block.y] = block;
         map[block.x][block.y].setPosition(block.x * Constant.BLOCK_SIZE + widthPadding, (block.y + heightOffset) * Constant.BLOCK_SIZE);
         MainGdx.addToStage(block);
+    }
+
+    public Board getMapAsBoard() {
+        return null;
     }
 }

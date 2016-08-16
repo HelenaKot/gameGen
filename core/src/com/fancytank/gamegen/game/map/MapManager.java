@@ -7,14 +7,15 @@ import java.util.ArrayList;
 
 public class MapManager {
     public static MapManager instance;
-    GameMap gameMap;
+    MapType gameMap;
 
-    public MapManager(float width, float height) {
-        gameMap = new GameMap((int) width / Constant.BLOCK_SIZE, (int) height / Constant.BLOCK_SIZE, 0);
+    public MapManager(float width, float height, MapType mapClass) {
+        Constant.setUpBlockConstants((int) width, 10);
+        gameMap = mapClass.init((int) width / Constant.BLOCK_SIZE, (int) height / Constant.BLOCK_SIZE, 0);
         instance = this;
     }
 
-    public static GameMap getInstance() {
+    public static MapType getInstance() {
         return instance.gameMap;
     }
 
@@ -24,7 +25,7 @@ public class MapManager {
 
     public static ArrayList<BaseActor> getBlocksOfClass(String className) {
         ArrayList<BaseActor> output = new ArrayList<>();
-        for (BaseActor[] row : getInstance().map)
+        for (BaseActor[] row : getInstance().getMap())
             for (BaseActor actor : row)
                 if (actor.getClassName().equals(className))
                     output.add(actor);

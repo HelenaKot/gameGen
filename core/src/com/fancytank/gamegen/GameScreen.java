@@ -2,6 +2,7 @@ package com.fancytank.gamegen;
 
 import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
+import com.fancytank.gamegen.game.map.GameMap;
 import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.game.script.ScriptLoader;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
@@ -20,10 +21,9 @@ public class GameScreen extends AbstractScreen {
     }
 
     public static void loadGame(ProgrammingBlockSavedInstance[] data) {
-        Constant.setUpBlockConstants((int) instance.width, 10);
         new ActorInitializer();
         ScriptLoader.load(data);
-        new MapManager(instance.width, instance.height);
+        new MapManager(instance.width, instance.height, new GameMap());
     }
 
     @Override
