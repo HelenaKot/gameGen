@@ -3,7 +3,6 @@ package com.fancytank.gamegen.programming.data;
 import java.io.Serializable;
 
 public enum ValueType implements Serializable {
-    // todo do połączeń między bloczkami VV
     BOOLEAN(),
     ANY(),
     COLOR(MethodType.COLOR_SETTER),

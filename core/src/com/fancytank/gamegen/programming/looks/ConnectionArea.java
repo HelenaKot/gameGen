@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.data.InputFragment;
+import com.fancytank.gamegen.programming.data.ValueType;
+import com.fancytank.gamegen.programming.data.Variable;
+import com.fancytank.gamegen.programming.data.VariableList;
 import com.fancytank.gamegen.programming.looks.input.BlockInputAppearance;
 import com.fancytank.gamegen.programming.looks.input.InputType;
 
@@ -30,6 +33,20 @@ public class ConnectionArea extends Actor {
         this.blockInputAppearance = blockInputAppearance;
         this.coreBlock = blockInputAppearance.coreBlock;
         setUpArea(x, y, direction);
+    }
+
+    public ValueType getAcceptedValueType() {
+        if (inputFragment != null) return inputFragment.expectedValue;
+        else if (direction == Direction.DOWN) return ValueType.METHOD;
+        return ValueType.ANY;
+    }
+
+    public ValueType getInnerValueType() {
+        if (direction == Direction.UP) return ValueType.METHOD;
+        Variable var = coreBlock.data.getVariable();
+        if (coreBlock.data.hasValue())
+            return (var.valueType == ValueType.VARIABLE) ? VariableList.get(var.getDirectValue()).valueType : var.valueType;
+        return ValueType.ANY;
     }
 
     private void setUpArea(float x, float y, Direction direction) {

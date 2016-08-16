@@ -14,8 +14,6 @@ import com.fancytank.gamegen.programming.data.ValueType;
 import com.fancytank.gamegen.programming.data.Variable;
 import com.fancytank.gamegen.programming.data.VariableList;
 
-import java.util.List;
-
 import static com.fancytank.gamegen.programming.dialog.DialogSpawner.initDialog;
 
 public class DialogVariables {
@@ -32,6 +30,7 @@ public class DialogVariables {
             String value = editText.getText().toString();
             VariableList.put(value, "0", selectedType);
             pattern.setValue(value, selectedType);
+            pattern.setExpectedValue(0, selectedType);
             pattern.setLabel(value + " (" + selectedType.toString().toLowerCase() + ")");
             pattern.spawn();
         });
@@ -57,6 +56,7 @@ public class DialogVariables {
         dialog.builder.setPositiveButton("OK", (DialogInterface d, int which) -> {
             Variable selectedVariable = new Variable((String) varSpinner.getSelectedItem(), ValueType.VARIABLE);
             pattern.setValue(selectedVariable);
+            pattern.setExpectedValue(0, VariableList.get(selectedVariable.getDirectValue()).valueType);
             pattern.setLabel(varSpinner.getSelectedItem() + " =");
             pattern.spawn();
 

@@ -1,6 +1,7 @@
 package com.fancytank.gamegen.programming.blocks;
 
 import com.fancytank.gamegen.programming.Direction;
+import com.fancytank.gamegen.programming.data.ValueType;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 
 import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBlock;
@@ -36,8 +37,15 @@ public final class ConnectionRules {
     }
 
     private static boolean canConnect(ConnectionArea base, ConnectionArea attaching) {
-        //// TODO: 2016-07-21
-        return true;
+        return (matchingValue(base.getAcceptedValueType(), attaching.getInnerValueType()));
+    }
+
+    private static boolean matchingValue(ValueType base, ValueType attaching) {
+        return (base == attaching || base == ValueType.ANY || attaching == ValueType.ANY || isNumberValue(base) && isNumberValue(attaching));
+    }
+
+    private static boolean isNumberValue(ValueType valueType) {
+        return (valueType == ValueType.NUMBER || valueType == ValueType.INT_NUMBER);
     }
 
     private static boolean isConnected(ConnectionArea connectFrom, ConnectionArea connectTo) {
