@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class TileType implements Serializable {
-    String name;
-    String textureName;
+    public String name;
+    public String textureName;
     private static final long serialVersionUID = 1233613063064495682L;
 
     private transient static String[] textureNames = new String[]{"block_bounds_full", "block_clear_full", "block_heart_cutout", "block_star_cutout", "block_striped_full"};

@@ -45,7 +45,7 @@ public class ActorInitializer {
     }
 
     public static void addActorClass(CustomActorToInit actorToInit) {
-        instance.actorToInit.put(actorToInit.name, actorToInit);
+        instance.actorToInit.put(actorToInit.tile.name, actorToInit);
     }
 
     public static LinkedList<ExecutableProducer> getListenerList(String name) {
@@ -71,17 +71,17 @@ public class ActorInitializer {
         instance.actorToInit.get(className).actionPerTick.add(executable);
     }
 
-    public static LinkedList<CustomActorToInit> getCustomActors() {
-        LinkedList<CustomActorToInit> output = new LinkedList<>();
+    public static LinkedList<TileType> getCustomActors() {
+        LinkedList<TileType> output = new LinkedList<>();
         for (ActorToInit actor : instance.actorToInit.values())
             if (actor instanceof CustomActorToInit)
-                output.add((CustomActorToInit) actor);
+                output.add(actor.tile);
         return output;
     }
 
     public static Texture getActorTexture(String name) {
         if (instance.actorToInit.containsKey(name))
-            return instance.actorToInit.get(name).getTexture();
+            return instance.actorToInit.get(name).tile.getTexture();
         return null;
     }
 

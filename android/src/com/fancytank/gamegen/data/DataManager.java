@@ -3,6 +3,7 @@ package com.fancytank.gamegen.data;
 import com.fancytank.gamegen.SaveListAdapter;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.CustomActorToInit;
+import com.fancytank.gamegen.game.actor.TileType;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 
 import java.io.File;
@@ -38,8 +39,8 @@ public class DataManager {
     }
 
     private static void loadActors(SaveInstance save) {
-        for (CustomActorToInit tile : save.tiles)
-            ActorInitializer.addActorClass(tile);
+        for (TileType tile : save.tiles)
+            ActorInitializer.addActorClass(new CustomActorToInit(tile.name, tile.textureName));
     }
 
     public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
@@ -50,9 +51,9 @@ public class DataManager {
         }
     }
 
-    private static CustomActorToInit[] fetchActors() {
-        LinkedList<CustomActorToInit> list = ActorInitializer.getCustomActors();
-        return list.toArray(new CustomActorToInit[list.size()]);
+    private static TileType[] fetchActors() {
+        LinkedList<TileType> list = ActorInitializer.getCustomActors();
+        return list.toArray(new TileType[list.size()]);
     }
 
     public static void deleteProject(String absolutePath, String projectName) {

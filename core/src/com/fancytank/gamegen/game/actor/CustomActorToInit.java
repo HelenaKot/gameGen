@@ -1,7 +1,7 @@
 package com.fancytank.gamegen.game.actor;
 
 public class CustomActorToInit extends ActorToInit {
-    CustomActorToInit(String name, String textureName) {
+    public CustomActorToInit(String name, String textureName) {
         super(name, textureName);
     }
 
