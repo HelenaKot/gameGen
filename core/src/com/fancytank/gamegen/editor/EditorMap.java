@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.editor;
 
+import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.actor.BaseActor;
@@ -21,6 +22,7 @@ public class EditorMap implements MapType {
 
     private void initEmptyMap(int width, int height) {
         map = new EditorActor[width][height];
+        EditorActor.setBrush("empty", Color.CORAL);
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 initActor(new EditorActor(x, y));

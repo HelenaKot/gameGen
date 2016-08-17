@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.game.actor;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.fancytank.gamegen.game.script.ExecutableProducer;
 
 import java.util.HashMap;
@@ -12,17 +13,17 @@ public class ActorInitializer {
     public ActorInitializer() {
         if (instance == null) {
             actorToInit = new HashMap<>();
-            actorToInit.put("unspecified", new ActorToInit() {
+            actorToInit.put("unspecified", new ActorToInit("unspecified", null) {
                 BaseActor createInstance(int x, int y) {
                     return new EmptyActor(x, y, "unspecified");
                 }
             }); // my "nullobject"
-            actorToInit.put("empty", new ActorToInit() {
+            actorToInit.put("empty", new ActorToInit("empty", null) {
                 BaseActor createInstance(int x, int y) {
                     return new EmptyActor(x, y, "empty");
                 }
             });
-            actorToInit.put("generic", new ActorToInit() {
+            actorToInit.put("generic", new ActorToInit("generic", "block_bounds_full") {
                 BaseActor createInstance(int x, int y) {
                     return new GenericActor(x, y, "generic");
                 }
@@ -71,11 +72,17 @@ public class ActorInitializer {
     }
 
     public static LinkedList<CustomActorToInit> getCustomActors() {
-        LinkedList<CustomActorToInit> output = new LinkedList();
+        LinkedList<CustomActorToInit> output = new LinkedList<>();
         for (ActorToInit actor : instance.actorToInit.values())
             if (actor instanceof CustomActorToInit)
                 output.add((CustomActorToInit) actor);
         return output;
+    }
+
+    public static Texture getActorTexture(String name) {
+        if (instance.actorToInit.containsKey(name))
+            return instance.actorToInit.get(name).getTexture();
+        return null;
     }
 
 }
