@@ -4,6 +4,7 @@ import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.BaseActor;
+import com.fancytank.gamegen.game.actor.TileType;
 
 public class GameMap implements MapType {
     int widthPadding, heightOffset;
@@ -16,6 +17,19 @@ public class GameMap implements MapType {
         if (map == null)
             initEmptyMap(width, height);
         return this;
+    }
+
+    public MapType initFromBoard(int width, int height, int heightOffset, Board board) {
+        initMapFromBoard(board);
+        return init(width, height, heightOffset);
+    }
+
+    private void initMapFromBoard(Board mapBoard) {
+        TileType[][] board = mapBoard.board;
+        map = new BaseActor[mapBoard.width][mapBoard.height];
+        for (int x = 0; x < mapBoard.width; x++)
+            for (int y = 0; y < mapBoard.height; y++)
+                initActor(ActorInitializer.getInstanceOf(board[x][y].name, x, y));
     }
 
     private void initEmptyMap(int width, int height) {
