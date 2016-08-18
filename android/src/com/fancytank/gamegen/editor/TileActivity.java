@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 
@@ -29,7 +30,7 @@ public class TileActivity extends Activity {
         String name = tileName.getText().toString();
         String imageName = (String) gridView.getAdapter().getItem(selectedId);
         if (name.length() > 0)
-            ActorInitializer.addActorClass(name, imageName);
+            ActorInitializer.addActorClass(name, imageName, Color.WHITE.toString());
         super.onBackPressed();
     }
 }

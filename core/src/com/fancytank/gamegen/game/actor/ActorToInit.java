@@ -9,8 +9,8 @@ abstract class ActorToInit {
     LinkedList<ExecutableProducer> actionListeners;
     TileType tile;
 
-    ActorToInit(String name, String textureName) {
-        tile = new TileType(name, textureName);
+    ActorToInit(String name, String textureName, String tint) {
+        tile = new TileType(name, textureName, tint);
         actionPerTick = new LinkedList<>();
         actionListeners = new LinkedList<>();
     }

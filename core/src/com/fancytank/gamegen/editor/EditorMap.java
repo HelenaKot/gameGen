@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.actor.BaseActor;
+import com.fancytank.gamegen.game.actor.TileType;
 import com.fancytank.gamegen.game.map.Board;
 import com.fancytank.gamegen.game.map.MapType;
 
@@ -43,7 +44,18 @@ public class EditorMap implements MapType {
         MainGdx.addToStage(block);
     }
 
+    //todo TODO
     public Board getMapAsBoard() {
+        int width = map.length, height = map[0].length;
+        Board output = new Board(width, height);
+        for (int i = 0; i < width; i++)
+            for (int j = 0; j < height; j++)
+                output.board[i][j] = new TileType(map[i][j].className, map[i][j].className, map[i][j].tint.toString());
         return null;
     }
+
+    public MapType initFromBoard(int width, int height, int heightOffset, Board board) {
+        return this;
+    }
+
 }

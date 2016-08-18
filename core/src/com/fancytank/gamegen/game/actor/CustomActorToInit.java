@@ -1,8 +1,12 @@
 package com.fancytank.gamegen.game.actor;
 
 public class CustomActorToInit extends ActorToInit {
-    public CustomActorToInit(String name, String textureName) {
-        super(name, textureName);
+    public CustomActorToInit(String name, String textureName, String colorHex) {
+        super(name, textureName, colorHex);
+    }
+
+    public CustomActorToInit(TileType tile) {
+        super(tile.name, tile.textureName, tile.colorHex);
     }
 
     @Override

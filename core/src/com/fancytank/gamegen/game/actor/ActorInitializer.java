@@ -1,5 +1,6 @@
 package com.fancytank.gamegen.game.actor;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.fancytank.gamegen.game.script.ExecutableProducer;
 
@@ -13,17 +14,17 @@ public class ActorInitializer {
     public ActorInitializer() {
         if (instance == null) {
             actorToInit = new HashMap<>();
-            actorToInit.put("unspecified", new ActorToInit("unspecified", null) {
+            actorToInit.put("unspecified", new ActorToInit("unspecified", null, null) {
                 BaseActor createInstance(int x, int y) {
                     return new EmptyActor(x, y, "unspecified");
                 }
             }); // my "nullobject"
-            actorToInit.put("empty", new ActorToInit("empty", null) {
+            actorToInit.put("empty", new ActorToInit("empty", null, null) {
                 BaseActor createInstance(int x, int y) {
                     return new EmptyActor(x, y, "empty");
                 }
             });
-            actorToInit.put("generic", new ActorToInit("generic", "block_bounds_full") {
+            actorToInit.put("generic", new ActorToInit("generic", "block_bounds_full", Color.WHITE.toString()) {
                 BaseActor createInstance(int x, int y) {
                     return new GenericActor(x, y, "generic");
                 }
@@ -40,8 +41,8 @@ public class ActorInitializer {
         return names.toArray(new String[names.size()]);
     }
 
-    public static void addActorClass(String name, String textureName) {
-        instance.actorToInit.put(name, new CustomActorToInit(name, textureName));
+    public static void addActorClass(String name, String textureName, String defaultColorHex) {
+        instance.actorToInit.put(name, new CustomActorToInit(name, textureName, defaultColorHex));
     }
 
     public static void addActorClass(CustomActorToInit actorToInit) {

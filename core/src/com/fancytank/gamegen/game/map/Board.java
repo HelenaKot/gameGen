@@ -6,9 +6,13 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 public class Board implements Serializable {
-    TileType[][] board;
+    public TileType[][] board;
     public int width, height;
     private static final long serialVersionUID = 1243613063057895682L;
+
+    public Board(int width, int height) {
+        board = new TileType[this.width = width][this.height = height];
+    }
 
     public Board(int width, int height, TileType initTile) {
         board = new TileType[this.width = width][this.height = height];
