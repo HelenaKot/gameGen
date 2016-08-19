@@ -11,6 +11,6 @@ public class CustomActorToInit extends ActorToInit {
 
     @Override
     BaseActor createInstance(int x, int y) {
-        return new GenericActor(x, y, tile.name, tile.getTexture());
+        return new GenericActor(x, y, tile.name, tile.getTexture(), tile.tint);
     }
 }

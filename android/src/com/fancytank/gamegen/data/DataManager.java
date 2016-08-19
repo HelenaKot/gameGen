@@ -40,7 +40,7 @@ public class DataManager {
 
     private static void loadActors(SaveInstance save) {
         for (TileType tile : save.tiles)
-            ActorInitializer.addActorClass(new CustomActorToInit(tile.name, tile.textureName));
+            ActorInitializer.addActorClass(new CustomActorToInit(tile));
     }
 
     public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
