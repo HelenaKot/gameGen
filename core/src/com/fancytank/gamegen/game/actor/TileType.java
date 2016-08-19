@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
