@@ -19,6 +19,7 @@ public class GameMap implements MapType {
         return this;
     }
 
+    @Override
     public MapType initFromBoard(int width, int height, int heightOffset, Board board) {
         initMapFromBoard(board);
         return init(width, height, heightOffset);

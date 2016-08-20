@@ -1,9 +1,11 @@
 package com.fancytank.gamegen.data;
 
+import com.fancytank.gamegen.SaveInstance;
 import com.fancytank.gamegen.SaveListAdapter;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.CustomActorToInit;
 import com.fancytank.gamegen.game.actor.TileType;
+import com.fancytank.gamegen.game.map.BoardManager;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 
 import java.io.File;
@@ -31,6 +33,7 @@ public class DataManager {
         try {
             SaveInstance save = loadFile(absolutePath, projectName);
             loadActors(save);
+            BoardManager.setInstance(save.boards);
             return save.blocks;
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +48,7 @@ public class DataManager {
 
     public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
         try {
-            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace, fetchActors()));
+            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace, fetchActors(), BoardManager.getBoards()));
         } catch (IOException e) {
             e.printStackTrace();
         }

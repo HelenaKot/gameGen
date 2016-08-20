@@ -14,7 +14,10 @@ import android.widget.TextView;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.editor.BlockButton;
+import com.fancytank.gamegen.editor.EditorMap;
 import com.fancytank.gamegen.editor.TileActivity;
+import com.fancytank.gamegen.game.map.BoardManager;
+import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.programming.BlocksExpendableList;
 import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
@@ -98,7 +101,10 @@ public class GDXActivity extends AndroidApplication {
 
     private void initDesignButtons(View designButtons) {
         designButtons.findViewById(R.id.button_programming).setOnClickListener(
-                v -> EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN));
+                v -> {
+                    BoardManager.addBoard("todo", ((EditorMap) MapManager.getInstance()).getMapAsBoard());
+                    EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
+                });
         designButtons.findViewById(R.id.button_new_class).setOnClickListener(
                 v -> {
                     Intent intent = new Intent(getContext(), TileActivity.class);

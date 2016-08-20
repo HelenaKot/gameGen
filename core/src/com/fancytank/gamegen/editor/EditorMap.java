@@ -21,12 +21,27 @@ public class EditorMap implements MapType {
         return this;
     }
 
+    @Override
+    public MapType initFromBoard(int width, int height, int heightOffset, Board board) {
+        init(width, height, heightOffset);
+        setBoardProperties(board);
+        return this;
+    }
+
     private void initEmptyMap(int width, int height) {
         map = new EditorActor[width][height];
         EditorActor.setBrush("empty", Color.CORAL);
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 initActor(new EditorActor(x, y));
+    }
+
+    private void setBoardProperties(Board board) {
+        for (int x = 0; x < board.width; x++)
+            for (int y = 0; y < board.height; y++) {
+                TileType tile = board.board[x][y];
+                map[x][y].setProperties(tile.name, tile.tint, tile.getTexture());
+            }
     }
 
     @Override
