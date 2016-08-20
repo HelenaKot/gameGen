@@ -9,23 +9,24 @@ import com.fancytank.gamegen.game.map.Board;
 import com.fancytank.gamegen.game.map.MapType;
 
 public class EditorMap implements MapType {
-    int widthPadding, heightOffset;
+    int widthPadding;
     private EditorActor[][] map;
 
     @Override
-    public MapType init(int width, int height, int heightOffset) {
-        this.heightOffset = heightOffset;
+    public MapType init() {
         widthPadding = Constant.MAP_PADDING;
         if (map == null)
-            initEmptyMap(width, height);
+            initEmptyMap(Constant.MAP_WIDTH, Constant.MAP_HEIGHT);
         return this;
     }
 
     @Override
-    public MapType initFromBoard(int width, int height, int heightOffset, Board board) {
-        init(width, height, heightOffset);
-        setBoardProperties(board);
-        return this;
+    public void setBoard(Board mapBoard) {
+        for (int x = 0; x < mapBoard.width; x++)
+            for (int y = 0; y < mapBoard.height; y++) {
+                TileType tile = mapBoard.board[x][y];
+                map[x][y].setProperties(tile.name, tile.tint, tile.getTexture());
+            }
     }
 
     private void initEmptyMap(int width, int height) {
@@ -34,14 +35,6 @@ public class EditorMap implements MapType {
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 initActor(new EditorActor(x, y));
-    }
-
-    private void setBoardProperties(Board board) {
-        for (int x = 0; x < board.width; x++)
-            for (int y = 0; y < board.height; y++) {
-                TileType tile = board.board[x][y];
-                map[x][y].setProperties(tile.name, tile.tint, tile.getTexture());
-            }
     }
 
     @Override
@@ -55,7 +48,7 @@ public class EditorMap implements MapType {
 
     private void initActor(EditorActor block) {
         map[block.x][block.y] = block;
-        map[block.x][block.y].setPosition(block.x * Constant.BLOCK_SIZE + widthPadding, (block.y + heightOffset) * Constant.BLOCK_SIZE);
+        map[block.x][block.y].setPosition(block.x * Constant.BLOCK_SIZE + widthPadding, block.y * Constant.BLOCK_SIZE);
         MainGdx.addToStage(block);
     }
 

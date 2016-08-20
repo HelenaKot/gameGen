@@ -3,9 +3,9 @@ package com.fancytank.gamegen.game.map;
 import com.fancytank.gamegen.game.actor.BaseActor;
 
 public interface MapType {
-    MapType init(int width, int height, int heightOffset);
+    MapType init();
 
-    MapType initFromBoard(int width, int height, int heightOffset, Board board);
+    void setBoard(Board mapBoard);
 
     void changeBlock(BaseActor actor);
 

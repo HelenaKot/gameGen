@@ -10,8 +10,8 @@ public class MapManager {
     MapType gameMap;
 
     public MapManager(float width, float height, MapType mapClass) {
-        Constant.setUpBlockConstants((int) width);
-        gameMap = mapClass.init((int) width / Constant.BLOCK_SIZE, (int) height / Constant.BLOCK_SIZE, 0);
+        Constant.setUpBlockConstants((int) width, (int) height);
+        gameMap = mapClass.init();
         instance = this;
     }
 

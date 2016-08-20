@@ -7,25 +7,19 @@ import com.fancytank.gamegen.game.actor.BaseActor;
 import com.fancytank.gamegen.game.actor.TileType;
 
 public class GameMap implements MapType {
-    int widthPadding, heightOffset;
+    int widthPadding;
     private BaseActor[][] map;
 
     @Override
-    public MapType init(int width, int height, int heightOffset) {
-        this.heightOffset = heightOffset;
+    public MapType init() {
         widthPadding = Constant.MAP_PADDING;
         if (map == null)
-            initEmptyMap(width, height);
+            initEmptyMap(Constant.MAP_WIDTH, Constant.MAP_HEIGHT);
         return this;
     }
 
     @Override
-    public MapType initFromBoard(int width, int height, int heightOffset, Board board) {
-        initMapFromBoard(board);
-        return init(width, height, heightOffset);
-    }
-
-    private void initMapFromBoard(Board mapBoard) {
+    public void setBoard(Board mapBoard) {
         TileType[][] board = mapBoard.board;
         map = new BaseActor[mapBoard.width][mapBoard.height];
         for (int x = 0; x < mapBoard.width; x++)
@@ -58,7 +52,7 @@ public class GameMap implements MapType {
 
     private void initActor(BaseActor block) {
         map[block.x][block.y] = block;
-        map[block.x][block.y].setPosition(block.x * Constant.BLOCK_SIZE + widthPadding, (block.y + heightOffset) * Constant.BLOCK_SIZE);
+        map[block.x][block.y].setPosition(block.x * Constant.BLOCK_SIZE + widthPadding, block.y * Constant.BLOCK_SIZE);
         MainGdx.addToStage(block);
     }
 }
