@@ -30,7 +30,7 @@ public class EditorMap implements MapType {
 
     private void initEmptyMap(int width, int height) {
         map = new EditorActor[width][height];
-        EditorActor.setBrush("empty", Color.CORAL);
+        EditorActor.setBrush("empty", Color.CORAL); //todo
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 initActor(new EditorActor(x, y));
@@ -59,18 +59,12 @@ public class EditorMap implements MapType {
         MainGdx.addToStage(block);
     }
 
-    //todo TODO
     public Board getMapAsBoard() {
         int width = map.length, height = map[0].length;
         Board output = new Board(width, height);
         for (int i = 0; i < width; i++)
             for (int j = 0; j < height; j++)
                 output.board[i][j] = new TileType(map[i][j].className, map[i][j].className, map[i][j].tint.toString());
-        return null;
+        return output;
     }
-
-    public MapType initFromBoard(int width, int height, int heightOffset, Board board) {
-        return this;
-    }
-
 }

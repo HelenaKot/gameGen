@@ -15,7 +15,7 @@ public class EditorActor extends Actor {
     String className;
     Color tint;
     Texture texture;
-    
+
     private static String brushClass;
     private static Color brushColor;
     private static Texture brushTexture;
@@ -30,6 +30,12 @@ public class EditorActor extends Actor {
         texture = defaultTexture;
         setBounds(getX(), getY(), Constant.BLOCK_SIZE, Constant.BLOCK_SIZE);
         addListener(classSwapListener());
+    }
+
+    public void setProperties(String className, Color tint, Texture texture) {
+        this.texture = texture;
+        this.tint = tint;
+        this.className = className;
     }
 
     public void draw(Batch batch, float alpha) {
@@ -48,9 +54,7 @@ public class EditorActor extends Actor {
     private InputListener classSwapListener() {
         return new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                texture = brushTexture;
-                tint = brushColor;
-                className = brushClass;
+                setProperties(brushClass, brushColor, brushTexture);
                 return true;
             }
         };
