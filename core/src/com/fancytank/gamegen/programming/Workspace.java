@@ -70,9 +70,7 @@ public class Workspace {
             ByteArrayInputStream bais = new ByteArrayInputStream(byteData);
             ProgrammingBlockSavedInstance clone = (ProgrammingBlockSavedInstance) new ObjectInputStream(bais).readObject();
             return clone.restore();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

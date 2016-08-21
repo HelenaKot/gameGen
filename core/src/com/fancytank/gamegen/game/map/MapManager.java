@@ -19,6 +19,10 @@ public class MapManager {
         return instance.gameMap;
     }
 
+    public static void setBoard(Board board) {
+        getInstance().setBoard(board);
+    }
+
     public static void changeBlock(BaseActor actor) {
         instance.gameMap.changeBlock(actor);
     }

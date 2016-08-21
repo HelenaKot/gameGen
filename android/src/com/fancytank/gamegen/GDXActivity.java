@@ -20,7 +20,6 @@ import com.fancytank.gamegen.game.map.BoardManager;
 import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.programming.BlocksExpendableList;
 import com.fancytank.gamegen.programming.Workspace;
-import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.wunderlist.slidinglayer.SlidingLayer;
 
@@ -79,7 +78,7 @@ public class GDXActivity extends AndroidApplication {
         switch (screen) {
             case EDITOR_SCREEN:
                 list.populateList();
-                loadWorkspace(gdxFrame.getRootView());
+                loadProgrammingBlocks(gdxFrame.getRootView());
                 break;
             case GAME_SCREEN:
                 GameScreen.loadGame(loadDataFromFile(gdxFrame.getRootView()).blocks);
@@ -92,12 +91,12 @@ public class GDXActivity extends AndroidApplication {
         slidingLayer.openLayer(true);
     }
 
-    public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
+    public void loadProgrammingBlocks(View view) throws IOException, ClassNotFoundException {
         Workspace.loadBlocks(loadDataFromFile(view).blocks);
     }
 
     private SaveInstance loadDataFromFile(View view) throws IOException, ClassNotFoundException {
-        return DataManager.loadWorkspace(view.getContext().getFilesDir().getAbsolutePath(), saveName);
+        return (saveInstance == null) ? saveInstance = DataManager.loadWorkspace(view.getContext().getFilesDir().getAbsolutePath(), saveName) : saveInstance;
     }
 
     private void initDesignButtons(View designButtons) {
@@ -124,7 +123,7 @@ public class GDXActivity extends AndroidApplication {
         debugButtons.findViewById(R.id.button_debug_load).setOnClickListener(
                 v -> {
                     try {
-                        loadWorkspace(v);
+                        loadProgrammingBlocks(v);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
