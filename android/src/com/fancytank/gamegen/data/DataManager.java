@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class DataManager {
@@ -29,15 +30,14 @@ public class DataManager {
         return new File[0];
     }
 
-    public static ProgrammingBlockSavedInstance[] loadWorkspace(String absolutePath, String projectName) {
+    public static SaveInstance loadWorkspace(String absolutePath, String projectName) {
         try {
             SaveInstance save = loadFile(absolutePath, projectName);
             loadActors(save);
             BoardManager.setInstance(save.boards);
-            return save.blocks;
+            return save;
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ProgrammingBlockSavedInstance[0];
+            return new SaveInstance(projectName, new ProgrammingBlockSavedInstance[0], null, new HashMap<>());
         }
     }
 

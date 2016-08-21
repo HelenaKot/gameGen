@@ -35,6 +35,7 @@ public class GDXActivity extends AndroidApplication {
     private BlocksExpendableList list;
     private TextView debugText;
     private String saveName = "untitled";
+    private static SaveInstance saveInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class GDXActivity extends AndroidApplication {
                 loadWorkspace(gdxFrame.getRootView());
                 break;
             case GAME_SCREEN:
-                GameScreen.loadGame(loadDataFromFile(gdxFrame.getRootView()));
+                GameScreen.loadGame(loadDataFromFile(gdxFrame.getRootView()).blocks);
                 break;
         }
     }
@@ -92,10 +93,10 @@ public class GDXActivity extends AndroidApplication {
     }
 
     public void loadWorkspace(View view) throws IOException, ClassNotFoundException {
-        Workspace.loadBlocks(loadDataFromFile(view));
+        Workspace.loadBlocks(loadDataFromFile(view).blocks);
     }
 
-    private ProgrammingBlockSavedInstance[] loadDataFromFile(View view) throws IOException, ClassNotFoundException {
+    private SaveInstance loadDataFromFile(View view) throws IOException, ClassNotFoundException {
         return DataManager.loadWorkspace(view.getContext().getFilesDir().getAbsolutePath(), saveName);
     }
 
