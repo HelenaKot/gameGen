@@ -41,6 +41,12 @@
             android:text="delete all" />
 
         <Button
+            android:id="@+id/button_debug_design"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="design" />
+
+        <Button
             android:id="@+id/button_debug_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

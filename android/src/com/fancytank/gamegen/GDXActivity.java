@@ -139,6 +139,8 @@ public class GDXActivity extends AndroidApplication {
                     else
                         EventBus.getDefault().post(ScreenEnum.GAME_SCREEN);
                 });
+        debugButtons.findViewById(R.id.button_debug_design).setOnClickListener(
+                v -> EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN));
     }
 
     //todo to wszystko zniknie, jak debug nie będzie potrzebny
