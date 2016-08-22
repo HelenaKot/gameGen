@@ -76,6 +76,10 @@ public class GDXActivity extends AndroidApplication {
     private void setupScreen(ScreenEnum screen) throws IOException, ClassNotFoundException {
         setToolsLayerContent(screen);
         switch (screen) {
+            case DESIGN_SCREEN:
+                getDataFromManager(gdxFrame.getRootView());
+                DesignScreen.loadBoard(BoardManager.get("default"));
+                break;
             case EDITOR_SCREEN:
                 list.populateList();
                 Workspace.populateWorkspace(getDataFromManager(gdxFrame.getRootView()).blocks);
@@ -98,7 +102,7 @@ public class GDXActivity extends AndroidApplication {
     private void initDesignButtons(View designButtons) {
         designButtons.findViewById(R.id.button_programming).setOnClickListener(
                 v -> {
-                    BoardManager.addBoard("todo", ((EditorMap) MapManager.getInstance()).getMapAsBoard());
+                    BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
                     EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
                 });
         designButtons.findViewById(R.id.button_new_class).setOnClickListener(

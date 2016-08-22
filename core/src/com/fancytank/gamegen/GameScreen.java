@@ -10,20 +10,16 @@ import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 import org.greenrobot.eventbus.EventBus;
 
 public class GameScreen extends AbstractScreen {
-    static GameScreen instance;
-    private float width, height;
 
     @Override
     public void buildStage() {
-        width = getWidth();
-        height = getHeight();
-        instance = this;
+        Constant.setUpBlockConstants((int) getWidth(), (int) getHeight());
     }
 
     public static void loadGame(ProgrammingBlockSavedInstance[] data) {
         new ActorInitializer();
         ScriptLoader.load(data);
-        new MapManager(instance.width, instance.height, new GameMap());
+        new MapManager(new GameMap());
     }
 
     @Override

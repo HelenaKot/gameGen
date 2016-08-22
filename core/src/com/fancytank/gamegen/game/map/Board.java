@@ -16,6 +16,7 @@ public class Board implements Serializable {
 
     public Board(int width, int height, TileType initTile) {
         board = new TileType[this.width = width][this.height = height];
-        Arrays.fill(board, initTile);
+        for (int row = 0; row < board.length; row++)
+            Arrays.fill(board[row], initTile);
     }
 }

@@ -47,7 +47,8 @@ public class TileTypeAdapter extends BaseAdapter {
             imageView = inflater.inflate(R.layout.image_row, null);
             imageView.setLayoutParams(new GridView.LayoutParams(248, 248));
             imageView.setPadding(8, 8, 8, 8);
-            ((ImageView) imageView.findViewById(R.id.image)).setImageDrawable(getImage(context, actorNames[position]));
+            if (ActorInitializer.getActorTile(actorNames[position]).textureName != null)
+                ((ImageView) imageView.findViewById(R.id.image)).setImageDrawable(getImage(context, actorNames[position]));
         } else {
             imageView = convertView;
         }

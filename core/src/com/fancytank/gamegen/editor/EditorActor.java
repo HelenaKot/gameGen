@@ -13,10 +13,12 @@ import com.fancytank.gamegen.game.actor.ActorInitializer;
 public class EditorActor extends Actor {
     int x, y;
     String className;
+    String textureName;
     Color tint;
     Texture texture;
 
     private static String brushClass;
+    private static String brushTextureName;
     private static Color brushColor;
     private static Texture brushTexture;
     private static Texture defaultTexture;
@@ -32,10 +34,11 @@ public class EditorActor extends Actor {
         addListener(classSwapListener());
     }
 
-    public void setProperties(String className, Color tint, Texture texture) {
-        this.texture = texture;
-        this.tint = tint;
+    public void setProperties(String className, String textureName, Color tint, Texture texture) {
         this.className = className;
+        this.textureName = textureName;
+        this.tint = tint;
+        this.texture = texture;
     }
 
     public void draw(Batch batch, float alpha) {
@@ -48,13 +51,14 @@ public class EditorActor extends Actor {
     public static void setBrush(String className, Color tint) {
         brushClass = className;
         brushColor = tint;
+        brushTextureName = ActorInitializer.getActorTile(className).textureName;
         brushTexture = ActorInitializer.getActorTile(className).getTexture();
     }
 
     private InputListener classSwapListener() {
         return new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                setProperties(brushClass, brushColor, brushTexture);
+                setProperties(brushClass, brushTextureName, brushColor, brushTexture);
                 return true;
             }
         };

@@ -1,6 +1,5 @@
 package com.fancytank.gamegen.game.map;
 
-import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.actor.BaseActor;
 
 import java.util.ArrayList;
@@ -9,18 +8,17 @@ public class MapManager {
     public static MapManager instance;
     MapType gameMap;
 
-    public MapManager(float width, float height, MapType mapClass) {
-        Constant.setUpBlockConstants((int) width, (int) height);
+    public MapManager(MapType mapClass) {
         gameMap = mapClass.init();
         instance = this;
     }
 
-    public static MapType getInstance() {
+    public static MapType getMap() {
         return instance.gameMap;
     }
 
     public static void setBoard(Board board) {
-        getInstance().setBoard(board);
+        getMap().setBoard(board);
     }
 
     public static void changeBlock(BaseActor actor) {
@@ -29,7 +27,7 @@ public class MapManager {
 
     public static ArrayList<BaseActor> getBlocksOfClass(String className) {
         ArrayList<BaseActor> output = new ArrayList<>();
-        for (BaseActor[] row : getInstance().getMap())
+        for (BaseActor[] row : getMap().getMap())
             for (BaseActor actor : row)
                 if (actor.getClassName().equals(className))
                     output.add(actor);

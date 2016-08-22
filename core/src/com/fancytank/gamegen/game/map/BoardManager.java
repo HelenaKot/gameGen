@@ -1,12 +1,14 @@
 package com.fancytank.gamegen.game.map;
 
 import com.fancytank.gamegen.game.Constant;
+import com.fancytank.gamegen.game.actor.ActorInitializer;
 
 import java.util.HashMap;
 
 public class BoardManager {
     static BoardManager instance;
     HashMap<String, Board> boards;
+    private Board defaultBoard;
 
     public BoardManager() {
         boards = new HashMap<>();
@@ -31,7 +33,9 @@ public class BoardManager {
     }
 
     public static Board get(String key) {
-        return (getInstance().boards.containsKey(key)) ? getInstance().boards.get(key) : new Board(Constant.MAP_WIDTH, Constant.MAP_HEIGHT);
+        if (!getInstance().boards.containsKey(key))
+            getInstance().boards.put(key, new Board(Constant.MAP_WIDTH, Constant.MAP_HEIGHT, ActorInitializer.getActorTile("generic")));
+        return getInstance().boards.get(key);
     }
 
 }
