@@ -80,10 +80,9 @@ public class ActorInitializer {
         return output;
     }
 
-    public static Texture getActorTexture(String name) {
+    public static TileType getActorTile(String name) {
         if (instance.actorToInit.containsKey(name))
-            return instance.actorToInit.get(name).tile.getTexture();
+            return instance.actorToInit.get(name).tile;
         return null;
     }
-
 }

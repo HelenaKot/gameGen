@@ -2,7 +2,6 @@ package com.fancytank.gamegen.editor;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -13,28 +12,29 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.fancytank.gamegen.R;
+import com.fancytank.gamegen.game.actor.ActorInitializer;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ImageAdapter extends BaseAdapter {
+public class TileTypeAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private static String[] textureNames = new String[]{"block_bounds_full", "block_clear_full", "block_heart_cutout", "block_star_cutout", "block_striped_full"};
     AssetManager assetManager;
+    private String[] actorNames = ActorInitializer.getActorNames();
 
-    public ImageAdapter(Context c) {
+    public TileTypeAdapter(Context c) {
         context = c;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assetManager = context.getAssets();
     }
 
     public int getCount() {
-        return textureNames.length;
+        return actorNames.length;
     }
 
     public Object getItem(int position) {
-        return textureNames[position];
+        return null;
     }
 
     public long getItemId(int position) {
@@ -47,7 +47,7 @@ public class ImageAdapter extends BaseAdapter {
             imageView = inflater.inflate(R.layout.image_row, null);
             imageView.setLayoutParams(new GridView.LayoutParams(248, 248));
             imageView.setPadding(8, 8, 8, 8);
-            ((ImageView) imageView.findViewById(R.id.image)).setImageDrawable(loadImage(context, textureNames[position]));
+            ((ImageView) imageView.findViewById(R.id.image)).setImageDrawable(getImage(context, actorNames[position]));
         } else {
             imageView = convertView;
         }
@@ -55,11 +55,12 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
 
-    private Drawable loadImage(Context c, String name) {
+    private Drawable getImage(Context c, String name) {
+        System.out.println(c.getFilesDir().getAbsolutePath() + name);
         try {
-            InputStream is = assetManager.open(name + ".png");
+            InputStream is = assetManager.open(ActorInitializer.getActorTile(name).textureName + ".png");
             Drawable output = Drawable.createFromStream(is, null);
-            output.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY);
+            output.setColorFilter(ActorInitializer.getActorTile(name).tint.toIntBits(), PorterDuff.Mode.MULTIPLY);
             is.close();
             return output;
         } catch (IOException e) {

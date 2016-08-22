@@ -15,6 +15,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.editor.BlockButton;
 import com.fancytank.gamegen.editor.EditorMap;
+import com.fancytank.gamegen.editor.PickBrushActivity;
 import com.fancytank.gamegen.editor.TileActivity;
 import com.fancytank.gamegen.game.map.BoardManager;
 import com.fancytank.gamegen.game.map.MapManager;
@@ -110,6 +111,12 @@ public class GDXActivity extends AndroidApplication {
                     Intent intent = new Intent(getContext(), TileActivity.class);
                     getContext().startActivity(intent);
                 });
+        designButtons.findViewById(R.id.button_paint).setOnClickListener(
+                v -> {
+                    Intent intent = new Intent(getContext(), PickBrushActivity.class);
+                    getContext().startActivity(intent);
+                }
+        );
     }
 
     private void initDebugTools(View debugButtons) {
