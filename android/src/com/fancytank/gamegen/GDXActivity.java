@@ -35,7 +35,6 @@ public class GDXActivity extends AndroidApplication {
     private BlocksExpendableList list;
     private TextView debugText;
     private String saveName = "untitled";
-    private static SaveInstance saveInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +78,10 @@ public class GDXActivity extends AndroidApplication {
         switch (screen) {
             case EDITOR_SCREEN:
                 list.populateList();
-                loadProgrammingBlocks(gdxFrame.getRootView());
+                Workspace.populateWorkspace(getDataFromManager(gdxFrame.getRootView()).blocks);
                 break;
             case GAME_SCREEN:
-                GameScreen.loadGame(loadDataFromFile(gdxFrame.getRootView()).blocks);
+                GameScreen.loadGame(getDataFromManager(gdxFrame.getRootView()).blocks);
                 break;
         }
     }
@@ -92,12 +91,8 @@ public class GDXActivity extends AndroidApplication {
         slidingLayer.openLayer(true);
     }
 
-    public void loadProgrammingBlocks(View view) throws IOException, ClassNotFoundException {
-        Workspace.loadBlocks(loadDataFromFile(view).blocks);
-    }
-
-    private SaveInstance loadDataFromFile(View view) throws IOException, ClassNotFoundException {
-        return (saveInstance == null) ? saveInstance = DataManager.loadWorkspace(view.getContext().getFilesDir().getAbsolutePath(), saveName) : saveInstance;
+    private SaveInstance getDataFromManager(View view) throws IOException, ClassNotFoundException {
+        return DataManager.loadWorkspace(view.getContext().getFilesDir().getAbsolutePath(), saveName);
     }
 
     private void initDesignButtons(View designButtons) {
@@ -126,11 +121,11 @@ public class GDXActivity extends AndroidApplication {
         debugButtons.findViewById(R.id.button_debug_connectors).setOnClickListener(
                 v -> ConnectionArea.debug = !ConnectionArea.debug);
         debugButtons.findViewById(R.id.button_debug_save).setOnClickListener(
-                v -> DataManager.saveBlocks(v.getContext().getFilesDir().getAbsolutePath(), saveName, Workspace.getWorkspaceItemsToSave()));
+                v -> DataManager.saveWorkspace(v.getContext().getFilesDir().getAbsolutePath(), saveName, Workspace.getWorkspaceItemsToSave()));
         debugButtons.findViewById(R.id.button_debug_load).setOnClickListener(
                 v -> {
                     try {
-                        loadProgrammingBlocks(v);
+                        Workspace.populateWorkspace(getDataFromManager(v).blocks);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

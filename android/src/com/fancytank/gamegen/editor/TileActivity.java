@@ -14,9 +14,9 @@ import uz.shift.colorpicker.LineColorPicker;
 import uz.shift.colorpicker.Palette;
 
 public class TileActivity extends Activity {
-    EditText tileName;
-    GridView gridView;
-    LineColorPicker lineColorPicker;
+    private EditText tileName;
+    private GridView gridView;
+    private LineColorPicker lineColorPicker;
     private int selectedId = 0;
 
     @Override

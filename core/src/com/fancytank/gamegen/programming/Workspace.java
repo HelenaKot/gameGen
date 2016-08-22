@@ -29,7 +29,7 @@ public class Workspace {
         return output;
     }
 
-    public static void loadBlocks(ProgrammingBlockSavedInstance[] data) {
+    public static void populateWorkspace(ProgrammingBlockSavedInstance[] data) {
         clearWorkspace();
         if (data != null) {
             for (ProgrammingBlockSavedInstance block : data) {

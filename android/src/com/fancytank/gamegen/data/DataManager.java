@@ -20,6 +20,7 @@ import java.util.LinkedList;
 public class DataManager {
     private static String saveDir = "saved";
     private static File directory;
+    private static SaveInstance saveInstance;
 
     public static File[] getFiles(String patch) {
         try {
@@ -31,32 +32,24 @@ public class DataManager {
     }
 
     public static SaveInstance loadWorkspace(String absolutePath, String projectName) {
-        try {
-            SaveInstance save = loadFile(absolutePath, projectName);
-            loadActors(save);
-            BoardManager.setInstance(save.boards);
-            return save;
-        } catch (Exception e) {
-            return new SaveInstance(projectName, new ProgrammingBlockSavedInstance[0], null, new HashMap<>());
-        }
+        if (saveInstance == null)
+            try {
+                saveInstance = loadFile(absolutePath, projectName);
+                loadActors(saveInstance);
+                BoardManager.setInstance(saveInstance.boards);
+            } catch (Exception e) {
+                saveInstance = new SaveInstance(projectName, new ProgrammingBlockSavedInstance[0], null, new HashMap<>());
+            }
+        return saveInstance;
     }
 
-    private static void loadActors(SaveInstance save) {
-        for (TileType tile : save.tiles)
-            ActorInitializer.addActorClass(new CustomActorToInit(tile));
-    }
-
-    public static void saveBlocks(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
+    public static void saveWorkspace(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
         try {
             saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace, fetchActors(), BoardManager.getBoards()));
+            saveInstance = null;
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static TileType[] fetchActors() {
-        LinkedList<TileType> list = ActorInitializer.getCustomActors();
-        return list.toArray(new TileType[list.size()]);
     }
 
     public static void deleteProject(String absolutePath, String projectName) {
@@ -68,6 +61,16 @@ public class DataManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void loadActors(SaveInstance save) {
+        for (TileType tile : save.tiles)
+            ActorInitializer.addActorClass(new CustomActorToInit(tile));
+    }
+
+    private static TileType[] fetchActors() {
+        LinkedList<TileType> list = ActorInitializer.getCustomActors();
+        return list.toArray(new TileType[list.size()]);
     }
 
     private static SaveInstance loadFile(String absolutePath, String projectName) throws IOException, ClassNotFoundException {
