@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.MainGdx;
-import com.fancytank.gamegen.editor.TrashCan;
+import com.fancytank.gamegen.programming.TrashCan;
 import com.fancytank.gamegen.programming.BlockResizeEvent;
 import com.fancytank.gamegen.programming.Direction;
 import com.fancytank.gamegen.programming.data.BlockData;

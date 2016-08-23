@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
-import com.fancytank.gamegen.editor.BlockButton;
+import com.fancytank.gamegen.programming.BlockButton;
 import com.fancytank.gamegen.editor.EditorMap;
 import com.fancytank.gamegen.editor.PickBrushActivity;
 import com.fancytank.gamegen.editor.TileActivity;
