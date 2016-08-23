@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -27,6 +29,11 @@ public class TileType implements Serializable {
         if (textures == null)
             initTextures();
         return textures.get(textureName);
+    }
+
+    private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        s.defaultReadObject();
+        setColor(colorHex);
     }
 
     private static void initTextures() {
