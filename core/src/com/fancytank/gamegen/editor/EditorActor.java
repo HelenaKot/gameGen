@@ -48,9 +48,9 @@ public class EditorActor extends Actor {
         }
     }
 
-    public static void setBrush(String className, Color tint) {
+    public static void setBrush(String className) {
         brushClass = className;
-        brushColor = tint;
+        brushColor = Color.valueOf(ActorInitializer.getActorTile(className).colorHex);
         brushTextureName = ActorInitializer.getActorTile(className).textureName;
         brushTexture = ActorInitializer.getActorTile(className).getTexture();
     }

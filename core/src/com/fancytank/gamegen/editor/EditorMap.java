@@ -25,13 +25,13 @@ public class EditorMap implements MapType {
         for (int x = 0; x < mapBoard.width; x++)
             for (int y = 0; y < mapBoard.height; y++) {
                 TileType tile = mapBoard.board[x][y];
-                map[x][y].setProperties(tile.name, tile.textureName, tile.tint, tile.getTexture());
+                map[x][y].setProperties(tile.name, tile.textureName, Color.valueOf(tile.colorHex), tile.getTexture());
             }
     }
 
     private void initEmptyMap(int width, int height) {
         map = new EditorActor[width][height];
-        EditorActor.setBrush("empty", Color.CORAL); //todo
+        EditorActor.setBrush("empty");
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 initActor(new EditorActor(x, y));

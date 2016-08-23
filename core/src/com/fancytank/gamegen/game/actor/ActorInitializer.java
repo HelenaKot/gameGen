@@ -1,7 +1,5 @@
 package com.fancytank.gamegen.game.actor;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.fancytank.gamegen.game.script.ExecutableProducer;
 
 import java.util.HashMap;
@@ -14,17 +12,17 @@ public class ActorInitializer {
     public ActorInitializer() {
         if (instance == null) {
             actorToInit = new HashMap<>();
-            actorToInit.put("unspecified", new ActorToInit("unspecified", null, null) {
+            actorToInit.put("unspecified", new ActorToInit("unspecified", null, "#ffffff") {
                 BaseActor createInstance(int x, int y) {
                     return new EmptyActor(x, y, "unspecified");
                 }
             }); // my "nullobject"
-            actorToInit.put("empty", new ActorToInit("empty", null, null) {
+            actorToInit.put("empty", new ActorToInit("empty", null, "#ffffff") {
                 BaseActor createInstance(int x, int y) {
                     return new EmptyActor(x, y, "empty");
                 }
             });
-            actorToInit.put("generic", new ActorToInit("generic", "block_bounds_full", Color.WHITE.toString()) {
+            actorToInit.put("generic", new ActorToInit("generic", "block_bounds_full", "#ffffff") {
                 BaseActor createInstance(int x, int y) {
                     return new GenericActor(x, y, "generic");
                 }

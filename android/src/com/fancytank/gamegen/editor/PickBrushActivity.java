@@ -23,7 +23,7 @@ public class PickBrushActivity extends Activity {
 
     public void confirmBrush(View view) {
         String selectedTile = (String) gridView.getAdapter().getItem(selectedId);
-        System.out.println("TODO");
+        EditorActor.setBrush(selectedTile);
         super.onBackPressed();
     }
 }

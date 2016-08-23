@@ -8,7 +8,6 @@ import java.util.HashMap;
 public class BoardManager {
     static BoardManager instance;
     HashMap<String, Board> boards;
-    private Board defaultBoard;
 
     public BoardManager() {
         boards = new HashMap<>();

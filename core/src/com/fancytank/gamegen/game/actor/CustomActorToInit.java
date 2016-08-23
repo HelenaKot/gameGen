@@ -1,5 +1,7 @@
 package com.fancytank.gamegen.game.actor;
 
+import com.badlogic.gdx.graphics.Color;
+
 public class CustomActorToInit extends ActorToInit {
     public CustomActorToInit(String name, String textureName, String colorHex) {
         super(name, textureName, colorHex);
@@ -11,6 +13,6 @@ public class CustomActorToInit extends ActorToInit {
 
     @Override
     BaseActor createInstance(int x, int y) {
-        return new GenericActor(x, y, tile.name, tile.getTexture(), tile.tint);
+        return new GenericActor(x, y, tile.name, tile.getTexture(), Color.valueOf(tile.colorHex));
     }
 }

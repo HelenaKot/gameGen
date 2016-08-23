@@ -2,6 +2,7 @@ package com.fancytank.gamegen.editor;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class TileTypeAdapter extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        return null;
+        return actorNames[position];
     }
 
     public long getItemId(int position) {
@@ -61,7 +62,7 @@ public class TileTypeAdapter extends BaseAdapter {
         try {
             InputStream is = assetManager.open(ActorInitializer.getActorTile(name).textureName + ".png");
             Drawable output = Drawable.createFromStream(is, null);
-            output.setColorFilter(ActorInitializer.getActorTile(name).tint.toIntBits(), PorterDuff.Mode.MULTIPLY);
+            output.setColorFilter(Color.parseColor(ActorInitializer.getActorTile(name).colorHex), PorterDuff.Mode.MULTIPLY);
             is.close();
             return output;
         } catch (IOException e) {
