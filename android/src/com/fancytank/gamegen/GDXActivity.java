@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
-import com.fancytank.gamegen.programming.BlockButton;
 import com.fancytank.gamegen.editor.EditorMap;
 import com.fancytank.gamegen.editor.PickBrushActivity;
 import com.fancytank.gamegen.editor.TileActivity;
 import com.fancytank.gamegen.game.map.BoardManager;
 import com.fancytank.gamegen.game.map.MapManager;
+import com.fancytank.gamegen.programming.BlockButton;
 import com.fancytank.gamegen.programming.BlocksExpendableList;
 import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
@@ -78,14 +78,14 @@ public class GDXActivity extends AndroidApplication {
         switch (screen) {
             case DESIGN_SCREEN:
                 getDataFromManager(gdxFrame.getRootView());
-                DesignScreen.loadBoard(BoardManager.get("default"));
+                DesignScreen.loadBoard(BoardManager.get("default")); // todo
                 break;
             case EDITOR_SCREEN:
                 list.populateList();
                 Workspace.populateWorkspace(getDataFromManager(gdxFrame.getRootView()).blocks);
                 break;
             case GAME_SCREEN:
-                GameScreen.loadGame(getDataFromManager(gdxFrame.getRootView()).blocks);
+                GameScreen.loadGame(getDataFromManager(gdxFrame.getRootView()).blocks, BoardManager.get("default")); //todo
                 break;
         }
     }
