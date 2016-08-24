@@ -33,7 +33,7 @@ public class BoardManager {
 
     public static Board get(String key) {
         if (!getInstance().boards.containsKey(key))
-            getInstance().boards.put(key, new Board(Constant.MAP_WIDTH, Constant.MAP_HEIGHT, ActorInitializer.getActorTile("generic")));
+            getInstance().boards.put(key, new Board(Constant.MAP_WIDTH, Constant.MAP_HEIGHT, ActorInitializer.getActorTile("empty")));
         return getInstance().boards.get(key);
     }
 

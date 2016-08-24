@@ -105,11 +105,6 @@ public class GDXActivity extends AndroidApplication {
                     BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
                     EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
                 });
-        designButtons.findViewById(R.id.button_new_class).setOnClickListener(
-                v -> {
-                    Intent intent = new Intent(getContext(), TileActivity.class);
-                    getContext().startActivity(intent);
-                });
         designButtons.findViewById(R.id.button_paint).setOnClickListener(
                 v -> {
                     Intent intent = new Intent(getContext(), PickBrushActivity.class);

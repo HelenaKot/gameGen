@@ -81,6 +81,6 @@ public class ActorInitializer {
     public static TileType getActorTile(String name) {
         if (instance.actorToInit.containsKey(name))
             return instance.actorToInit.get(name).tile;
-        return null;
+        return instance.actorToInit.get("unspecified").tile;
     }
 }

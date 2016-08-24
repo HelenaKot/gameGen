@@ -18,15 +18,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageAdapter extends BaseAdapter {
-    private Context context;
     private LayoutInflater inflater;
     private static String[] textureNames = new String[]{"block_bounds_full", "block_clear_full", "block_heart_cutout", "block_star_cutout", "block_striped_full"};
     AssetManager assetManager;
 
     public ImageAdapter(Context c) {
-        context = c;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        assetManager = context.getAssets();
+        inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assetManager = c.getAssets();
     }
 
     public int getCount() {
@@ -42,20 +40,17 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        View imageView;
         if (convertView == null) {
-            imageView = inflater.inflate(R.layout.image_row, null);
+            View imageView = inflater.inflate(R.layout.image_row, null);
             imageView.setLayoutParams(new GridView.LayoutParams(248, 248));
             imageView.setPadding(8, 8, 8, 8);
-            ((ImageView) imageView.findViewById(R.id.image)).setImageDrawable(loadImage(context, textureNames[position]));
-        } else {
-            imageView = convertView;
-        }
-
-        return imageView;
+            ((ImageView) imageView.findViewById(R.id.image)).setImageDrawable(loadImage(textureNames[position]));
+            return imageView;
+        } else
+            return convertView;
     }
 
-    private Drawable loadImage(Context c, String name) {
+        private Drawable loadImage(String name) {
         try {
             InputStream is = assetManager.open(name + ".png");
             Drawable output = Drawable.createFromStream(is, null);

@@ -32,7 +32,6 @@ public class GameMap implements MapType {
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 initActor(ActorInitializer.getInstanceOf("empty", x, y));
-        changeBlock(ActorInitializer.getInstanceOf("generic", 2, 2));
     }
 
     @Override

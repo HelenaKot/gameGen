@@ -31,7 +31,7 @@ public class EditorMap implements MapType {
 
     private void initEmptyMap(int width, int height) {
         map = new EditorActor[width][height];
-        EditorActor.setBrush("empty");
+        EditorActor.setBrush("generic");
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 initActor(new EditorActor(x, y));
