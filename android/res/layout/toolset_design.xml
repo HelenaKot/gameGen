@@ -28,7 +28,7 @@
         style="@style/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="programming" />
+        android:text="code" />
 
     <ImageButton
         android:id="@+id/button_screen"

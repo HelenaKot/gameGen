@@ -5,17 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.editor.EditorMap;
 import com.fancytank.gamegen.editor.PickBrushActivity;
-import com.fancytank.gamegen.editor.TileActivity;
 import com.fancytank.gamegen.game.map.BoardManager;
 import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.programming.BlockButton;
@@ -100,17 +101,19 @@ public class GDXActivity extends AndroidApplication {
     }
 
     private void initDesignButtons(View designButtons) {
-        designButtons.findViewById(R.id.button_programming).setOnClickListener(
-                v -> {
-                    BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
-                    EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
-                });
         designButtons.findViewById(R.id.button_paint).setOnClickListener(
                 v -> {
                     Intent intent = new Intent(getContext(), PickBrushActivity.class);
                     getContext().startActivity(intent);
                 }
         );
+        designButtons.findViewById(R.id.button_programming).setOnClickListener(
+                v -> {
+                    BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
+                    EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
+                });
+        designButtons.findViewById(R.id.button_test).setOnClickListener(
+                v -> EventBus.getDefault().post(ScreenEnum.GAME_SCREEN));
     }
 
     private void initDebugTools(View debugButtons) {
@@ -144,21 +147,30 @@ public class GDXActivity extends AndroidApplication {
 
     //todo to wszystko zniknie, jak debug nie będzie potrzebny
     private void setToolsLayerContent(ScreenEnum screen) {
-        SlidingLayer toolsLayer = (SlidingLayer) findViewById(R.id.tools_layer);
         runOnUiThread(() -> {
-            toolsLayer.removeAllViews();
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            inflater.inflate(getResId(screen), toolsLayer);
-            switch (screen) {
-                case DESIGN_SCREEN:
-                    initDesignButtons(toolsLayer);
-                    break;
-                case EDITOR_SCREEN:
-                case GAME_SCREEN:
-                    initDebugTools(toolsLayer);
-                    break;
-            }
+            ViewGroup currentView = getScreen(screen);
+            inflateTools(currentView, getResId(screen));
+            if (screen == ScreenEnum.DESIGN_SCREEN)
+                initDesignButtons(currentView);
+            else
+                initDebugTools(currentView);
         });
+    }
+
+    private ViewGroup getScreen(ScreenEnum screen) {
+        switch (screen) {
+            case DESIGN_SCREEN:
+                return (LinearLayout) findViewById(R.id.tools_panel);
+            case EDITOR_SCREEN:
+            default:
+                return (SlidingLayer) findViewById(R.id.debug_layer);
+        }
+    }
+
+    private void inflateTools(ViewGroup toolsLayer, int resId) {
+        toolsLayer.removeAllViews();
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(resId, toolsLayer);
     }
 
     private int getResId(ScreenEnum screen) {
