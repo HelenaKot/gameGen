@@ -3,28 +3,51 @@
     android:id="@+id/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/button_material_dark"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <Button
+    <ImageButton
         android:id="@+id/button_paint"
+        style="@style/imageButton"
+        android:src="@drawable/paint_roller" />
+
+    <TextView
+        style="@style/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="paint tool" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_programming"
+        style="@style/imageButton"
+        android:src="@drawable/puzzle" />
+
+    <TextView
+        style="@style/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="programming" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_screen"
+        style="@style/imageButton"
+        android:src="@drawable/layers" />
+
+    <TextView
+        style="@style/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="edit screen" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_test"
+        style="@style/imageButton"
+        android:src="@drawable/play" />
+
+    <TextView
+        style="@style/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test play" />
