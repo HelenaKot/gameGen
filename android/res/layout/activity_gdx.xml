@@ -12,13 +12,10 @@
 
     <com.wunderlist.slidinglayer.SlidingLayer xmlns:slidingLayer="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sliding_layer"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         slidingLayer:changeStateOnTap="true"
         slidingLayer:offsetDistance="10dp"
-        slidingLayer:previewOffsetDistance="10dp"
-        slidingLayer:shadowDrawable="@drawable/drawer_shadow"
-        slidingLayer:shadowSize="10dp"
         slidingLayer:stickTo="left">
 
         <LinearLayout

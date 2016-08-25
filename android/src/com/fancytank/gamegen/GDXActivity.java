@@ -3,6 +3,7 @@ package com.fancytank.gamegen;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import java.io.IOException;
 public class GDXActivity extends AndroidApplication {
     private FrameLayout gdxFrame;
     private SlidingLayer slidingLayer;
+    private ExpandableListView drawerList;
     private BlocksExpendableList list;
     private TextView debugText;
     private String saveName = "untitled";
@@ -53,7 +55,8 @@ public class GDXActivity extends AndroidApplication {
         gdxFrame = (FrameLayout) findViewById(R.id.content_frame);
         gdxFrame.addView(initializeForView(new MainGdx()));
         slidingLayer = (SlidingLayer) findViewById(R.id.sliding_layer);
-        list = new BlocksExpendableList((ExpandableListView) findViewById(R.id.drawer_list), this);
+        drawerList = (ExpandableListView) findViewById(R.id.drawer_list);
+        list = new BlocksExpendableList(drawerList, this);
     }
 
     private void readName() {
@@ -152,10 +155,10 @@ public class GDXActivity extends AndroidApplication {
         runOnUiThread(() -> {
             switch (screen) {
                 case DESIGN_SCREEN:
-                    setEditorTools();
+                    setEditorScreen();
                     break;
                 case EDITOR_SCREEN:
-                    setProgrammingTools();
+                    setProgrammingScreen();
                     //setDebugTools();
                     break;
                 case GAME_SCREEN:
@@ -165,21 +168,23 @@ public class GDXActivity extends AndroidApplication {
         });
     }
 
-    private void setEditorTools() {
-        setLayerState((SlidingLayer) findViewById(R.id.sliding_layer), true);
+    private void setEditorScreen() {
+        setLayerState(slidingLayer, true);
         //setLayerState((SlidingLayer) findViewById(R.id.debug_layer), false);
-        (findViewById(R.id.drawer_list)).setVisibility(View.GONE);
+        drawerList.setVisibility(View.GONE);
         LinearLayout editorTools = (LinearLayout) findViewById(R.id.tools_panel);
         inflateTools(editorTools, R.layout.toolset_design);
         initDesignButtons(editorTools);
+        resizeSlidingLayer();
     }
 
-    private void setProgrammingTools() {
-        setLayerState((SlidingLayer) findViewById(R.id.sliding_layer), true);
-        (findViewById(R.id.drawer_list)).setVisibility(View.VISIBLE);
+    private void setProgrammingScreen() {
+        setLayerState(slidingLayer, true);
+        drawerList.setVisibility(View.VISIBLE);
         LinearLayout editorTools = (LinearLayout) findViewById(R.id.tools_panel);
         inflateTools(editorTools, R.layout.toolset_programming);
         initProgrammingButtons(editorTools);
+        resizeSlidingLayer();
     }
 
     private void setDebugTools() {
@@ -189,9 +194,17 @@ public class GDXActivity extends AndroidApplication {
         initDebugButtons(debugLayer);
     }
 
+    private void resizeSlidingLayer() {
+        ViewGroup.LayoutParams params = slidingLayer.getLayoutParams();
+        params.width = findViewById(R.id.tools_panel).getWidth();
+        if (drawerList.getVisibility() == View.VISIBLE)
+            params.width += drawerList.getWidth();
+        slidingLayer.setLayoutParams(params);
+    }
+
     private void setGameScreen() {
-        setLayerState((SlidingLayer) findViewById(R.id.sliding_layer), false);
-        setLayerState((SlidingLayer) findViewById(R.id.debug_layer), false);
+        setLayerState(slidingLayer, false);
+        setLayerState(slidingLayer, false);
     }
 
     private void setLayerState(SlidingLayer layer, boolean enabled) {
@@ -210,12 +223,27 @@ public class GDXActivity extends AndroidApplication {
 
     @Override
     public void onBackPressed() {
-        EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
+        if (ScreenManager.currentScreen == ScreenEnum.DESIGN_SCREEN) {
+            finish();
+        } else
+            EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
+        if (ScreenManager.currentScreen == null)
+            EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
+    }
+
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent e) {
+        switch (keycode) {
+            case KeyEvent.KEYCODE_MENU:
+                if (ScreenManager.currentScreen != ScreenEnum.GAME_SCREEN)
+                    slidingLayer.openLayer(true);
+                return true;
+        }
+        return super.onKeyDown(keycode, e);
     }
 }
