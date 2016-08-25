@@ -204,4 +204,10 @@ public class GDXActivity extends AndroidApplication {
     public void onBackPressed() {
         EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
+    }
 }
