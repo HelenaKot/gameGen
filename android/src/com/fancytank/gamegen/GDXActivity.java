@@ -112,11 +112,15 @@ public class GDXActivity extends AndroidApplication {
                     BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
                     EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
                 });
-        designButtons.findViewById(R.id.button_test).setOnClickListener(
-                v -> EventBus.getDefault().post(ScreenEnum.GAME_SCREEN));
+        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> EventBus.getDefault().post(ScreenEnum.GAME_SCREEN));
     }
 
-    private void initDebugTools(View debugButtons) {
+    private void initProgrammingButtons(View designButtons) {
+        designButtons.findViewById(R.id.button_design).setOnClickListener(v -> EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN));
+        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> EventBus.getDefault().post(ScreenEnum.GAME_SCREEN));
+    }
+
+    private void initDebugButtons(View debugButtons) {
         debugText = (TextView) findViewById(R.id.debug_text);
         debugButtons.findViewById(R.id.button_debug_log).setOnClickListener(
                 v -> debugText.setText(Workspace.getDebugLog()));
@@ -134,37 +138,60 @@ public class GDXActivity extends AndroidApplication {
                 });
         debugButtons.findViewById(R.id.button_debug_delete).setOnClickListener(
                 v -> Workspace.clearWorkspace());
-        debugButtons.findViewById(R.id.button_debug_test).setOnClickListener(
-                v -> {
-                    if (ScreenManager.currentScreen == ScreenEnum.GAME_SCREEN)
-                        EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
-                    else
-                        EventBus.getDefault().post(ScreenEnum.GAME_SCREEN);
-                });
-        debugButtons.findViewById(R.id.button_debug_design).setOnClickListener(
-                v -> EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN));
     }
 
-    //todo to wszystko zniknie, jak debug nie będzie potrzebny
     private void setToolsLayerContent(ScreenEnum screen) {
         runOnUiThread(() -> {
-            ViewGroup currentView = getScreen(screen);
-            inflateTools(currentView, getResId(screen));
-            if (screen == ScreenEnum.DESIGN_SCREEN)
-                initDesignButtons(currentView);
-            else
-                initDebugTools(currentView);
+            switch (screen) {
+                case DESIGN_SCREEN:
+                    setEditorTools();
+                    break;
+                case EDITOR_SCREEN:
+                    setProgrammingTools();
+                    //setDebugTools();
+                    break;
+                case GAME_SCREEN:
+                    setGameScreen();
+                    break;
+            }
         });
     }
 
-    private ViewGroup getScreen(ScreenEnum screen) {
-        switch (screen) {
-            case DESIGN_SCREEN:
-                return (LinearLayout) findViewById(R.id.tools_panel);
-            case EDITOR_SCREEN:
-            default:
-                return (SlidingLayer) findViewById(R.id.debug_layer);
-        }
+    private void setEditorTools() {
+        setLayerState((SlidingLayer) findViewById(R.id.sliding_layer), true);
+        //setLayerState((SlidingLayer) findViewById(R.id.debug_layer), false);
+        (findViewById(R.id.drawer_list)).setVisibility(View.GONE);
+        LinearLayout editorTools = (LinearLayout) findViewById(R.id.tools_panel);
+        inflateTools(editorTools, R.layout.toolset_design);
+        initDesignButtons(editorTools);
+    }
+
+    private void setProgrammingTools() {
+        setLayerState((SlidingLayer) findViewById(R.id.sliding_layer), true);
+        (findViewById(R.id.drawer_list)).setVisibility(View.VISIBLE);
+        LinearLayout editorTools = (LinearLayout) findViewById(R.id.tools_panel);
+        inflateTools(editorTools, R.layout.toolset_programming);
+        initProgrammingButtons(editorTools);
+    }
+
+    private void setDebugTools() {
+        setLayerState((SlidingLayer) findViewById(R.id.debug_layer), true);
+        SlidingLayer debugLayer = (SlidingLayer) findViewById(R.id.debug_layer);
+        inflateTools(debugLayer, R.layout.toolset_debug);
+        initDebugButtons(debugLayer);
+    }
+
+    private void setGameScreen() {
+        setLayerState((SlidingLayer) findViewById(R.id.sliding_layer), false);
+        setLayerState((SlidingLayer) findViewById(R.id.debug_layer), false);
+    }
+
+    private void setLayerState(SlidingLayer layer, boolean enabled) {
+        if (enabled)
+            layer.openLayer(true);
+        else
+            layer.closeLayer(true);
+        layer.setSlidingEnabled(enabled);
     }
 
     private void inflateTools(ViewGroup toolsLayer, int resId) {
@@ -173,14 +200,8 @@ public class GDXActivity extends AndroidApplication {
         inflater.inflate(resId, toolsLayer);
     }
 
-    private int getResId(ScreenEnum screen) {
-        switch (screen) {
-            case DESIGN_SCREEN:
-                return R.layout.toolset_design;
-            case EDITOR_SCREEN:
-                return R.layout.toolset_debug;
-            default:
-                return R.layout.toolset_debug;
-        }
+    @Override
+    public void onBackPressed() {
+        EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
     }
 }
