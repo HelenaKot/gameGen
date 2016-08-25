@@ -82,6 +82,9 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.VARIABLE, "vertically").setExpectedValue(ValueType.INT_NUMBER),
                         new InputFragment(InputType.VARIABLE, "horizontally").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
 */
+                new BlockPatternHolder(new BlockActorPattern("replace", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.VARIABLE, "replace with").setExpectedValue(ValueType.CLASS_NAME)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
+
                 new BlockPatternHolder(new BlockActorPattern("spawn object", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "spawn new").setExpectedValue(ValueType.CLASS_NAME),
                         new InputFragment(InputType.DUMMY, ""),
