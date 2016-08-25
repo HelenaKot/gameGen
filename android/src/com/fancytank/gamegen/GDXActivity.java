@@ -110,14 +110,17 @@ public class GDXActivity extends AndroidApplication {
         designButtons.findViewById(R.id.button_programming).setOnClickListener(
                 v -> {
                     BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
-                    EventBus.getDefault().post(ScreenEnum.EDITOR_SCREEN);
+                    saveAndProceed(v.getContext(), ScreenEnum.EDITOR_SCREEN);
                 });
-        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> EventBus.getDefault().post(ScreenEnum.GAME_SCREEN));
+        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> {
+            BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
+            saveAndProceed(v.getContext(), ScreenEnum.GAME_SCREEN);
+        });
     }
 
     private void initProgrammingButtons(View designButtons) {
-        designButtons.findViewById(R.id.button_design).setOnClickListener(v -> EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN));
-        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> EventBus.getDefault().post(ScreenEnum.GAME_SCREEN));
+        designButtons.findViewById(R.id.button_design).setOnClickListener(v -> saveAndProceed(v.getContext(), ScreenEnum.DESIGN_SCREEN));
+        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> saveAndProceed(v.getContext(), ScreenEnum.GAME_SCREEN));
     }
 
     private void initDebugButtons(View debugButtons) {
@@ -138,6 +141,11 @@ public class GDXActivity extends AndroidApplication {
                 });
         debugButtons.findViewById(R.id.button_debug_delete).setOnClickListener(
                 v -> Workspace.clearWorkspace());
+    }
+
+    private void saveAndProceed(Context c, ScreenEnum screen) {
+        DataManager.saveWorkspace(c.getFilesDir().getAbsolutePath(), saveName, Workspace.getWorkspaceItemsToSave());
+        EventBus.getDefault().post(screen);
     }
 
     private void setToolsLayerContent(ScreenEnum screen) {
