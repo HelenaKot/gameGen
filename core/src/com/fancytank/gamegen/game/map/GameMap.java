@@ -38,10 +38,14 @@ public class GameMap implements MapType {
     public void changeBlock(BaseActor actor) {
         if (actor == null)
             System.out.println(actor + " is not initialized");
-        else if (0 <= actor.x && actor.x < map.length && 0 <= actor.y && actor.y < map[0].length) {
+        else if (inBounds(actor.x, actor.y) && map[actor.x][actor.y].getClassName() != actor.getClassName()) {
             map[actor.x][actor.y].remove();
             initActor(actor);
         }
+    }
+
+    private boolean inBounds(int x, int y) {
+        return 0 <= x && x < map.length && 0 <= y && y < map[0].length;
     }
 
     @Override
