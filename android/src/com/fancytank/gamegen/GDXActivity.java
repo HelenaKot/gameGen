@@ -204,7 +204,6 @@ public class GDXActivity extends AndroidApplication {
 
     private void setGameScreen() {
         setLayerState(slidingLayer, false);
-        setLayerState(slidingLayer, false);
     }
 
     private void setLayerState(SlidingLayer layer, boolean enabled) {

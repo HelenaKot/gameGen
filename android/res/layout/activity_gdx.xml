@@ -12,23 +12,23 @@
 
     <com.wunderlist.slidinglayer.SlidingLayer xmlns:slidingLayer="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sliding_layer"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        slidingLayer:changeStateOnTap="true"
-        slidingLayer:offsetDistance="10dp"
+        slidingLayer:changeStateOnTap="false"
         slidingLayer:stickTo="left">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:background="#111"
             android:orientation="horizontal">
 
             <ExpandableListView
                 android:id="@+id/drawer_list"
-                android:layout_width="200dp"
+                android:layout_width="170dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                android:background="#111"
                 android:choiceMode="singleChoice"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="0dp" />
@@ -37,6 +37,7 @@
                 android:id="@+id/tools_panel"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:background="@color/button_material_dark"
                 android:orientation="vertical" />
 
         </LinearLayout>

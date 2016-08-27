@@ -3,7 +3,6 @@
     android:id="@+id/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/button_material_dark"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="8dp">
