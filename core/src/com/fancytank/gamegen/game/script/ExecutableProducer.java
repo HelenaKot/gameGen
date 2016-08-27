@@ -18,12 +18,21 @@ public class ExecutableProducer {
     MethodType methodType;
     boolean producersInited = false;
 
+    private int delay;
     private HashMap<ProducerTag, ExecutableProducer> producers;
     private ArrayList<ExecutableProducer> instructions;
 
     ExecutableProducer(BlockData methodBlock, ActionListenerType type) {
         initProducer(methodBlock);
         this.type = type;
+        if (methodBlock.hasDescendant())
+            collectDescendants();
+    }
+
+    ExecutableProducer(BlockData methodBlock, int delay) {
+        initProducer(methodBlock);
+        this.type = ActionListenerType.TICK;
+        this.delay = delay;
         if (methodBlock.hasDescendant())
             collectDescendants();
     }
@@ -40,7 +49,7 @@ public class ExecutableProducer {
     }
 
     private void collectDescendants() {
-        ArrayList<BlockData> instructionBlocks = new ArrayList<BlockData>();
+        ArrayList<BlockData> instructionBlocks = new ArrayList<>();
         instructionBlocks.add(methodBlock);
         createList(instructionBlocks, methodBlock);
         for (BlockData block : instructionBlocks)
@@ -54,6 +63,7 @@ public class ExecutableProducer {
     }
 
     public Executable getInstance() {
+        if (type == ActionListenerType.TICK) return new Timer(this, delay);
         return (instructions.size() > 1) ? getAggregatedExecutables() : getLocalExecutable();
     }
 

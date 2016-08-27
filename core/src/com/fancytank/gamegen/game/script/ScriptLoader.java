@@ -51,7 +51,7 @@ public class ScriptLoader {
     }
 
     private static void createTimerAction(String delayInput, String className, BlockData executableBlock) {
-        ExecutableProducer executableProducer = new ExecutableProducer(executableBlock, ActionListenerType.TICK);
+        ExecutableProducer executableProducer = new ExecutableProducer(executableBlock, Integer.parseInt(delayInput));
         if (executableProducer.getInstance() != null)
             ActorInitializer.addTimerListener(className, executableProducer);
         else
