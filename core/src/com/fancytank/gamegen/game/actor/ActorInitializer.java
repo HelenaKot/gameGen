@@ -59,7 +59,7 @@ public class ActorInitializer {
         if (instance.actorToInit.containsKey(name))
             return instance.actorToInit.get(name).createInstance(x, y);
         else System.out.println("Actor with this name can not be initialized = " + name);
-        return null;
+        return instance.actorToInit.get("unspecified").createInstance(x, y);
     }
 
     public static void addActionListener(String className, ExecutableProducer executable) {

@@ -16,10 +16,7 @@ import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
-import com.fancytank.gamegen.editor.EditorMap;
 import com.fancytank.gamegen.editor.PickBrushActivity;
-import com.fancytank.gamegen.game.map.BoardManager;
-import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.programming.BlockButton;
 import com.fancytank.gamegen.programming.BlocksExpendableList;
 import com.fancytank.gamegen.programming.Workspace;
@@ -37,7 +34,8 @@ public class GDXActivity extends AndroidApplication {
     private ExpandableListView drawerList;
     private BlocksExpendableList list;
     private TextView debugText;
-    private String saveName = "untitled";
+    private String saveName = "untitled", absolutePath;
+    private DataManager dataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +44,17 @@ public class GDXActivity extends AndroidApplication {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_gdx);
 
-        initXML();
         readName();
+        dataManager = new DataManager(saveName, absolutePath);
+        initXML();
         EventBus.getDefault().register(this);
+    }
+
+    private void readName() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("saveName"))
+            saveName = intent.getExtras().getString("saveName");
+        absolutePath = getFilesDir().getAbsolutePath();
     }
 
     private void initXML() {
@@ -59,20 +65,14 @@ public class GDXActivity extends AndroidApplication {
         list = new BlocksExpendableList(drawerList, this);
     }
 
-    private void readName() {
-        Intent intent = getIntent();
-        if (intent.hasExtra("saveName"))
-            saveName = intent.getExtras().getString("saveName");
-    }
-
     @Subscribe
     public void onEvent(MainGdx.AppStatus status) throws IOException, ClassNotFoundException {
         switch (status) {
             case GDX_INIT_FINISHED:
-                EventBus.getDefault().post(ScreenManager.currentScreen);
+                EventBus.getDefault().post(ScreenEnum.currentScreen);
                 break;
             case SETUP_FINISHED:
-                setupScreen(ScreenManager.currentScreen);
+                setupScreen(ScreenEnum.currentScreen);
                 break;
         }
     }
@@ -81,15 +81,14 @@ public class GDXActivity extends AndroidApplication {
         setToolsLayerContent(screen);
         switch (screen) {
             case DESIGN_SCREEN:
-                getDataFromManager(gdxFrame.getRootView());
-                DesignScreen.loadBoard(BoardManager.get("default")); // todo
+                getDataFromManager();
                 break;
             case EDITOR_SCREEN:
                 list.populateList();
-                Workspace.populateWorkspace(getDataFromManager(gdxFrame.getRootView()).blocks);
+                Workspace.populateWorkspace(getDataFromManager().blocks);
                 break;
             case GAME_SCREEN:
-                GameScreen.loadGame(getDataFromManager(gdxFrame.getRootView()).blocks, BoardManager.get("default")); //todo
+                EventBus.getDefault().post(getDataFromManager().blocks);
                 break;
         }
     }
@@ -99,8 +98,8 @@ public class GDXActivity extends AndroidApplication {
         slidingLayer.openLayer(true);
     }
 
-    private SaveInstance getDataFromManager(View view) throws IOException, ClassNotFoundException {
-        return DataManager.loadWorkspace(view.getContext().getFilesDir().getAbsolutePath(), saveName);
+    private SaveInstance getDataFromManager() throws IOException, ClassNotFoundException {
+        return dataManager.loadWorkspace();
     }
 
     private void initDesignButtons(View designButtons) {
@@ -111,19 +110,14 @@ public class GDXActivity extends AndroidApplication {
                 }
         );
         designButtons.findViewById(R.id.button_programming).setOnClickListener(
-                v -> {
-                    BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
-                    saveAndProceed(v.getContext(), ScreenEnum.EDITOR_SCREEN);
-                });
-        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> {
-            BoardManager.addBoard("default", ((EditorMap) MapManager.getMap()).getMapAsBoard()); //todo
-            saveAndProceed(v.getContext(), ScreenEnum.GAME_SCREEN);
-        });
+                v -> saveAndProceed(ScreenEnum.EDITOR_SCREEN));
+        designButtons.findViewById(R.id.button_test).setOnClickListener(
+                v -> saveAndProceed(ScreenEnum.GAME_SCREEN));
     }
 
     private void initProgrammingButtons(View designButtons) {
-        designButtons.findViewById(R.id.button_design).setOnClickListener(v -> saveAndProceed(v.getContext(), ScreenEnum.DESIGN_SCREEN));
-        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> saveAndProceed(v.getContext(), ScreenEnum.GAME_SCREEN));
+        designButtons.findViewById(R.id.button_design).setOnClickListener(v -> saveAndProceed(ScreenEnum.DESIGN_SCREEN));
+        designButtons.findViewById(R.id.button_test).setOnClickListener(v -> saveAndProceed(ScreenEnum.GAME_SCREEN));
     }
 
     private void initDebugButtons(View debugButtons) {
@@ -133,11 +127,11 @@ public class GDXActivity extends AndroidApplication {
         debugButtons.findViewById(R.id.button_debug_connectors).setOnClickListener(
                 v -> ConnectionArea.debug = !ConnectionArea.debug);
         debugButtons.findViewById(R.id.button_debug_save).setOnClickListener(
-                v -> DataManager.saveWorkspace(v.getContext().getFilesDir().getAbsolutePath(), saveName, Workspace.getWorkspaceItemsToSave()));
+                v -> dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave()));
         debugButtons.findViewById(R.id.button_debug_load).setOnClickListener(
                 v -> {
                     try {
-                        Workspace.populateWorkspace(getDataFromManager(v).blocks);
+                        Workspace.populateWorkspace(getDataFromManager().blocks);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -146,8 +140,8 @@ public class GDXActivity extends AndroidApplication {
                 v -> Workspace.clearWorkspace());
     }
 
-    private void saveAndProceed(Context c, ScreenEnum screen) {
-        DataManager.saveWorkspace(c.getFilesDir().getAbsolutePath(), saveName, Workspace.getWorkspaceItemsToSave());
+    private void saveAndProceed(ScreenEnum screen) {
+        dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave());
         EventBus.getDefault().post(screen);
     }
 
@@ -222,7 +216,9 @@ public class GDXActivity extends AndroidApplication {
 
     @Override
     public void onBackPressed() {
-        if (ScreenManager.currentScreen == ScreenEnum.DESIGN_SCREEN) {
+        if (ScreenEnum.currentScreen == ScreenEnum.DESIGN_SCREEN) {
+            dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave());
+            dispose();
             finish();
         } else
             EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
@@ -231,7 +227,7 @@ public class GDXActivity extends AndroidApplication {
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (ScreenManager.currentScreen == null)
+        if (ScreenEnum.currentScreen == null)
             EventBus.getDefault().post(ScreenEnum.DESIGN_SCREEN);
     }
 
@@ -239,10 +235,15 @@ public class GDXActivity extends AndroidApplication {
     public boolean onKeyDown(int keycode, KeyEvent e) {
         switch (keycode) {
             case KeyEvent.KEYCODE_MENU:
-                if (ScreenManager.currentScreen != ScreenEnum.GAME_SCREEN)
+                if (ScreenEnum.currentScreen != ScreenEnum.GAME_SCREEN)
                     slidingLayer.openLayer(true);
                 return true;
         }
         return super.onKeyDown(keycode, e);
+    }
+
+    private void dispose() {
+        dataManager = null;
+        EventBus.getDefault().unregister(this);
     }
 }
