@@ -42,5 +42,4 @@ public class WelcomeActivity extends AppCompatActivity {
         instance.adapter = new SaveListAdapter(instance, files);
         instance.projectList.setAdapter(instance.adapter);
     }
-
 }

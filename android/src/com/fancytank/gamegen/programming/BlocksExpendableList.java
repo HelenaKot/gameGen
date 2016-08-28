@@ -76,12 +76,7 @@ public class BlocksExpendableList {
 
                 new BlockPatternHolder(new BlockActorPattern("tile type", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "generic")}, BlockShape.VARIABLE), Color.SKY), DialogSpawner.DIALOG_PICK_CLASS),
-/*
-                new CustomBlockPattern("move object", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "move self"),
-                        new InputFragment(InputType.VARIABLE, "vertically").setExpectedValue(ValueType.INT_NUMBER),
-                        new InputFragment(InputType.VARIABLE, "horizontally").setExpectedValue(ValueType.INT_NUMBER)}, BlockShape.CHAIN_METHOD), Color.ORANGE),
-*/
+
                 new BlockPatternHolder(new BlockActorPattern("replace", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "replace with").setExpectedValue(ValueType.CLASS_NAME)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
 
@@ -93,9 +88,6 @@ public class BlocksExpendableList {
 
                 new BlockPatternHolder(new BlockActorPattern("change color", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.VARIABLE, "change color to").setExpectedValue(ValueType.COLOR)}, BlockShape.CHAIN_METHOD), Color.ORANGE)),
-/*
-                new CustomBlockPattern("delete object", new BlockData(new InputFragment[]{
-                        new InputFragment(InputType.DUMMY, "delete self")}, BlockShape.LAST_METHOD), Color.RED),*/
         };
         childItems.add(tilesPatterns);
 

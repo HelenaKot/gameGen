@@ -87,9 +87,8 @@ public class DataManager {
     public static void deleteProject(String absolutePath, String projectName) {
         try {
             File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
-            if (file.exists())
-                file.delete();
-            //  notifyListAdapter(); TODO
+            file.delete();
+            SaveListAdapter.instance.notifyDataSetChanged();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,12 +110,6 @@ public class DataManager {
             directory.createNewFile();
         }
         return directory;
-    }
-
-    private void notifyListAdapter() {
-        if (SaveListAdapter.instance != null) {
-            SaveListAdapter.instance.notifyDataSetChanged();
-        }
     }
 
 }
