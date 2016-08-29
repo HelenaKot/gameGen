@@ -17,9 +17,13 @@ import android.widget.TextView;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
 import com.fancytank.gamegen.editor.PickBrushActivity;
+import com.fancytank.gamegen.game.actor.ActorInitializer;
+import com.fancytank.gamegen.game.map.BoardManager;
+import com.fancytank.gamegen.game.map.MapManager;
 import com.fancytank.gamegen.programming.BlockButton;
 import com.fancytank.gamegen.programming.BlocksExpendableList;
 import com.fancytank.gamegen.programming.Workspace;
+import com.fancytank.gamegen.programming.blocks.BlockManager;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
 import com.wunderlist.slidinglayer.SlidingLayer;
 
@@ -126,8 +130,8 @@ public class GDXActivity extends AndroidApplication {
                 v -> debugText.setText(Workspace.getDebugLog()));
         debugButtons.findViewById(R.id.button_debug_connectors).setOnClickListener(
                 v -> ConnectionArea.debug = !ConnectionArea.debug);
-        debugButtons.findViewById(R.id.button_debug_save).setOnClickListener(
-                v -> dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave()));
+       /* debugButtons.findViewById(R.id.button_debug_save).setOnClickListener(
+                v -> dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave()));*/
         debugButtons.findViewById(R.id.button_debug_load).setOnClickListener(
                 v -> {
                     try {
@@ -141,7 +145,7 @@ public class GDXActivity extends AndroidApplication {
     }
 
     private void saveAndProceed(ScreenEnum screen) {
-        dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave());
+//        dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave());
         EventBus.getDefault().post(screen);
     }
 
@@ -217,7 +221,7 @@ public class GDXActivity extends AndroidApplication {
     @Override
     public void onBackPressed() {
         if (ScreenEnum.currentScreen == ScreenEnum.DESIGN_SCREEN) {
-            dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave());
+            dataManager.saveWorkspace();
             dispose();
             finish();
         } else
@@ -244,6 +248,7 @@ public class GDXActivity extends AndroidApplication {
 
     private void dispose() {
         EventBus.getDefault().unregister(this);
+        BlockManager.dispose();
         ActorInitializer.dispose();
         BoardManager.dispose();
         MapManager.dispose();

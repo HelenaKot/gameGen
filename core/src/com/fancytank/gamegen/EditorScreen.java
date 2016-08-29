@@ -7,6 +7,8 @@ import com.fancytank.gamegen.programming.EditorBackground;
 import com.fancytank.gamegen.programming.TrashCan;
 import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
+import com.fancytank.gamegen.programming.blocks.BlockManager;
+import com.fancytank.gamegen.programming.blocks.BlockRestoreEvent;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 
 import org.greenrobot.eventbus.EventBus;
@@ -23,12 +25,12 @@ public class EditorScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         super.buildStage();
-        setUp();
+        addWorkspaceActors();
         editorBackground.setDraggable(programmingBlocks);
         EventBus.getDefault().register(this);
     }
 
-    private void setUp() {
+    private void addWorkspaceActors() {
         addActor(editorBackground = new EditorBackground(getWidth(), getHeight()));
         addActor(new TrashCan(getWidth()));
         addActor(new BlockButton(getHeight()));
@@ -38,15 +40,17 @@ public class EditorScreen extends AbstractScreen {
     @Subscribe
     public void onEvent(BlockCreateEvent event) {
         ProgrammingBlock template = new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor());
-        Actor newBlock = Workspace.clone(template);
+        ProgrammingBlock newBlock = Workspace.clone(template);
+        BlockManager.add(newBlock);
         newBlock.setPosition(getWidth() * 0.4f, getHeight() / 2);
         addToStage(newBlock);
         template.destroy();
     }
 
-    @Override
-    void saveState() {
-        //TODO
+    @Subscribe
+    public void onEvent(BlockRestoreEvent event) {
+        BlockManager.add(event.data);
+        addToStage(event.data);
     }
 
     @Override

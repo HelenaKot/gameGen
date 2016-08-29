@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.fancytank.gamegen.MainGdx;
-import com.fancytank.gamegen.programming.TrashCan;
 import com.fancytank.gamegen.programming.BlockResizeEvent;
 import com.fancytank.gamegen.programming.Direction;
+import com.fancytank.gamegen.programming.TrashCan;
 import com.fancytank.gamegen.programming.data.BlockData;
 import com.fancytank.gamegen.programming.data.InputFragment;
 import com.fancytank.gamegen.programming.looks.ConnectionArea;
@@ -20,7 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.fancytank.gamegen.programming.looks.ConnectionPlacer.getConnectors;
 import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBlock;
@@ -31,14 +30,12 @@ public class ProgrammingBlock extends Group {
     private float touchedX, touchedY;
     private Group attachedTo = null;
     private int myZIndex;
-    private static CopyOnWriteArrayList<ProgrammingBlock> blocksList = new CopyOnWriteArrayList<ProgrammingBlock>();
 
     public ProgrammingBlock(BlockData data, Color tint) {
         setName(UUID.randomUUID().toString());
         coreBlock = new CoreBlock(this, data, tint);
         data.setCoreBlock(coreBlock);
         connectors = getConnectors(coreBlock);
-        blocksList.add(this);
         setBounds(0, 0, coreBlock.getWidth(), coreBlock.getHeight());
         setUpListeners();
         populateGroup();
@@ -71,7 +68,7 @@ public class ProgrammingBlock extends Group {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                for (ProgrammingBlock programmingBlock : blocksList)
+                for (ProgrammingBlock programmingBlock : BlockManager.getBlocList())
                     if (programmingBlock != local)
                         checkOverlapping(programmingBlock);
                 if (checkBinOverlapping())
@@ -188,7 +185,7 @@ public class ProgrammingBlock extends Group {
     }
 
     public void destroy() {
-        blocksList.remove(this);
+        BlockManager.getBlocList().remove(this);
         if (coreBlock.data.hasDescendant())
             coreBlock.data.getDescendant().getCoreBlock().getProgrammingBlock().destroy();
         for (InputFragment input : coreBlock.data.getInputs())
@@ -204,9 +201,5 @@ public class ProgrammingBlock extends Group {
 
     public int getSignificance() {
         return this.coreBlock.data.shape.significance;
-    }
-
-    public static CopyOnWriteArrayList<ProgrammingBlock> getBlockList() {
-        return blocksList;
     }
 }

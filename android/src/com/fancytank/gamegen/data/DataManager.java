@@ -6,6 +6,7 @@ import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.CustomActorToInit;
 import com.fancytank.gamegen.game.actor.TileType;
 import com.fancytank.gamegen.game.map.BoardManager;
+import com.fancytank.gamegen.programming.blocks.BlockManager;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 
 import java.io.File;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class DataManager {
     private static String saveDir = "saved";
@@ -39,9 +39,9 @@ public class DataManager {
         return saveInstance;
     }
 
-    public void saveWorkspace(ProgrammingBlockSavedInstance[] workspace) {
+    public void saveWorkspace() {
         try {
-            saveFile(new SaveInstance(projectName, workspace, fetchActors(), BoardManager.getBoards()));
+            saveFile(new SaveInstance(projectName, BlockManager.getWorkspaceItemsToSave(), ActorInitializer.getCustomActors(), BoardManager.getBoards()));
             saveInstance = null;
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,11 +51,6 @@ public class DataManager {
     private void loadActors() {
         for (TileType tile : saveInstance.tiles)
             ActorInitializer.addActorClass(new CustomActorToInit(tile));
-    }
-
-    private TileType[] fetchActors() {
-        LinkedList<TileType> list = ActorInitializer.getCustomActors();
-        return list.toArray(new TileType[list.size()]);
     }
 
     private SaveInstance loadFile() throws IOException, ClassNotFoundException {

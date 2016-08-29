@@ -53,7 +53,6 @@ public class BlockActorPattern {
     }
 
     public void spawn() {
-        BlockCreateEvent bce = new BlockCreateEvent(this);
-        EventBus.getDefault().post(bce);
+        EventBus.getDefault().post(new BlockCreateEvent(this));
     }
 }
