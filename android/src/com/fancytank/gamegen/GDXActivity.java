@@ -243,7 +243,9 @@ public class GDXActivity extends AndroidApplication {
     }
 
     private void dispose() {
-        dataManager = null;
         EventBus.getDefault().unregister(this);
+        ActorInitializer.dispose();
+        BoardManager.dispose();
+        MapManager.dispose();
     }
 }

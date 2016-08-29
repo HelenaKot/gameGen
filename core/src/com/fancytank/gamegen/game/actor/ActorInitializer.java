@@ -83,4 +83,8 @@ public class ActorInitializer {
             return instance.actorToInit.get(name).tile;
         return instance.actorToInit.get("unspecified").tile;
     }
+
+    public static void dispose() {
+        instance = null;
+    }
 }

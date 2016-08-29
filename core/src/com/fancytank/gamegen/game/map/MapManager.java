@@ -5,13 +5,13 @@ import com.fancytank.gamegen.game.actor.BaseActor;
 import java.util.ArrayList;
 
 public class MapManager {
-    public static MapManager gameInstance;
+    public static MapManager instance;
     public MapType gameMap;
 
     public MapManager(MapType mapClass) {
         gameMap = mapClass.init();
         if (mapClass instanceof GameMap)
-            gameInstance = this;
+            instance = this;
     }
 
     public void setBoard(Board board) {
@@ -19,15 +19,19 @@ public class MapManager {
     }
 
     public static void changeBlock(BaseActor actor) {
-        gameInstance.gameMap.changeBlock(actor);
+        instance.gameMap.changeBlock(actor);
     }
 
     public static ArrayList<BaseActor> getBlocksOfClass(String className) {
         ArrayList<BaseActor> output = new ArrayList<>();
-        for (BaseActor[] row : gameInstance.gameMap.getMap())
+        for (BaseActor[] row : instance.gameMap.getMap())
             for (BaseActor actor : row)
                 if (actor.getClassName().equals(className))
                     output.add(actor);
         return output;
+    }
+
+    public static void dispose() {
+        instance = null;
     }
 }
