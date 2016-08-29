@@ -6,19 +6,16 @@ import java.util.ArrayList;
 
 public class MapManager {
     public static MapManager instance;
-    MapType gameMap;
+    public MapType gameMap;
 
     public MapManager(MapType mapClass) {
         gameMap = mapClass.init();
-        instance = this;
+        if (mapClass instanceof GameMap)
+            instance = this;
     }
 
-    public static MapType getMap() {
-        return instance.gameMap;
-    }
-
-    public static void setBoard(Board board) {
-        getMap().setBoard(board);
+    public void setBoard(Board board) {
+        gameMap.setBoard(board);
     }
 
     public static void changeBlock(BaseActor actor) {
@@ -27,10 +24,14 @@ public class MapManager {
 
     public static ArrayList<BaseActor> getBlocksOfClass(String className) {
         ArrayList<BaseActor> output = new ArrayList<>();
-        for (BaseActor[] row : getMap().getMap())
+        for (BaseActor[] row : instance.gameMap.getMap())
             for (BaseActor actor : row)
                 if (actor.getClassName().equals(className))
                     output.add(actor);
         return output;
+    }
+
+    public static void dispose() {
+        instance = null;
     }
 }

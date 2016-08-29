@@ -6,6 +6,7 @@ import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.actor.CustomActorToInit;
 import com.fancytank.gamegen.game.actor.TileType;
 import com.fancytank.gamegen.game.map.BoardManager;
+import com.fancytank.gamegen.programming.blocks.BlockManager;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
 
 import java.io.File;
@@ -15,27 +16,22 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class DataManager {
     private static String saveDir = "saved";
-    private static File directory;
-    private static SaveInstance saveInstance;
+    private String projectName, absolutePath;
+    private SaveInstance saveInstance;
 
-    public static File[] getFiles(String patch) {
-        try {
-            return getDirectory(patch).listFiles();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new File[0];
+    public DataManager(String projectName, String absolutePath) {
+        this.projectName = projectName;
+        this.absolutePath = absolutePath;
     }
 
-    public static SaveInstance loadWorkspace(String absolutePath, String projectName) {
+    public SaveInstance loadWorkspace() {
         if (saveInstance == null)
             try {
-                saveInstance = loadFile(absolutePath, projectName);
-                loadActors(saveInstance);
+                saveInstance = loadFile();
+                loadActors();
                 BoardManager.setInstance(saveInstance.boards);
             } catch (Exception e) {
                 saveInstance = new SaveInstance(projectName, new ProgrammingBlockSavedInstance[0], null, new HashMap<>());
@@ -43,37 +39,21 @@ public class DataManager {
         return saveInstance;
     }
 
-    public static void saveWorkspace(String absolutePath, String projectName, ProgrammingBlockSavedInstance[] workspace) {
+    public void saveWorkspace() {
         try {
-            saveFile(absolutePath, projectName, new SaveInstance(projectName, workspace, fetchActors(), BoardManager.getBoards()));
+            saveFile(new SaveInstance(projectName, BlockManager.getWorkspaceItemsToSave(), ActorInitializer.getCustomActors(), BoardManager.getBoards()));
             saveInstance = null;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void deleteProject(String absolutePath, String projectName) {
-        try {
-            File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
-            if (file.exists())
-                file.delete();
-            notifyListAdapter();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void loadActors(SaveInstance save) {
-        for (TileType tile : save.tiles)
+    private void loadActors() {
+        for (TileType tile : saveInstance.tiles)
             ActorInitializer.addActorClass(new CustomActorToInit(tile));
     }
 
-    private static TileType[] fetchActors() {
-        LinkedList<TileType> list = ActorInitializer.getCustomActors();
-        return list.toArray(new TileType[list.size()]);
-    }
-
-    private static SaveInstance loadFile(String absolutePath, String projectName) throws IOException, ClassNotFoundException {
+    private SaveInstance loadFile() throws IOException, ClassNotFoundException {
         File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
         if (file.exists()) {
             FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile());
@@ -86,7 +66,7 @@ public class DataManager {
         return null;
     }
 
-    private static void saveFile(String absolutePath, String projectName, SaveInstance save) throws IOException {
+    private void saveFile(SaveInstance save) throws IOException {
         File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
         if (!file.exists()) {
             file.createNewFile();
@@ -99,19 +79,32 @@ public class DataManager {
         fileOutputStream.close();
     }
 
+    public static void deleteProject(String absolutePath, String projectName) {
+        try {
+            File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
+            file.delete();
+            SaveListAdapter.instance.notifyDataSetChanged();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static File[] getFiles(String patch) {
+        try {
+            return getDirectory(patch).listFiles();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new File[0];
+    }
+
     private static File getDirectory(String absolutePath) throws IOException {
-        directory = new File(absolutePath, saveDir);
+        File directory = new File(absolutePath, saveDir);
         if (!directory.exists()) {
             directory.mkdirs();
             directory.createNewFile();
         }
         return directory;
-    }
-
-    private static void notifyListAdapter() {
-        if (SaveListAdapter.instance != null) {
-            SaveListAdapter.instance.notifyDataSetChanged();
-        }
     }
 
 }

@@ -5,9 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.fancytank.gamegen.game.actor.ActorInitializer;
 
 public abstract class AbstractScreen extends Stage implements Screen {
-    public abstract void buildStage();
+    public void buildStage() {
+        new ActorInitializer();
+    }
 
     @Override
     public void show() {
@@ -22,6 +25,9 @@ public abstract class AbstractScreen extends Stage implements Screen {
         super.draw();
     }
 
+    void saveState() {
+    }
+
     public void addToStage(Actor actor) {
         addActor(actor);
     }
@@ -33,17 +39,16 @@ public abstract class AbstractScreen extends Stage implements Screen {
 
     @Override
     public void pause() {
-
+        saveState();
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
+        saveState();
     }
 
     @Override

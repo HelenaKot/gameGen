@@ -33,20 +33,11 @@ public class SaveListAdapter extends ArrayAdapter {
         final Context context = convertView.getContext();
         title.setText(save.getName());
         subtitle.setText(new Date(save.lastModified()).toString());
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setSave(save.getName());
-            }
+        convertView.setOnClickListener(v -> setSave(save.getName()));
+        convertView.setOnLongClickListener(v -> {
+            ProjectDialog.getDeleteProjectDialog(context, save.getName(), position);
+            return true;
         });
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ProjectDialog.getDeleteProjectDialog(context, save.getName(), position);
-                return true;
-            }
-        });
-
         return convertView;
     }
 

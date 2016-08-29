@@ -1,10 +1,8 @@
 package com.fancytank.gamegen.programming.data;
 
-import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
 import com.fancytank.gamegen.programming.looks.CoreBlock;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class BlockData implements Serializable {
     private static final long serialVersionUID = 1233613063064496932L;
@@ -60,13 +58,6 @@ public class BlockData implements Serializable {
         if (inputs != null)
             return inputs;
         else return new InputFragment[0];
-    }
-
-    public static ArrayList<BlockData> getBlockDataList() {
-        ArrayList<BlockData> output = new ArrayList<BlockData>();
-        for (ProgrammingBlock programmingBlock : ProgrammingBlock.getBlockList())
-            output.add(programmingBlock.coreBlock.data);
-        return output;
     }
 
     public boolean hasValue() {

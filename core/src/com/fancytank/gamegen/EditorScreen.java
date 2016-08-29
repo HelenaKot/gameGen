@@ -1,19 +1,15 @@
 package com.fancytank.gamegen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.fancytank.gamegen.programming.BlockButton;
 import com.fancytank.gamegen.programming.EditorBackground;
 import com.fancytank.gamegen.programming.TrashCan;
-import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.programming.Workspace;
 import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
+import com.fancytank.gamegen.programming.blocks.BlockManager;
+import com.fancytank.gamegen.programming.blocks.BlockRestoreEvent;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
-import com.fancytank.gamegen.programming.looks.BlockAppearance;
-import com.fancytank.gamegen.programming.looks.PatchTextureManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,15 +24,13 @@ public class EditorScreen extends AbstractScreen {
 
     @Override
     public void buildStage() {
-        setUp();
+        super.buildStage();
+        addWorkspaceActors();
         editorBackground.setDraggable(programmingBlocks);
         EventBus.getDefault().register(this);
     }
 
-    private void setUp() {
-        new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
-        BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
-        new ActorInitializer();
+    private void addWorkspaceActors() {
         addActor(editorBackground = new EditorBackground(getWidth(), getHeight()));
         addActor(new TrashCan(getWidth()));
         addActor(new BlockButton(getHeight()));
@@ -46,10 +40,17 @@ public class EditorScreen extends AbstractScreen {
     @Subscribe
     public void onEvent(BlockCreateEvent event) {
         ProgrammingBlock template = new ProgrammingBlock(event.blockActorPattern.getBlockData(), event.blockActorPattern.getColor());
-        Actor newBlock = Workspace.clone(template);
+        ProgrammingBlock newBlock = Workspace.clone(template);
+        BlockManager.add(newBlock);
         newBlock.setPosition(getWidth() * 0.4f, getHeight() / 2);
         addToStage(newBlock);
         template.destroy();
+    }
+
+    @Subscribe
+    public void onEvent(BlockRestoreEvent event) {
+        BlockManager.add(event.data);
+        addToStage(event.data);
     }
 
     @Override

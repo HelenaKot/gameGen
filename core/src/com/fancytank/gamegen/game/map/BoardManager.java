@@ -37,4 +37,7 @@ public class BoardManager {
         return getInstance().boards.get(key);
     }
 
+    public static void dispose() {
+        instance = null;
+    }
 }

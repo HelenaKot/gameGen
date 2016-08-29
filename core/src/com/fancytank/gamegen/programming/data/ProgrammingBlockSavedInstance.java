@@ -10,22 +10,19 @@ import java.io.Serializable;
 public class ProgrammingBlockSavedInstance implements Serializable {
     private static final long serialVersionUID = 1233613063064496931L;
     public BlockData data;
-    float a, r, g, b;
+    int color;
     float posX, posY;
 
     public ProgrammingBlockSavedInstance(ProgrammingBlock programmingBlock) {
         data = programmingBlock.coreBlock.data;
-        a = programmingBlock.coreBlock.tint.a;
-        r = programmingBlock.coreBlock.tint.r;
-        g = programmingBlock.coreBlock.tint.g;
-        b = programmingBlock.coreBlock.tint.b;
+        color = Color.rgba8888(programmingBlock.coreBlock.tint);
         Vector2 pos = Utility.myLocalToStageCoordinates(programmingBlock);
         posX = pos.x + programmingBlock.getWidth();
         posY = pos.y + programmingBlock.getHeight();
     }
 
     public ProgrammingBlock restore() {
-        ProgrammingBlock restoredBlock = new ProgrammingBlock(data, new Color(r, g, b, a));
+        ProgrammingBlock restoredBlock = new ProgrammingBlock(data, new Color(color));
         restoredBlock.setPosition(posX - restoredBlock.coreBlock.getWidth(), posY - restoredBlock.coreBlock.getHeight());
         return restoredBlock;
     }
