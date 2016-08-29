@@ -10,6 +10,7 @@ import com.fancytank.gamegen.programming.blocks.BlockCreateEvent;
 import com.fancytank.gamegen.programming.blocks.BlockManager;
 import com.fancytank.gamegen.programming.blocks.BlockRestoreEvent;
 import com.fancytank.gamegen.programming.blocks.ProgrammingBlock;
+import com.fancytank.gamegen.programming.looks.ReconnectBlocks;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,15 +54,20 @@ public class EditorScreen extends AbstractScreen {
         addToStage(event.data);
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-        EventBus.getDefault().unregister(this);
+    @Subscribe
+    public void onEvent(ReconnectBlocks.ReconnectEvent event) {
+        ReconnectBlocks.reconnectAll();
     }
 
     @Override
     public void addToStage(Actor actor) {
         actor.moveBy(-programmingBlocks.getX(), -programmingBlocks.getY()); // compensating for pan movement
         programmingBlocks.addActor(actor);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        EventBus.getDefault().unregister(this);
     }
 }
