@@ -15,6 +15,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         slidingLayer:changeStateOnTap="false"
+        slidingLayer:offsetDistance="10dp"
+        slidingLayer:shadowDrawable="@drawable/drawer_shadow"
+        slidingLayer:shadowSize="10dp"
         slidingLayer:stickTo="left">
 
         <LinearLayout
