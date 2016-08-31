@@ -30,7 +30,7 @@
         android:text="code" />
 
     <ImageButton
-        android:id="@+id/button_screen"
+        android:id="@+id/button_board"
         style="@style/imageButton"
         android:src="@drawable/layers" />
 
@@ -38,7 +38,7 @@
         style="@style/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="edit screen" />
+        android:text="board list" />
 
     <ImageButton
         android:id="@+id/button_test"

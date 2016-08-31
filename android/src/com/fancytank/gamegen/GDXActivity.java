@@ -133,8 +133,6 @@ public class GDXActivity extends AndroidApplication {
                 v -> debugText.setText(Workspace.getDebugLog()));
         debugButtons.findViewById(R.id.button_debug_connectors).setOnClickListener(
                 v -> ConnectionArea.debug = !ConnectionArea.debug);
-       /* debugButtons.findViewById(R.id.button_debug_save).setOnClickListener(
-                v -> dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave()));*/
         debugButtons.findViewById(R.id.button_debug_load).setOnClickListener(
                 v -> {
                     try {
@@ -148,7 +146,7 @@ public class GDXActivity extends AndroidApplication {
     }
 
     private void saveAndProceed(ScreenEnum screen) {
-//        dataManager.saveWorkspace(Workspace.getWorkspaceItemsToSave());
+        dataManager.saveWorkspace();
         EventBus.getDefault().post(screen);
     }
 

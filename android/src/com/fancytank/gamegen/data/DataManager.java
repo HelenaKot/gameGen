@@ -41,7 +41,8 @@ public class DataManager {
 
     public void saveWorkspace() {
         try {
-            saveFile(new SaveInstance(projectName, BlockManager.getWorkspaceItemsToSave(), ActorInitializer.getCustomActors(), BoardManager.getBoards()));
+            if (BlockManager.getWorkspaceItemsToSave().length > 0) // todo quickfix
+                saveFile(new SaveInstance(projectName, BlockManager.getWorkspaceItemsToSave(), ActorInitializer.getCustomActors(), BoardManager.getBoards()));
             saveInstance = null;
         } catch (IOException e) {
             e.printStackTrace();
