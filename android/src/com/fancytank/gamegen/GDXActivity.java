@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.fancytank.gamegen.data.DataManager;
+import com.fancytank.gamegen.editor.BoardActivity;
 import com.fancytank.gamegen.editor.PickBrushActivity;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 import com.fancytank.gamegen.game.map.BoardManager;
@@ -107,12 +108,14 @@ public class GDXActivity extends AndroidApplication {
     }
 
     private void initDesignButtons(View designButtons) {
-        designButtons.findViewById(R.id.button_paint).setOnClickListener(
-                v -> {
-                    Intent intent = new Intent(getContext(), PickBrushActivity.class);
-                    getContext().startActivity(intent);
-                }
-        );
+        designButtons.findViewById(R.id.button_paint).setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), PickBrushActivity.class);
+            getContext().startActivity(intent);
+        });
+        designButtons.findViewById(R.id.button_board).setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), BoardActivity.class);
+            getContext().startActivity(intent);
+        });
         designButtons.findViewById(R.id.button_programming).setOnClickListener(
                 v -> saveAndProceed(ScreenEnum.EDITOR_SCREEN));
         designButtons.findViewById(R.id.button_test).setOnClickListener(
