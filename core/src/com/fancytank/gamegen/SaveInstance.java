@@ -21,4 +21,13 @@ public class SaveInstance implements Serializable {
         this.tiles = tiles;
         this.boards = boards;
     }
+
+    public SaveInstance getForJsonExport() {
+        //todo carefull for original file
+        for (ProgrammingBlockSavedInstance pb : blocks)
+        {
+            pb.data.removeCyclicConnections();
+        }
+        return this;
+    }
 }

@@ -1,5 +1,7 @@
 package com.fancytank.gamegen.data;
 
+import android.content.Context;
+
 import com.fancytank.gamegen.SaveInstance;
 import com.fancytank.gamegen.SaveListAdapter;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
@@ -8,6 +10,7 @@ import com.fancytank.gamegen.game.actor.TileType;
 import com.fancytank.gamegen.game.map.BoardManager;
 import com.fancytank.gamegen.programming.blocks.BlockManager;
 import com.fancytank.gamegen.programming.data.ProgrammingBlockSavedInstance;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,13 +21,14 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 public class DataManager {
-    private static String saveDir = "saved";
-    private String projectName, absolutePath;
+    private static String saveDir = "saved", absolutePath;
+    private String projectName;
     private SaveInstance saveInstance;
 
-    public DataManager(String projectName, String absolutePath) {
+    public DataManager(String projectName, Context context) {
         this.projectName = projectName;
-        this.absolutePath = absolutePath;
+        if (absolutePath == null)
+            this.absolutePath = context.getExternalFilesDir(null).toString();
     }
 
     public SaveInstance loadWorkspace() {
@@ -78,9 +82,19 @@ public class DataManager {
         objectOutputStream.flush();
         objectOutputStream.close();
         fileOutputStream.close();
+        saveFileForExport(save);
     }
 
-    public static void deleteProject(String absolutePath, String projectName) {
+    private void saveFileForExport(SaveInstance save) throws IOException {
+        Gson gson = new Gson();
+        String serialized = gson.toJson(save.getForJsonExport());
+        File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName + "_json");
+        FileOutputStream outputStream = new FileOutputStream(file.getAbsoluteFile());
+        outputStream.write(serialized.getBytes());
+        outputStream.close();
+    }
+
+    public static void deleteProject(String projectName) {
         try {
             File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
             file.delete();
@@ -90,9 +104,9 @@ public class DataManager {
         }
     }
 
-    public static File[] getFiles(String patch) {
+    public static File[] getFiles(Context context) {
         try {
-            return getDirectory(patch).listFiles();
+            return getDirectory(absolutePath = context.getExternalFilesDir(null).toString()).listFiles();
         } catch (IOException e) {
             e.printStackTrace();
         }

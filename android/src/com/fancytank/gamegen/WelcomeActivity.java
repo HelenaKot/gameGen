@@ -38,7 +38,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public static void resetAdapter() {
-        ArrayList<File> files = new ArrayList<>(Arrays.asList(DataManager.getFiles(instance.getFilesDir().getAbsolutePath())));
+        ArrayList<File> files = new ArrayList<>(Arrays.asList(DataManager.getFiles(instance)));
         instance.adapter = new SaveListAdapter(instance, files);
         instance.projectList.setAdapter(instance.adapter);
     }

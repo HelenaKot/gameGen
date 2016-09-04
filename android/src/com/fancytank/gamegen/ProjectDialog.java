@@ -39,7 +39,7 @@ public class ProjectDialog {
 
         builder.setPositiveButton("OK", (DialogInterface dialog, int which) -> {
             SaveListAdapter.instance.saves.remove(index);
-            DataManager.deleteProject(context.getFilesDir().getAbsolutePath(), saveName);
+            DataManager.deleteProject(saveName);
         });
         builder.setNegativeButton("Cancel", (DialogInterface dialog, int which) -> dialog.cancel());
         builder.show();

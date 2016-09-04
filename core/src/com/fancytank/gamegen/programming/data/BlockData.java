@@ -38,6 +38,10 @@ public class BlockData implements Serializable {
         parent = null;
     }
 
+    public void removeCyclicConnections() {
+        parent = null;
+    }
+
     public BlockData getDescendant() {
         return descendant;
     }

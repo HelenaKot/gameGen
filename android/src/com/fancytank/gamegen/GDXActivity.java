@@ -50,7 +50,7 @@ public class GDXActivity extends AndroidApplication {
         setContentView(R.layout.activity_gdx);
 
         readName();
-        dataManager = new DataManager(saveName, absolutePath);
+        dataManager = new DataManager(saveName, this);
         initXML();
         EventBus.getDefault().register(this);
     }
