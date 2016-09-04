@@ -19,19 +19,11 @@ public class ProjectDialog {
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String saveName = input.getText().toString();
-                newProject(context, saveName);
-            }
+        builder.setPositiveButton("OK", (DialogInterface dialog, int which) -> {
+            String saveName = input.getText().toString();
+            newProject(context, saveName);
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("Cancel", (DialogInterface dialog, int which) -> dialog.cancel());
         builder.show();
     }
 
@@ -45,19 +37,11 @@ public class ProjectDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("do you want to delete " + saveName);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                SaveListAdapter.instance.saves.remove(index);
-                DataManager.deleteProject(context.getFilesDir().getAbsolutePath(), saveName);
-            }
+        builder.setPositiveButton("OK", (DialogInterface dialog, int which) -> {
+            SaveListAdapter.instance.saves.remove(index);
+            DataManager.deleteProject(context.getFilesDir().getAbsolutePath(), saveName);
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("Cancel", (DialogInterface dialog, int which) -> dialog.cancel());
         builder.show();
     }
 }

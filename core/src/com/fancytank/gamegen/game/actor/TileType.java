@@ -22,12 +22,10 @@ public class TileType implements Serializable {
     }
 
     public Texture getTexture() {
-        if (textures == null)
-            initTextures();
         return textures.get(textureName);
     }
 
-    private static void initTextures() {
+    public static void initTextures() {
         textures = new HashMap<>();
         for (String name : textureNames)
             textures.put(name, new Texture(Gdx.files.internal(name + ".png")));

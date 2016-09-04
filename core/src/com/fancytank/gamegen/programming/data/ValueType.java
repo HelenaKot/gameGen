@@ -1,8 +1,6 @@
 package com.fancytank.gamegen.programming.data;
 
-import java.io.Serializable;
-
-public enum ValueType implements Serializable {
+public enum ValueType {
     BOOLEAN(),
     ANY(),
     COLOR(MethodType.COLOR_SETTER),

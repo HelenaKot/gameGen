@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.fancytank.gamegen.game.actor.TileType;
 import com.fancytank.gamegen.programming.looks.BlockAppearance;
 import com.fancytank.gamegen.programming.looks.PatchTextureManager;
 
@@ -25,6 +26,7 @@ public class MainGdx extends Game {
     private void loadAssets() {
         new PatchTextureManager(new TextureAtlas(Gdx.files.internal("blocks.atlas")));
         BlockAppearance.loadFont(new BitmapFont(Gdx.files.internal("fontvarsmall.fnt"), Gdx.files.internal("fontvarsmall.png"), false));
+        TileType.initTextures();
     }
 
     @Subscribe
