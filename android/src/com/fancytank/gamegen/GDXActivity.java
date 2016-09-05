@@ -87,7 +87,7 @@ public class GDXActivity extends AndroidApplication {
         switch (screen) {
             case DESIGN_SCREEN:
                 getDataFromManager();
-                EventBus.getDefault().post(BoardManager.get("default"));
+                EventBus.getDefault().post("default");
                 break;
             case EDITOR_SCREEN:
                 list.populateList();

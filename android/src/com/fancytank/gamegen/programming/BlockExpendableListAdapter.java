@@ -28,25 +28,20 @@ public class BlockExpendableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        itemsArray = items.get(groupPosition);
-        if (convertView == null) {
+        if (convertView == null)
             convertView = inflater.inflate(R.layout.programming_list_item, null);
-        }
-
         TextView textView = (TextView) convertView.findViewById(R.id.item_title);
-        textView.setText(itemsArray[childPosition].getName());
+        textView.setText(items.get(groupPosition)[childPosition].getName());
 
-        convertView.setOnClickListener((v) -> itemsArray[childPosition].click(v.getContext()));
+        convertView.setOnClickListener((v) -> items.get(groupPosition)[childPosition].click(v.getContext()));
 
         return convertView;
     }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
-        if (convertView == null) {
+        if (convertView == null)
             convertView = inflater.inflate(R.layout.programming_list_group, null);
-        }
         TextView textView = (TextView) convertView.findViewById(R.id.group_title);
         textView.setText(titleItems.get(groupPosition));
 

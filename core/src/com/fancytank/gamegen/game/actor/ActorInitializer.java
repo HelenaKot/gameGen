@@ -17,7 +17,7 @@ public class ActorInitializer {
                     return new EmptyActor(x, y, "unspecified");
                 }
             }); // my "nullobject"
-            actorToInit.put("empty", new ActorToInit("empty", null, "#ffffff") {
+            actorToInit.put("empty", new ActorToInit("empty", null, "#000000") {
                 BaseActor createInstance(int x, int y) {
                     return new EmptyActor(x, y, "empty");
                 }

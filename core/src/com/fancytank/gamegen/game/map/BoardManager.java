@@ -1,6 +1,5 @@
 package com.fancytank.gamegen.game.map;
 
-import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 
 import java.util.HashMap;
