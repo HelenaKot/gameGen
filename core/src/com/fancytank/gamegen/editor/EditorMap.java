@@ -22,8 +22,8 @@ public class EditorMap implements MapType {
 
     @Override
     public void setBoard(Board mapBoard) {
-        for (int x = 0; x < mapBoard.width; x++)
-            for (int y = 0; y < mapBoard.height; y++) {
+        for (int x = 0; x < Constant.MAP_WIDTH; x++)
+            for (int y = 0; y < Constant.MAP_HEIGHT; y++) {
                 TileType tile = mapBoard.board[x][y];
                 map[x][y].setProperties(tile.name, tile.textureName, Color.valueOf(tile.colorHex), tile.getTexture());
             }
@@ -53,10 +53,9 @@ public class EditorMap implements MapType {
     }
 
     public Board getMapAsBoard() {
-        int width = map.length, height = map[0].length;
-        Board output = new Board(width, height);
-        for (int i = 0; i < width; i++)
-            for (int j = 0; j < height; j++)
+        Board output = new Board();
+        for (int i = 0; i < Constant.MAP_WIDTH; i++)
+            for (int j = 0; j < Constant.MAP_HEIGHT; j++)
                 output.board[i][j] = new TileType(map[i][j].className, map[i][j].textureName, map[i][j].tint.toString());
         return output;
     }

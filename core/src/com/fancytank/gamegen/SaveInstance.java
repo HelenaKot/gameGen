@@ -22,12 +22,9 @@ public class SaveInstance implements Serializable {
         this.boards = boards;
     }
 
-    public SaveInstance getForJsonExport() {
-        //todo carefull for original file
+    public SaveInstance convertForJsonExport() {
         for (ProgrammingBlockSavedInstance pb : blocks)
-        {
             pb.data.removeCyclicConnections();
-        }
         return this;
     }
 }

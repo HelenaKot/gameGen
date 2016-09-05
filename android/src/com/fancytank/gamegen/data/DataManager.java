@@ -87,7 +87,7 @@ public class DataManager {
 
     private void saveFileForExport(SaveInstance save) throws IOException {
         Gson gson = new Gson();
-        String serialized = gson.toJson(save.getForJsonExport());
+        String serialized = gson.toJson(save.convertForJsonExport());
         File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName + "_json");
         FileOutputStream outputStream = new FileOutputStream(file.getAbsoluteFile());
         outputStream.write(serialized.getBytes());

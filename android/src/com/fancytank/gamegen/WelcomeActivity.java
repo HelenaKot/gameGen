@@ -23,7 +23,7 @@ public class WelcomeActivity extends AppCompatActivity {
         instance = this;
         setContentView(R.layout.activity_welcome);
         projectList = (ListView) findViewById(R.id.saved_projects_list);
-        View footerView = ((LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.main_footer, null, false);
+        View footerView = ((LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_main, null, false);
         projectList.addFooterView(footerView);
     }
 
