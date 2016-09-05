@@ -26,7 +26,7 @@ public class GameScreen extends AbstractScreen {
     public void onEvent(ProgrammingBlockSavedInstance[] data) {
         new ActorInitializer();
         ScriptLoader.load(data);
-        mapManager.setBoard(BoardManager.get("default"));
+        MapManager.setBoard(BoardManager.get("default"));
     }
 
     @Override

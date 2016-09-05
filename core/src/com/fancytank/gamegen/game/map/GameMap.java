@@ -20,11 +20,18 @@ public class GameMap implements MapType {
 
     @Override
     public void setBoard(Board mapBoard) {
+        clearMap();
         TileType[][] board = mapBoard.board;
         map = new BaseActor[Constant.MAP_WIDTH][Constant.MAP_WIDTH];
         for (int x = 0; x < Constant.MAP_WIDTH; x++)
             for (int y = 0; y < Constant.MAP_HEIGHT; y++)
                 initActor(ActorInitializer.getInstanceOf(board[x][y].name, x, y));
+    }
+
+    private void clearMap() {
+        for (int x = 0; x < Constant.MAP_WIDTH; x++)
+            for (int y = 0; y < Constant.MAP_HEIGHT; y++)
+                map[x][y].remove();
     }
 
     private void initEmptyMap(int width, int height) {

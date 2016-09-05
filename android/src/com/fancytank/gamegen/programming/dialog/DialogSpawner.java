@@ -16,7 +16,7 @@ import uz.shift.colorpicker.LineColorPicker;
 import uz.shift.colorpicker.Palette;
 
 public enum DialogSpawner {
-    DIALOG_NUMBER, DIALOG_COLOR, DIALOG_LOOP, DIALOG_COMPARATOR, DIALOG_INIT_VAR, DIALOG_GET_VAR, DIALOG_SET_VAR, DIALOG_PICK_CLASS;
+    DIALOG_NUMBER, DIALOG_COLOR, DIALOG_SCREEN, DIALOG_LOOP, DIALOG_COMPARATOR, DIALOG_INIT_VAR, DIALOG_GET_VAR, DIALOG_SET_VAR, DIALOG_PICK_CLASS;
 
     public void getDialog(final Context context, BlockActorPattern pattern) {
         switch (this) {
@@ -25,6 +25,9 @@ public enum DialogSpawner {
                 break;
             case DIALOG_COLOR:
                 colorPickerDialog(context, pattern);
+                break;
+            case DIALOG_SCREEN:
+                DialogVariables.screenPickerDialog(context, pattern);
                 break;
             case DIALOG_LOOP:
                 DialogLoop.newLoopDialog(context);

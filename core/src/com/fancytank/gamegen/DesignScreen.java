@@ -24,7 +24,7 @@ public class DesignScreen extends AbstractScreen {
     public void onEvent(String boardName) {
         saveState();
         currentBoard = boardName;
-        mapManager.setBoard(BoardManager.get(boardName));
+        MapManager.setBoard(BoardManager.get(boardName));
     }
 
     @Override

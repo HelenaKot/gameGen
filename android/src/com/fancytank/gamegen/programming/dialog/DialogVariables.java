@@ -4,15 +4,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
+import com.fancytank.gamegen.game.map.BoardManager;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.ValueType;
 import com.fancytank.gamegen.programming.data.Variable;
 import com.fancytank.gamegen.programming.data.VariableList;
+
+import java.util.ArrayList;
 
 import static com.fancytank.gamegen.programming.dialog.DialogSpawner.initDialog;
 
@@ -60,6 +64,16 @@ public class DialogVariables {
             pattern.setLabel(varSpinner.getSelectedItem() + " =");
             pattern.spawn();
 
+        });
+        dialog.builder.show();
+    }
+
+    public static void screenPickerDialog(final Context context, final BlockActorPattern pattern) {
+        BuilderWrapper dialog = initDialog(context, "pick screen", R.layout.dialog_get_var);
+        final Spinner varSpinner = setupSpinner(context, dialog, "screen", BoardManager.getBoards().keySet().toArray(new String[BoardManager.getBoards().size()]));
+        dialog.builder.setPositiveButton("OK", (d, which) -> {
+            pattern.setValue((String) varSpinner.getSelectedItem(), ValueType.SCREEN);
+            pattern.spawn();
         });
         dialog.builder.show();
     }

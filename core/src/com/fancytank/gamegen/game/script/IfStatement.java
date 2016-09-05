@@ -3,6 +3,7 @@ package com.fancytank.gamegen.game.script;
 import com.fancytank.gamegen.game.actor.BaseActor;
 
 import static com.fancytank.gamegen.game.script.ExecutableProducer.ProducerTag;
+import static com.fancytank.gamegen.game.script.Util.initFromProducer;
 
 class IfStatement implements Executable {
     private ExecutableProducer producer;
@@ -24,13 +25,10 @@ class IfStatement implements Executable {
 
     @Override
     public void init(BaseActor blockInstance) {
-        condition = producer.getProducer(ProducerTag.CONDITION_PRODUCER).getInstance();
-        condition.init(blockInstance);
-        execution1 = producer.getProducer(ProducerTag.EXECUTION_PRODUCER).getInstance();
-        execution1.init(blockInstance);
+        condition = initFromProducer(producer.getProducer(ProducerTag.CONDITION_PRODUCER), blockInstance);
+        execution1 = initFromProducer(producer.getProducer(ProducerTag.EXECUTION_PRODUCER), blockInstance);
         if (producer.methodBlock.getInputs().length > 2) {
-            execution2 = producer.getProducer(ProducerTag.SECONDARY_PRODUCER).getInstance();
-            execution2.init(blockInstance);
+            execution2 = initFromProducer(producer.getProducer(ProducerTag.SECONDARY_PRODUCER), blockInstance);
             doElse = true;
         }
     }

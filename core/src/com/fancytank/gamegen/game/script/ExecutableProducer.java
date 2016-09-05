@@ -85,8 +85,12 @@ public class ExecutableProducer {
                 return new IfStatement(this);
             case GETTER:
                 return new Getter(this);
+            case BLOCK_GETTER:
+                return new TileGetter(this);
             case SUM:
                 return new Sum(this);
+            case SCREEN_SWAPPER:
+                return new ScreenSwapper(this);
             default:
                 return new DefaultExecutable(this.methodBlock);
         }

@@ -8,7 +8,8 @@ public enum ValueType {
     INT_NUMBER(),
     CLASS_NAME(MethodType.BLOCK_SETTER),
     METHOD(),
-    VARIABLE();
+    VARIABLE(),
+    SCREEN(MethodType.SCREEN_SWAPPER);
 
     private static final long serialVersionUID = 1233613063064496950L;
     MethodType expectedMethod;
@@ -35,8 +36,8 @@ public enum ValueType {
 
     private static void initValues() {
         if (usedValues == null) {
-            usedValues = new ValueType[]{BOOLEAN, COLOR, NUMBER, INT_NUMBER, CLASS_NAME, METHOD};
-            valueNames = new String[]{"boolean", "color", "number", "integer", "class", "method"};
+            usedValues = new ValueType[]{INT_NUMBER, BOOLEAN, COLOR, NUMBER, CLASS_NAME, METHOD, SCREEN};
+            valueNames = new String[]{"integer", "boolean", "color", "number", "class", "method", "screen"};
         }
     }
 }
