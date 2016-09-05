@@ -21,7 +21,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 public class DataManager {
-    private static String saveDir = "saved", absolutePath;
+    private static String saveDir = "saved", jsonDir = "export", absolutePath;
     private String projectName;
     private SaveInstance saveInstance;
 
@@ -59,7 +59,7 @@ public class DataManager {
     }
 
     private SaveInstance loadFile() throws IOException, ClassNotFoundException {
-        File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
+        File file = new File(getDirectory(absolutePath, saveDir).getAbsolutePath(), projectName);
         if (file.exists()) {
             FileInputStream fileInputStream = new FileInputStream(file.getAbsoluteFile());
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -72,7 +72,7 @@ public class DataManager {
     }
 
     private void saveFile(SaveInstance save) throws IOException {
-        File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
+        File file = new File(getDirectory(absolutePath, saveDir).getAbsolutePath(), projectName);
         if (!file.exists()) {
             file.createNewFile();
         }
@@ -88,7 +88,7 @@ public class DataManager {
     private void saveFileForExport(SaveInstance save) throws IOException {
         Gson gson = new Gson();
         String serialized = gson.toJson(save.convertForJsonExport());
-        File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName + "_json");
+        File file = new File(getDirectory(absolutePath, jsonDir).getAbsolutePath(), projectName + "_json");
         FileOutputStream outputStream = new FileOutputStream(file.getAbsoluteFile());
         outputStream.write(serialized.getBytes());
         outputStream.close();
@@ -96,7 +96,7 @@ public class DataManager {
 
     public static void deleteProject(String projectName) {
         try {
-            File file = new File(getDirectory(absolutePath).getAbsolutePath(), projectName);
+            File file = new File(getDirectory(absolutePath, saveDir).getAbsolutePath(), projectName);
             file.delete();
             SaveListAdapter.instance.notifyDataSetChanged();
         } catch (IOException e) {
@@ -106,15 +106,15 @@ public class DataManager {
 
     public static File[] getFiles(Context context) {
         try {
-            return getDirectory(absolutePath = context.getExternalFilesDir(null).toString()).listFiles();
+            return getDirectory(absolutePath = context.getExternalFilesDir(null).toString(), saveDir).listFiles();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return new File[0];
     }
 
-    private static File getDirectory(String absolutePath) throws IOException {
-        File directory = new File(absolutePath, saveDir);
+    private static File getDirectory(String absolutePath, String dir) throws IOException {
+        File directory = new File(absolutePath, dir);
         if (!directory.exists()) {
             directory.mkdirs();
             directory.createNewFile();
