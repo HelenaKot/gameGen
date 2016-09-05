@@ -9,7 +9,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/icon_block"
         android:label="@string/app_name"
         android:theme="@style/Base.Theme.AppCompat.Light">
         <activity
