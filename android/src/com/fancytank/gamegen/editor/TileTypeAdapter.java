@@ -75,7 +75,7 @@ public class TileTypeAdapter extends BaseAdapter {
         try {
             InputStream is = assetManager.open(tile.textureName + ".png");
             Drawable output = Drawable.createFromStream(is, null);
-            output.setColorFilter(Color.parseColor(tile.colorHex), PorterDuff.Mode.MULTIPLY);
+            output.setColorFilter(tile.getIntColor(), PorterDuff.Mode.MULTIPLY);
             is.close();
             return output;
         } catch (IOException e) {

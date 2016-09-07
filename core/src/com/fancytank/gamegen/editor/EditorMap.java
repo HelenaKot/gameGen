@@ -1,6 +1,5 @@
 package com.fancytank.gamegen.editor;
 
-import com.badlogic.gdx.graphics.Color;
 import com.fancytank.gamegen.MainGdx;
 import com.fancytank.gamegen.game.Constant;
 import com.fancytank.gamegen.game.actor.BaseActor;
@@ -25,7 +24,7 @@ public class EditorMap implements MapType {
         for (int x = 0; x < Constant.MAP_WIDTH; x++)
             for (int y = 0; y < Constant.MAP_HEIGHT; y++) {
                 TileType tile = mapBoard.board[x][y];
-                map[x][y].setProperties(tile.name, tile.textureName, Color.valueOf(tile.colorHex), tile.getTexture());
+                map[x][y].setProperties(tile.name, tile.textureName, tile.getColor(), tile.getTexture());
             }
     }
 

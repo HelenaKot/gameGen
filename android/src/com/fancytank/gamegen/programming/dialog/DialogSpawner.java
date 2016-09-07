@@ -70,7 +70,7 @@ public enum DialogSpawner {
         final LineColorPicker lineColorPicker = (LineColorPicker) dialog.view.findViewById(R.id.picker);
         lineColorPicker.setColors(Palette.DEFAULT);
         dialog.builder.setPositiveButton("OK", (d, which) -> {
-            String value = String.format("#%06X", (0xFFFFFF & lineColorPicker.getColor()));
+            String value = String.format("#%06x", (0xFFFFFF & lineColorPicker.getColor()));
             pattern.setValue(value, ValueType.COLOR);
             pattern.spawn();
         });
