@@ -32,13 +32,13 @@ public class VariableList {
         put(name, new Variable(value, type));
     }
 
+    private static void updateValue(String name, Variable variable) {
+        instance.variables.get(name).setValue(variable.getValue());
+    }
+
     private static VariableList getInstance() {
         if (instance == null)
             instance = new VariableList();
         return instance;
-    }
-
-    private static void updateValue(String name, Variable variable) {
-        instance.variables.get(name).setValue(variable.getValue());
     }
 }

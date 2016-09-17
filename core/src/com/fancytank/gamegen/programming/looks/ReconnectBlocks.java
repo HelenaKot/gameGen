@@ -16,7 +16,6 @@ public class ReconnectBlocks {
             if (programmingBlock.coreBlock.data.shape.enclosed())
                 reconnectBlock(programmingBlock.coreBlock.data);
     }
-
     private static void reconnectBlock(BlockData data) {
         for (InputFragment inputFragment : data.getInputs())
             if (inputFragment.connectedTo != null)

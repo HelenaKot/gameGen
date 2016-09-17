@@ -11,8 +11,4 @@ public class BlockConnectionEvent {
         this.attachingConnector = attachingConnector;
         this.isConnecting = isConnecting;
     }
-
-    public boolean isConnecting() {
-        return isConnecting;
-    }
 }

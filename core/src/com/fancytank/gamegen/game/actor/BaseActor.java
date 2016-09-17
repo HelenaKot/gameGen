@@ -69,6 +69,12 @@ public abstract class BaseActor extends Actor {
         return output;
     }
 
+    @Override
+    public boolean remove() {
+        actions = new  LinkedList<>();
+        return super.remove();
+    }
+
     public String getClassName() {
         return className;
     }

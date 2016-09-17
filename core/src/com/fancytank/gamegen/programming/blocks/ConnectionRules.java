@@ -9,14 +9,8 @@ import static com.fancytank.gamegen.programming.looks.Utility.getProgrammingBloc
 public final class ConnectionRules {
 
     public static void tryConnect(ConnectionArea base, ConnectionArea attaching) {
-        if (isConnected(base, attaching)) {
-            boolean shouldSwap = false;
-            if (!isCorrectSignificanceOrder(base, attaching))
-                shouldSwap = !shouldSwap;
-            if (!isCorrectVerticalOrder(base, attaching))
-                shouldSwap = !shouldSwap;
-
-            if (shouldSwap) {
+        if (notConnected(base, attaching)) {
+            if (shouldSwap(base, attaching)) {
                 ConnectionArea tmp = base;
                 base = attaching;
                 attaching = tmp;
@@ -25,6 +19,15 @@ public final class ConnectionRules {
             if (canConnect(base, attaching))
                 ProgrammingBlock.attachBlock(base, attaching);
         }
+    }
+
+    private static boolean shouldSwap(ConnectionArea base, ConnectionArea attaching) {
+        boolean shouldSwap = false;
+        if (!isCorrectSignificanceOrder(base, attaching))
+            shouldSwap = !shouldSwap;
+        if (!isCorrectVerticalOrder(base, attaching))
+            shouldSwap = !shouldSwap;
+        return shouldSwap;
     }
 
     private static boolean isCorrectSignificanceOrder(ConnectionArea base, ConnectionArea attaching) {
@@ -48,7 +51,7 @@ public final class ConnectionRules {
         return (valueType == ValueType.NUMBER || valueType == ValueType.INT_NUMBER);
     }
 
-    private static boolean isConnected(ConnectionArea connectFrom, ConnectionArea connectTo) {
+    private static boolean notConnected(ConnectionArea connectFrom, ConnectionArea connectTo) {
         return (connectFrom.getConnection() == null && connectTo.getConnection() == null);
     }
 }
