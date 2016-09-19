@@ -37,7 +37,7 @@ public class TileActivity extends Activity {
         String name = tileName.getText().toString();
         String imageName = (String) gridView.getAdapter().getItem(selectedId);
         if (name.length() > 0) {
-            ActorInitializer.addActorClass(name, imageName, Integer.toHexString(lineColorPicker.getColor()));
+            ActorInitializer.addActorClass(name, imageName, "#" + Integer.toHexString(lineColorPicker.getColor()).substring(2, 8));
             postResult(name);
         } else
             setResult(RESULT_CANCELED);

@@ -31,8 +31,7 @@ public class TileType implements Serializable {
 
     public Color getColor() {
         if (colorHex.length() > 7)
-            //return Color.valueOf("#"+colorHex.substring(2,8));
-        return Color.valueOf(colorHex.substring(0, 6).toLowerCase());
+            return Color.valueOf(colorHex.substring(0, 6).toLowerCase());
         return Color.valueOf(colorHex);
     }
 
