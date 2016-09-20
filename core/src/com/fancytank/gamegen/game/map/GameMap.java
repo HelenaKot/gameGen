@@ -52,7 +52,7 @@ public class GameMap implements MapType {
     }
 
     private boolean inBounds(int x, int y) {
-        return 0 <= x && x < map.length && 0 <= y && y < map[0].length;
+        return 0 <= x && x < Constant.MAP_WIDTH && 0 <= y && y < Constant.MAP_HEIGHT;
     }
 
     @Override
