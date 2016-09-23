@@ -158,6 +158,8 @@ public class BlocksExpendableList {
                         new InputFragment(InputType.DUMMY, "get x")}, BlockShape.VARIABLE).setVariable(new Variable("x", ValueType.INT_NUMBER)).setExpectedMethod(MethodType.GETTER), Color.PINK)),
                 new BlockPatternHolder(new BlockActorPattern("get y", new BlockData(new InputFragment[]{
                         new InputFragment(InputType.DUMMY, "get y")}, BlockShape.VARIABLE).setVariable(new Variable("y", ValueType.INT_NUMBER)).setExpectedMethod(MethodType.GETTER), Color.PINK)),
+                new BlockPatternHolder(new BlockActorPattern("get tile type", new BlockData(new InputFragment[]{
+                        new InputFragment(InputType.DUMMY, "get tile")}, BlockShape.VARIABLE).setVariable(new Variable("t", ValueType.CLASS_NAME)).setExpectedMethod(MethodType.GETTER), Color.PINK)),
         };
         childItems.add(getterPatterns);
 

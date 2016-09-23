@@ -8,6 +8,7 @@ import android.text.InputType;
 import android.widget.EditText;
 
 import com.fancytank.gamegen.data.DataManager;
+import com.fancytank.gamegen.game.map.BoardManager;
 
 public class ProjectDialog {
 
@@ -21,6 +22,7 @@ public class ProjectDialog {
 
         builder.setPositiveButton("OK", (DialogInterface dialog, int which) -> {
             String saveName = input.getText().toString();
+            new BoardManager();//todo
             newProject(context, saveName);
         });
         builder.setNegativeButton("Cancel", (DialogInterface dialog, int which) -> dialog.cancel());

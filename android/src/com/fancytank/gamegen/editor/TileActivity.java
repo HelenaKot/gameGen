@@ -12,7 +12,6 @@ import com.fancytank.gamegen.R;
 import com.fancytank.gamegen.game.actor.ActorInitializer;
 
 import uz.shift.colorpicker.LineColorPicker;
-import uz.shift.colorpicker.Palette;
 
 public class TileActivity extends Activity {
     static String NAME_KEY = "name";
@@ -28,7 +27,7 @@ public class TileActivity extends Activity {
         tileName = (EditText) findViewById(R.id.tile_name);
         gridView = (GridView) findViewById(R.id.tile_texture);
         lineColorPicker = (LineColorPicker) findViewById(R.id.picker);
-        lineColorPicker.setColors(Palette.DEFAULT);
+        lineColorPicker.setColors(MyColors.getPalette());
         gridView.setAdapter(new ImageAdapter(this));
         gridView.setOnItemClickListener((AdapterView<?> parent, View v, int position, long id) -> selectedId = position);
     }

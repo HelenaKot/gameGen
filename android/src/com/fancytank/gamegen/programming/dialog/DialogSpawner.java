@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.fancytank.gamegen.R;
+import com.fancytank.gamegen.editor.MyColors;
 import com.fancytank.gamegen.programming.blocks.BlockActorPattern;
 import com.fancytank.gamegen.programming.data.ValueType;
 
 import uz.shift.colorpicker.LineColorPicker;
-import uz.shift.colorpicker.Palette;
 
 public enum DialogSpawner {
     DIALOG_NUMBER, DIALOG_COLOR, DIALOG_SCREEN, DIALOG_LOOP, DIALOG_COMPARATOR, DIALOG_INIT_VAR, DIALOG_GET_VAR, DIALOG_SET_VAR, DIALOG_PICK_CLASS;
@@ -68,7 +68,7 @@ public enum DialogSpawner {
     public static void colorPickerDialog(final Context context, final BlockActorPattern pattern) {
         BuilderWrapper dialog = initDialog(context, "pick color", R.layout.dialog_color_picker);
         final LineColorPicker lineColorPicker = (LineColorPicker) dialog.view.findViewById(R.id.picker);
-        lineColorPicker.setColors(Palette.DEFAULT);
+        lineColorPicker.setColors(MyColors.getPalette());
         dialog.builder.setPositiveButton("OK", (d, which) -> {
             String value = String.format("#%06x", (0xFFFFFF & lineColorPicker.getColor()));
             pattern.setValue(value, ValueType.COLOR);

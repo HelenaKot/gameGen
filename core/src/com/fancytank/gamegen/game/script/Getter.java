@@ -21,11 +21,13 @@ public class Getter implements Executable {
     public Variable performActionForResults() {
         switch (type) {
             case 'c':
-                return new Variable("#"+blockInstance.tint.toString().substring(0, 6), ValueType.COLOR);
+                return new Variable("#" + blockInstance.tint.toString().substring(0, 6), ValueType.COLOR);
             case 'x':
                 return new Variable(String.valueOf(blockInstance.x), ValueType.INT_NUMBER);
             case 'y':
                 return new Variable(String.valueOf(blockInstance.y), ValueType.INT_NUMBER);
+            case 't':
+                return new Variable(blockInstance.getClassName(), ValueType.CLASS_NAME);
         }
         return null;
     }
