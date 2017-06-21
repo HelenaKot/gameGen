@@ -1,4 +1,4 @@
-#Game Generator
+# Game Generator
 Android Application for creating simple games using visual programming.<br>
 Content:<br>
 * drawing/dragging blocks using LibGDX framework
